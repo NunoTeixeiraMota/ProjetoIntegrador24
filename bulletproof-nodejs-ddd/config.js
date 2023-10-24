@@ -61,7 +61,7 @@ export default {
       path: "../repos/userRepo"
     },
     buildings: {
-      name: "BuildingRepo",
+      name: "BuildingsRepo",
       path: "../repos/buildingsRepo"
     }
   },

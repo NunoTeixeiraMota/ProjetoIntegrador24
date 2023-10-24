@@ -2,24 +2,34 @@ import 'reflect-metadata';
 import * as sinon from 'sinon';
 import { Response, Request, NextFunction } from 'express';
 import { Container } from 'typedi';
-import { Result } from '../src/core/logic/Result';
-import IBuildingService from "../src/services/IServices/IBuildingsService";
-import BuildingsController from "../src/controllers/buildingsController";
 import IBuildingDTO from '../src/dto/IBuildingDTO';
-import config from '../config';
+import { Result } from '../src/core/logic/Result';
+import BuildingsController from '../src/controllers/buildingsController';
+import IBuildingService from '../src/services/IServices/IBuildingsService';
 
-describe('BuildingsController', function () {
+describe('BuildingsController (Unit Test)', function () {
+  const sandbox = sinon.createSandbox();
+
     beforeEach(function() {
+      Container.reset();
+
+		  let buildingsServiceClass = require("../src/services/buildingsService").default;
+		  let buildingsServiceInstance = Container.get(buildingsServiceClass);
+		  Container.set("BuildingsService", buildingsServiceInstance);
     });
-  
+    afterEach(function() {
+      sandbox.restore();
+    });
+
     it('createBuilding: returns JSON with id+name values', async function () {
       const body = {
         "id": "123",
-        "name": "Building 123",
+        "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2
       };
+      
   
       const req: Partial<Request> = {};
       req.body = body;
@@ -32,9 +42,7 @@ describe('BuildingsController', function () {
       const next: Partial<NextFunction> = () => {};
   
       // Mock the building service
-      const buildingServiceClass = require(config.services.buildings.path).default;
-      const buildingServiceInstance = Container.get(buildingServiceClass);
-      Container.set(config.services.buildings.name, buildingServiceInstance);
+      const buildingServiceInstance = Container.get("BuildingsService");
   
       // Stub the createBuilding method to return a predefined result
       const expectedResult: IBuildingDTO = {
@@ -61,4 +69,4 @@ describe('BuildingsController', function () {
       sinon.assert.calledOnce(res.json);
       sinon.assert.calledWith(res.json, sinon.match(expectedResult));
     });
-  });
+});
