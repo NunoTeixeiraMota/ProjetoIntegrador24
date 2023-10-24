@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 
-import BuildingService from '../../services/buildingService'; // Import your BuildingService
+import BuildingService from '../../services/buildingsService'; // Import your BuildingService
 import { IBuildingDTO } from '../../dto/IBuildingDTO'; // Import your BuildingDTO
 
 import middlewares from '../middlewares';

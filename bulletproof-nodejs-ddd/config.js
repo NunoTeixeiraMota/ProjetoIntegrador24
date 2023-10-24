@@ -5,15 +5,16 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const envFound = dotenv.config();
 if (!envFound) {
-  // This error should crash the whole process
-  throw new Error("⚠️ Couldn't find .env file  ⚠️");
+  // This error should crash whole process
+
+  throw new Error("⚠️  Couldn't find .env file  ⚠️");
 }
 
 export default {
   /**
    * Your favorite port : optional change to 4000 by JRT
    */
-  port: parseInt(process.env.PORT, 10) || 4000,
+  port: parseInt(process.env.PORT, 10) || 4000, 
 
   /**
    * That long string from mlab
@@ -42,40 +43,37 @@ export default {
   controllers: {
     role: {
       name: "RoleController",
-      path: "../controllers/roleController",
+      path: "../controllers/roleController"
     },
-    // Add a similar configuration for your Building controller if needed
-    building: {
-      name: "BuildingController",
-      path: "../controllers/buildingController",
-    },
+    buildings: {
+      name: "BuildingsController",
+      path: "../controllers/buildingsController"
+    } 
   },
 
   repos: {
     role: {
       name: "RoleRepo",
-      path: "../repos/roleRepo",
+      path: "../repos/roleRepo"
     },
     user: {
       name: "UserRepo",
-      path: "../repos/userRepo",
+      path: "../repos/userRepo"
     },
-    // Add a similar configuration for your Building repository if needed
-    building: {
+    buildings: {
       name: "BuildingRepo",
-      path: "../repos/buildingRepo",
-    },
+      path: "../repos/buildingsRepo"
+    }
   },
 
   services: {
     role: {
       name: "RoleService",
-      path: "../services/roleService",
+      path: "../services/roleService"
     },
-    // Add a similar configuration for your Building service if needed
-    building: {
-      name: "BuildingService",
-      path: "../services/buildingsService",
-    },
+    buildings: {
+      name: "BuildingsService",
+      path: "../services/buildingsService"
+    }
   },
 };

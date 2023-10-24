@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GH_USERNAME="JoseTeixeira1200941"
-GH_REPO="SEM_5_PI"
+GH_REPO="G046"
 
 issues=(
   "Gestão de Campus 150 Criar edifício"

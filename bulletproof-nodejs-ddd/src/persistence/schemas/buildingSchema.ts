@@ -1,4 +1,4 @@
-import { IBuildingPersistence } from '../../dataschema/IBuildingPersistence';
+import { IBuildingsPersistence } from '../../dataschema/IBuildingsPersistence';
 import mongoose from 'mongoose';
 
 const BuildingSchema = new mongoose.Schema(
@@ -30,4 +30,4 @@ const BuildingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IBuildingPersistence & mongoose.Document>('Building', BuildingSchema);
+export default mongoose.model<IBuildingsPersistence & mongoose.Document>('Building', BuildingSchema);

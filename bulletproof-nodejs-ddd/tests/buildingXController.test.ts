@@ -3,59 +3,62 @@ import * as sinon from 'sinon';
 import { Response, Request, NextFunction } from 'express';
 import { Container } from 'typedi';
 import { Result } from '../src/core/logic/Result';
-import IBuildingService from "../src/services/IServices/IBuildingsService"; // Import your BuildingService interface
-import BuildingController from "../src/controllers/buildingController"; // Import your BuildingController
-import IBuildingDTO from '../src/dto/IBuildingDTO'; // Import your BuildingDTO
+import IBuildingService from "../src/services/IServices/IBuildingsService";
+import BuildingsController from "../src/controllers/buildingsController";
+import IBuildingDTO from '../src/dto/IBuildingDTO';
+import config from '../config';
 
-describe('Building controller', function () {
-	const sandbox = sinon.createSandbox();
-
-	beforeEach(function() {
-		Container.reset();
-		// Initialize dependencies, repositories, and services as needed.
-	});
-
-	afterEach(function() {
-		sandbox.restore();
-	});
-
-	it('BuildingController unit test using BuildingService stub', async function () {
-		// Arrange
-		let body = { "name": 'Building1', "localizationoncampus": 'Campus A', "floors": 5, "lifts": 2 };
-		let req: Partial<Request> = {};
-		req.body = body;
-		let res: Partial<Response> = {
-			json: sinon.spy()
-		};
-		let next: Partial<NextFunction> = () => {};
-
-		// Create a stub for the BuildingService and configure it to return a Result with a BuildingDTO.
-		let buildingServiceInstance = Container.get("BuildingService") as IBuildingService;
-		sinon.stub(buildingServiceInstance, "createBuilding").returns(
-			Result.ok<IBuildingDTO>({
-				"id": "123",
-				"name": req.body.name,
-				"localizationoncampus": req.body.localizationoncampus,
-				"floors": req.body.floors,
-				"lifts": req.body.lifts
-			})
-		);
-
-		const ctrl = new BuildingController(buildingServiceInstance);
-
-		// Act
-		await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
-
-		// Assert
-		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({
-			"id": "123",
-			"name": req.body.name,
-			"localizationoncampus": req.body.localizationoncampus,
-			"floors": req.body.floors,
-			"lifts": req.body.lifts
-		}));
-	});
-
-	// Add more test cases as needed for other scenarios.
-});
+describe('BuildingsController', function () {
+    beforeEach(function() {
+    });
+  
+    it('createBuilding: returns JSON with id+name values', async function () {
+      const body = {
+        "id": "123",
+        "name": "Building 123",
+        "localizationoncampus": "Campus XYZ",
+        "floors": 5,
+        "lifts": 2
+      };
+  
+      const req: Partial<Request> = {};
+      req.body = body;
+  
+      const res: Partial<Response> = {
+        json: sinon.spy(),
+        status: sinon.stub().returnsThis(),
+      };
+      
+      const next: Partial<NextFunction> = () => {};
+  
+      // Mock the building service
+      const buildingServiceClass = require(config.services.buildings.path).default;
+      const buildingServiceInstance = Container.get(buildingServiceClass);
+      Container.set(config.services.buildings.name, buildingServiceInstance);
+  
+      // Stub the createBuilding method to return a predefined result
+      const expectedResult: IBuildingDTO = {
+        "id": req.body.id,
+        "name": req.body.name,
+        "localizationoncampus": req.body.localizationoncampus,
+        "floors": req.body.floors,
+        "lifts": req.body.lifts,
+      };
+  
+      sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
+          "id": req.body.id,
+          "name": req.body.name,
+          "localizationoncampus": req.body.localizationoncampus,
+          "floors": req.body.floors,
+          "lifts": req.body.lifts,
+      }));
+  
+      const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+  
+      await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
+  
+      // Assertions
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledWith(res.json, sinon.match(expectedResult));
+    });
+  });

@@ -1,58 +1,57 @@
+import 'reflect-metadata';
 import * as sinon from 'sinon';
 import { Response, Request, NextFunction } from 'express';
 import { Container } from 'typedi';
-import config from "../../config";
-import { Result } from '../core/logic/Result';
-import IBuildingService from "../services/IServices/IBuildingsService"; // Import your BuildingService interface
-import BuildingController from "./buildingController"; // Import your BuildingController
-import IBuildingDTO from '../dto/IBuildingDTO'; // Import your BuildingDTO
+import IBuildingService from "../services/IServices/IBuildingsService";
+import BuildingsController from "./buildingsController";
+import IBuildingDTO from '../dto/IBuildingDTO';
+import config from '../../config';
 
-describe('Building controller', function () {
-    beforeEach(function () {
-    });
+describe('BuildingsController', function () {
+  beforeEach(function() {
+  });
 
-    it('createBuilding: returns json with id+name values', async function () {
-        let body = {
-            "name": 'Building1',
-            "localizationoncampus": 'Campus A',
-            "floors": 5,
-            "lifts": 2
-        };
-        let req: Partial<Request> = {};
-        req.body = body;
+  it('createBuilding: returns JSON with id+name values', async function () {
+    const body = {
+      "id": "123",
+      "name": "Building 123",
+      "localizationoncampus": "Campus XYZ",
+      "floors": 5,
+      "lifts": 2
+    };
 
-        let res: Partial<Response> = {
-            json: sinon.spy()
-        };
-        let next: Partial<NextFunction> = () => {};
+    const req: Partial<Request> = {};
+    req.body = body;
 
-        // Replace with the path to your BuildingService implementation.
-        let buildingServiceClass = require(config.services.building.path).default;
-        let buildingServiceInstance = Container.get(buildingServiceClass);
-        Container.set(config.services.building.name, buildingServiceInstance);
+    const res: Partial<Response> = {
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis(),
+    };
+    
+    const next: Partial<NextFunction> = () => {};
 
-        buildingServiceInstance = Container.get(config.services.building.name);
-        sinon.stub(buildingServiceInstance, "createBuilding").returns(
-            Result.ok<IBuildingDTO>({
-                "id": "123",
-                "name": req.body.name,
-                "localizationoncampus": req.body.localizationoncampus,
-                "floors": req.body.floors,
-                "lifts": req.body.lifts
-            })
-        );
+    // Mock the building service
+    const buildingServiceClass = require(config.services.buildings.path).default;
+    const buildingServiceInstance = Container.get(buildingServiceClass);
+    Container.set(config.services.buildings.name, buildingServiceInstance);
 
-        const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
+    // Stub the createBuilding method to return a predefined result
+    const expectedResult: IBuildingDTO = {
+      "id": req.body.id,
+      "name": req.body.name,
+      "localizationoncampus": req.body.localizationoncampus,
+      "floors": req.body.floors,
+      "lifts": req.body.lifts,
+    };
 
-        await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
+    sinon.stub(buildingServiceInstance, "createBuilding").returns(Promise.resolve(expectedResult));
 
-        sinon.assert.calledOnce(res.json);
-        sinon.assert.calledWith(res.json, sinon.match({
-            "id": "123",
-            "name": req.body.name,
-            "localizationoncampus": req.body.localizationoncampus,
-            "floors": req.body.floors,
-            "lifts": req.body.lifts
-        }));
-    });
+    const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+
+    await ctrl.createBuilding(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assertions
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match(expectedResult));
+  });
 });
