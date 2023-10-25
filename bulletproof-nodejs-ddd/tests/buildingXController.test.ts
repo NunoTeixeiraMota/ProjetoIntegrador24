@@ -13,6 +13,13 @@ describe('BuildingsController (Unit Test)', function () {
     beforeEach(function() {
       Container.reset();
 
+      let buildSchemaInstance = require("../src/persistence/schemas/buildingsSchema").default;
+      Container.set("BuildingsSchema",buildSchemaInstance);
+
+      let buildRepoClass = require("../src/repos/buildingsRepo").default;
+      let buildingRepoInstance = Container.get(buildRepoClass);
+      Container.set("BuildingsRepo",buildingRepoInstance);
+
 		  let buildingsServiceClass = require("../src/services/buildingsService").default;
 		  let buildingsServiceInstance = Container.get(buildingsServiceClass);
 		  Container.set("BuildingsService", buildingsServiceInstance);

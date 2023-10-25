@@ -16,7 +16,6 @@ import config from '../../config';
 @Service()
 export default class buildingService implements IBuildingService {
   constructor(
-    @Inject('logger') private logger,
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
   ) {}
   updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
@@ -35,11 +34,7 @@ export default class buildingService implements IBuildingService {
         return Result.fail<IBuildingDTO>('Building with the same name already exists');
       }
 
-      const salt = randomBytes(32);
-      this.logger.silly('Hashing information for the new building');
-      // Hashing or any other processing for building information can be added here.
 
-      this.logger.silly('Creating building db record');
       const buildingOrError = Building.create({
         name: buildingDTO.name,
         localizationoncampus: buildingDTO.localizationoncampus,
@@ -60,7 +55,6 @@ export default class buildingService implements IBuildingService {
       const buildingDTOResult = BuildingsMap.toDTO(buildingResult) as IBuildingDTO;
       return Result.ok<IBuildingDTO>(buildingDTOResult);
     } catch (e) {
-      this.logger.error(e);
       throw e;
     }
   }

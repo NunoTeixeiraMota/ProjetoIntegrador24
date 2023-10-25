@@ -10,14 +10,13 @@ import { Result } from '../core/logic/Result';
 
 @Service()
 export default class BuildingsController implements IBuildingsController {
-  constructor(
-    @Inject(config.services.buildings.name) private buildingsServiceInstance: IBuildingsService
-
-  ) {}
+  constructor(@Inject(config.services.buildings.name) private buildingsServiceInstance: IBuildingsService) {}
 
   public async createBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const buildingOrError = await this.buildingsServiceInstance.createBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
+      const buildingOrError = (await this.buildingsServiceInstance.createBuilding(req.body as IBuildingDTO)) as Result<
+        IBuildingDTO
+      >;
 
       if (buildingOrError.isFailure) {
         res.status(402).send();
@@ -32,7 +31,9 @@ export default class BuildingsController implements IBuildingsController {
 
   public async updateBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const buildingOrError = await this.buildingsServiceInstance.updateBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
+      const buildingOrError = (await this.buildingsServiceInstance.updateBuilding(req.body as IBuildingDTO)) as Result<
+        IBuildingDTO
+      >;
 
       if (buildingOrError.isFailure) {
         res.status(404).send();
