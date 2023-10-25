@@ -70,4 +70,14 @@ export default class BuildingsRepo implements IBuildingsRepo {
       return null;
     }
   }
+
+  public async findAll(): Promise<string[]> {
+    try {
+      const buildingDocuments = await this.buildingsSchema.find({});
+      const buildingNames = buildingDocuments.map((doc) => doc.name);
+      return buildingNames;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
