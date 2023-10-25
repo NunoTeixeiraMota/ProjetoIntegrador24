@@ -12,17 +12,16 @@ describe('BuildingsController (Unit Test)', function () {
 
     beforeEach(function() {
       Container.reset();
+      const buildSchemaInstance = require("../src/persistence/schemas/buildingsSchema").default;
+      Container.set("BuildingsSchema", buildSchemaInstance);
 
-      let buildSchemaInstance = require("../src/persistence/schemas/buildingsSchema").default;
-      Container.set("BuildingsSchema",buildSchemaInstance);
+      const buildRepoClass = require("../src/repos/buildingsRepo").default;
+      const buildingRepoInstance = new buildRepoClass(); // Instantiate the repo if necessary
+      Container.set("BuildingsRepo", buildingRepoInstance);
 
-      let buildRepoClass = require("../src/repos/buildingsRepo").default;
-      let buildingRepoInstance = Container.get(buildRepoClass);
-      Container.set("BuildingsRepo",buildingRepoInstance);
-
-		  let buildingsServiceClass = require("../src/services/buildingsService").default;
-		  let buildingsServiceInstance = Container.get(buildingsServiceClass);
-		  Container.set("BuildingsService", buildingsServiceInstance);
+      const buildingsServiceClass = require("../src/services/buildingsService").default;
+      const buildingsServiceInstance = new buildingsServiceClass(); // Instantiate the service if necessary
+      Container.set("BuildingsService", buildingsServiceInstance);
     });
     afterEach(function() {
       sandbox.restore();
