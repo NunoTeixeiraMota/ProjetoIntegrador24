@@ -64,4 +64,13 @@ export default class buildingService implements IBuildingService {
       throw e;
     }
   }
+
+  public async findAll(): Promise<string[]> {
+    try {
+      const buildingNames = await this.buildingsRepo.findAll();
+      return buildingNames;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

@@ -44,4 +44,12 @@ export default class BuildingsController implements IBuildingsController {
       next(e);
     }
   }
+  public async listAll(req, res) {
+    try {
+      const buildingNames = await this.buildingsServiceInstance
+      res.json(buildingNames);
+    } catch (err) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 }
