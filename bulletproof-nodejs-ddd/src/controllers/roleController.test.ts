@@ -13,6 +13,14 @@ import IRoleDTO from '../dto/IRoleDTO';
 
 describe('role controller', function () {
 	beforeEach(function() {
+		const RoleServiceName = config.services.role.name;
+        const RoleRepoName = config.repos.name;
+
+        const RoleServiceClass = require(config.services.role.path).default;
+        const RoleRepoClass = require(config.repos.role.path).default;
+
+        Container.set(RoleServiceName, new RoleServiceClass());
+        Container.set(RoleRepoName, new RoleRepoClass());
     });
 
     it('createRole: returns json with id+name values', async function () {
@@ -25,11 +33,7 @@ describe('role controller', function () {
         };
 		let next: Partial<NextFunction> = () => {};
 
-		let roleServiceClass = require(config.services.role.path).default;
-		let roleServiceInstance = Container.get(roleServiceClass)
-		Container.set(config.services.role.name, roleServiceInstance);
-
-		roleServiceInstance = Container.get(config.services.role.name);
+		let roleServiceInstance = Container.get(config.services.role.name);
 		sinon.stub(roleServiceInstance, "createRole").returns( Result.ok<IRoleDTO>( {"id":"123", "name": req.body.name} ));
 
 		const ctrl = new RoleController(roleServiceInstance as IRoleService);
