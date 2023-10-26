@@ -18,6 +18,20 @@ export default class buildingService implements IBuildingService {
   constructor(
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
   ) {}
+  async listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
+    try {
+      // Use the buildingsRepo to query buildings that fall within the specified range of floors.
+      const buildingsInRange = await this.buildingsRepo.findByFloors(minFloors, maxFloors);
+
+      // Map the buildings to DTOs
+      const buildingDTOs = buildingsInRange.map(building => BuildingsMap.toDTO(building));
+
+      return buildingDTOs;
+    } catch (error) {
+      // Handle any errors that occur during the operation, e.g., database errors.
+      throw error;
+    }
+  }
   updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     throw new Error('Method not implemented.');
   }

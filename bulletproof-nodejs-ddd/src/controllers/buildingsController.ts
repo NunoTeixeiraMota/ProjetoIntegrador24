@@ -53,5 +53,29 @@ export default class BuildingsController implements IBuildingsController {
       next(e);
     }
   }
+
+  public async listBuildingsByFloors(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const minFloors = parseInt(req.query.minFloors as string, 10);
+      const maxFloors = parseInt(req.query.maxFloors as string, 10);
+  
+      if (isNaN(minFloors) || isNaN(maxFloors)) {
+        res.status(400).json({ error: 'Invalid input for minFloors and maxFloors.' });
+        return;
+      }
+  
+      const buildingList = await this.buildingsServiceInstance.listBuildingsByFloors(minFloors, maxFloors);
+  
+      if (buildingList.length === 0) {
+        res.status(404).json({ error: 'No buildings found within the specified range of floors.' });
+      } else {
+        res.status(200).json(buildingList);
+      }
+    } catch (e) {
+      res.status(500).json({ error: 'Internal Server Error' });
+      next(e);
+    }
+  }
+  
   
 }

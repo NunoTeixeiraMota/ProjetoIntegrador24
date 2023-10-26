@@ -98,6 +98,54 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.assert.calledOnce(res.json);
       sinon.assert.calledWith(res.json, buildingNames);
   });
+  it('listBuildingsByFloors: returns an array of buildings within the specified range of floors', async function () {
+    const minFloors = 1;
+    const maxFloors = 5;
+
+    const req: Partial<Request> = {
+      query: {
+        minFloors: minFloors.toString(),
+        maxFloors: maxFloors.toString(),
+      },
+    };
+
+    const buildingList = [
+      {
+        id: '1',
+        name: 'Building 1',
+        localizationoncampus: 'Campus XYZ',
+        floors: 3,
+        lifts: 2,
+      },
+      {
+        id: '2',
+        name: 'Building 2',
+        localizationoncampus: 'Campus ABC',
+        floors: 4,
+        lifts: 3,
+      },
+    ];
+
+    const res: Partial<Response> = {
+      json: sinon.spy(),
+    };
+
+    const next: Partial<NextFunction> = () => {};
+
+    // Mock the building service
+    const buildingServiceInstance = Container.get('BuildingsService');
+
+    // Stub the listBuildingsByFloors method to return the predefined building list
+    sinon.stub(buildingServiceInstance, 'listBuildingsByFloors').resolves(buildingList);
+
+    const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+
+    await ctrl.listBuildingsByFloors(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assertions
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, buildingList);
+  });
   
 });
 

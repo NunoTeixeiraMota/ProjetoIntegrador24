@@ -15,6 +15,24 @@ export default class BuildingsRepo implements IBuildingsRepo {
   constructor(
     @Inject('buildingsSchema') private buildingsSchema: Model<IBuildingsPersistence & Document>,
   ) {}
+  async findByFloors(minFloors: number, maxFloors: number): Promise<Building[]> {
+    try {
+      // Use the buildingsSchema to query buildings within the specified range of floors
+      const query: FilterQuery<IBuildingsPersistence & Document> = {
+        floors: { $gte: minFloors, $lte: maxFloors },
+      };
+  
+      const buildingDocuments = await this.buildingsSchema.find(query);
+  
+      // Map the building documents to domain objects and return as an array
+      const buildings = await Promise.all(buildingDocuments.map((doc) => BuildingsMap.toDomain(doc)));
+      
+      return buildings;
+    } catch (err) {
+      throw err;
+    }
+  }
+  
   findByName(id: string | BuildingId): Promise<Building> {
     throw new Error('Method not implemented.');
   }

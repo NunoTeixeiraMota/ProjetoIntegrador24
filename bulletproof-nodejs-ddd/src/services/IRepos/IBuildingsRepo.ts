@@ -5,5 +5,6 @@ import { BuildingId } from "../../domain/buildingId";
 export default interface IBuildingsRepo extends Repo<Building> {
   save(building: Building): Promise<Building>;
   findByName(id: BuildingId | string): Promise<Building>;
-  findAll ():  Promise<string[]>;
+  findAll(): Promise<string[]>;
+  findByFloors(minFloors: number, maxFloors: number): Promise<Building[]>;
 }
