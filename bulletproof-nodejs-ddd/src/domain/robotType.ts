@@ -6,7 +6,7 @@ interface RobotTypeProps {
   designation: string;
   brand: string;
   model: string;
-  tasks: number; //0 - vigilance 1 - pickup & delivery 2 - both
+  task: number; //0 - vigilance 1 - pickup & delivery 2 - both
 }
 
 export class RobotType extends AggregateRoot<RobotTypeProps> {
@@ -26,8 +26,8 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     return this.props.model;
   }
 
-  get tasks(): number {
-    return this.props.tasks;
+  get task(): number {
+    return this.props.task;
   }
 
   private constructor(props: RobotTypeProps, id?: UniqueEntityID) {
@@ -35,11 +35,11 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
   }
 
   public static create(robotTypeProps: RobotTypeProps, id?: string): Result<RobotType> {
-    const { designation, brand, model, tasks} = robotTypeProps;
+    const { designation, brand, model, task} = robotTypeProps;
 
     if (!designation || designation.length === 0) {
       return Result.fail<RobotType>("Must provide a designation for the robot type");
-    } else if (!tasks || tasks < 0 || tasks > 2) {
+    } else if (!task || task < 0 || task > 2) {
       return Result.fail<RobotType>("Must provide a valid task");
     } else if (!brand || brand.length === 0) {
       return Result.fail<RobotType>("Must provide the brand of the robot");

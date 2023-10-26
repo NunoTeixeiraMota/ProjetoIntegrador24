@@ -31,7 +31,7 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
         robotTypeDocument.designation = robotType.designation;
         robotTypeDocument.brand = robotType.brand;
         robotTypeDocument.model = robotType.model;
-        robotTypeDocument.tasks = robotType.tasks;
+        robotTypeDocument.task = robotType.task;
         await robotTypeDocument.save();
 
         return robotType;

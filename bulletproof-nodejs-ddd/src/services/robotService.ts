@@ -26,7 +26,7 @@ export default class robotService implements IRobotService {
         designation: robotTypeDTO.designation,
         brand: robotTypeDTO.brand,
         model: robotTypeDTO.model,
-        tasks: robotTypeDTO.tasks
+        tasks: robotTypeDTO.task
       });
 
       if (robotTypeOrError.isFailure) {
@@ -41,7 +41,7 @@ export default class robotService implements IRobotService {
         designation: robotTypeResult.designation,
         brand: robotTypeResult.brand,
         model: robotTypeResult.model,
-        tasks: robotTypeResult.tasks
+        tasks: robotTypeResult.task
       };
 
       return Result.ok<IRobotTypeDTO>(robotTypeDTO);

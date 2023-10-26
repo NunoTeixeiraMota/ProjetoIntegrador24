@@ -21,7 +21,7 @@ const RobotTypeSchema = new mongoose.Schema(
       index: true,
     },
 
-    tasks: {
+    task: {
       type: Number,
       default: 0,
       min: 0,

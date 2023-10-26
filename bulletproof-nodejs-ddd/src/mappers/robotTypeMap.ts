@@ -8,7 +8,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
       designation: robotType.designation.toString(),
       brand: robotType.brand.toString(),
       model: robotType.model.toString(),
-      tasks: robotType.tasks
+      task: robotType.task
     } as IRobotTypeDTO;
   }
 
@@ -17,7 +17,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
         designation: dto.designation.toString(),
         brand: dto.brand.toString(),
         model: dto.model.toString(),
-        tasks: dto.tasks
+        task: dto.task
     }, dto.designation.toString());
 
     robotTypeOrError.isFailure ? console.log(robotTypeOrError.error) : '';
@@ -30,7 +30,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
         designation: robotType.designation.toString(),
         brand: robotType.brand.toString(),
         model: robotType.model.toString(),
-        tasks: robotType.tasks
+        task: robotType.task
     };
   }
 }
