@@ -7,6 +7,7 @@ import { Result } from '../src/core/logic/Result';
 import BuildingsController from '../src/controllers/buildingsController';
 import IBuildingService from '../src/services/IServices/IBuildingsService';
 
+
 describe('BuildingsController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
 
@@ -75,4 +76,28 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.assert.calledOnce(res.json);
       sinon.assert.calledWith(res.json, sinon.match(expectedResult));
     });
+    it('findAll: returns an array of building names', async function () {
+      const buildingNames = ['Building 1', 'Building 2'];
+
+      const req: Partial<Request> = {};
+      const res: Partial<Response> = {
+          json: sinon.spy(),
+      };
+      const next: Partial<NextFunction> = () => {};
+
+      // Mock the building service
+      const buildingServiceInstance = Container.get('BuildingsService');
+
+      // Stub the findAll method to return predefined result
+      sinon.stub(buildingServiceInstance, 'findAll').resolves(buildingNames);
+
+      const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+      await ctrl.findAll(<Request>req, <Response>res, <NextFunction>next);
+
+      // Assertions
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledWith(res.json, buildingNames);
+  });
+  
 });
+

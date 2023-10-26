@@ -10,6 +10,8 @@ import IBuildingDTO from '../dto/IBuildingDTO';
 import BuildingsController from './buildingsController';
 import IBuildingService from '../services/IServices/IBuildingsService';
 
+
+
 describe('BuildingsController (Integration Test)', function () {
     beforeEach(function() {
     });
@@ -51,4 +53,29 @@ describe('BuildingsController (Integration Test)', function () {
             "lifts": req.body.lifts,
         }));
     });
+    it('findAll: returns an array of building names', async function () {
+        const buildingNames = ['Building 1', 'Building 2'];
+
+        const req: Partial<Request> = {};
+        const res: Partial<Response> = {
+            json: sinon.spy(),
+        };
+        const next: Partial<NextFunction> = () => {};
+
+        // Mock the building service
+        const buildingServiceClass = require('../src/services/buildingsService').default;
+        const buildingServiceInstance = new buildingServiceClass();
+        Container.set('BuildingsService', buildingServiceInstance);
+
+        // Stub the findAll method to return predefined result
+        sinon.stub(buildingServiceInstance, 'findAll').resolves(buildingNames);
+
+        const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+        await ctrl.findAll(<Request>req, <Response>res, <NextFunction>next);
+
+        // Assertions
+        sinon.assert.calledOnce(res.json);
+        sinon.assert.calledWith(res.json, buildingNames);
+    });
+    
 });
