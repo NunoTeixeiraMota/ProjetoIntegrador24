@@ -48,7 +48,11 @@ export default {
     buildings: {
       name: "BuildingsController",
       path: "../controllers/buildingsController"
-    } 
+    },
+    robot: {
+      name: "RobotController",
+      path: "../controllers/robotController"
+    }
   },
 
   repos: {
@@ -63,6 +67,10 @@ export default {
     buildings: {
       name: "BuildingsRepo",
       path: "../repos/buildingsRepo"
+    },
+    robotType: {
+      name: "RobotTypeRepo",
+      path: "../repos/robotTypeRepo"
     }
   },
 
@@ -74,6 +82,10 @@ export default {
     buildings: {
       name: "BuildingsService",
       path: "../services/buildingsService"
+    },
+    robot: {
+      name: "robotService",
+      path: "../services/robotService"
     }
   },
 };
