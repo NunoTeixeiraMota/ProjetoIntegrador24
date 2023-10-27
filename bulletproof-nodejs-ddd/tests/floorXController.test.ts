@@ -36,8 +36,7 @@ describe('FloorController (Unit Test)', function () {
         "hall": "dadad",
         "room": 4,
         "floorMap": "dasdada",
-        "hasElevator":"true",
-     
+        "hasElevator":true
     };
 
     const req: Partial<Request> = {};
