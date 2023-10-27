@@ -46,11 +46,8 @@ describe('FloorController (Unit Test)', function () {
       status: sinon.stub().returnsThis(),
     };
     const next: Partial<NextFunction> = () => {};
-
-
     const floorServiceInstance = Container.get("FloorService");
 
-  
     const expectedResult : IFloorDTO = {
         "id" : req.body.id,
         "name" : req.body.name,
@@ -62,9 +59,7 @@ describe('FloorController (Unit Test)', function () {
     }
 
     sinon.stub(floorServiceInstance, "createFloor").returns(Result.ok(expectedResult));
-
     const ctrl = new FloorController(floorServiceInstance as IFloorService);
-
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
     // Assertions
@@ -74,109 +69,76 @@ describe('FloorController (Unit Test)', function () {
 
   it('updateFloor: returns JSON with updated floor data', async function () {
     const floorData = {
-        "id": "123",
-        "name": "Floor 123",
-        "description": "Welcom",
-        "hall": "dadad",
-        "room": 4,
-        "floorMap": "dasdada",
-        "hasElevator": true
-    };
-  
-    const updatedFloorData = {
-        "id": "123",
-        "name": "Floor 123",
-        "description": "Welcome to LIDL",
-        "hall": "hall",
-        "room": 5,
-        "floorMap": "aaaaaaaaa",
-        "hasElevator": false
-    };
-  
-    const req: Partial<Request> = {};
-    req.body = floorData;
-  
-    const res: Partial<Response> = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis(),
-    };
-  
-    const next: Partial<NextFunction> = () => {};
-  
-    const floorServiceInstance = Container.get("FloorService");
-  
-    const expectedResult: IFloorDTO = {
-        "id": updatedFloorData.id,
-        "name": updatedFloorData.name,
-        "description": updatedFloorData.description,
-        "hall": updatedFloorData.hall,
-        "room": updatedFloorData.room,
-        "floorMap": updatedFloorData.floorMap,
-        "hasElevator": updatedFloorData.hasElevator
-    };
-  
-    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.ok(expectedResult));
-  
-    const ctrl = new FloorController(floorServiceInstance as IFloorService);
-  
-    await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
-  
-    // Assertions
-    sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, sinon.match(expectedResult));
-  });
-  it('updateFloor: returns a message when floor is not found', async function () {
-    const floorData = {
       "id": "123",
       "name": "Floor 123",
-      "description": "Welcom",
+      "description": "Welcome",
       "hall": "dadad",
       "room": 4,
       "floorMap": "dasdada",
       "hasElevator": true
     };
-
+  
     const updatedFloorData = {
-      "id": "1234",
-      "name": "Floor 1234",
+      "id": "123",
+      "name": "Floor 123",
       "description": "Welcome to LIDL",
       "hall": "hall",
       "room": 5,
       "floorMap": "aaaaaaaaa",
       "hasElevator": false
     };
-
+  
     const req: Partial<Request> = {};
     req.body = floorData;
-
+  
     const res: Partial<Response> = {
       json: sinon.spy(),
       status: sinon.stub().returnsThis(),
     };
-
+  
     const next: Partial<NextFunction> = () => {};
-
     const floorServiceInstance = Container.get("FloorService");
-
-    const expectedResult: IFloorDTO = {
-        "id": updatedFloorData.id,
-        "name": updatedFloorData.name,
-        "description": updatedFloorData.description,
-        "hall": updatedFloorData.hall,
-        "room": updatedFloorData.room,
-        "floorMap": updatedFloorData.floorMap,
-        "hasElevator": updatedFloorData.hasElevator
-    };
-
-    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.ok(null));
+    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.ok(updatedFloorData));
   
     const ctrl = new FloorController(floorServiceInstance as IFloorService);
-  
     await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
   
     // Assertions
     sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, null, { message: 'Floor was not found.' });
+    sinon.assert.calledWith(res.json, sinon.match(updatedFloorData));
   });
   
+  it('updateFloor: returns a message when floor is not found', async function () {
+    const floorData = {
+      "id": "1",
+      "name": "f",
+      "description": "f",
+      "hall": "f",
+      "room": 4,
+      "floorMap": "f",
+      "hasElevator": true
+    };
+  
+    const req: Partial<Request> = {};
+    req.body = floorData;
+  
+    const res: Partial<Response> = {
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis(),
+    };
+  
+    const next: Partial<NextFunction> = () => {};
+    const floorServiceInstance = Container.get("FloorService");
+    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.fail("Floor not found"));
+  
+    const ctrl = new FloorController(floorServiceInstance as IFloorService);
+    await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
+  
+    // Assertions
+    sinon.assert.calledOnce(res.status);
+    sinon.assert.calledWith(res.status, 400);
+  
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, { message: 'Floor not found' });
+  });
 });
