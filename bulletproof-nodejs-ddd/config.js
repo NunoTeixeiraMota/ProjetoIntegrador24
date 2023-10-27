@@ -53,9 +53,14 @@ export default {
       name: "RobotController",
       path: "../controllers/robotController"
     },
+
     lift: {
       name: "LiftController",
       path: "../controllers/liftController"
+    },
+    floor:{
+      name: "floorController",
+      path: "../controllers/floorController"
     }
   },
 
@@ -79,7 +84,13 @@ export default {
     lift: {
       name: "LiftRepo",
       path: "../repos/liftRepo"
+    },
+
+    floor: {
+      name: "floorRepo",
+      path: "../repos/floorRepo" 
     }
+  
   },
 
   services: {
@@ -98,6 +109,10 @@ export default {
     lift: {
       name: "LiftService",
       path: "../services/liftService"
+    },
+    floor: {
+      name: "FloorService",
+      path: "../services/floorService"
     }
   },
 };
