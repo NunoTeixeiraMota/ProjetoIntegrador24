@@ -7,6 +7,7 @@ import { FloorMap } from '../mappers/FloorMap';
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence'; 
 import IFloorRepo from '../services/IRepos/IFloorRepo'; 
+import IFloorDTO from '../dto/IFloorDTO';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -44,26 +45,25 @@ export default class FloorRepo implements IFloorRepo {
     }
   }
 
-public async exists (floor: Floor): Promise<boolean> {
-  const idX = floor.id instanceof FloorId ? (<FloorId>floor.id).toValue : floor.id;
-  const query = {domainId: idX};
-  const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
-  return !!floorDocument === true;
-}
+  public async exists (floor: Floor): Promise<boolean> {
+    const idX = floor.id instanceof FloorId ? (<FloorId>floor.id).toValue : floor.id;
+    const query = {domainId: idX};
+    const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+    return !!floorDocument === true;
+  }
 
-public async findByDomainId (floorId : FloorId | string): Promise <Floor> {
-const query = {domainId : floorId};
-const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+  public async findByDomainId (floorId : FloorId | string): Promise <Floor> {
+    const query = {domainId : floorId};
+    const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
 
-if (floorRecord != null){
-  return FloorMap.toDomain(floorRecord);
-}else {
-  return null;
-}
+    if (floorRecord != null){
+      return FloorMap.toDomain(floorRecord);
+    }else {
+      return null;
+    }
+  }
 
-}
-
-async findAll(): Promise<Floor[]> {
+  async findAll(): Promise<Floor[]> {
     try {
       const floorDocuments = await this.floorSchema.find({});
       const floors = await Promise.all(floorDocuments.map((doc) => FloorMap.toDomain(doc)));
@@ -71,25 +71,16 @@ async findAll(): Promise<Floor[]> {
     } catch (err) {
       throw err;
     }
-}
+  }
 
-public async updateFloor(floor: Floor): Promise<Floor | null> {
-  try {
-    const query = { name : floor.name};
-    const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+  public async findByID(id: FloorId | string): Promise<Floor> {
+    const query = { domainId: FloorId };
+    const floor = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
 
-    if (floorDocument !== null) {
-      const rawFloor: any = FloorMap.toPersistence(floor);
-      Object.assign(floorDocument, rawFloor);
-
-      await floorDocument.save();
-
-      return FloorMap.toDomain(floorDocument);
+    if (floor != null) {
+      return FloorMap.toDomain(floor);
     } else {
       return null;
     }
-  } catch (err) {
-    throw err;
   }
-}
 }

@@ -47,30 +47,25 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  async updateFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
+  public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      const floorOrError = Floor.create ({
-        name: floorDTO.name,
-        description: floorDTO.description,
-        hall: floorDTO.hall,
-        room: floorDTO.room,
-        floorMap: floorDTO.floorMap,
-        hasElevator: floorDTO.hasElevator
+      const floor = await this.floorRepo.findByID(floorDTO.id)
 
-      });
-      if (floorOrError.isFailure){
-        throw Result.fail<IFloorDTO>(floorOrError.errorValue());
+      if (floor === null) {
+        return Result.fail<IFloorDTO>("Floor not found");
+      } else {
+        floor.name = floorDTO.name;
+        floor.description = floorDTO.description;
+        floor.hall = floorDTO.hall;
+        floor.room = floorDTO.room;
+        floor.floorMap = floorDTO.floorMap;
+        floor.hasElevator = floorDTO.hasElevator;
+
+        await this.floorRepo.save(floor);
+
+        const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
+        return Result.ok<IFloorDTO>(floorDTOResult);
       }
-
-      const floorResult = floorOrError.getValue();
-
-      await this.floorRepo.updateFloor(floorResult); 
-      const floorDTOResult = await this.floorRepo.updateFloor(floorResult);
-      if(floorDTOResult == null){
-        return null;
-      }else{
-        return Result.ok<IFloorDTO>(FloorMap.toDTO(floorResult) as IFloorDTO);
-      } 
     } catch (e) {
       throw e;
     }

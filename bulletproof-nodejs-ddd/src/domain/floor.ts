@@ -21,25 +21,43 @@ import { FloorId } from "./floorId";
     get name(): string {
       return this.props.name;
     }
+    set name ( value: string) {
+      this.props.name = value;
+    }
   
     get description(): string {
       return this.props.description;
+    }
+    set description ( value: string) {
+      this.props.description = value;
     }
   
     get hall(): string {
       return this.props.hall;
     }
+    set hall ( value: string) {
+      this.props.hall = value;
+    }
   
     get room(): number {
       return this.props.room;
+    }
+    set room ( value: number) {
+      this.props.room = value;
     }
   
     get floorMap(): string {
       return this.props.floorMap;
     }
+    set floorMap ( value: string) {
+      this.props.floorMap = value;
+    }
   
     get hasElevator(): boolean {
       return this.props.hasElevator;
+    }
+    set hasElevator ( value: boolean) {
+      this.props.hasElevator = value;
     }
     private constructor (props: FloorProps, id? : UniqueEntityID){
       super (props, id);
