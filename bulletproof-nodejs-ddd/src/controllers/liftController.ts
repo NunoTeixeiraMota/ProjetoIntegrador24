@@ -9,7 +9,7 @@ import ILiftDTO from '../dto/ILiftDTO';
 import { Result } from "../core/logic/Result";
 
 @Service()
-export default class LiftController implements ILiftController {
+export default class liftController implements ILiftController {
   constructor(
       @Inject(config.services.lift.name) private liftServiceInstance : ILiftService
   ) {}
