@@ -4,7 +4,7 @@ import { Response, Request, NextFunction } from 'express';
 import { Container } from 'typedi';
 import IFloorDTO from '../src/dto/IFloorDTO';
 import { Result } from '../src/core/logic/Result';
-import FloorController from '../src/controllers/FloorController';
+import FloorController from '../src/controllers/floorController';
 import IFloorService from '../src/services/IServices/IFloorService';
 
 describe('FloorController (Unit Test)', function () {

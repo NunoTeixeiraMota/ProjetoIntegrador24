@@ -19,7 +19,7 @@ import { error } from 'console';
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
-    @Inject(config.repos.floors.name) private floorRepo: IFloorRepo, 
+    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo, 
   ) {}
 
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
