@@ -73,7 +73,23 @@ async findAll(): Promise<Floor[]> {
     }
 }
 
+public async updateFloor(floor: Floor): Promise<Floor | null> {
+  try {
+    const query = { name : floor.name};
+    const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
 
+    if (floorDocument !== null) {
+      const rawFloor: any = FloorMap.toPersistence(floor);
+      Object.assign(floorDocument, rawFloor);
 
+      await floorDocument.save();
 
+      return FloorMap.toDomain(floorDocument);
+    } else {
+      return null;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
 }

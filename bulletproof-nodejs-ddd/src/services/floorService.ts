@@ -47,4 +47,32 @@ export default class FloorService implements IFloorService {
     }
   }
 
+  async updateFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
+    try {
+      const floorOrError = Floor.create ({
+        name: floorDTO.name,
+        description: floorDTO.description,
+        hall: floorDTO.hall,
+        room: floorDTO.room,
+        floorMap: floorDTO.floorMap,
+        hasElevator: floorDTO.hasElevator
+
+      });
+      if (floorOrError.isFailure){
+        throw Result.fail<IFloorDTO>(floorOrError.errorValue());
+      }
+
+      const floorResult = floorOrError.getValue();
+
+      await this.floorRepo.updateFloor(floorResult); 
+      const floorDTOResult = await this.floorRepo.updateFloor(floorResult);
+      if(floorDTOResult == null){
+        return null;
+      }else{
+        return Result.ok<IFloorDTO>(FloorMap.toDTO(floorResult) as IFloorDTO);
+      } 
+    } catch (e) {
+      throw e;
+    }
+  }
 }
