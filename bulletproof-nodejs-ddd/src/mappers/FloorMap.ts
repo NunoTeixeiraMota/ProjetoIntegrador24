@@ -4,9 +4,6 @@ import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 
-
-
-
 export class FloorMap extends Mapper<Floor> {
   public static toDTO(floor: Floor): IFloorDTO {
     return {
