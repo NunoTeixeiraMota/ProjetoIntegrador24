@@ -59,4 +59,23 @@ export default class FloorController implements IFloorController {
       next(error);
     }
   }
+  
+  public async addPassages(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floor = req.body as IFloorDTO;
+      const passageData = req.body.newPassage; // Assuming passage data is sent in the request body
+  
+      const result = await this.floorServiceInstance.addPassages(floor, passageData);
+  
+      if (result.isSuccess) {
+        res.status(200).json(result.getValue());
+      } else {
+        res.status(400).json({ error: 'Bad Request', message: result.error });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+
 }

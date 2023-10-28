@@ -13,6 +13,25 @@ export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo, 
   ) {}
+  async addPassages(floor: IFloorDTO, passageData: any): Promise<Result<IFloorDTO>> {
+    try {
+      const errorOrFloor = await this.floorRepo.findByID(floor.id);
+
+      if (!errorOrFloor) {
+        return Result.fail<IFloorDTO>('Floor not found');
+      }
+
+      // Assuming passageData is an array of objects to be added to the floor
+      errorOrFloor.passages.push(...passageData);
+
+      await this.floorRepo.save(errorOrFloor);
+
+      const floorDTOResult = FloorMap.toDTO(errorOrFloor) as IFloorDTO;
+      return Result.ok<IFloorDTO>(floorDTOResult);
+    } catch (e) {
+      throw e;
+    }
+  }
 
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
@@ -22,8 +41,8 @@ export default class FloorService implements IFloorService {
         hall: floorDTO.hall,
         room: floorDTO.room,
         floorMap: floorDTO.floorMap,
-        hasElevator: floorDTO.hasElevator
-
+        hasElevator: floorDTO.hasElevator,
+        passages: []
       });
       if (floorOrError.isFailure){
         throw Result.fail<IFloorDTO>(floorOrError.errorValue());

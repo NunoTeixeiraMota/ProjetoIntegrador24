@@ -101,4 +101,48 @@ describe('BuildingsController (Integration Test)', function () {
         sinon.assert.calledOnce(res.json);
         sinon.assert.calledWith(res.json, buildingNames);
     });
+
+    it('getAllFloorsInBuilding: returns an array of floors for a specific building ID', async function () {
+      const buildingId = '123'; // Use a specific building ID
+      const floorsForBuilding = [
+        { id: '1', name: 'Floor 1' },
+        { id: '2', name: 'Floor 2' },
+      ];
+    
+      const req: Partial<Request> = {
+        params: { buildingId },
+      };
+    
+      const res: Partial<Response> = {
+        json: sinon.spy(),
+        status: sinon.stub().returnsThis(),
+      };
+    
+      const next: Partial<NextFunction> = () => {};
+    
+      // Mock the building service
+      const buildingServiceInstance = Container.get(buildingService);
+    
+      // Stub the getAllFloorsInBuilding method to return the predefined array of floors
+      sinon.stub(buildingServiceInstance, 'getAllFloorsInBuilding').resolves(floorsForBuilding);
+    
+      const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+    
+      await ctrl.listAllFloorsInBuilding(<Request>req, <Response>res, <NextFunction>next);
+    
+      // Assertions
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledWith(res.json, floorsForBuilding);
+    
+      // Specific assertions
+      sinon.assert.calledWith(res.json, sinon.match.array); // Ensure it returns an array
+      sinon.assert.calledWith(res.json, sinon.match.has('length', floorsForBuilding.length)); // Check if the correct number of floors is returned
+    
+      // Check specific floor properties
+      sinon.assert.calledWithMatch(res.json, [
+        sinon.match({ id: '1', name: 'Floor 1' }),
+        sinon.match({ id: '2', name: 'Floor 2' }),
+      ]);
+    });
+    
 });

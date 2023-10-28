@@ -7,6 +7,7 @@ import IFloorService from '../services/IServices/IFloorService';
 import { Result } from '../core/logic/Result';
 import FloorService from '../services/floorService';
 import IFloorDTO from '../dto/IFloorDTO';
+import { Floor } from '../domain/floor';
 
 describe('FloorController (Integration Test)', function () {
   beforeEach(function () {
@@ -29,7 +30,7 @@ describe('FloorController (Integration Test)', function () {
       "room": 4,
       "floorMap": "dasdada",
       "hasElevator":"true",
-    
+      "passages": "[]"
     };
 
     const req: Partial<Request> = {};
@@ -45,13 +46,14 @@ describe('FloorController (Integration Test)', function () {
 
 
     const expectedResult: IFloorDTO = {
-        "id" : req.body.id,
-        "name" : req.body.name,
-        "description" : req.body.description,
-        "hall" : req.body.hall,
-        "room" : req.body.room,
-        "floorMap" : req.body.floorMap,
-        "hasElevator" : req.body.hasElevator,
+      "id": req.body.id,
+      "name": req.body.name,
+      "description": req.body.description,
+      "hall": req.body.hall,
+      "room": req.body.room,
+      "floorMap": req.body.floorMap,
+      "hasElevator": req.body.hasElevator,
+      "passages": req.body.passages
     } 
 
     sinon.stub(floorServiceInstance, "createFloor").returns(Result.ok(expectedResult));

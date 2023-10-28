@@ -207,5 +207,6 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.match({ id: '2', name: 'Floor 2' }),
     ]);
   });
+
 });
 

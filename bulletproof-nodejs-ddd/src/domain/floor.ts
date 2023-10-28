@@ -12,6 +12,7 @@ import { FloorId } from "./floorId";
     room: number;
     floorMap: string;
     hasElevator: boolean;
+    passages: Floor[];
   }
   
   export class Floor extends AggregateRoot<FloorProps>{
@@ -61,6 +62,10 @@ import { FloorId } from "./floorId";
     }
     private constructor (props: FloorProps, id? : UniqueEntityID){
       super (props, id);
+    }
+
+    set passages ( value: Floor[]) { 
+      this.props.passages = value;
     }
    public static create (FloorProps: FloorProps,id?: UniqueEntityID): Result<Floor>{
     const {name,description,hall,room,floorMap,hasElevator} = FloorProps;

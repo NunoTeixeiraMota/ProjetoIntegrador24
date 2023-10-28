@@ -1,3 +1,5 @@
+import { Floor } from "../domain/floor";
+
 export interface IFloorPersistence {
     id:string;
     name: string;
@@ -6,5 +8,5 @@ export interface IFloorPersistence {
     room: number;
     floorMap: string;
     hasElevator: boolean;
-
+    passages: Floor[];
   }
