@@ -29,12 +29,30 @@ export default class FloorController implements IFloorController {
 
   public async updateFloor(req: Request, res: Response, next: NextFunction) {
     try {
-      const floorOrError = await this.floorServiceInstance.updateFloor(req.body as IFloorDTO) as Result<IFloorDTO>
+      const floorOrError = await this.floorServiceInstance.updateFloor(req.body as IFloorDTO) as Result<IFloorDTO>;
 
       if (floorOrError.isSuccess) {
         res.status(201).json(floorOrError.getValue());
       }else{
         res.status(400).json({ error: 'Bad Request', message: floorOrError.error });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+
+  public async updateFloorMap(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floorId = req.params.id;
+      const floorUpdates: Partial<IFloorDTO> = req.body;
+  
+      const result = await this.floorServiceInstance.patchFloorMap(floorId, floorUpdates);
+  
+      if (result.isSuccess) {
+        res.status(200).json(result.getValue());
+      } else {
+        res.status(400).json({ error: 'Bad Request', message: result.error });
       }
     } catch (error) {
       console.error(error);
