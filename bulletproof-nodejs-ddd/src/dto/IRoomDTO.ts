@@ -1,9 +1,11 @@
+import { Building } from '../domain/building';
+import { Floor } from '../domain/floor';
 import { RoomCategory } from '../domain/room';
 
-interface RoomDTO {
+export default interface IRoomDTO {
   id: string;
-  building: string;
-  floor: string;
+  building: Building;
+  floor: Floor;
   name: string;
   category: RoomCategory;
   description: string;

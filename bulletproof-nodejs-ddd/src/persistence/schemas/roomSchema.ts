@@ -1,20 +1,20 @@
 import { IRoomPersistence } from '../../dataschema/IRoomPersistence';
-import mongoose from 'mongoose';
-import { Building } from '../../domain/building';
-import { Floor } from '../../domain/floor';
+import mongoose, { Schema } from 'mongoose';
 
 const roomSchema = new mongoose.Schema(
   {
+    id: { 
+      type: String, 
+      unique: true 
+    },
     building: {
-      type: Building,
-      required: [true, 'Please enter a valid building'],
-      index: true,
+      type: Schema.Types.ObjectId,
+      ref: 'building',
     },
 
     floor: {
-      type: Floor,
-      required: [true, 'Please enter a valid floor'],
-      index: true,
+      type: Schema.Types.ObjectId,
+      ref: 'floor',
     },
 
     name: {
