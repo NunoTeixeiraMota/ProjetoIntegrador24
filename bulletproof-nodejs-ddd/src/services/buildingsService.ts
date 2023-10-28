@@ -12,11 +12,14 @@ import { Building } from '../domain/building';
 
 import { Result } from '../core/logic/Result';
 import config from '../../config';
+import { Floor } from '../domain/floor';
+import IFloorRepo from './IRepos/IFloorRepo';
 
 @Service()
 export default class buildingService implements IBuildingService {
   constructor(
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
+    @Inject(config.repos.floor.name) private floorRepository: IFloorRepo ,
   ) {}
   async listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
     try {
@@ -55,6 +58,7 @@ export default class buildingService implements IBuildingService {
         floors: buildingDTO.floors,
         lifts: buildingDTO.lifts,
         maxCel: buildingDTO.maxCel,
+        floorIds: buildingDTO.floorIds,
         // Add more properties as needed
       });
 
@@ -82,4 +86,29 @@ export default class buildingService implements IBuildingService {
       throw err;
     }
   }
+  
+  async getAllFloorsInBuilding(buildingId: string): Promise<Floor[]> {
+    try {
+        // Retrieve the building
+        const building = await this.buildingsRepo.findByName(buildingId);
+        if (!building) {
+            throw new Error('Building not found');
+        }
+
+        const floorIdsInBuilding = building.floorIds; // Assuming this array holds floor IDs
+
+        const floorsInBuilding: Floor[] = [];
+        for (const floorId of floorIdsInBuilding) {
+            const floor = await this.floorRepository.findByID(floorId);
+            if (floor) {
+                floorsInBuilding.push(floor);
+            }
+        }
+
+        return floorsInBuilding;
+    } catch (err) {
+        throw err; // Handle or log errors here
+    }
 }
+}
+

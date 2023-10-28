@@ -7,6 +7,7 @@ import IBuildingDTO from '../dto/IBuildingDTO';
 import BuildingsController from './buildingsController';
 import IBuildingService from '../services/IServices/IBuildingsService';
 import buildingService from '../services/buildingsService';
+import { FloorId } from '../domain/floorId';
 
 describe('BuildingsController (Integration Test)', function () {
     beforeEach(function () {
@@ -21,13 +22,15 @@ describe('BuildingsController (Integration Test)', function () {
     });
 
     it('createBuilding: returns JSON with id+name values', async function () {
-        const body = {
+      let floorIds: FloorId[] = [new FloorId(1), new FloorId(2), new FloorId(3)]; // Populate this array with your actual FloorId instances
+      const body = {
           "id": "123",
           "name": "Building 123", // Make sure 'name' is defined
           "localizationoncampus": "Campus XYZ",
           "floors": 5,
           "lifts": 2,
-          "maxCel": [1,2]
+          "maxCel": [1,2],
+          "FloorIds": floorIds
         };
         
     
@@ -51,7 +54,8 @@ describe('BuildingsController (Integration Test)', function () {
           "localizationoncampus": req.body.localizationoncampus,
           "floors": req.body.floors,
           "lifts": req.body.lifts,
-          "maxCel": req.body.maxCel
+          "maxCel": req.body.maxCel,
+          "floorIds": floorIds,
         };
     
         sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -60,7 +64,8 @@ describe('BuildingsController (Integration Test)', function () {
             "localizationoncampus": req.body.localizationoncampus,
             "floors": req.body.floors,
             "lifts": req.body.lifts,
-            "maxCel": req.body.maxCel
+            "maxCel": req.body.maxCel,
+            "floorIds": floorIds,
         }));
     
         const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);

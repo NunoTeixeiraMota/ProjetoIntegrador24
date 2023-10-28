@@ -3,6 +3,7 @@ import { Mapper } from '../core/infra/Mapper';
 import IBuildingDTO from '../dto/IBuildingDTO';
 import { Building } from '../domain/building';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
+import { floor } from 'lodash';
 
 export class BuildingsMap extends Mapper<Building> {
   public static toDTO(building: Building): IBuildingDTO {
@@ -13,6 +14,7 @@ export class BuildingsMap extends Mapper<Building> {
       floors: building.floors,
       lifts: building.lifts,
       maxCel: building.maxCel,
+      floorIds: building.floorIds,
     } as IBuildingDTO;
   }
 
@@ -23,6 +25,7 @@ export class BuildingsMap extends Mapper<Building> {
       floors: dto.floors,
       lifts: dto.lifts,
       maxCel: dto.maxCel,
+      floorIds: dto.floorIds,
     }, new UniqueEntityID(dto.id)); // Adjust for your identifier type
 
     buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
@@ -38,6 +41,7 @@ export class BuildingsMap extends Mapper<Building> {
       floors: building.floors,
       lifts: building.lifts,
       maxCel : building.maxCel,
+      floorIds: building.floorIds,
     };
   }
 }
