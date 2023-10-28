@@ -34,7 +34,7 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     super(props, id);
   }
 
-  public static create(robotTypeProps: RobotTypeProps, id?: string): Result<RobotType> {
+  public static create(robotTypeProps: RobotTypeProps, id?: UniqueEntityID): Result<RobotType> {
     const { designation, brand, model, task} = robotTypeProps;
 
     if (!designation || designation.length === 0) {
@@ -46,8 +46,7 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     } else if (!model || model.length === 0) {
       return Result.fail<RobotType>("Must provide the model of the robot");
     } else {
-      const uniqueEntityID = id ? new UniqueEntityID(id) : new UniqueEntityID();
-      const robotType = new RobotType(robotTypeProps, uniqueEntityID);
+      const robotType = new RobotType(robotTypeProps, id);
       return Result.ok<RobotType>(robotType);
     }
   }

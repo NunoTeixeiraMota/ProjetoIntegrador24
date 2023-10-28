@@ -1,4 +1,5 @@
 export interface IRobotTypePersistance {
+    id: string;
     designation: string;
     brand: string;
     model: string;

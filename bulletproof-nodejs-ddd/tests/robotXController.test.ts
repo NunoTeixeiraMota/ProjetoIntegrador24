@@ -47,6 +47,7 @@ describe('RobotController (Unit Test)', function () {
         const robotServiceInstance = Container.get("robotService");
     
         const expectedResult: IRobotTypeDTO = {
+          "id": req.body.id,
           "designation": req.body.designation,
           "brand": req.body.brand,
           "model": req.body.model,
@@ -54,6 +55,7 @@ describe('RobotController (Unit Test)', function () {
         };
     
         sinon.stub(robotServiceInstance, "createRobotType").returns( Result.ok<IRobotTypeDTO>( {
+          "id": req.body.id,
           "designation": req.body.designation,
           "brand": req.body.brand,
           "model": req.body.model,
