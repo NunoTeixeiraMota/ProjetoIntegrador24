@@ -11,8 +11,19 @@ import IRobotService from '../services/IServices/IRobotService';
 import IRobotTypeDTO from '../dto/IRobotTypeDTO';
 
 describe('RobotController (Integration Test)', function () {
-    beforeEach(function() {
-    });
+  beforeEach(function() {
+    Container.reset();
+    const robotTypeSchemaInstance = require("../src/persistence/schemas/robotTypeSchema").default;
+    Container.set("robotTypeSchema", robotTypeSchemaInstance);
+
+    const robotTypeRepoClass = require("../src/repos/robotTypeRepo").default;
+    const robotTypeRepoInstance = new robotTypeRepoClass();
+    Container.set("robotTypeRepo", robotTypeRepoInstance);
+
+    const robotServiceClass = require("../src/services/robotService").default;
+    const robotServiceInstance = new robotServiceClass();
+    Container.set("robotService", robotServiceInstance);
+  });
 
     it('createRobotType: returns JSON with designation+brand+model+task values', async function () {
         let body = {
