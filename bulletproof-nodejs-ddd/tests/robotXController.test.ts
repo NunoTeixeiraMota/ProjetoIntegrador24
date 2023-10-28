@@ -3,8 +3,8 @@ import { Response, Request, NextFunction } from 'express';
 import { Container } from 'typedi';
 import IRobotTypeDTO from '../src/dto/IRobotTypeDTO';
 import { Result } from '../src/core/logic/Result';
-import RobotController from '../src/controllers/robotController';
 import IRobotService from '../src/services/IServices/IRobotService';
+import robotController from '../src/controllers/robotController';
 
 describe('RobotController (Unit Test)', function () {
     const sandbox = sinon.createSandbox();
@@ -63,7 +63,7 @@ describe('RobotController (Unit Test)', function () {
           "task": req.body.task
         }));
     
-        const ctrl = new RobotController(robotServiceInstance as IRobotService);
+        const ctrl = new robotController(robotServiceInstance as IRobotService);
     
         await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
     
