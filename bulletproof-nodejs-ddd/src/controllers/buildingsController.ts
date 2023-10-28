@@ -72,6 +72,7 @@ export default class BuildingsController implements IBuildingsController {
         res.status(200).json(buildingList);
       }
     } catch (e) {
+      console.log(e);
       res.status(500).json({ error: 'Internal Server Error' });
       next(e);
     }

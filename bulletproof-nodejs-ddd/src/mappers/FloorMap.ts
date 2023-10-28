@@ -17,7 +17,7 @@ export class FloorMap extends Mapper<Floor> {
     } as IFloorDTO;
   }
 
-  public static async toDomain(dto: IFloorDTO): Promise<Floor> {
+  public static toDomain(dto: IFloorDTO): Floor {
     const florOrError = Floor.create( {
       name: dto.name,
       description: dto.description,
@@ -25,6 +25,7 @@ export class FloorMap extends Mapper<Floor> {
       room: dto.room,
       floorMap: dto.floorMap,
       hasElevator: dto.hasElevator,
+      passages: []
     }, new UniqueEntityID(dto.id));
     florOrError.isFailure ? console.log(florOrError.error) : '';
 
@@ -40,6 +41,7 @@ export class FloorMap extends Mapper<Floor> {
       room: floor.room,
       floorMap: floor.floorMap,
       hasElevator: floor.hasElevator,
+      passages: floor.passages
     };
   }
 }
