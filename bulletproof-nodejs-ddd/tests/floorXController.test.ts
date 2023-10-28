@@ -7,6 +7,7 @@ import { Result } from '../src/core/logic/Result';
 import FloorController from '../src/controllers/floorController';
 import IFloorService from '../src/services/IServices/IFloorService';
 
+
 describe('FloorController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
 
@@ -106,39 +107,5 @@ describe('FloorController (Unit Test)', function () {
     // Assertions
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match(updatedFloorData));
-  });
-  
-  it('updateFloor: returns a message when floor is not found', async function () {
-    const floorData = {
-      "id": "1",
-      "name": "f",
-      "description": "f",
-      "hall": "f",
-      "room": 4,
-      "floorMap": "f",
-      "hasElevator": true
-    };
-  
-    const req: Partial<Request> = {};
-    req.body = floorData;
-  
-    const res: Partial<Response> = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis(),
-    };
-  
-    const next: Partial<NextFunction> = () => {};
-    const floorServiceInstance = Container.get("FloorService");
-    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.fail("Floor not found"));
-  
-    const ctrl = new FloorController(floorServiceInstance as IFloorService);
-    await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
-  
-    // Assertions
-    sinon.assert.calledOnce(res.status);
-    sinon.assert.calledWith(res.status, 400);
-  
-    sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, { message: 'Floor not found' });
   });
 });

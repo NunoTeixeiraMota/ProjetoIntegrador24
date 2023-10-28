@@ -42,7 +42,7 @@ export default class FloorController implements IFloorController {
     }
   }
 
-  public async updateFloorMap(req: Request, res: Response, next: NextFunction) {
+  public async patchFloorMap(req: Request, res: Response, next: NextFunction) {
     try {
       const floorId = req.params.id;
       const floorUpdates: Partial<IFloorDTO> = req.body;
