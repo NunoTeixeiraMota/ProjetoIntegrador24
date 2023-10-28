@@ -3,6 +3,8 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { Result } from "../core/logic/Result";
 import { BuildingId } from "./buildingId"; // Define this class if necessary
+import { Floor } from "./floor";
+import { FloorId } from "./floorId";
 
 interface BuildingProps {
   name: string;
@@ -10,6 +12,7 @@ interface BuildingProps {
   floors: number;
   lifts: number;
   maxCel: number[];
+  floorIds: FloorId[];
 }
 
 export class Building extends AggregateRoot<BuildingProps> {
@@ -30,6 +33,10 @@ export class Building extends AggregateRoot<BuildingProps> {
 
   get localizationoncampus(): string {
     return this.props.localizationoncampus;
+  }
+
+  get floorIds(): FloorId[] {
+    return this.props.floorIds;
   }
 
   get floors(): number {
@@ -60,12 +67,16 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.maxCel = value;
   }
 
+  set floorIds(value: FloorId[]) {
+    this.props.floorIds = value;
+  }
+
   private constructor(props: BuildingProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
   public static create(buildingProps: BuildingProps, id?: UniqueEntityID): Result<Building> {
-    const { name, localizationoncampus, floors, lifts, maxCel } = buildingProps;
+    const { name, localizationoncampus, floors, lifts, maxCel,floorIds } = buildingProps;
 
     if (!name || name.length === 0) {
       return Result.fail<Building>("Must provide a building name");
@@ -77,6 +88,8 @@ export class Building extends AggregateRoot<BuildingProps> {
       return Result.fail<Building>("Number of lifts cannot be negative");
     } else if (maxCel.length === 0) {
       return Result.fail<Building>("Must provide a maxCel");
+    } else if (floorIds.length !== floors) {
+      return Result.fail<Building>("Floor ammount must be equal to floors array length");
     }
       else {
       const building = new Building(buildingProps, id);

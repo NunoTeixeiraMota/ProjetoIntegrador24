@@ -1,5 +1,7 @@
+import { floor } from 'lodash';
 import { IBuildingsPersistence } from '../../dataschema/IBuildingsPersistence';
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { FloorId } from '../../domain/floorId';
 
 const BuildingsSchema = new mongoose.Schema(
   {
@@ -31,6 +33,10 @@ const BuildingsSchema = new mongoose.Schema(
       default: 0,
       min: [1, 'At least one cel is required'],
     },
+    floorIds: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Floor',
+    }],
   },
   { timestamps: true }
 );

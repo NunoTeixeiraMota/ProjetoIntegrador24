@@ -76,6 +76,26 @@ export default class BuildingsController implements IBuildingsController {
       next(e);
     }
   }
-  
-  
+  async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const buildingId = req.params.buildingId;
+
+            if (!buildingId) {
+                res.status(400).json({ error: 'Building ID is missing.' });
+                return;
+            }
+            const floors = await this.buildingsServiceInstance.getAllFloorsInBuilding(buildingId);
+            if (!floors || floors.length === 0) {
+                res.status(404).json({ error: 'No floors found for the building ID provided.' });
+            } else {
+                res.status(200).json(floors);
+            }
+        } catch (err) {
+            res.status(500).json({ error: 'Internal Server Error' });
+            next(err);
+        }
+    }
 }
+
+  
+
