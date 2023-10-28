@@ -28,6 +28,7 @@ describe('RobotController (Unit Test)', function () {
   
       it('createRobotType: returns JSON with designation+brand+model+task values', async function () {
         let body = {
+            "id": 123,
             "designation": "robolindo",
             "brand": "Croissants",
             "model": "do Lidl",
