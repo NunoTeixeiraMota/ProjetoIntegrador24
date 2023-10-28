@@ -34,7 +34,8 @@ describe('BuildingsController (Unit Test)', function () {
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
-        "lifts": 2
+        "lifts": 2,
+        "maxCel": "[1,2]"
       };
       
   
@@ -58,6 +59,7 @@ describe('BuildingsController (Unit Test)', function () {
         "localizationoncampus": req.body.localizationoncampus,
         "floors": req.body.floors,
         "lifts": req.body.lifts,
+        "maxCel": req.body.maxCel,
       };
   
       sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -66,6 +68,7 @@ describe('BuildingsController (Unit Test)', function () {
           "localizationoncampus": req.body.localizationoncampus,
           "floors": req.body.floors,
           "lifts": req.body.lifts,
+          "maxCel": req.body.maxCel,
       }));
   
       const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
@@ -116,6 +119,7 @@ describe('BuildingsController (Unit Test)', function () {
         localizationoncampus: 'Campus XYZ',
         floors: 3,
         lifts: 2,
+        maxCel: '[1,2]',
       },
       {
         id: '2',
@@ -123,6 +127,7 @@ describe('BuildingsController (Unit Test)', function () {
         localizationoncampus: 'Campus ABC',
         floors: 4,
         lifts: 3,
+        maxCel: '[1,2]',
       },
     ];
 

@@ -4,5 +4,6 @@ export interface IBuildingsPersistence {
     localizationoncampus: string;
     floors: number;
     lifts: number;
+    maxCel: number[];
   }
   

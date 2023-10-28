@@ -9,6 +9,7 @@ interface BuildingProps {
   localizationoncampus: string;
   floors: number;
   lifts: number;
+  maxCel: number[];
 }
 
 export class Building extends AggregateRoot<BuildingProps> {
@@ -16,6 +17,9 @@ export class Building extends AggregateRoot<BuildingProps> {
     return this._id;
   }
 
+  get maxCel(): number[] {
+    return this.props.maxCel;
+  }
   get buildingId(): BuildingId {
     return new BuildingId(this.id.toValue());
   }
@@ -52,12 +56,16 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.lifts = value;
   }
 
+  set maxCel(value: number[]) {
+    this.props.maxCel = value;
+  }
+
   private constructor(props: BuildingProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
   public static create(buildingProps: BuildingProps, id?: UniqueEntityID): Result<Building> {
-    const { name, localizationoncampus, floors, lifts } = buildingProps;
+    const { name, localizationoncampus, floors, lifts, maxCel } = buildingProps;
 
     if (!name || name.length === 0) {
       return Result.fail<Building>("Must provide a building name");
@@ -67,7 +75,10 @@ export class Building extends AggregateRoot<BuildingProps> {
       return Result.fail<Building>("Number of floors must be greater than 0");
     } else if (lifts < 0) {
       return Result.fail<Building>("Number of lifts cannot be negative");
-    } else {
+    } else if (maxCel.length === 0) {
+      return Result.fail<Building>("Must provide a maxCel");
+    }
+      else {
       const building = new Building(buildingProps, id);
       return Result.ok<Building>(building);
     }

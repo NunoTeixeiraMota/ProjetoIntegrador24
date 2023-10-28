@@ -54,6 +54,7 @@ export default class buildingService implements IBuildingService {
         localizationoncampus: buildingDTO.localizationoncampus,
         floors: buildingDTO.floors,
         lifts: buildingDTO.lifts,
+        maxCel: buildingDTO.maxCel,
         // Add more properties as needed
       });
 
