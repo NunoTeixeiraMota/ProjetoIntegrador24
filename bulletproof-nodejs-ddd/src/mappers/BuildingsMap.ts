@@ -12,6 +12,7 @@ export class BuildingsMap extends Mapper<Building> {
       localizationoncampus: building.localizationoncampus,
       floors: building.floors,
       lifts: building.lifts,
+      maxCel: building.maxCel,
     } as IBuildingDTO;
   }
 
@@ -21,6 +22,7 @@ export class BuildingsMap extends Mapper<Building> {
       localizationoncampus: dto.localizationoncampus,
       floors: dto.floors,
       lifts: dto.lifts,
+      maxCel: dto.maxCel,
     }, new UniqueEntityID(dto.id)); // Adjust for your identifier type
 
     buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
@@ -35,6 +37,7 @@ export class BuildingsMap extends Mapper<Building> {
       localizationoncampus: building.localizationoncampus,
       floors: building.floors,
       lifts: building.lifts,
+      maxCel : building.maxCel,
     };
   }
 }

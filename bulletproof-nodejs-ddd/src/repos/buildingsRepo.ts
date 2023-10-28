@@ -69,6 +69,7 @@ export default class BuildingsRepo implements IBuildingsRepo {
         buildingDocument.localizationoncampus = building.localizationoncampus;
         buildingDocument.floors = building.floors;
         buildingDocument.lifts = building.lifts;
+        buildingDocument.maxCel = building.maxCel;
         await buildingDocument.save();
 
         return building;
