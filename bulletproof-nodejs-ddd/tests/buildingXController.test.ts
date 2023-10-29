@@ -132,7 +132,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        // floorIds: floorIdss,
+        floorIds: floorIdss,
       },
       {
         id: '2',
@@ -141,7 +141,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        // floorIds: floorIdss,
+        floorIds: floorIdss,
       },
       {
         id: '3',
@@ -150,7 +150,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 7,
         lifts: 3,
         maxCel: '[1,2]',
-        // floorIds: floorIdss,
+        floorIds: floorIdss,
       },
     ];
 
@@ -162,7 +162,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        // floorIds: floorIdss,
+        floorIds: floorIdss,
       },
       {
         id: '2',
@@ -171,7 +171,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        // floorIds: floorIdss,
+        floorIds: floorIdss,
       },
     ];
 
