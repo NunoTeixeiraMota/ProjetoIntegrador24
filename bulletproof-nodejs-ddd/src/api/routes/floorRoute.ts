@@ -41,7 +41,7 @@ export default (app: Router) => {
   );
 
   route.patch(
-    '/floor/:floorId/:floorUpdates',
+    '/floorMap/:floorId/:floorUpdates',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const { floorId, floorUpdates } = req.params;
@@ -49,6 +49,28 @@ export default (app: Router) => {
   
         const floorServiceInstance = Container.get(FloorService);
         const result = await floorServiceInstance.patchFloorMap(floorId, updates);
+  
+        if (result.isSuccess) {
+          return res.status(200).json(result.getValue());
+        } else {
+          return res.status(400).json({ error: 'Bad Request', message: result.error });
+        }
+      } catch (error) {
+        console.error(error);
+        return next(error);
+      }
+    }
+  );
+
+  route.patch(
+    '/floorPassages/:floorId/:floorUpdates',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { floorId, floorUpdates } = req.params;
+        const updates: Partial<IFloorDTO> = req.body;
+  
+        const floorServiceInstance = Container.get(FloorService);
+        const result = await floorServiceInstance.patchPassageBuilding(floorId, updates);
   
         if (result.isSuccess) {
           return res.status(200).json(result.getValue());

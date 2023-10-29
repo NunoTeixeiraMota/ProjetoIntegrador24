@@ -4,4 +4,5 @@ export default interface IBuildingsController {
     createFloor(req: Request, res: Response, next: NextFunction): Promise<void>;
     updateFloor(req: Request, res: Response, next: NextFunction);
     patchFloorMap(req: Request, res: Response, next: NextFunction);
+    patchPassageBuilding(req: Request, res: Response, next: NextFunction);
 }
