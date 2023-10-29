@@ -121,8 +121,7 @@ describe('BuildingsController (Integration Test)', function () {
       const next: Partial<NextFunction> = () => {};
     
       // Mock the building service
-      const buildingServiceInstance = Container.get(buildingService);
-    
+      const buildingServiceInstance = Container.get(config.services.buildings.name);
       // Stub the getAllFloorsInBuilding method to return the predefined array of floors
       sinon.stub(buildingServiceInstance, 'getAllFloorsInBuilding').resolves(floorsForBuilding);
     
