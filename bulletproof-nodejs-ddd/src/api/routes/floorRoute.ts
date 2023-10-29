@@ -10,9 +10,26 @@ import { Joi, celebrate } from 'celebrate';
 const route = Router();
 
 export default (app: Router) => {
-  app.use('/building', route);
+  app.use('/floor', route);
 
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController
+
+  route.put(
+    '/updateFloor',
+    celebrate({
+        body: Joi.object({
+            id: Joi.string().required(),
+            passages: Joi.array().items(Joi.object({
+                id: Joi.string().required(),
+                name: Joi.string().required(),
+                description: Joi.string().required(),
+                hall: Joi.string().required(),
+                room: Joi.number().required(),
+                floorMap: Joi.string().required(),
+                hasElevator: Joi.boolean().required()
+            })).required()
+        }),
+    }), (req, res, next) => ctrl.updateFloor(req, res, next));
 
   route.patch(
     '/patchFloorMap',
