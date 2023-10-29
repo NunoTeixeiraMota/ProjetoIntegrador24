@@ -36,6 +36,7 @@ export default class FloorRepo implements IFloorRepo {
         floorDocument.room = floor.room;
         floorDocument.floorMap = floor.floorMap;
         floorDocument.hasElevator = floor.hasElevator;
+        floorDocument.passages = floor.passages;
         await floorDocument.save();
 
         return floor;

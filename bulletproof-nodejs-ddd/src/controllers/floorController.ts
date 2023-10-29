@@ -59,6 +59,24 @@ export default class FloorController implements IFloorController {
       next(error);
     }
   }
+
+  public async patchPassageBuilding(req: Request, res: Response, next: NextFunction) {
+    try {
+      const floorId = req.params.id;
+      const floorUpdates: Partial<IFloorDTO> = req.body;
+  
+      const result = await this.floorServiceInstance.patchPassageBuilding(floorId, floorUpdates);
+  
+      if (result.isSuccess) {
+        res.status(200).json(result.getValue());
+      } else {
+        res.status(400).json({ error: 'Bad Request', message: result.error });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
   
   public async addPassages(req: Request, res: Response, next: NextFunction) {
     try {

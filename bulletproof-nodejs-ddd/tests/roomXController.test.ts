@@ -87,7 +87,8 @@ describe('RoomRepo', () => {
             "hall": "dadad",
             "room": 4,
             "floorMap": "dasdada",
-            "hasElevator":true
+            "hasElevator":true,
+            "passages": []
         };
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
@@ -97,7 +98,8 @@ describe('RoomRepo', () => {
             "hall": floorData.hall,
             "room": floorData.room,
             "floorMap": floorData.floorMap,
-            "hasElevator": floorData.hasElevator
+            "hasElevator": floorData.hasElevator,
+            "passages": floorData.passages
         }));
 
         const roomData = {
