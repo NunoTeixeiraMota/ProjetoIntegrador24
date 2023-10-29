@@ -54,49 +54,49 @@ export default class BuildingsController implements IBuildingsController {
     }
   }
 
-  public async listBuildingsByFloors(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async listBuildingsByFloors(req: Request, res: Response, next: NextFunction) {
     try {
       const minFloors = parseInt(req.query.minFloors as string, 10);
       const maxFloors = parseInt(req.query.maxFloors as string, 10);
-  
+
       if (isNaN(minFloors) || isNaN(maxFloors)) {
-        res.status(400).json({ error: 'Invalid input for minFloors and maxFloors.' });
-        return;
+        return res.status(400).json({ error: 'Invalid input for minFloors and maxFloors.' });
       }
-  
+
       const buildingList = await this.buildingsServiceInstance.listBuildingsByFloors(minFloors, maxFloors);
-  
-      if (buildingList.length === 0) {
-        res.status(404).json({ error: 'No buildings found within the specified range of floors.' });
+
+      // Filter the buildings based on the number of floors
+      const filteredBuildings = buildingList.filter(building => building.floors >= minFloors && building.floors <= maxFloors);
+
+      if (filteredBuildings.length === 0) {
+        return res.status(404).json({ error: 'No buildings found within the specified range of floors.' });
       } else {
-        res.status(200).json(buildingList);
+        return res.json(filteredBuildings);
       }
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ error: 'Internal Server Error' });
-      next(e);
+      //res.status(500).json({ error: 'Internal Server Error' });
+      return next(e);
     }
   }
-  async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
-        try {
-            const buildingId = req.params.buildingId;
+  public async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction) {
+    try {
+      const buildingId = req.params.buildingId;
 
-            if (!buildingId) {
-                res.status(400).json({ error: 'Building ID is missing.' });
-                return;
-            }
-            const floors = await this.buildingsServiceInstance.getAllFloorsInBuilding(buildingId);
-            if (!floors || floors.length === 0) {
-                res.status(404).json({ error: 'No floors found for the building ID provided.' });
-            } else {
-                res.status(200).json(floors);
-            }
-        } catch (err) {
-            res.status(500).json({ error: 'Internal Server Error' });
-            next(err);
-        }
+      if (!buildingId) {
+        return res.status(400).json({ error: 'Building ID is missing.' });
+      }
+      const floors = await this.buildingsServiceInstance.getAllFloorsInBuilding(buildingId);
+      if (!floors || floors.length === 0) {
+        return res.status(404).json({ error: 'No floors found for the building ID provided.' });
+      } else {
+        return res.status(200).json(floors);
+      }
+    } catch (err) {
+      //res.status(500).json({ error: 'Internal Server Error' });
+      return next(err);
     }
+  }
 }
 
-  
+
 

@@ -132,7 +132,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        // floorIds: floorIdss,
       },
       {
         id: '2',
@@ -141,7 +141,37 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        // floorIds: floorIdss,
+      },
+      {
+        id: '3',
+        name: 'Building 2',
+        localizationoncampus: 'Campus ABC',
+        floors: 7,
+        lifts: 3,
+        maxCel: '[1,2]',
+        // floorIds: floorIdss,
+      },
+    ];
+
+    const expectedlist = [
+      {
+        id: '1',
+        name: 'Building 1',
+        localizationoncampus: 'Campus XYZ',
+        floors: 3,
+        lifts: 2,
+        maxCel: '[1,2]',
+        // floorIds: floorIdss,
+      },
+      {
+        id: '2',
+        name: 'Building 2',
+        localizationoncampus: 'Campus ABC',
+        floors: 4,
+        lifts: 3,
+        maxCel: '[1,2]',
+        // floorIds: floorIdss,
       },
     ];
 
@@ -163,7 +193,7 @@ describe('BuildingsController (Unit Test)', function () {
 
     // Assertions
     sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, buildingList);
+    sinon.assert.calledWith(res.json, expectedlist);
   });
   it('getAllFloorsInBuilding: returns an array of floors for a specific building ID', async function () {
     const buildingId = '123'; // Use a specific building ID
@@ -207,6 +237,5 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.match({ id: '2', name: 'Floor 2' }),
     ]);
   });
-
 });
 
