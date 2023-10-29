@@ -8,7 +8,7 @@ import { floor } from 'lodash';
 export class BuildingsMap extends Mapper<Building> {
   public static toDTO(building: Building): IBuildingDTO {
     return {
-      id: building.buildingId.toString(), // Adjust based on your identifier type
+      id: building.buildingId.toString(),
       name: building.name,
       localizationoncampus: building.localizationoncampus,
       floors: building.floors,
@@ -26,7 +26,7 @@ export class BuildingsMap extends Mapper<Building> {
       lifts: dto.lifts,
       maxCel: dto.maxCel,
       floorOnBuilding: dto.floorOnBuilding,
-    }, new UniqueEntityID(dto.id)); // Adjust for your identifier type
+    }, new UniqueEntityID(dto.id));
 
     buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
 
@@ -35,7 +35,7 @@ export class BuildingsMap extends Mapper<Building> {
 
   public static toPersistence(building: Building): IBuildingDTO {
     return {
-      id: building.id.toString(), // Adjust for your identifier type
+      id: building.id.toString(),
       name: building.name,
       localizationoncampus: building.localizationoncampus,
       floors: building.floors,

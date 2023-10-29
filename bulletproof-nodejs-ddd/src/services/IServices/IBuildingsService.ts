@@ -1,14 +1,17 @@
 import { Result } from "../../core/logic/Result";
+import { Building } from "../../domain/building";
+import { BuildingId } from "../../domain/buildingId";
 import { Floor } from "../../domain/floor";
 import IBuildingDTO from "../../dto/IBuildingDTO";
 import IFloorDTO from "../../dto/IFloorDTO";
 
 export default interface IBuildingsService {
+  findByDomainId(buildingId: BuildingId): Promise<Building>;
   ListBuildingFloorWithPassageToOtherBuilding(buildingId: string): Promise<IFloorDTO[]>;
   createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   getBuilding(buildingId: string): Promise<Result<IBuildingDTO>>;
   findAll(): Promise<string[]>;
   listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]>;
-  getAllFloorsInBuilding(buildingId: string): Promise<Floor[]>;
+  getAllFloorsInBuilding(buildingId: BuildingId): Promise<IFloorDTO[]>;
 }
