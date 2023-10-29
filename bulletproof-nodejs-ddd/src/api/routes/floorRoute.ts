@@ -1,8 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-import winston = require('winston');
-import IFloorDTO from '../../dto/IFloorDTO';
-import FloorService from '../../services/floorService';
 import IFloorController from '../../controllers/IControllers/IFloorController';
 import config from '../../../config';
 import { Joi, celebrate } from 'celebrate';
@@ -19,6 +16,12 @@ export default (app: Router) => {
     celebrate({
         body: Joi.object({
             id: Joi.string().required(),
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+            hall: Joi.string().required(),
+            room: Joi.number.required(),
+            floorMap: Joi.string().required(),
+            hasElevator: Joi.string().required(),
             passages: Joi.array().items(Joi.object({
                 id: Joi.string().required(),
                 name: Joi.string().required(),
