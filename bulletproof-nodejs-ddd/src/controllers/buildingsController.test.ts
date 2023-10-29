@@ -7,7 +7,9 @@ import IBuildingDTO from '../dto/IBuildingDTO';
 import BuildingsController from './buildingsController';
 import IBuildingService from '../services/IServices/IBuildingsService';
 import buildingService from '../services/buildingsService';
-import { FloorId } from '../domain/floorId';
+import { Floor } from '../domain/floor';
+import IFloorDTO from '../dto/IFloorDTO';
+import { FloorMap } from '../mappers/FloorMap';
 
 describe('BuildingsController (Integration Test)', function () {
     beforeEach(function () {
@@ -19,10 +21,25 @@ describe('BuildingsController (Integration Test)', function () {
 
         Container.set(buildingServiceName, new buildingServiceClass());
         Container.set(buildingRepoName, new buildingRepoClass());
+        
+      
     });
 
     it('createBuilding: returns JSON with id+name values', async function () {
-      let floorIds: FloorId[] = [new FloorId(1), new FloorId(2), new FloorId(3)]; // Populate this array with your actual FloorId instances
+      const floorDataPassage: IFloorDTO = {
+        "id": "456",
+        "name": "Floor 456",
+        "description": "This floor offers a beautiful view of the city skyline.",
+        "hall": "Main Hall",
+        "room": 8,
+        "floorMap": "dasdasd",
+        "hasElevator": false,
+        "passages": []
+      };
+    
+      // Assume FloorMap.toDomain converts IFloorDTO to the domain object
+      const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
+      const FloorArray = [FloorPassaDomain];
       const body = {
           "id": "123",
           "name": "Building 123", // Make sure 'name' is defined
@@ -30,7 +47,7 @@ describe('BuildingsController (Integration Test)', function () {
           "floors": 5,
           "lifts": 2,
           "maxCel": [1,2],
-          "FloorIds": floorIds
+          "floorOnBuilding": FloorArray
         };
         
     
@@ -55,7 +72,7 @@ describe('BuildingsController (Integration Test)', function () {
           "floors": req.body.floors,
           "lifts": req.body.lifts,
           "maxCel": req.body.maxCel,
-          "floorIds": floorIds,
+          "floorOnBuilding": FloorArray,
         };
     
         sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -65,7 +82,7 @@ describe('BuildingsController (Integration Test)', function () {
             "floors": req.body.floors,
             "lifts": req.body.lifts,
             "maxCel": req.body.maxCel,
-            "floorIds": floorIds,
+            "floorOnBuilding": FloorArray,
         }));
     
         const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
@@ -121,8 +138,7 @@ describe('BuildingsController (Integration Test)', function () {
       const next: Partial<NextFunction> = () => {};
     
       // Mock the building service
-      const buildingServiceInstance = Container.get(buildingService);
-    
+      const buildingServiceInstance = Container.get(config.services.buildings.name);
       // Stub the getAllFloorsInBuilding method to return the predefined array of floors
       sinon.stub(buildingServiceInstance, 'getAllFloorsInBuilding').resolves(floorsForBuilding);
     

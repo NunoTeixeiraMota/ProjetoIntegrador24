@@ -1,4 +1,4 @@
-import { FloorId } from "../domain/floorId";
+import { Floor } from "../domain/floor";
 
 export interface IBuildingsPersistence {
     id: string;
@@ -7,6 +7,6 @@ export interface IBuildingsPersistence {
     floors: number;
     lifts: number;
     maxCel: number[];
-    floorIds: FloorId[];
+    floorOnBuilding: Floor[];
   }
   
