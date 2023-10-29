@@ -1,22 +1,35 @@
-@startuml
-actor "User" as user
-participant ":FrontEnd" as frontend
-participant ":FloorController" as controller
-participant ":FloorService" as service
-database "Database" as db
+@startuml sd
 
-user -> frontend: HTTP POST /createFloor
-activate frontend
-frontend -> controller: Handle HTTP Request
-activate controller
-controller -> service: Handle Request
-activate service
-service -> db: Insert Floor Data
-db --> service: Result
-service --> controller: Result
-deactivate service
-controller --> frontend: Generate HTTP Response
-deactivate controller
-frontend --> user: HTTP Response
-deactivate frontend
+participant "User" as A
+participant "IFloorController" as IB
+participant "FloorController" as B
+participant "IFloorService" as IC
+participant "FloorService" as C
+database "Database" as D
+
+
+A -> IB: Request to create a Floor
+activate IB
+IB -> B: Create a Floor
+activate B
+B -> IC: Handle Request
+activate IC
+IC -> D: Create Floor Data
+activate D
+D --> IC: Result
+deactivate D
+IC --> B: Result
+deactivate IC
+B --> IB: Result
+deactivate B
+
+alt Successful Result
+    IB -> A: HTTP 201 with Floor Data
+else Failed Result
+    IB -> A: HTTP 400 with Error Message
+end
+
+deactivate IB
+deactivate A
+
 @enduml
