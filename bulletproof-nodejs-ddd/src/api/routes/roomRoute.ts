@@ -1,18 +1,15 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-
-import BuildingService from '../../services/buildingsService';
-import { IBuildingDTO } from '../../dto/IBuildingDTO';
-
 import { celebrate, Joi } from 'celebrate';
-import winston = require('winston');
-import roomService from '../../services/roomService';
-import IRoomDTO from '../../dto/IRoomDTO';
+import IRoomController from '../../controllers/IControllers/IRoomController';
+import config from '../../../config';
 
 const route = Router();
 
 export default (app: Router) => {
   app.use('/room', route);
+
+  const ctrl = Container.get(config.controllers.room.name) as IRoomController
 
   route.post(
     '/createRoom',
@@ -49,28 +46,5 @@ export default (app: Router) => {
           description: Joi.string().required(),
           dimension: Joi.array().items(Joi.number().required()).required(),
       }),
-  });
-  async (req: Request, res: Response, next: NextFunction) => {
-    const logger = Container.get('logger') as winston.Logger;
-
-    try {
-      const roomServiceInstance = Container.get(roomService);
-      const roomOrError = await roomServiceInstance.createRoom(req.body as IRoomDTO);
-
-      if (roomOrError.isFailure) {
-        logger.debug(roomOrError.errorValue());
-        return res.status(400).send(roomOrError.errorValue());
-      }
-
-      const buildingDTO = roomOrError.getValue();
-
-      return res.status(201).json(buildingDTO);
-    } catch (e) {
-      logger.error('🔥 error: %o', e);
-      return next(e);
-    }
-  }
-  );
-
-  app.use('/buildings', route);
+  }),(req,res,next) => ctrl.createRoom(req,res,next));
 };

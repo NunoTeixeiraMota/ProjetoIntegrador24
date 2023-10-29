@@ -2,13 +2,15 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import winston = require('winston');
-import robotService from '../../services/robotService';
-import IRobotDTO from '../../dto/IRobotDTO';
+import IRobotController from '../../controllers/IControllers/IRobotController';
+import config from '../../../config';
 
 const route = Router();
 
 export default (app: Router) => {
   app.use('/robot', route);
+
+  const ctrl = Container.get(config.controllers.robot.name) as IRobotController
 
   route.post(
     '/addRobot',
@@ -25,28 +27,17 @@ export default (app: Router) => {
           serialNumber: Joi.string().required(),
           description: Joi.string().required(),
         }),
-      }),
-    async (req: Request, res: Response, next: NextFunction) => {
-      const logger = Container.get('logger') as winston.Logger;
-      logger.debug('Calling Create RobotType endpoint with body: %o', req.body);
+      }), (req,res,next) => ctrl.addRobot(req,res,next));
 
-      try {
-        const robotServiceInstance = Container.get(robotService);
-        const robotOrError = await robotServiceInstance.addRobot(req.body as IRobotDTO);
-
-        if (robotOrError.isFailure) {
-          logger.debug(robotOrError.errorValue());
-          return res.status(400).send(robotOrError.errorValue());
-        }
-
-        const robotDTO = robotOrError.getValue();
-
-        return res.status(201).json(robotDTO);
-      } catch (e) {
-        logger.error('🔥 error: %o', e);
-        return next(e);
-      }
-    }
-  );
-  app.use('/robot', route);
+  route.post(
+    '/createRobot',
+        celebrate({
+          body: Joi.object({
+            id: Joi.string().required(),
+            designation: Joi.string().required(),
+            brand: Joi.string().required(),
+            model: Joi.string().required(),
+            task: Joi.number().required()
+          }),
+        }),(req,res,next) => ctrl.createRobotType(req,res,next));
 };

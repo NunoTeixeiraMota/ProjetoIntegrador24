@@ -1,62 +1,43 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-
-import BuildingService from '../../services/buildingsService'; 
-
 import winston = require('winston');
 import IFloorDTO from '../../dto/IFloorDTO';
 import FloorService from '../../services/floorService';
-
-
-const floorController = require('../../controllers/floorController'); 
+import IFloorController from '../../controllers/IControllers/IFloorController';
+import config from '../../../config';
+import { Joi, celebrate } from 'celebrate';
 
 const route = Router();
 
 export default (app: Router) => {
   app.use('/building', route);
 
-  route.patch(
-    '/floorMap/:floorId/:floorUpdates',
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { floorId, floorUpdates } = req.params;
-        const updates: Partial<IFloorDTO> = req.body;
-  
-        const floorServiceInstance = Container.get(FloorService);
-        const result = await floorServiceInstance.patchFloorMap(floorId, updates);
-  
-        if (result.isSuccess) {
-          return res.status(200).json(result.getValue());
-        } else {
-          return res.status(400).json({ error: 'Bad Request', message: result.error });
-        }
-      } catch (error) {
-        console.error(error);
-        return next(error);
-      }
-    }
-  );
+  const ctrl = Container.get(config.controllers.floor.name) as IFloorController
 
   route.patch(
-    '/floorPassages/:floorId/:floorUpdates',
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { floorId, floorUpdates } = req.params;
-        const updates: Partial<IFloorDTO> = req.body;
-  
-        const floorServiceInstance = Container.get(FloorService);
-        const result = await floorServiceInstance.patchPassageBuilding(floorId, updates);
-  
-        if (result.isSuccess) {
-          return res.status(200).json(result.getValue());
-        } else {
-          return res.status(400).json({ error: 'Bad Request', message: result.error });
-        }
-      } catch (error) {
-        console.error(error);
-        return next(error);
-      }
-    }
-  );
-  app.use('/buildings', route);
+    '/patchFloorMap',
+    celebrate({
+        body: Joi.object({
+            id: Joi.string.required(),
+            floorMap: Joi.string().required(),
+        }),
+    }), (req, res, next) => ctrl.patchFloorMap(req, res, next));
+
+
+    route.patch(
+      '/patchPassageBuildings',
+      celebrate({
+          body: Joi.object({
+              id: Joi.string().required(),
+              passages: Joi.array().items(Joi.object({
+                  id: Joi.string().required(),
+                  name: Joi.string().required(),
+                  description: Joi.string().required(),
+                  hall: Joi.string().required(),
+                  room: Joi.number().required(),
+                  floorMap: Joi.string().required(),
+                  hasElevator: Joi.boolean().required()
+              })).required()
+          }),
+      }), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
 };
