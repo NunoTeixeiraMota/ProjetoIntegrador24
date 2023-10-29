@@ -13,7 +13,7 @@ export class FloorMap extends Mapper<Floor> {
       room: floor.room,
       floorMap: floor.floorMap || '', 
       hasElevator: floor.hasElevator,
-    
+      passages: floor.passages,
     } as IFloorDTO;
   }
 

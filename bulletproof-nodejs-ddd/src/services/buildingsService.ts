@@ -14,6 +14,9 @@ import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Floor } from '../domain/floor';
 import IFloorRepo from './IRepos/IFloorRepo';
+import IFloorDTO from '../dto/IFloorDTO';
+import { FloorMap } from '../mappers/FloorMap';
+import { forEach } from 'lodash';
 
 @Service()
 export default class buildingService implements IBuildingService {
@@ -21,6 +24,22 @@ export default class buildingService implements IBuildingService {
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
     @Inject(config.repos.floor.name) private floorRepository: IFloorRepo ,
   ) {}
+
+  async ListBuildingFloorWithPassageToOtherBuilding(buildingId: string): Promise<IFloorDTO[]> {
+    const buildingDocument = await this.buildingsRepo.findByName(buildingId);
+  
+    if (!buildingDocument) {
+      throw new Error('Building not found');
+    }
+  
+    // Filter the floors based on the condition that their 'floorOnBuilding' array is not empty
+    const floorsWithPassages = buildingDocument.floorOnBuilding.filter((floor: Floor) => {
+      return floor.passages.length > 0;
+    });
+    const floorsDTO: IFloorDTO[] = floorsWithPassages.map(floor => FloorMap.toDTO(floor));
+    return floorsDTO ;
+  }
+
   async listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
     try {
       // Use the buildingsRepo to query buildings that fall within the specified range of floors.
@@ -103,6 +122,8 @@ export default class buildingService implements IBuildingService {
     } catch (err) {
         throw err; // Handle or log errors here
     }
+  
+    
 }
 }
 

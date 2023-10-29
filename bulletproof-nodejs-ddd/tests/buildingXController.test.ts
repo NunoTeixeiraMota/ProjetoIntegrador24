@@ -250,5 +250,84 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.match({ id: '2', name: 'Floor 2' }),
     ]);
   });
+
+  it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
+    const buildingId = '123'; // Use a specific building ID
+    
+    // Mock IFloorDTO entities for passages
+    const mockPassageFloorDTOs: IFloorDTO[] = [
+        {
+            id: 'passage1',
+            name: 'Passage 1',
+            description: 'Description for Passage 1',
+            hall: 'Hall X',
+            room: 5,
+            floorMap: 'floorMapPassage1',
+            hasElevator: false,
+            passages: [] // empty because it's a passage floor without further passages
+        },
+        {
+            id: 'passage2',
+            name: 'Passage 2',
+            description: 'Description for Passage 2',
+            hall: 'Hall Y',
+            room: 6,
+            floorMap: 'floorMapPassage2',
+            hasElevator: false,
+            passages: [] // empty because it's a passage floor without further passages
+        }
+    ];
+
+    // Convert mockPassageFloorDTOs to Floor entities
+    const mockPassageFloors = mockPassageFloorDTOs.map(FloorMap.toDomain);
+
+    const mockFloorsWithPassagesDTO: IFloorDTO[] = [
+        {
+            id: '1',
+            name: 'Floor 1 with Passage',
+            description: 'Description for Floor 1',
+            hall: 'Hall A',
+            room: 10,
+            floorMap: 'floorMap1',
+            hasElevator: true,
+            passages: [mockPassageFloors[0]]
+        },
+        {
+            id: '3',
+            name: 'Floor 3',
+            description: 'Description for Floor 3',
+            hall: 'Hall C',
+            room: 15,
+            floorMap: 'floorMap3',
+            hasElevator: true,
+            passages: [mockPassageFloors[1]]
+        }
+    ];
+
+    const req: Partial<Request> = {
+        params: { buildingId },
+    };
+
+    const res: Partial<Response> = {
+        json: sinon.spy(),
+        status: sinon.stub().returnsThis(),
+    };
+
+    const next: Partial<NextFunction> = () => {};
+
+    // Mock the building service
+    const buildingServiceInstance = Container.get('BuildingsService');
+    
+    // Stub the ListBuildingFloorWithPassageToOtherBuilding method to return the predefined floors with passages DTO
+    sinon.stub(buildingServiceInstance, 'ListBuildingFloorWithPassageToOtherBuilding').resolves(mockFloorsWithPassagesDTO);
+
+    const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+
+    await ctrl.ListBuildingFloorWithPassageToOtherBuilding(<Request>req, <Response>res, <NextFunction>next);
+
+    // Assertions
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWithMatch(res.json, mockFloorsWithPassagesDTO);
+});
 });
 
