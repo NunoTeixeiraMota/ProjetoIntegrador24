@@ -6,9 +6,12 @@ import IRobotTypeDTO from '../dto/IRobotTypeDTO';
 
 import { RobotType } from '../domain/robotType';
 import { Result } from '../core/logic/Result';
+import IRobotDTO from '../dto/IRobotDTO';
+import { Robot } from '../domain/robot';
 
 @Service()
 export default class robotService implements IRobotService {
+  robotRepo: any;
   constructor(
     @Inject('logger') private logger,
     @Inject('robotTypeRepo') private robotTypeRepo: IRobotTypeRepo
@@ -45,6 +48,37 @@ export default class robotService implements IRobotService {
       };
 
       return Result.ok<IRobotTypeDTO>(robotTypeDTO);
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async addRobot(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
+    try {
+      const robotOrError = Robot.create({
+        nickname: robot.nickname,
+        type: robot.type,
+        serialNumber: robot.serialNumber,
+        description: robot.description
+      });
+
+      if (robotOrError.isFailure) {
+        throw Result.fail<IRobotDTO>(robotOrError.errorValue());
+      }
+
+      const robotResult = robotOrError.getValue();
+      await this.robotRepo.save(robotResult);
+
+      const robotDTOResult = {
+        id: robotResult.id.toString(),
+        nickname: robotResult.nickname,
+        type: robotResult.type,
+        serialNumber: robotResult.serialNumber,
+        description: robotResult.description
+      };
+
+      return Result.ok<IRobotDTO>(robotDTOResult);
     } catch (e) {
       this.logger.error(e);
       throw e;

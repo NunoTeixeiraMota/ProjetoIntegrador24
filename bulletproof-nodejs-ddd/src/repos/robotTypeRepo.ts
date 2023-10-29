@@ -18,7 +18,7 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
   }
 
   async save(robotType: RobotType): Promise<RobotType> {
-    const query = {domainId: robotType.designation.toString()};
+    const query = {domainId: robotType.id.toString()};
 
     const robotTypeDocument = await this.robotTypeSchema.findOne(query);
 
