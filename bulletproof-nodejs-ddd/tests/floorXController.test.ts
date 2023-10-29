@@ -71,7 +71,7 @@ describe('FloorController (Unit Test)', function () {
     sinon.assert.calledWith(res.json, sinon.match(expectedResult));
   });
 
-  it('updateFloor: returns JSON with updated floor data', async function () {
+  it('updateFloorMap: tests the update of floor map', async function () {
     const floorData = {
       "id": "123",
       "name": "Floor 123",
@@ -92,6 +92,48 @@ describe('FloorController (Unit Test)', function () {
       "floorMap": "aaaaaaaaa",
       "hasElevator": false,
       "passages": []
+    };
+  
+    const req: Partial<Request> = {};
+    req.body = floorData;
+  
+    const res: Partial<Response> = {
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis(),
+    };
+  
+    const next: Partial<NextFunction> = () => {};
+    const floorServiceInstance = Container.get("FloorService");
+    sinon.stub(floorServiceInstance, "updateFloor").returns(Result.ok(updatedFloorData));
+  
+    const ctrl = new FloorController(floorServiceInstance as IFloorService);
+    await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
+  
+    // Assertions
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match(updatedFloorData));
+  });
+  it('updateFloorPassages: tests the update of passages', async function () {
+    const floorData = {
+      "id": "123",
+      "name": "Floor 123",
+      "description": "Welcome",
+      "hall": "dadad",
+      "room": 4,
+      "floorMap": "dasdada",
+      "hasElevator": true,
+      "passages": [1]
+    };
+  
+    const updatedFloorData = {
+      "id": "123",
+      "name": "Floor 123",
+      "description": "Welcome to LIDL",
+      "hall": "hall",
+      "room": 5,
+      "floorMap": "aaaaaaaaa",
+      "hasElevator": false,
+      "passages": [2]
     };
   
     const req: Partial<Request> = {};
