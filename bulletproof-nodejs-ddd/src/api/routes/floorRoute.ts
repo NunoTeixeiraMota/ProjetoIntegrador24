@@ -15,31 +15,6 @@ const route = Router();
 export default (app: Router) => {
   app.use('/building', route);
 
-  route.get(
-    '/floor/:buildingId/:floorNumber',
-    async (req: Request, res: Response, next: NextFunction) => {
-      const logger = Container.get('logger') as winston.Logger;
-      const { buildingId, floorNumber } = req.params;
-
-      try {
-        const buildingServiceInstance = Container.get(BuildingService);
-        const floorOrError = await buildingServiceInstance.getFloorByNumber(buildingId, floorNumber);
-
-        if (floorOrError.isFailure) {
-          logger.debug(floorOrError.errorValue());
-          return res.status(400).send(floorOrError.errorValue());
-        }
-
-        const floorDTO = floorOrError.getValue();
-
-        return res.status(200).json(floorDTO);
-      } catch (e) {
-        logger.error('🔥 error: %o', e);
-        return next(e);
-      }
-    }
-  );
-
   route.patch(
     '/floorMap/:floorId/:floorUpdates',
     async (req: Request, res: Response, next: NextFunction) => {
