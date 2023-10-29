@@ -105,6 +105,52 @@ describe('BuildingsController (Unit Test)', function () {
       sinon.assert.calledOnce(res.json);
       sinon.assert.calledWith(res.json, sinon.match(expectedResult));
     });
+    it('updateBuilding: returns updated building data', async function () {
+      // Define the updated building data
+      const updatedData = {
+        "id": "123",
+        "name": "Updated Building 123",
+        "localizationoncampus": "Updated Campus XYZ",
+        "floors": 6,
+        "lifts": 3
+      };
+    
+      // Mock request and response objects
+      const req: Partial<Request> = {};
+      req.body = updatedData;
+    
+      const res: Partial<Response> = {
+        json: sinon.spy(),
+        status: sinon.stub().returnsThis(),
+      };
+    
+      const next: Partial<NextFunction> = () => {};
+    
+      // Mock the building service
+      const buildingServiceInstance = Container.get("BuildingsService");
+    
+      // Stub the updateBuilding method to return a predefined result
+      const expectedResult: IBuildingDTO = {
+        "id": req.body.id,
+        "name": req.body.name,
+        "localizationoncampus": req.body.localizationoncampus,
+        "floors": req.body.floors,
+        "lifts": req.body.lifts,
+        maxCel: [],
+        floorOnBuilding: []
+      };
+    
+      sinon.stub(buildingServiceInstance, "updateBuilding").returns(Result.ok<IBuildingDTO>(expectedResult));
+    
+      const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
+    
+      await ctrl.updateBuilding(<Request>req, <Response>res, <NextFunction>next);
+    
+      // Assertions
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledWith(res.json, sinon.match(expectedResult));
+    });
+
     it('findAll: returns an array of building names', async function () {
       const buildingNames = ['Building 1', 'Building 2'];
 

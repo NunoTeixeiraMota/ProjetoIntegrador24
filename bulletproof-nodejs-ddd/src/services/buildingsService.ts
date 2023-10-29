@@ -63,13 +63,20 @@ export default class buildingService implements IBuildingService {
       throw error;
     }
   }
-  updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
-    throw new Error('Method not implemented.');
-  }
-  getBuilding(buildingId: string): Promise<Result<IBuildingDTO>> {
-    throw new Error('Method not implemented.');
-  }
+  public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
+    const buildingID = new BuildingId(buildingDTO.id);
+    try {
+        const buildingDocument = await this.buildingsRepo.findByDomainId(buildingID);
+        
+        await this.buildingsRepo.save(buildingDocument);
 
+        const BDTOP = BuildingsMap.toDTO(buildingDocument);
+
+        return Result.ok(BDTOP);
+    } catch (error) {
+        return Result.fail<IBuildingDTO>("Failed to update building");
+    }
+}
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
       const buildingDocument = await this.buildingsRepo.findByName(buildingDTO.name);
