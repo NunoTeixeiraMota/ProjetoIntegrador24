@@ -5,6 +5,7 @@ import IRobotTypeDTO from '../src/dto/IRobotTypeDTO';
 import { Result } from '../src/core/logic/Result';
 import IRobotService from '../src/services/IServices/IRobotService';
 import robotController from '../src/controllers/robotController';
+import IRobotDTO from '../src/dto/IRobotDTO';
 
 describe('RobotController (Unit Test)', function () {
     const sandbox = sinon.createSandbox();
@@ -66,6 +67,60 @@ describe('RobotController (Unit Test)', function () {
         const ctrl = new robotController(robotServiceInstance as IRobotService);
     
         await ctrl.createRobotType(<Request>req, <Response>res, <NextFunction>next);
+    
+        // Assertions
+        sinon.assert.calledOnce(res.json);
+        sinon.assert.calledWith(res.json, sinon.match(expectedResult));
+      });
+
+      it('addRobot: returns JSON with robot values', async function () {
+        let robotTypeValues = {
+            "id": 123,
+            "designation": "robolindo",
+            "brand": "Croissants",
+            "model": "do Lidl",
+            "task": 2
+        };
+
+        let robotValues = {
+          "id": 1,
+          "nickname": "Robot_do_lidl",
+          "type": robotTypeValues,
+          "serialNumber": "1213434",
+          "description": "Ira fazer as entregas todas do lidl"
+      };
+        
+        const req: Partial<Request> = {};
+        req.body = robotValues;
+    
+        const res: Partial<Response> = {
+          json: sinon.spy(),
+          status: sinon.stub().returnsThis(),
+        };
+        
+        const next: Partial<NextFunction> = () => {};
+    
+        const robotServiceInstance = Container.get("robotService");
+    
+        const expectedResult: IRobotDTO = {
+          "id": req.body.id,
+          "nickname": req.body.nickname,
+          "type": req.body.type,
+          "serialNumber": req.body.serialNumber,
+          "description": req.body.description
+        };
+    
+        sinon.stub(robotServiceInstance, "addRobot").returns( Result.ok<IRobotDTO>( {
+          "id": req.body.id,
+          "nickname": req.body.nickname,
+          "type": req.body.type,
+          "serialNumber": req.body.serialNumber,
+          "description": req.body.description
+        }));
+    
+        const ctrl = new robotController(robotServiceInstance as IRobotService);
+    
+        await ctrl.addRobot(<Request>req, <Response>res, <NextFunction>next);
     
         // Assertions
         sinon.assert.calledOnce(res.json);
