@@ -5,10 +5,6 @@ import { Container } from 'typedi';
 import { Result } from '../src/core/logic/Result';
 import { FloorId } from '../src/domain/floorId';
 import { RoomCategory} from '../src/domain/room';
-import BuildingsController from '../src/controllers/buildingsController';
-import FloorController from '../src/controllers/floorController';
-import IFloorService from '../src/services/IServices/IFloorService';
-import IBuildingService from '../src/services/IServices/IBuildingsService';
 import IRoomService from '../src/services/IServices/IRoomService';
 import IRoomDTO from '../src/dto/IRoomDTO';
 import roomController from '../src/controllers/roomController';
@@ -91,7 +87,8 @@ describe('RoomRepo', () => {
             "hall": "dadad",
             "room": 4,
             "floorMap": "dasdada",
-            "hasElevator":true
+            "hasElevator":true,
+            "passages": []
         };
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
@@ -102,7 +99,7 @@ describe('RoomRepo', () => {
             "room": floorData.room,
             "floorMap": floorData.floorMap,
             "hasElevator": floorData.hasElevator,
-            "passages" : []
+            "passages": floorData.passages
         }));
 
         const roomData = {

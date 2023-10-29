@@ -108,4 +108,31 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
+
+  public async patchPassageBuilding(floorId: string, updates: Partial<IFloorDTO>): Promise<Result<IFloorDTO>> {
+    try {
+      const floor = await this.floorRepo.findByID(floorId);
+  
+      if (!floor) {
+        return Result.fail<IFloorDTO>('Floor not found');
+      }
+  
+      for (const key in updates) {
+        if (updates.hasOwnProperty(key)) {
+          if (key === 'passages') {
+            floor.passages = updates.passages;
+          } else {
+            floor[key] = updates[key];
+          }
+        }
+      }
+  
+      await this.floorRepo.save(floor);
+  
+      const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
+      return Result.ok<IFloorDTO>(floorDTOResult);
+    } catch (e) {
+      throw e;
+    }
+  }
 }
