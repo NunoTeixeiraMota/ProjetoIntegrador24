@@ -7,6 +7,7 @@ import IBuildingsService from '../services/IServices/IBuildingsService'; // Defi
 import IBuildingDTO from '../dto/IBuildingDTO'; // Define this DTO
 
 import { Result } from '../core/logic/Result';
+import { BuildingId } from '../domain/buildingId';
 
 @Service()
 export default class BuildingsController implements IBuildingsController {
@@ -80,7 +81,7 @@ export default class BuildingsController implements IBuildingsController {
   }
   public async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      const buildingId = req.params.buildingId;
+      const buildingId = new BuildingId(req.params.buildingId);
 
       if (!buildingId) {
         return res.status(400).json({ error: 'Building ID is missing.' });

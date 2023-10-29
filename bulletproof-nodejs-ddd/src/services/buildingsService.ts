@@ -16,7 +16,8 @@ import { Floor } from '../domain/floor';
 import IFloorRepo from './IRepos/IFloorRepo';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
-import { forEach } from 'lodash';
+import { floor, forEach } from 'lodash';
+import { BuildingId } from '../domain/buildingId';
 
 @Service()
 export default class buildingService implements IBuildingService {
@@ -24,9 +25,17 @@ export default class buildingService implements IBuildingService {
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
     @Inject(config.repos.floor.name) private floorRepository: IFloorRepo,
   ) { }
+  findByDomainId(buildingId: BuildingId): Promise<Building> {
+    const buildingDocument =  this.buildingsRepo.findByDomainId(buildingId);
+    if (!buildingDocument) {
+      throw new Error('Building not found');
+    }
+    return buildingDocument;
+  }
 
   async ListBuildingFloorWithPassageToOtherBuilding(buildingId: string): Promise<IFloorDTO[]> {
-    const buildingDocument = await this.buildingsRepo.findByName(buildingId);
+    const buildingID = new BuildingId(buildingId);
+    const buildingDocument = await this.buildingsRepo.findByDomainId(buildingID);
 
     if (!buildingDocument) {
       throw new Error('Building not found');
@@ -92,19 +101,19 @@ export default class buildingService implements IBuildingService {
     }
   }
 
-  async getAllFloorsInBuilding(buildingId: string): Promise<Floor[]> {
+  async getAllFloorsInBuilding(buildingId: BuildingId): Promise<IFloorDTO[]> {
     try {
       // Retrieve the building
-      const building = await this.buildingsRepo.findByName(buildingId);
+      const building = await this.buildingsRepo.findByDomainId(buildingId);
       if (!building) {
         throw new Error('Building not found');
       }
 
 
       const floorsInBuilding: Floor[] = building.floorOnBuilding;
+      const floorsInBuildingDTO = floorsInBuilding.map(floor => FloorMap.toDTO(floor));
 
-
-      return floorsInBuilding;
+      return floorsInBuildingDTO;
     } catch (err) {
       throw err; // Handle or log errors here
     }
