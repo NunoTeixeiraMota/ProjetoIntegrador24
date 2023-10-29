@@ -1,50 +1,50 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-
-import BuildingService from '../../services/buildingsService';
-import { IBuildingDTO } from '../../dto/IBuildingDTO';
-
 import { celebrate, Joi } from 'celebrate';
-import winston = require('winston');
-
-const buildingController = require('../../controllers/buildingController');
+import IRoomController from '../../controllers/IControllers/IRoomController';
+import config from '../../../config';
 
 const route = Router();
 
 export default (app: Router) => {
   app.use('/room', route);
 
+  const ctrl = Container.get(config.controllers.room.name) as IRoomController
+
   route.post(
-    '/create',
+    '/createRoom',
     celebrate({
-        body: Joi.object({
-        name: Joi.string().required(),
-        localizationoncampus: Joi.string().required(),
-        floors: Joi.number().required(),
-        lifts: Joi.number().required()
-        }),
-    }),
-    async (req: Request, res: Response, next: NextFunction) => {
-      const logger = Container.get('logger') as winston.Logger;
-      logger.debug('Calling Create Building endpoint with body: %o', req.body);
-
-      try {
-        const buildingServiceInstance = Container.get(BuildingService);
-        const buildingOrError = await buildingServiceInstance.createBuilding(req.body as IBuildingDTO);
-
-        if (buildingOrError.isFailure) {
-          logger.debug(buildingOrError.errorValue());
-          return res.status(400).send(buildingOrError.errorValue());
-        }
-
-        const buildingDTO = buildingOrError.getValue();
-
-        return res.status(201).json(buildingDTO);
-      } catch (e) {
-        logger.error('🔥 error: %o', e);
-        return next(e);
-      }
-    }
-  );
-  app.use('/buildings', route);
+      body: Joi.object({
+          id: Joi.string().required(),
+          building: Joi.object({
+              id: Joi.string().required(),
+              localizationoncampus: Joi.string().required(),
+              floors: Joi.number().required(),
+              lifts: Joi.number().required(),
+              maxCel: Joi.array().items(Joi.number().required()).required(),
+              floorOnBuilding: Joi.object({
+                  id: Joi.string().required(),
+                  name: Joi.string().required(),
+                  description: Joi.string().required(),
+                  hall: Joi.string().required(),
+                  room: Joi.number().required(),
+                  floorMap: Joi.string().required(),
+                  hasElevator: Joi.boolean().required(),
+              }),
+          }),
+          floor: Joi.object({
+              id: Joi.string().required(),
+              name: Joi.string().required(),
+              description: Joi.string().required(),
+              hall: Joi.string().required(),
+              room: Joi.number().required(),
+              floorMap: Joi.string().required(),
+              hasElevator: Joi.boolean().required(),
+          }),
+          name: Joi.string().required(),
+          category: Joi.string().required(),
+          description: Joi.string().required(),
+          dimension: Joi.array().items(Joi.number().required()).required(),
+      }),
+  }),(req,res,next) => ctrl.createRoom(req,res,next));
 };

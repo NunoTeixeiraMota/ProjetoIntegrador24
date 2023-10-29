@@ -123,5 +123,5 @@ describe('RobotController (Integration Test)', function () {
     // Assertions
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match(expectedResult));
-  });    
+  });   
 });
