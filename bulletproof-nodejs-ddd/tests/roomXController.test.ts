@@ -101,7 +101,8 @@ describe('RoomRepo', () => {
             "hall": floorData.hall,
             "room": floorData.room,
             "floorMap": floorData.floorMap,
-            "hasElevator": floorData.hasElevator
+            "hasElevator": floorData.hasElevator,
+            "passages" : []
         }));
 
         const roomData = {
