@@ -58,7 +58,7 @@ export default class buildingService implements IBuildingService {
         floors: buildingDTO.floors,
         lifts: buildingDTO.lifts,
         maxCel: buildingDTO.maxCel,
-        floorIds: buildingDTO.floorIds,
+        floorOnBuilding: buildingDTO.floorOnBuilding,
         // Add more properties as needed
       });
 
@@ -95,15 +95,9 @@ export default class buildingService implements IBuildingService {
             throw new Error('Building not found');
         }
 
-        const floorIdsInBuilding = building.floorIds; // Assuming this array holds floor IDs
 
-        const floorsInBuilding: Floor[] = [];
-        for (const floorId of floorIdsInBuilding) {
-            const floor = await this.floorRepository.findByID(floorId);
-            if (floor) {
-                floorsInBuilding.push(floor);
-            }
-        }
+        const floorsInBuilding: Floor[] = building.floorOnBuilding;
+        
 
         return floorsInBuilding;
     } catch (err) {

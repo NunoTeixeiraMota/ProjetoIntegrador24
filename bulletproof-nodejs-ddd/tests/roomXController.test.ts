@@ -10,10 +10,24 @@ import IRoomDTO from '../src/dto/IRoomDTO';
 import roomController from '../src/controllers/roomController';
 import IBuildingDTO from '../src/dto/IBuildingDTO';
 import IFloorDTO from '../src/dto/IFloorDTO';
+import { FloorMap } from '../src/mappers/FloorMap';
 
 describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
-
+    const floorDataPassage: IFloorDTO = {
+        "id": "456",
+        "name": "Floor 456",
+        "description": "This floor offers a beautiful view of the city skyline.",
+        "hall": "Main Hall",
+        "room": 8,
+        "floorMap": "dasdasd",
+        "hasElevator": false,
+        "passages": []
+      };
+    
+      // Assume FloorMap.toDomain converts IFloorDTO to the domain object
+      const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
+      const FloorArray = [FloorPassaDomain];
   beforeEach(function () {
     Container.reset();
     const floorSchemaInstance = require("../src/persistence/schemas/floorSchema").default;
@@ -67,7 +81,7 @@ describe('RoomRepo', () => {
             "floors": 5,
             "lifts": 2,
             "maxCel": [1,2],
-            "floorIds": floorIds
+            "floorOnBuilding": FloorArray,
         };
 
         sinon.stub(Container.get("BuildingsService"), "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -77,7 +91,7 @@ describe('RoomRepo', () => {
             "floors": buildingData.floors,
             "lifts": buildingData.lifts,
             "maxCel": buildingData.maxCel,
-            "floorIds": floorIds
+            "floorOnBuilding": FloorArray,
         }));
     
         const floorData = {

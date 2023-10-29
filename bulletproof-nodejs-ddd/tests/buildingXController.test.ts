@@ -10,10 +10,25 @@ import {Building} from '../src/domain/building';
 
 import { FloorId } from '../src/domain/floorId';
 import { Floor } from '../src/domain/floor';
-
+import { FloorMap } from '../src/mappers/FloorMap';
+import IFloorDTO from '../src/dto/IFloorDTO';
 
 describe('BuildingsController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
+  const floorDataPassage: IFloorDTO = {
+    "id": "456",
+    "name": "Floor 456",
+    "description": "This floor offers a beautiful view of the city skyline.",
+    "hall": "Main Hall",
+    "room": 8,
+    "floorMap": "dasdasd",
+    "hasElevator": false,
+    "passages": []
+  };
+
+  // Assume FloorMap.toDomain converts IFloorDTO to the domain object
+  const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
+  const FloorArray = [FloorPassaDomain];
 
     beforeEach(function() {
       Container.reset();
@@ -37,7 +52,6 @@ describe('BuildingsController (Unit Test)', function () {
     });
 
     it('createBuilding: returns JSON with id+name values', async function () {
-      let floorIds: FloorId[] = [new FloorId(1), new FloorId(2), new FloorId(3)]; // Populate this array with your actual FloorId instances
       const body = {
           "id": "123",
           "name": "Building 123", // Make sure 'name' is defined
@@ -45,7 +59,7 @@ describe('BuildingsController (Unit Test)', function () {
           "floors": 5,
           "lifts": 2,
           "maxCel": [1,2],
-          "FloorIds": floorIds
+          "floorOnBuilding": FloorArray,
         };
       
   
@@ -70,7 +84,7 @@ describe('BuildingsController (Unit Test)', function () {
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorIds": floorIds,
+        "floorOnBuilding": FloorArray,
       };
   
       sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -80,8 +94,8 @@ describe('BuildingsController (Unit Test)', function () {
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorIds": floorIds,
-    }));
+        "floorOnBuilding": FloorArray,
+      }));
   
       const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
   
@@ -116,7 +130,6 @@ describe('BuildingsController (Unit Test)', function () {
   it('listBuildingsByFloors: returns an array of buildings within the specified range of floors', async function () {
     const minFloors = 1;
     const maxFloors = 5;
-    let floorIdss: FloorId[] = [new FloorId(1), new FloorId(2), new FloorId(3)]; // Populate this array with your actual FloorId instances
     const req: Partial<Request> = {
       query: {
         minFloors: minFloors.toString(),
@@ -132,7 +145,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        floorOnBuilding: FloorArray,
       },
       {
         id: '2',
@@ -141,7 +154,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        floorOnBuilding: FloorArray,
       },
       {
         id: '3',
@@ -150,7 +163,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 7,
         lifts: 3,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        floorOnBuilding: FloorArray,
       },
     ];
 
@@ -162,7 +175,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        floorOnBuilding: FloorArray,
       },
       {
         id: '2',
@@ -171,7 +184,7 @@ describe('BuildingsController (Unit Test)', function () {
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        floorIds: floorIdss,
+        floorOnBuilding: FloorArray,
       },
     ];
 

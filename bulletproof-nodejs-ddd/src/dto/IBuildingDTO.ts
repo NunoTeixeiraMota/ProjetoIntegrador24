@@ -1,6 +1,4 @@
 import { Floor } from "../domain/floor";
-import { FloorId } from "../domain/floorId";
-
 export default interface IBuildingDTO {
   id: string;
   name: string;
@@ -8,6 +6,6 @@ export default interface IBuildingDTO {
   floors: number;
   lifts: number;
   maxCel: number[];
-  floorIds: FloorId[];
+  floorOnBuilding: Floor[];
   // You can add more properties specific to building information as needed.
 }
