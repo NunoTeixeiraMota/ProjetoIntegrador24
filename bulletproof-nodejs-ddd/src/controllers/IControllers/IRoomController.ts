@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 
-export default interface IBuildingsController {
+export default interface IRoomController {
     createRoom(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

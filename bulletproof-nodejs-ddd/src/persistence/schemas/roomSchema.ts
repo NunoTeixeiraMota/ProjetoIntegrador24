@@ -20,13 +20,13 @@ const roomSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Please enter a valid name'],
-      maxlength: [50, 'Cant excede 50 carachters'],
+      maxlength: [50, 'Cant exceede 50 characters'],
     },
 
     description: {
         type: String,
         required: [true, 'Please enter a valid description'],
-        maxlength: [250, 'Cant excede 50 carachters'],
+        maxlength: [250, 'Cant exceed 250 characters'],
     },
 
     dimension: {

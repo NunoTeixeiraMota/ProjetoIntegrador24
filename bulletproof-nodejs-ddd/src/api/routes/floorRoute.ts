@@ -1,8 +1,8 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router} from 'express';
 import { Container } from 'typedi';
+import { celebrate, Joi } from 'celebrate';
 import IFloorController from '../../controllers/IControllers/IFloorController';
 import config from '../../../config';
-import { Joi, celebrate } from 'celebrate';
 
 const route = Router();
 
@@ -19,7 +19,7 @@ export default (app: Router) => {
             name: Joi.string().required(),
             description: Joi.string().required(),
             hall: Joi.string().required(),
-            room: Joi.number.required(),
+            room: Joi.number().required(),
             floorMap: Joi.string().required(),
             hasElevator: Joi.string().required(),
             passages: Joi.array().items(Joi.object({
@@ -27,7 +27,7 @@ export default (app: Router) => {
                 name: Joi.string().required(),
                 description: Joi.string().required(),
                 hall: Joi.string().required(),
-                room: Joi.number().required(),
+                room: Joi.number().required,
                 floorMap: Joi.string().required(),
                 hasElevator: Joi.boolean().required()
             })).required()
@@ -38,7 +38,7 @@ export default (app: Router) => {
     '/patchFloorMap',
     celebrate({
         body: Joi.object({
-            id: Joi.string.required(),
+            id: Joi.string().required(),
             floorMap: Joi.string().required(),
         }),
     }), (req, res, next) => ctrl.patchFloorMap(req, res, next));

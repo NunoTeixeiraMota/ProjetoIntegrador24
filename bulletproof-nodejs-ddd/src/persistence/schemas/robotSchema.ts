@@ -32,4 +32,4 @@ const RobotSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IRobotPersistance & mongoose.Document>('RobotType', RobotSchema);
+export default mongoose.model<IRobotPersistance & mongoose.Document>('Robot', RobotSchema);

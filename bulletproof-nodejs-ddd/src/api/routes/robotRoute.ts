@@ -1,7 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
-import winston = require('winston');
 import IRobotController from '../../controllers/IControllers/IRobotController';
 import config from '../../../config';
 

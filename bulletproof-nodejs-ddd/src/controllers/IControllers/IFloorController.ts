@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-export default interface IBuildingsController {
+export default interface IFloorController {
     createFloor(req: Request, res: Response, next: NextFunction): Promise<void>;
     updateFloor(req: Request, res: Response, next: NextFunction);
     patchFloorMap(req: Request, res: Response, next: NextFunction);

@@ -82,8 +82,12 @@ export default {
       path: "../repos/buildingsRepo"
     },
     robotType: {
-      name: "RobotTypeRepo",
+      name: "robotTypeRepo",
       path: "../repos/robotTypeRepo"
+    },
+    robot: {
+      name: "RobotRepo",
+      path: "../repos/robotRepo"
     },
     lift: {
       name: "LiftRepo",

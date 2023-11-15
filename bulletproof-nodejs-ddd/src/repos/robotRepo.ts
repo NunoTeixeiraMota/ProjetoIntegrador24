@@ -11,7 +11,7 @@ export default class RobotRepo implements IRobotRepo {
 
   constructor(
     @Inject('logger') private logger: any,
-    @Inject('robotTypeSchema') private robotSchema: Model<IRobotPersistance & Document>
+    @Inject('robotSchema') private robotSchema: Model<IRobotPersistance & Document>
   ) {}
     exists(t: Robot): Promise<boolean> {
         throw new Error('Method not implemented.');
