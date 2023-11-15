@@ -75,8 +75,8 @@ export class Building extends AggregateRoot<BuildingProps> {
   }
 
   public static create(buildingProps: BuildingProps, id?: UniqueEntityID): Result<Building> {
-    const { name, localizationoncampus, floors, lifts, maxCel,floorOnBuilding } = buildingProps;
-
+    const { name, localizationoncampus, floors, lifts, maxCel, floorOnBuilding } = buildingProps;
+  
     if (!name || name.length === 0) {
       return Result.fail<Building>("Must provide a building name");
     } else if (!localizationoncampus || localizationoncampus.length === 0) {
@@ -85,14 +85,14 @@ export class Building extends AggregateRoot<BuildingProps> {
       return Result.fail<Building>("Number of floors must be greater than 0");
     } else if (lifts < 0) {
       return Result.fail<Building>("Number of lifts cannot be negative");
-    } else if (maxCel.length === 0) {
+    } else if (!maxCel || maxCel.length === 0) {  // Check if maxCel is defined
       return Result.fail<Building>("Must provide a maxCel");
-    } else if (floorOnBuilding.length !== floors) {
-      return Result.fail<Building>("Floor ammount must be equal to floors array length");
-    }
-      else {
+    } else if (!floorOnBuilding || floorOnBuilding.length !== floors) { // Check if floorOnBuilding is defined
+      return Result.fail<Building>("Floor amount must be equal to the floors array length");
+    } else {
       const building = new Building(buildingProps, id);
       return Result.ok<Building>(building);
     }
   }
+  
 }

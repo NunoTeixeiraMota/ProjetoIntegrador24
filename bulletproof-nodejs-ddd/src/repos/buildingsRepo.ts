@@ -33,9 +33,25 @@ export default class BuildingsRepo implements IBuildingsRepo {
     }
   }
   
-  findByName(id: string | BuildingId): Promise<Building> {
-    throw new Error('Method not implemented.');
+  async findByName(name: string): Promise<Building | null> {
+    try {
+      // Define the query to find a building by its name
+      const query: FilterQuery<IBuildingsPersistence & Document> = { name };
+  
+      // Use buildingsSchema to find the building
+      const buildingDocument = await this.buildingsSchema.findOne(query);
+  
+      // If a building is found, map it to the domain object, otherwise return null
+      if (buildingDocument) {
+        return BuildingsMap.toDomain(buildingDocument);
+      } else {
+        return null;
+      }
+    } catch (err) {
+      throw err;
+    }
   }
+  
 
   private createBaseQuery(): any {
     return {

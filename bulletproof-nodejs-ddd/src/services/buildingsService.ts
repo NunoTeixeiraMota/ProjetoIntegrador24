@@ -101,6 +101,7 @@ export default class buildingService implements IBuildingService {
       const buildingDTOResult = BuildingsMap.toDTO(building) as IBuildingDTO;
       return Result.ok<IBuildingDTO>(buildingDTOResult);
     } catch (e) {
+      console.log(e);
       throw e;
     }
   }

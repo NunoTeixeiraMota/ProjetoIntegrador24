@@ -19,7 +19,6 @@ export default class BuildingsController implements IBuildingsController {
   public async createBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const buildingOrError = await this.buildingsServiceInstance.createBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
-
       if (buildingOrError.isFailure) {
         res.status(402).send();
       } else {
@@ -27,6 +26,7 @@ export default class BuildingsController implements IBuildingsController {
         res.status(201).json(buildingDTO);
       }
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
