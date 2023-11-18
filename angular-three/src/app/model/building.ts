@@ -1,6 +1,6 @@
 import Floor from "./floor";
 
-export default interface IBuildingDTO {
+export default interface building {
   id: string;
   name: string;
   localizationoncampus: string;
