@@ -15,7 +15,19 @@ export default class robotService implements IRobotService {
   constructor(
     @Inject('logger') private logger,
     @Inject('robotTypeRepo') private robotTypeRepo: IRobotTypeRepo
-  ) {}
+  ) { }
+
+  public async changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
+    try {
+      const existingRobot = await this.robotRepo.findById(robot.id);
+      existingRobot.isActive = !existingRobot.isActive;
+      await this.robotRepo.save(existingRobot);
+      return Result.ok<IRobotDTO>(existingRobot);
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
 
   public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
