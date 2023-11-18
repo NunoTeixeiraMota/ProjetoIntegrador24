@@ -76,6 +76,7 @@ export default class FloorService implements IFloorService {
         return Result.fail<IFloorDTO>("Floor not found");
       } else {
         floor.name = floorDTO.name;
+        floor.building = BuildingsMap.toDomain(floorDTO.building)
         floor.description = floorDTO.description;
         floor.hall = floorDTO.hall;
         floor.room = floorDTO.room;

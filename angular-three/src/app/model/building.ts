@@ -1,6 +1,4 @@
-import Floor from "./floor";
-
-export default interface building {
+export default interface Building {
   id: string;
   name: string;
   localizationoncampus: string;

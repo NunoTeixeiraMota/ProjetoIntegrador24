@@ -6,15 +6,15 @@ import { RoomCategory } from 'src/app/model/room';
 
 @Component({
   selector: 'app-room-create',
-  templateUrl: './room-create.component.html',
-  styleUrls: ['./room-create.component.css']
+  templateUrl: './createRoom.component.html',
+  styleUrls: ['./CreateRoom.component.css']
 })
-export class RoomCreateComponent implements OnInit {
+export class CreateRoomComponent implements OnInit {
 
   room = {
     id: "",
-    building: {id: "",name: "",localizationoncampus: "",floors: 0,lifts: 0,maxCel: [0, 0],floorOnBuilding: []},
-    floor: {id: "",name: "",description: "",hall: "",room: 0,floorMap: "",hasElevator: true,passages: []},
+    building: {id: "",name: "",localizationoncampus: "",floors: 0,lifts: 0,maxCel: [0, 0]},
+    floor: {id: "",name: "",description: "",hall: "",room: 0,floorMap: "",hasElevator: true,building: {id: "",name: "",localizationoncampus: "",floors: 0,lifts: 0,maxCel: [0, 0]},passages: []},
     name: "",
     category: RoomCategory.Gabinete,
     description: "",

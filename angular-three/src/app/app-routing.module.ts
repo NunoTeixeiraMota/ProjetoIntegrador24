@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RoomCreateComponent } from './component/createRoom/createRoom.component';
+import { CreateRoomComponent } from './component/createRoom/createRoom.component';
+import { MainMenuComponent } from './component/mainMenu/mainMenu.component';
 
 const routes: Routes = [
-// Redirect to the cube component on app load
-{ path: '', redirectTo: '/cube', pathMatch: 'full' },
-// Route for the cube component
-{ path: 'cube', component: CubeComponent },
-{ path: 'roomCreate', component: RoomCreateComponent },
+{ path: '', redirectTo: '/mainMenu', pathMatch: 'full' },
+{ path: 'createRoom', component: CreateRoomComponent },
+{ path: 'mainMenu', component: MainMenuComponent },
 ];
 
 @NgModule({
