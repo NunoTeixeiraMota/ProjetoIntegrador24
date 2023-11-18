@@ -9,7 +9,7 @@ import { RoomCategory } from 'src/app/model/room';
   templateUrl: './createRoom.component.html',
   styleUrls: ['./CreateRoom.component.css']
 })
-export class RoomCreateComponent implements OnInit {
+export class CreateRoomComponent implements OnInit {
 
   room = {
     id: "",
