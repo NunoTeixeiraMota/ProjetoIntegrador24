@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+
+import { AppComponent } from './component/appComponent/app.component';
+import { MessagesComponent } from './component/messages/messages.component';
+
 import { RoomCreateComponent } from './component/createRoom/createRoom.component';
 import { MainMenuComponent } from './component/mainMenu/mainMenu.component';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MessagesComponent,
     RoomCreateComponent,
     MainMenuComponent
   ],
