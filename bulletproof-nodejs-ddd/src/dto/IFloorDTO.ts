@@ -1,7 +1,10 @@
 
+import { Building } from '../domain/building';
 import {Floor} from '../domain/floor';
+import IBuildingDTO from './IBuildingDTO';
 export default interface IFloorDTO {
     id: string;
+    building: IBuildingDTO;
     name: string;
     description: string;
     hall: string;

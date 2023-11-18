@@ -7,6 +7,4 @@ export default interface IBuildingDTO {
   floors: number;
   lifts: number;
   maxCel: number[];
-  floorOnBuilding: IFloorDTO[];
-  // You can add more properties specific to building information as needed.
 }

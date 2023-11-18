@@ -3,7 +3,6 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { Result } from "../core/logic/Result";
 import { BuildingId } from "./buildingId"; // Define this class if necessary
-import { Floor } from "./floor";
 
 interface BuildingProps {
   name: string;
@@ -11,7 +10,6 @@ interface BuildingProps {
   floors: number;
   lifts: number;
   maxCel: number[];
-  floorOnBuilding: Floor[];
 }
 
 export class Building extends AggregateRoot<BuildingProps> {
@@ -32,10 +30,6 @@ export class Building extends AggregateRoot<BuildingProps> {
 
   get localizationoncampus(): string {
     return this.props.localizationoncampus;
-  }
-
-  get floorOnBuilding(): Floor[] {
-    return this.props.floorOnBuilding;
   }
 
   get floors(): number {
@@ -66,16 +60,13 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.maxCel = value;
   }
 
-  set floorOnBuilding(value: Floor[]) {
-    this.props.floorOnBuilding = value;
-  }
 
   private constructor(props: BuildingProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
   public static create(buildingProps: BuildingProps, id?: UniqueEntityID): Result<Building> {
-    const { name, localizationoncampus, floors, lifts, maxCel, floorOnBuilding } = buildingProps;
+    const { name, localizationoncampus, floors, lifts, maxCel, } = buildingProps;
   
     if (!name || name.length === 0) {
       return Result.fail<Building>("Must provide a building name");
@@ -87,8 +78,6 @@ export class Building extends AggregateRoot<BuildingProps> {
       return Result.fail<Building>("Number of lifts cannot be negative");
     } else if (!maxCel || maxCel.length === 0) {  // Check if maxCel is defined
       return Result.fail<Building>("Must provide a maxCel");
-    } else if (!floorOnBuilding || floorOnBuilding.length !== floors) { // Check if floorOnBuilding is defined
-      return Result.fail<Building>("Floor amount must be equal to the floors array length");
     } else {
       const building = new Building(buildingProps, id);
       return Result.ok<Building>(building);

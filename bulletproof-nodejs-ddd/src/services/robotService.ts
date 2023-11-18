@@ -70,6 +70,7 @@ export default class robotService implements IRobotService {
     try {
       const robotOrError = Robot.create({
         nickname: robot.nickname,
+        isActive: robot.isActive,
         type: robot.type,
         serialNumber: robot.serialNumber,
         description: robot.description
@@ -84,6 +85,7 @@ export default class robotService implements IRobotService {
 
       const robotDTOResult = {
         id: robotResult.id.toString(),
+        isActive: robotResult.isActive,
         nickname: robotResult.nickname,
         type: robotResult.type,
         serialNumber: robotResult.serialNumber,

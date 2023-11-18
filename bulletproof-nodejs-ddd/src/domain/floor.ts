@@ -2,10 +2,11 @@ import { AggregateRoot } from "../core/domain/AggregateRoot";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { Result } from "../core/logic/Result";
-import { FloorId } from "./floorId";
+import { Building } from "./building";
     
     
     interface FloorProps {
+    building: Building;
     name: string;
     description: string;
     hall: string;
@@ -25,7 +26,12 @@ import { FloorId } from "./floorId";
     set name ( value: string) {
       this.props.name = value;
     }
-  
+    get building(): Building {
+      return this.building;
+    }
+    set building ( value: Building) { 
+      this.props.building = value;
+    }
     get description(): string {
       return this.props.description;
     }
@@ -68,9 +74,10 @@ import { FloorId } from "./floorId";
       this.props.passages = value;
     }
    public static create (FloorProps: FloorProps,id?: UniqueEntityID): Result<Floor>{
-    const {name,description,hall,room,floorMap,hasElevator} = FloorProps;
-
-    if (!name || name.length === 0) {
+    const {building,name,description,hall,room,floorMap,hasElevator} = FloorProps;
+    if(!building){
+      return Result.fail<Floor>("Must provide a building");
+    } else if (!name || name.length === 0) {
       return Result.fail<Floor>("Must provide a building name");
     } else if (!description || description.length === 0) {
       return Result.fail<Floor>("Empty description");

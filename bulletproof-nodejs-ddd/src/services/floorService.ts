@@ -6,6 +6,10 @@ import IFloorRepo from './IRepos/IFloorRepo';
 import { Floor } from '../domain/floor';
 import { Result } from '../core/logic/Result';
 import config from '../../config';
+import { Building } from '../domain/building';
+import { BuildingsMap } from '../mappers/BuildingsMap';
+import IBuildingsService from './IServices/IBuildingsService';
+import { BuildingId } from '../domain/buildingId';
 
 
 @Service()
@@ -13,6 +17,9 @@ export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo, 
   ) {}
+  getFloorsOnBuilding(building: Building): Promise<IFloorDTO[]> {
+    throw new Error('Method not implemented.');
+  }
   async addPassages(floor: IFloorDTO, passageData: any): Promise<Result<IFloorDTO>> {
     try {
       const errorOrFloor = await this.floorRepo.findByID(floor.id);
@@ -37,6 +44,7 @@ export default class FloorService implements IFloorService {
     try {
       const floorOrError = Floor.create ({
         name: floorDTO.name,
+        building: BuildingsMap.toDomain(floorDTO.building),
         description: floorDTO.description,
         hall: floorDTO.hall,
         room: floorDTO.room,

@@ -39,4 +39,13 @@ export default (app: Router) => {
             task: Joi.number().required()
           }),
         }),(req,res,next) => ctrl.createRobotType(req,res,next));
+  // /changeRobotState
+  route.post(
+    '/changeRobotState',
+        celebrate({
+          body: Joi.object({
+            id: Joi.string().required(),
+            state: Joi.string().required()
+          }),
+        }),(req,res,next) => ctrl.changeRobotState(req,res,next));
 };

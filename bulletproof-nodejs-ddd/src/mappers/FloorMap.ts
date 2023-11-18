@@ -3,6 +3,7 @@ import {Mapper} from '../core/infra/Mapper';
 import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
+import { BuildingsMap } from './BuildingsMap';
 
 export class FloorMap extends Mapper<Floor> {
   public static toDTO(floor: Floor): IFloorDTO {
@@ -21,6 +22,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toDomain(dto: IFloorDTO): Floor {
     const florOrError = Floor.create( {
       name: dto.name,
+      building: BuildingsMap.toDomain(dto.building),
       description: dto.description,
       hall: dto.hall,
       room: dto.room,
@@ -36,6 +38,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toPersistence(floor: Floor): IFloorDTO {
     return {
       id: floor.id.toString(),
+      building: BuildingsMap.toDTO(floor.building),
       name: floor.name,
       description: floor.description,
       hall: floor.hall,

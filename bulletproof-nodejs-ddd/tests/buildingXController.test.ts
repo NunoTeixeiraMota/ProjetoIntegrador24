@@ -15,8 +15,17 @@ import IFloorDTO from '../src/dto/IFloorDTO';
 
 describe('BuildingsController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
+  const building: IBuildingDTO = {
+    "id": "123",
+    "name": "Building 123", // Make sure 'name' is defined
+    "localizationoncampus": "Campus XYZ",
+    "floors": 5,
+    "lifts": 2,
+    "maxCel": [1,2],
+  };
   const floorDataPassage: IFloorDTO = {
     "id": "456",
+    "building": building,
     "name": "Floor 456",
     "description": "This floor offers a beautiful view of the city skyline.",
     "hall": "Main Hall",
@@ -42,7 +51,7 @@ const floorarraydatapassage = [floorDataPassage];
 
       const buildingsServiceClass = require("../src/services/buildingsService").default;
       const buildingsServiceInstance = new buildingsServiceClass(); // Instantiate the service if necessary
-      Container.set("BuildingsService", buildingsServiceInstance);
+      Container.set("buildingsService", buildingsServiceInstance);
 
       const FloorRepoClass = require("../src/repos/floorRepo").default;
       const FloorRepoInstance = new FloorRepoClass(); // Instantiate the repo if necessary
@@ -75,7 +84,7 @@ const floorarraydatapassage = [floorDataPassage];
       const next: Partial<NextFunction> = () => {};
   
       // Mock the building service
-      const buildingServiceInstance = Container.get("BuildingsService");
+      const buildingServiceInstance = Container.get("buildingsService");
   
       // Stub the createBuilding method to return a predefined result
       const expectedResult: IBuildingDTO = {
@@ -85,7 +94,6 @@ const floorarraydatapassage = [floorDataPassage];
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorOnBuilding": floorarraydatapassage,
       };
   
       sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -95,7 +103,6 @@ const floorarraydatapassage = [floorDataPassage];
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorOnBuilding": floorarraydatapassage,
       }));
   
       const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
@@ -116,7 +123,7 @@ const floorarraydatapassage = [floorDataPassage];
       const next: Partial<NextFunction> = () => {};
 
       // Mock the building service
-      const buildingServiceInstance = Container.get('BuildingsService');
+      const buildingServiceInstance = Container.get('buildingsService');
 
       // Stub the findAll method to return predefined result
       sinon.stub(buildingServiceInstance, 'findAll').resolves(buildingNames);
@@ -196,7 +203,7 @@ const floorarraydatapassage = [floorDataPassage];
     const next: Partial<NextFunction> = () => {};
 
     // Mock the building service
-    const buildingServiceInstance = Container.get('BuildingsService');
+    const buildingServiceInstance = Container.get('buildingsService');
 
     // Stub the listBuildingsByFloors method to return the predefined building list
     sinon.stub(buildingServiceInstance, 'listBuildingsByFloors').resolves(buildingList);
@@ -228,7 +235,7 @@ const floorarraydatapassage = [floorDataPassage];
     const next: Partial<NextFunction> = () => {};
 
     // Mock the building service
-    const buildingServiceInstance = Container.get('BuildingsService');
+    const buildingServiceInstance = Container.get('buildingsService');
 
     // Stub the getAllFloorsInBuilding method to return the predefined array of floors
     sinon.stub(buildingServiceInstance, 'getAllFloorsInBuilding').resolves(floorsForBuilding);
@@ -254,11 +261,19 @@ const floorarraydatapassage = [floorDataPassage];
 
   it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
     const buildingId = '123'; // Use a specific building ID
-    
+    const building: IBuildingDTO = {
+      "id": "123",
+      "name": "Building 123", // Make sure 'name' is defined
+      "localizationoncampus": "Campus XYZ",
+      "floors": 5,
+      "lifts": 2,
+      "maxCel": [1,2],
+    };
     // Mock IFloorDTO entities for passages
     const mockPassageFloorDTOs: IFloorDTO[] = [
         {
             id: 'passage1',
+            building: building,
             name: 'Passage 1',
             description: 'Description for Passage 1',
             hall: 'Hall X',
@@ -269,6 +284,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: 'passage2',
+            building: building,
             name: 'Passage 2',
             description: 'Description for Passage 2',
             hall: 'Hall Y',
@@ -285,6 +301,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockFloorsWithPassagesDTO: IFloorDTO[] = [
         {
             id: '1',
+            building: building,
             name: 'Floor 1 with Passage',
             description: 'Description for Floor 1',
             hall: 'Hall A',
@@ -295,6 +312,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: '3',
+            building: building,
             name: 'Floor 3',
             description: 'Description for Floor 3',
             hall: 'Hall C',
@@ -317,7 +335,7 @@ const floorarraydatapassage = [floorDataPassage];
     const next: Partial<NextFunction> = () => {};
 
     // Mock the building service
-    const buildingServiceInstance = Container.get('BuildingsService');
+    const buildingServiceInstance = Container.get('buildingsService');
     
     // Stub the ListBuildingFloorWithPassageToOtherBuilding method to return the predefined floors with passages DTO
     sinon.stub(buildingServiceInstance, 'ListBuildingFloorWithPassageToOtherBuilding').resolves(mockFloorsWithPassagesDTO);

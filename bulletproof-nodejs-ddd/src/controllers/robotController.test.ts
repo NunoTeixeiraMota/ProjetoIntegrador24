@@ -102,6 +102,7 @@ describe('RobotController (Integration Test)', function () {
 
     const expectedResult: IRobotDTO = {
       "id": req.body.id,
+      "isActive": req.body.isActive,
       "nickname": req.body.nickname,
       "type": req.body.type,
       "serialNumber": req.body.serialNumber,
@@ -110,6 +111,7 @@ describe('RobotController (Integration Test)', function () {
 
     sinon.stub(robotServiceInstance, "addRobot").returns( Result.ok<IRobotDTO>( {
       "id": req.body.id,
+      "isActive": req.body.isActive,
       "nickname": req.body.nickname,
       "type": req.body.type,
       "serialNumber": req.body.serialNumber,

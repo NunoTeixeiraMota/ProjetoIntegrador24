@@ -9,6 +9,7 @@ import FloorService from '../services/floorService';
 import IFloorDTO from '../dto/IFloorDTO';
 import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
+import IBuildingDTO from '../dto/IBuildingDTO';
 
 describe('FloorController (Integration Test)', function () {
   beforeEach(function () {
@@ -26,6 +27,7 @@ describe('FloorController (Integration Test)', function () {
   it('createFloor: returns JSON with floor data', async function () {
     const floorData = {
         "id": "123",
+        "building": "123",
         "name": "Floor 123",
         "description": "Welcome to floor 123",
         "hall": "dadad",
@@ -46,6 +48,7 @@ describe('FloorController (Integration Test)', function () {
 
     const expectedResult : IFloorDTO = {
       "id": req.body.id,
+      "building": req.body.building,
       "name": req.body.name,
       "description": req.body.description,
       "hall": req.body.hall,
@@ -150,9 +153,17 @@ describe('FloorController (Integration Test)', function () {
   });
   it('addPassages: returns JSON with added passages data', async function () {
     const floorServiceInstance = Container.get("FloorService");
-  
+    const building: IBuildingDTO = {
+      "id": "123",
+      "name": "Building 123", // Make sure 'name' is defined
+      "localizationoncampus": "Campus XYZ",
+      "floors": 5,
+      "lifts": 2,
+      "maxCel": [1,2],
+    };
     const floorData: IFloorDTO = {
       "id": "123",
+      "building": building,
       "name": "Floor 123",
       "description": "Welcome to floor 123",
       "hall": "dadad",
@@ -164,6 +175,7 @@ describe('FloorController (Integration Test)', function () {
   
     const floorDataPassage: IFloorDTO = {
       "id": "456",
+      "building": building,
       "name": "Floor 456",
       "description": "This floor offers a beautiful view of the city skyline.",
       "hall": "Main Hall",

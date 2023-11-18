@@ -79,13 +79,7 @@ export default class BuildingsRepo implements IBuildingsRepo {
     try {
       if (buildingDocument === null) {
         const rawBuilding: any = BuildingsMap.toPersistence(building);
-        const FloorsDTO = [];
-  
-        for (const floor of rawBuilding.floorOnBuilding) {
-          const floorcreated = (await this.floorSchema.create(floor));
-          FloorsDTO.push(floorcreated);
-         }
-         rawBuilding.floorOnBuilding = FloorsDTO;
+
         const buildingCreated = await this.buildingsSchema.create(rawBuilding) as unknown as IBuildingDTO;
         return BuildingsMap.toDomain(buildingCreated);
       } else {
@@ -95,7 +89,6 @@ export default class BuildingsRepo implements IBuildingsRepo {
         buildingDocument.floors = building.floors;
         buildingDocument.lifts = building.lifts;
         buildingDocument.maxCel = building.maxCel;
-        buildingDocument.floorOnBuilding = building.floorOnBuilding.map(floor => FloorMap.toDTO(floor));
         await buildingDocument.save();
 
         return building;

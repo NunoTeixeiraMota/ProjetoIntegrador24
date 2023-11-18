@@ -15,10 +15,13 @@ import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
 import { BuildingId } from '../domain/buildingId';
+import IFloorService from './IServices/IFloorService';
+import { forEach } from 'lodash';
 @Service()
-export default class buildingService implements IBuildingService {
+export default class BuildingService implements IBuildingService {
   constructor(
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
+    @Inject(config.services.floor.name) private floorServiceInstance: IFloorService
   ) { }
   findByDomainId(buildingId: BuildingId): Promise<Building> {
     const buildingDocument =  this.buildingsRepo.findByDomainId(buildingId);
@@ -36,11 +39,9 @@ export default class buildingService implements IBuildingService {
       throw new Error('Building not found');
     }
 
-    // Filter the floors based on the condition that their 'floorOnBuilding' array is not empty
-    const floorsWithPassages = buildingDocument.floorOnBuilding.filter((floor: Floor) => {
-      return floor.passages.length > 0;
-    });
-    const floorsDTO: IFloorDTO[] = floorsWithPassages.map(floor => FloorMap.toDTO(floor));
+    const floors= this.floorServiceInstance.getFloorsOnBuilding(buildingDocument);
+    const floorsWithPassages = (await floors).filter(floor => floor.passages.length > 0);
+    const floorsDTO: IFloorDTO[] = floorsWithPassages;
     return floorsDTO;
   }
 
@@ -105,7 +106,7 @@ export default class buildingService implements IBuildingService {
       throw err;
     }
   }
-
+  //TODO
   async getAllFloorsInBuilding(buildingId: BuildingId): Promise<IFloorDTO[]> {
     try {
       // Retrieve the building
@@ -113,11 +114,8 @@ export default class buildingService implements IBuildingService {
       if (!building) {
         throw new Error('Building not found');
       }
-
-
-      const floorsInBuilding: Floor[] = building.floorOnBuilding;
-      const floorsInBuildingDTO = floorsInBuilding.map(floor => FloorMap.toDTO(floor));
-
+      const floorsInBuilding: Floor[]= [];
+      const floorsInBuildingDTO: IFloorDTO[] = [];
       return floorsInBuildingDTO;
     } catch (err) {
       throw err; // Handle or log errors here

@@ -8,6 +8,5 @@ export interface IBuildingsPersistence {
     floors: number;
     lifts: number;
     maxCel: number[];
-    floorOnBuilding: IFloorDTO[];
   }
   

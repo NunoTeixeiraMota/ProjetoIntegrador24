@@ -8,6 +8,7 @@ import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence'; 
 import IFloorRepo from '../services/IRepos/IFloorRepo'; 
 import IFloorDTO from '../dto/IFloorDTO';
+import { Building } from '../domain/building';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -15,6 +16,20 @@ export default class FloorRepo implements IFloorRepo {
   constructor(
     @Inject('floorSchema') private floorSchema: Model<IFloorPersistence & Document>, 
   ) {}
+  async findByBuildingID(building: Building): Promise<IFloorDTO[]> {
+    const buildingId = building.id.toString();
+    try {
+      const query = { buildingId: buildingId };
+      const floorDocuments = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>);
+      if (!floorDocuments || floorDocuments.length === 0) {
+        return [];
+      }
+      return floorDocuments;
+    } catch (err) {
+      throw err;
+    }
+  }
+  
 
 
   public async save (floor: Floor): Promise<Floor> {

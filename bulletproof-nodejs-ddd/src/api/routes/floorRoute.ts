@@ -10,7 +10,21 @@ export default (app: Router) => {
   app.use('/floor', route);
 
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController
-
+    route.post(
+        '/create',
+        celebrate({
+        body: Joi.object({
+            name: Joi.string().required(),
+            building: Joi.string().required(),
+            description: Joi.string().required(),
+            hall: Joi.string().required(),
+            room: Joi.number().required(),
+            floorMap: Joi.string().required(),
+            hasElevator: Joi.boolean().required(),
+        }),
+        }),
+        (req, res, next) => ctrl.createFloor(req, res, next)
+    );
   route.put(
     '/updateFloor',
     celebrate({
@@ -27,7 +41,7 @@ export default (app: Router) => {
                 name: Joi.string().required(),
                 description: Joi.string().required(),
                 hall: Joi.string().required(),
-                room: Joi.number().required,
+                room: Joi.number().required(),
                 floorMap: Joi.string().required(),
                 hasElevator: Joi.boolean().required()
             })).required()

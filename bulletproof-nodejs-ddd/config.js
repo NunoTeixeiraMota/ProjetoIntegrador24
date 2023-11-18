@@ -110,7 +110,7 @@ export default {
       path: "../services/roleService"
     },
     buildings: {
-      name: "BuildingsService",
+      name: "buildingsService",
       path: "../services/buildingsService"
     },
     robot: {

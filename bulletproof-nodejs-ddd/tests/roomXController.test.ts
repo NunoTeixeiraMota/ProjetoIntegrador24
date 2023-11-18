@@ -14,8 +14,17 @@ import { FloorMap } from '../src/mappers/FloorMap';
 
 describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
+    const building: IBuildingDTO = {
+        "id": "123",
+        "name": "Building 123", // Make sure 'name' is defined
+        "localizationoncampus": "Campus XYZ",
+        "floors": 5,
+        "lifts": 2,
+        "maxCel": [1,2],
+      };
     const floorDataPassage: IFloorDTO = {
         "id": "456",
+        "building": building,
         "name": "Floor 456",
         "description": "This floor offers a beautiful view of the city skyline.",
         "hall": "Main Hall",
@@ -54,7 +63,7 @@ describe('RoomRepo', () => {
 
     const buildingsServiceClass = require("../src/services/buildingsService").default;
     const buildingsServiceInstance = new buildingsServiceClass();
-    Container.set("BuildingsService", buildingsServiceInstance);
+    Container.set("buildingsService", buildingsServiceInstance);
 
     const roomSchemaInstance = require("../src/persistence/schemas/roomSchema").default;
     Container.set("RoomSchema", roomSchemaInstance);
@@ -84,14 +93,13 @@ describe('RoomRepo', () => {
             "floorOnBuilding": FloorArray,
         };
 
-        sinon.stub(Container.get("BuildingsService"), "createBuilding").returns( Result.ok<IBuildingDTO>( {
+        sinon.stub(Container.get("buildingsService"), "createBuilding").returns( Result.ok<IBuildingDTO>( {
             "id": buildingData.id,
             "name": buildingData.name,
             "localizationoncampus": buildingData.localizationoncampus,
             "floors": buildingData.floors,
             "lifts": buildingData.lifts,
             "maxCel": buildingData.maxCel,
-            "floorOnBuilding": floorarraydatapassage,
         }));
     
         const floorData = {
@@ -107,6 +115,7 @@ describe('RoomRepo', () => {
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
             "id": floorData.id,
+            "building": buildingData,
             "name": floorData.name,
             "description": floorData.description,
             "hall": floorData.hall,

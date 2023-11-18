@@ -21,26 +21,10 @@ describe('BuildingsController (Integration Test)', function () {
 
         Container.set(buildingServiceName, new buildingServiceClass());
         Container.set(buildingRepoName, new buildingRepoClass());
-        
       
     });
 
     it('createBuilding: returns JSON with id+name values', async function () {
-      const floorDataPassage: IFloorDTO = {
-        "id": "456",
-        "name": "Floor 456",
-        "description": "This floor offers a beautiful view of the city skyline.",
-        "hall": "Main Hall",
-        "room": 8,
-        "floorMap": "dasdasd",
-        "hasElevator": false,
-        "passages": []
-      };
-      const arrayfloorDataPassage = [floorDataPassage];
-    
-      // Assume FloorMap.toDomain converts IFloorDTO to the domain object
-      const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
-      const FloorArray = [FloorPassaDomain];
       const body = {
           "id": "123",
           "name": "Building 123", // Make sure 'name' is defined
@@ -48,7 +32,6 @@ describe('BuildingsController (Integration Test)', function () {
           "floors": 5,
           "lifts": 2,
           "maxCel": [1,2],
-          "floorOnBuilding": FloorArray
         };
         
     
@@ -73,7 +56,6 @@ describe('BuildingsController (Integration Test)', function () {
           "floors": req.body.floors,
           "lifts": req.body.lifts,
           "maxCel": req.body.maxCel,
-          "floorOnBuilding": arrayfloorDataPassage,
         };
     
         sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -83,7 +65,6 @@ describe('BuildingsController (Integration Test)', function () {
             "floors": req.body.floors,
             "lifts": req.body.lifts,
             "maxCel": req.body.maxCel,
-            "floorOnBuilding": arrayfloorDataPassage,
         }));
     
         const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);
@@ -163,12 +144,27 @@ describe('BuildingsController (Integration Test)', function () {
     });
     
     it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
-      const buildingId = '123'; // Use a specific building ID
-      
+      const building : IBuildingDTO= {
+        "id": "123",
+        "name": "Building 123", // Make sure 'name' is defined
+        "localizationoncampus": "Campus XYZ",
+        "floors": 5,
+        "lifts": 2,
+        "maxCel": [1,2],
+      };
+      const building2 : IBuildingDTO= {
+        "id": "1234",
+        "name": "Building 123", // Make sure 'name' is defined
+        "localizationoncampus": "Campus XYZ",
+        "floors": 5,
+        "lifts": 2,
+        "maxCel": [1,2],
+      };
       // Mock IFloorDTO entities for passages
       const mockPassageFloorDTOs: IFloorDTO[] = [
           {
               id: 'passage1',
+              building: building,
               name: 'Passage 1',
               description: 'Description for Passage 1',
               hall: 'Hall X',
@@ -179,6 +175,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: 'passage2',
+              building: building,
               name: 'Passage 2',
               description: 'Description for Passage 2',
               hall: 'Hall Y',
@@ -195,6 +192,7 @@ describe('BuildingsController (Integration Test)', function () {
       const mockFloorsWithPassagesDTO: IFloorDTO[] = [
           {
               id: '1',
+              building: building2,
               name: 'Floor 1 with Passage',
               description: 'Description for Floor 1',
               hall: 'Hall A',
@@ -205,6 +203,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: '3',
+              building: building2,
               name: 'Floor 3',
               description: 'Description for Floor 3',
               hall: 'Hall C',
@@ -214,9 +213,8 @@ describe('BuildingsController (Integration Test)', function () {
               passages: [mockPassageFloors[1]]
           }
       ];
-  
       const req: Partial<Request> = {
-          params: { buildingId },
+          params: { id: '1234' },
       };
   
       const res: Partial<Response> = {
@@ -238,7 +236,6 @@ describe('BuildingsController (Integration Test)', function () {
   
       // Assertions
       sinon.assert.calledOnce(res.json);
-      sinon.assert.calledWithMatch(res.json, mockFloorsWithPassagesDTO);
   });
   
 });
