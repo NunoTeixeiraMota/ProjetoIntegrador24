@@ -19,16 +19,6 @@ export default (app: Router) => {
         floors: Joi.number().required(),
         lifts: Joi.number().required(),
         maxCel: Joi.array().items(Joi.number().required()).required(),
-        floorOnBuilding: Joi.array().items(
-          Joi.object({
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            hall: Joi.string().required(),
-            room: Joi.number().required(),
-            floorMap: Joi.string().required(),
-            hasElevator: Joi.boolean().required(),
-          })
-        ).required(),
       }),
     }),
     (req, res, next) => ctrl.createBuilding(req, res, next)
