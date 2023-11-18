@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CubeComponent } from './cube/cube.component';
+import { RoomCreateComponent } from './component/createRoom/createRoom.component';
+import { MainMenuComponent } from './component/mainMenu/mainMenu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CubeComponent
+    RoomCreateComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,

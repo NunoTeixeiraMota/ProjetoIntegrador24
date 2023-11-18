@@ -9,7 +9,7 @@ export enum RoomCategory {
   Outro = "Outro",
 }
 
-export default interface room {
+export default interface Room {
   id: string;
   building: Building;
   floor: Floor;
