@@ -7,6 +7,10 @@ import { BuildingsMap } from "../mappers/BuildingsMap";
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IBuildingsPersistence } from '../dataschema/IBuildingsPersistence';
 import IBuildingsRepo from '../services/IRepos/IBuildingsRepo';
+import IBuildingDTO from '../dto/IBuildingDTO';
+import { Floor } from '../domain/floor';
+import { FloorMap } from '../mappers/FloorMap';
+
 
 @Service()
 export default class BuildingsRepo implements IBuildingsRepo {
@@ -14,8 +18,9 @@ export default class BuildingsRepo implements IBuildingsRepo {
 
   constructor(
     @Inject('buildingsSchema') private buildingsSchema: Model<IBuildingsPersistence & Document>,
+    @Inject('floorSchema') private floorSchema: Model<IBuildingsPersistence & Document>,
   ) {}
-  async findByFloors(minFloors: number, maxFloors: number): Promise<Building[]> {
+  async findByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
     try {
       // Use the buildingsSchema to query buildings within the specified range of floors
       const query: FilterQuery<IBuildingsPersistence & Document> = {
@@ -23,15 +28,13 @@ export default class BuildingsRepo implements IBuildingsRepo {
       };
   
       const buildingDocuments = await this.buildingsSchema.find(query);
-  
-      // Map the building documents to domain objects and return as an array
-      const buildings = await Promise.all(buildingDocuments.map((doc) => BuildingsMap.toDomain(doc)));
-      
-      return buildings;
+      return buildingDocuments;
     } catch (err) {
+      console.error('Error in findByFloors:', err);
       throw err;
     }
   }
+  
   
   async findByName(name: string): Promise<Building | null> {
     try {
@@ -76,17 +79,23 @@ export default class BuildingsRepo implements IBuildingsRepo {
     try {
       if (buildingDocument === null) {
         const rawBuilding: any = BuildingsMap.toPersistence(building);
-
-        const buildingCreated = await this.buildingsSchema.create(rawBuilding);
-
+        const FloorsDTO = [];
+  
+        for (const floor of rawBuilding.floorOnBuilding) {
+          const floorcreated = (await this.floorSchema.create(floor));
+          FloorsDTO.push(floorcreated);
+         }
+         rawBuilding.floorOnBuilding = FloorsDTO;
+        const buildingCreated = await this.buildingsSchema.create(rawBuilding) as unknown as IBuildingDTO;
         return BuildingsMap.toDomain(buildingCreated);
       } else {
+        const FloorsDTO = 
         buildingDocument.name = building.name;
         buildingDocument.localizationoncampus = building.localizationoncampus;
         buildingDocument.floors = building.floors;
         buildingDocument.lifts = building.lifts;
         buildingDocument.maxCel = building.maxCel;
-        buildingDocument.floorOnBuilding = building.floorOnBuilding;
+        buildingDocument.floorOnBuilding = building.floorOnBuilding.map(floor => FloorMap.toDTO(floor));
         await buildingDocument.save();
 
         return building;

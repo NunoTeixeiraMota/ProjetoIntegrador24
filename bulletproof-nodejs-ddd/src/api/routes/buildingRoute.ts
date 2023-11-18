@@ -21,7 +21,6 @@ export default (app: Router) => {
         maxCel: Joi.array().items(Joi.number().required()).required(),
         floorOnBuilding: Joi.array().items(
           Joi.object({
-            id: Joi.string().required(),
             name: Joi.string().required(),
             description: Joi.string().required(),
             hall: Joi.string().required(),

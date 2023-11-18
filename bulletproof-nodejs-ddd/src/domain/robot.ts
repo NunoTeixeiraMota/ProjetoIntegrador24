@@ -8,6 +8,7 @@ interface RobotProps {
   type: RobotType;
   serialNumber: string;
   description: string;
+  isActive: boolean;
 }
 
 export class Robot extends AggregateRoot<RobotProps> {
@@ -31,6 +32,10 @@ export class Robot extends AggregateRoot<RobotProps> {
     return this.props.description;
   }
 
+  get isActive(): boolean {
+    return this.props.isActive;
+  }
+
   private constructor(props: RobotProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -47,6 +52,7 @@ export class Robot extends AggregateRoot<RobotProps> {
     } else if (!description || description.length === 0 || description.length > 250) {
       return Result.fail<Robot>("Must provide a valid description");
     } else {
+      robotProps.isActive = true;
       const robot = new Robot(robotProps, id);
       return Result.ok<Robot>(robot);
     }

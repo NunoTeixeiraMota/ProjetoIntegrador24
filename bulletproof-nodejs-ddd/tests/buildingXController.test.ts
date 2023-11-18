@@ -25,6 +25,7 @@ describe('BuildingsController (Unit Test)', function () {
     "hasElevator": false,
     "passages": []
   };
+const floorarraydatapassage = [floorDataPassage];
 
   // Assume FloorMap.toDomain converts IFloorDTO to the domain object
   const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
@@ -84,7 +85,7 @@ describe('BuildingsController (Unit Test)', function () {
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorOnBuilding": FloorArray,
+        "floorOnBuilding": floorarraydatapassage,
       };
   
       sinon.stub(buildingServiceInstance, "createBuilding").returns( Result.ok<IBuildingDTO>( {
@@ -94,7 +95,7 @@ describe('BuildingsController (Unit Test)', function () {
         "floors": req.body.floors,
         "lifts": req.body.lifts,
         "maxCel": req.body.maxCel,
-        "floorOnBuilding": FloorArray,
+        "floorOnBuilding": floorarraydatapassage,
       }));
   
       const ctrl = new BuildingsController(buildingServiceInstance as IBuildingService);

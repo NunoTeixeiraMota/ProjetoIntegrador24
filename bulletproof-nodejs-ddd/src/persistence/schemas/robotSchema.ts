@@ -28,6 +28,12 @@ const RobotSchema = new mongoose.Schema(
         index: true,
         maxlength: [250, 'Cant excede 250 carachters'],
       },
+
+      isActive: {
+          type: Boolean,
+          required: [true, 'Please enter the state of the robot'],
+          index: true,
+        },
   },
   { timestamps: true }
 );

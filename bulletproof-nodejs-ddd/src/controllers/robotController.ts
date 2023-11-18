@@ -14,6 +14,21 @@ export default class robotController implements IRobotController {
     @Inject(config.services.robot.name) private robotService: RobotService
   ) {}
 
+  public async changeRobotState(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const robotChangeStateOrError = await this.robotService.changeRobotState(req.body as IRobotDTO) as Result<IRobotDTO>;
+
+      if (robotChangeStateOrError.isFailure) {
+        res.status(400).send();
+      } else {
+        const robotTypeDTO = robotChangeStateOrError.getValue();
+        res.status(201).json(robotTypeDTO);
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public async createRobotType(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const robotTypeOrError = await this.robotService.createRobotType(req.body as IRobotTypeDTO) as Result<IRobotTypeDTO>;

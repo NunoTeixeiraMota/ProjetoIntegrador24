@@ -1,4 +1,5 @@
 import { Floor } from "../domain/floor";
+import IFloorDTO from "../dto/IFloorDTO";
 
 export interface IBuildingsPersistence {
     id: string;
@@ -7,6 +8,6 @@ export interface IBuildingsPersistence {
     floors: number;
     lifts: number;
     maxCel: number[];
-    floorOnBuilding: Floor[];
+    floorOnBuilding: IFloorDTO[];
   }
   
