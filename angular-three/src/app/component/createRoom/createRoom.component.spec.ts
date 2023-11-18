@@ -34,7 +34,7 @@ describe('RoomCreateComponent', () => {
     let room: Room = {
         id: "1",
         building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},
-        floor: {id: "3",name: "a",description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},passages: []},
+        floor: {id: "3",name: "a",building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []},
         name: "a",
         category: RoomCategory.Gabinete,
         description: "a",
@@ -57,7 +57,7 @@ describe('RoomCreateComponent', () => {
 
     component.room.id = "1";
     component.room.building = {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]};
-    component.room.floor = {id: "3",name: "a",description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},passages: []};
+    component.room.floor = {id: "3",name: "a",building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []};
     component.room.name = "a";
     component.room.category = RoomCategory.Gabinete;
     component.room.description = "a";
