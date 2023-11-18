@@ -7,5 +7,4 @@ export default interface building {
   floors: number;
   lifts: number;
   maxCel: number[];
-  floorOnBuilding: Floor[];
 }

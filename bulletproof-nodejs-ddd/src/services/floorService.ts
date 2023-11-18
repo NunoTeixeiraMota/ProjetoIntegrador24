@@ -10,6 +10,7 @@ import { Building } from '../domain/building';
 import { BuildingsMap } from '../mappers/BuildingsMap';
 import IBuildingsService from './IServices/IBuildingsService';
 import { BuildingId } from '../domain/buildingId';
+import BuildingService from './buildingsService';
 
 
 @Service()
@@ -41,10 +42,11 @@ export default class FloorService implements IFloorService {
   }
 
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
+    const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
     try {
       const floorOrError = Floor.create ({
         name: floorDTO.name,
-        building: BuildingsMap.toDomain(floorDTO.building),
+        building: await buildingsrv.findByDomainId(floorDTO.building.id),
         description: floorDTO.description,
         hall: floorDTO.hall,
         room: floorDTO.room,
@@ -57,7 +59,6 @@ export default class FloorService implements IFloorService {
       }
 
      const floorResult = floorOrError.getValue();
-
       await this.floorRepo.save(floorResult); 
       const floorDTOResult = FloorMap.toDTO(floorResult) as IFloorDTO; 
       return Result.ok<IFloorDTO>(floorDTOResult);

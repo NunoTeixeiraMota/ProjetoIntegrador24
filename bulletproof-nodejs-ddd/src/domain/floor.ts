@@ -26,11 +26,8 @@ import { Building } from "./building";
     set name ( value: string) {
       this.props.name = value;
     }
-    get building(): Building {
-      return this.building;
-    }
-    set building ( value: Building) { 
-      this.props.building = value;
+    public building(): Building {
+      return this.props.building;
     }
     get description(): string {
       return this.props.description;

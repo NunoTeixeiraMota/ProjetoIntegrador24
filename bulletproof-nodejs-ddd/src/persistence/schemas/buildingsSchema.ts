@@ -30,11 +30,7 @@ const BuildingsSchema = new mongoose.Schema(
       type: [Number],
       default: 0,
       min: [1, 'At least one cel is required'],
-    },
-    floorOnBuilding: [{
-      type: Schema.Types.ObjectId,
-      ref: 'floor',
-    }],
+    }
   },
   { timestamps: true }
 );

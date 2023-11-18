@@ -69,7 +69,6 @@ const floorarraydatapassage = [floorDataPassage];
           "floors": 5,
           "lifts": 2,
           "maxCel": [1,2],
-          "floorOnBuilding": FloorArray,
         };
       
   
@@ -153,7 +152,6 @@ const floorarraydatapassage = [floorDataPassage];
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        floorOnBuilding: FloorArray,
       },
       {
         id: '2',
@@ -162,7 +160,6 @@ const floorarraydatapassage = [floorDataPassage];
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        floorOnBuilding: FloorArray,
       },
       {
         id: '3',
@@ -171,7 +168,6 @@ const floorarraydatapassage = [floorDataPassage];
         floors: 7,
         lifts: 3,
         maxCel: '[1,2]',
-        floorOnBuilding: FloorArray,
       },
     ];
 
@@ -183,7 +179,6 @@ const floorarraydatapassage = [floorDataPassage];
         floors: 3,
         lifts: 2,
         maxCel: '[1,2]',
-        floorOnBuilding: FloorArray,
       },
       {
         id: '2',
@@ -192,7 +187,6 @@ const floorarraydatapassage = [floorDataPassage];
         floors: 4,
         lifts: 3,
         maxCel: '[1,2]',
-        floorOnBuilding: FloorArray,
       },
     ];
 

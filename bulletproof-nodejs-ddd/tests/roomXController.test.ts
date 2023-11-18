@@ -90,7 +90,6 @@ describe('RoomRepo', () => {
             "floors": 5,
             "lifts": 2,
             "maxCel": [1,2],
-            "floorOnBuilding": FloorArray,
         };
 
         sinon.stub(Container.get("buildingsService"), "createBuilding").returns( Result.ok<IBuildingDTO>( {

@@ -1,5 +1,6 @@
 import { IFloorPersistence } from "../../dataschema/IFloorPersistence";
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
+import { Building } from "../../domain/building";
 
 const FloorSchema = new mongoose.Schema(
     {
@@ -8,7 +9,10 @@ const FloorSchema = new mongoose.Schema(
             required: [true, 'Please enter a floor name'],
             index: true,
           },
-      
+          building: {
+            type: Schema.Types.ObjectId, // Assuming building is referenced by its ObjectId
+            ref: 'Building', // Replace 'Building' with the actual model name for buildings
+          },
         description: {
             type: String,
             required: [true, 'Please enter the floor description'],
