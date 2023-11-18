@@ -26,7 +26,7 @@ const FloorSchema = new mongoose.Schema(
             required: [true, 'Please enter the floor hall'],
             index: true,
           },
-        FloorMap: {
+        floorMap: {
             type: String,
             required: [true, 'Please enter the floor map'],
             index: true,

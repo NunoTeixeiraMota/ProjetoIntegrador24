@@ -1,6 +1,5 @@
 import { Container, Service, Inject } from 'typedi';
 
-import { randomBytes } from 'crypto';
 
 import IBuildingService from './IServices/IBuildingsService';
 import { BuildingsMap } from '../mappers/BuildingsMap';
@@ -13,17 +12,13 @@ import { Building } from '../domain/building';
 import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Floor } from '../domain/floor';
-import IFloorRepo from './IRepos/IFloorRepo';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
-import { floor, forEach } from 'lodash';
 import { BuildingId } from '../domain/buildingId';
-
 @Service()
 export default class buildingService implements IBuildingService {
   constructor(
     @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
-    @Inject(config.repos.floor.name) private floorRepository: IFloorRepo,
   ) { }
   findByDomainId(buildingId: BuildingId): Promise<Building> {
     const buildingDocument =  this.buildingsRepo.findByDomainId(buildingId);
@@ -51,14 +46,10 @@ export default class buildingService implements IBuildingService {
 
   async listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
     try {
-      // Use the buildingsRepo to query buildings that fall within the specified range of floors.
       const buildingsInRange = await this.buildingsRepo.findByFloors(minFloors, maxFloors);
-
-      // Map the buildings to DTOs
-      const buildingDTOs = buildingsInRange.map(building => BuildingsMap.toDTO(building));
-
-      return buildingDTOs;
+      return buildingsInRange;
     } catch (error) {
+      console.log(error)
       // Handle any errors that occur during the operation, e.g., database errors.
       throw error;
     }
@@ -91,12 +82,12 @@ export default class buildingService implements IBuildingService {
       if (found) {
         return Result.fail<IBuildingDTO>('Building with the same name already exists');
       }
+      // create an array called FloorsDTO as an array of FloorDTO
 
       const building = await BuildingsMap.toDomain(buildingDTO);
       if (building == null) {
         return Result.fail<IBuildingDTO>(building);
       }
-
       await this.buildingsRepo.save(building);
       const buildingDTOResult = BuildingsMap.toDTO(building) as IBuildingDTO;
       return Result.ok<IBuildingDTO>(buildingDTOResult);

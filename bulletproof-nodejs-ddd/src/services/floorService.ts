@@ -54,6 +54,7 @@ export default class FloorService implements IFloorService {
       const floorDTOResult = FloorMap.toDTO(floorResult) as IFloorDTO; 
       return Result.ok<IFloorDTO>(floorDTOResult);
     } catch (e) {
+      console.log(e);
       throw e;
     }
   }

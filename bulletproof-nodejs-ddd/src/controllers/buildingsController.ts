@@ -26,7 +26,6 @@ export default class BuildingsController implements IBuildingsController {
         res.status(201).json(buildingDTO);
       }
     } catch (e) {
-      console.log(e);
       next(e);
     }
   }

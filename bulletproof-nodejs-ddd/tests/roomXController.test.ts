@@ -24,7 +24,7 @@ describe('RoomRepo', () => {
         "hasElevator": false,
         "passages": []
       };
-    
+     const floorarraydatapassage = [floorDataPassage];
       // Assume FloorMap.toDomain converts IFloorDTO to the domain object
       const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
       const FloorArray = [FloorPassaDomain];
@@ -91,7 +91,7 @@ describe('RoomRepo', () => {
             "floors": buildingData.floors,
             "lifts": buildingData.lifts,
             "maxCel": buildingData.maxCel,
-            "floorOnBuilding": FloorArray,
+            "floorOnBuilding": floorarraydatapassage,
         }));
     
         const floorData = {

@@ -7,6 +7,7 @@ import { UniqueEntityID } from '../core/domain/UniqueEntityID';
 export class FloorMap extends Mapper<Floor> {
   public static toDTO(floor: Floor): IFloorDTO {
     return {
+      id: floor.id.toString(),
       name: floor.name,
       description: floor.description,
       hall: floor.hall,
