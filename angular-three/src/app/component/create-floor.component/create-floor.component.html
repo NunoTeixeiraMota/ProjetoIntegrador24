@@ -1,0 +1,39 @@
+<form (ngSubmit)="createFloor()">
+    <div>
+      <label for="name">Floor Name:</label>
+      <input type="text" id="name" [(ngModel)]="floorData.name" name="name" required>
+    </div>
+  
+    <div>
+      <label for="building">Building:</label>
+      <input type="text" id="building" [(ngModel)]="floorData.building" name="building" required>
+    </div>
+  
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="floorData.description" name="description" required></textarea>
+    </div>
+  
+    <div>
+      <label for="hall">Hall:</label>
+      <input type="text" id="hall" [(ngModel)]="floorData.hall" name="hall" required>
+    </div>
+  
+    <div>
+      <label for="room">Room:</label>
+      <input type="text" id="room" [(ngModel)]="floorData.room" name="room" required>
+    </div>
+  
+    <div>
+      <label for="floorMap">Floor Map:</label>
+      <input type="text" id="floorMap" [(ngModel)]="floorData.floorMap" name="floorMap" required>
+    </div>
+  
+    <div>
+      <label for="hasElevator">Has Elevator:</label>
+      <input type="checkbox" id="hasElevator" [(ngModel)]="floorData.hasElevator" name="hasElevator">
+    </div>
+  
+    <button type="submit">Create Floor</button>
+  </form>
+  
