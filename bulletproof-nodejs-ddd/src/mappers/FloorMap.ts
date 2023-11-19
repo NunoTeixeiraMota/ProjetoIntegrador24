@@ -38,7 +38,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toPersistence(floor: Floor): IFloorDTO {
     return {
       id: floor.id.toString(),
-      building: floor.building(),
+      building: floor.building,
       name: floor.name,
       description: floor.description,
       hall: floor.hall,

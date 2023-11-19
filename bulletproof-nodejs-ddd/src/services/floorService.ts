@@ -1,4 +1,4 @@
-import { Service, Inject } from 'typedi';
+import Container, { Service, Inject } from 'typedi';
 import IFloorService from './IServices/IFloorService';
 import { FloorMap } from '../mappers/FloorMap';
 import IFloorDTO from '../dto/IFloorDTO';
@@ -7,13 +7,9 @@ import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Building } from '../domain/building';
 import { BuildingsMap } from '../mappers/BuildingsMap';
-<<<<<<< HEAD
-=======
 import IBuildingsService from './IServices/IBuildingsService';
-import { BuildingId } from '../domain/buildingId';
-import BuildingService from './buildingsService';
+import { Floor } from '../domain/floor';
 
->>>>>>> f80e830f76b2629534815c22f83bf7f5327d6889
 
 @Service()
 export default class FloorService implements IFloorService {
