@@ -44,21 +44,6 @@ export default class FloorService implements IFloorService {
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
     const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
     try {
-<<<<<<< HEAD
-      const floorDocument = await this.floorRepo.findByID(floorDTO.id);
-      const found = !!floorDocument;
-
-      if (found) {
-        return Result.fail<IFloorDTO>('Floor with the same id already exists');
-      }
-
-      const floor = await FloorMap.toDomain(floorDTO);
-      if (floor == null) {
-        return Result.fail<IFloorDTO>(floor);
-      }
-      await this.floorRepo.save(floor);
-      const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
-=======
       const floorOrError = Floor.create ({
         name: floorDTO.name,
         building: await buildingsrv.findByDomainId(floorDTO.building.id),
@@ -76,7 +61,6 @@ export default class FloorService implements IFloorService {
      const floorResult = floorOrError.getValue();
       await this.floorRepo.save(floorResult); 
       const floorDTOResult = FloorMap.toDTO(floorResult) as IFloorDTO; 
->>>>>>> f80e830f76b2629534815c22f83bf7f5327d6889
       return Result.ok<IFloorDTO>(floorDTOResult);
     } catch (e) {
       console.error('Error in createFloor:', e);
