@@ -21,7 +21,7 @@ export class Building extends AggregateRoot<BuildingProps> {
     return this.props.maxCel;
   }
   get buildingId(): BuildingId {
-    return new BuildingId(this.id.toValue());
+    return this.id;
   }
 
   get name(): string {

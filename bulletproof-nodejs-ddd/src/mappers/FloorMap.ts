@@ -22,7 +22,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toDomain(dto: IFloorDTO): Floor {
     const florOrError = Floor.create( {
       name: dto.name,
-      building: BuildingsMap.toDomain(dto.building),
+      building: dto.building,
       description: dto.description,
       hall: dto.hall,
       room: dto.room,
@@ -38,7 +38,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toPersistence(floor: Floor): IFloorDTO {
     return {
       id: floor.id.toString(),
-      building: BuildingsMap.toDTO(floor.building),
+      building: floor.building(),
       name: floor.name,
       description: floor.description,
       hall: floor.hall,

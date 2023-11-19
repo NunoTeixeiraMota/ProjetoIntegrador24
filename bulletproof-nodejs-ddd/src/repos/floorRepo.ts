@@ -35,11 +35,13 @@ export default class FloorRepo implements IFloorRepo {
    const floorDocument = await this.floorSchema.findOne(query);
     try {
       if(floorDocument === null){
-        const rawFloor: any = FloorMap.toPersistence(floor);
-        const floorCreated = await this.floorSchema.create(rawFloor);
-        return FloorMap.toDomain(floorCreated);
+
+      const rawFloor: any = FloorMap.toPersistence(floor);
+      const floorCreated = await this.floorSchema.create(rawFloor);
+      return FloorMap.toDomain(floorCreated);
       } else {
         floorDocument.name = floor.name;
+        floorDocument
         floorDocument.description = floor.description;
         floorDocument.hall = floor.hall;
         floorDocument.room = floor.room;

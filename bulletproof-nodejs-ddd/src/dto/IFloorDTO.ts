@@ -2,7 +2,7 @@ import {Floor} from '../domain/floor';
 import IBuildingDTO from './IBuildingDTO';
 export default interface IFloorDTO {
     id: string;
-    building: IBuildingDTO;
+    building: Building;
     name: string;
     description: string;
     hall: string;

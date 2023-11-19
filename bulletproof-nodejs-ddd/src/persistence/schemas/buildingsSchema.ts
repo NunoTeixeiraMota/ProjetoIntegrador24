@@ -30,7 +30,11 @@ const BuildingsSchema = new mongoose.Schema(
       type: [Number],
       default: 0,
       min: [1, 'At least one cel is required'],
+<<<<<<< HEAD
     },
+=======
+    }
+>>>>>>> f80e830f76b2629534815c22f83bf7f5327d6889
   },
   { timestamps: true }
 );
