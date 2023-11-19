@@ -7,8 +7,6 @@ import IRobotTypeRepo from '../services/IRepos/IRobotTypeRepo';
 
 @Service()
 export default class RobotTypeRepo implements IRobotTypeRepo {
-  private models: Model<IRobotTypePersistance & Document>;
-
   constructor(
     @Inject('logger') private logger: any,
     @Inject('robotTypeSchema') private robotTypeSchema: Model<IRobotTypePersistance & Document>
@@ -30,7 +28,7 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
       }else{
         robotTypeDocument.designation = robotType.designation;
         robotTypeDocument.brand = robotType.brand;
-        robotTypeDocument.model = robotType.model;
+        robotTypeDocument.modelRobot = robotType.modelRobot;
         robotTypeDocument.task = robotType.task;
         await robotTypeDocument.save();
 

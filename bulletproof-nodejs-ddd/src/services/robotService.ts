@@ -8,13 +8,15 @@ import { RobotType } from '../domain/robotType';
 import { Result } from '../core/logic/Result';
 import IRobotDTO from '../dto/IRobotDTO';
 import { Robot } from '../domain/robot';
+import IRobotRepo from './IRepos/IRobotRepo';
+import { RobotMap } from '../mappers/robotMap';
 
 @Service()
 export default class robotService implements IRobotService {
-  robotRepo: any;
   constructor(
     @Inject('logger') private logger,
-    @Inject('robotTypeRepo') private robotTypeRepo: IRobotTypeRepo
+    @Inject('robotTypeRepo') private robotTypeRepo: IRobotTypeRepo,
+    @Inject('RobotRepo') private robotRepo: IRobotRepo
   ) { }
 
   public async changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
@@ -22,7 +24,8 @@ export default class robotService implements IRobotService {
       const existingRobot = await this.robotRepo.findById(robot.id);
       existingRobot.isActive = !existingRobot.isActive;
       await this.robotRepo.save(existingRobot);
-      return Result.ok<IRobotDTO>(existingRobot);
+      const robotDTOResult = RobotMap.toDTO(existingRobot) as IRobotDTO;
+      return Result.ok<IRobotDTO>(robotDTOResult);
     } catch (e) {
       this.logger.error(e);
       throw e;
@@ -40,7 +43,7 @@ export default class robotService implements IRobotService {
       const robotTypeOrError = RobotType.create({
         designation: robotTypeDTO.designation,
         brand: robotTypeDTO.brand,
-        model: robotTypeDTO.model,
+        modelRobot: robotTypeDTO.modelRobot,
         task: robotTypeDTO.task
       });
 
@@ -55,13 +58,13 @@ export default class robotService implements IRobotService {
       const robotTypeDTOResult = {
         designation: robotTypeResult.designation,
         brand: robotTypeResult.brand,
-        model: robotTypeResult.model,
+        modelRobot: robotTypeResult.modelRobot,
         task: robotTypeResult.task
       };
 
       return Result.ok<IRobotTypeDTO>(robotTypeDTO);
     } catch (e) {
-      this.logger.error(e);
+      console.error(e);
       throw e;
     }
   }
@@ -94,7 +97,7 @@ export default class robotService implements IRobotService {
 
       return Result.ok<IRobotDTO>(robotDTOResult);
     } catch (e) {
-      this.logger.error(e);
+      console.error(e);
       throw e;
     }
   }

@@ -10,7 +10,8 @@ export class RobotMap extends Mapper<Robot> {
       nickname: robot.nickname.toString(),
       type: robot.type,
       serialNumber: robot.serialNumber.toString(),
-      description: robot.description.toString()
+      description: robot.description.toString(),
+      isActive: robot.isActive
     } as IRobotDTO;
   }
 
@@ -19,7 +20,8 @@ export class RobotMap extends Mapper<Robot> {
         nickname: dto.nickname.toString(),
         type: dto.type,
         serialNumber: dto.serialNumber.toString(),
-        description: dto.description.toString()
+        description: dto.description.toString(),
+        isActive: dto.isActive
     }, new UniqueEntityID(dto.id));
 
     robotOrError.isFailure ? console.log(robotOrError.error) : '';
@@ -33,7 +35,8 @@ export class RobotMap extends Mapper<Robot> {
         nickname: robot.nickname.toString(),
         type: robot.type,
         serialNumber: robot.serialNumber.toString(),
-        description: robot.description.toString()
+        description: robot.description.toString(),
+        isActive: robot.isActive
     };
   }
 }

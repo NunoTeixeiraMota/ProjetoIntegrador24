@@ -1,6 +1,3 @@
-import { Floor } from "../domain/floor";
-import IFloorDTO from "../dto/IFloorDTO";
-
 export interface IBuildingsPersistence {
     id: string;
     name: string;

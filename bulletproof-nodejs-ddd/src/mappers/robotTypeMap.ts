@@ -9,7 +9,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
       id: robotType.id.toString(),
       designation: robotType.designation.toString(),
       brand: robotType.brand.toString(),
-      model: robotType.model.toString(),
+      modelRobot: robotType.modelRobot.toString(),
       task: robotType.task
     } as IRobotTypeDTO;
   }
@@ -18,7 +18,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
     const robotTypeOrError = RobotType.create({
       designation: dto.designation.toString(),
       brand: dto.brand.toString(),
-      model: dto.model.toString(),
+      modelRobot: dto.modelRobot.toString(),
       task: dto.task
     }, new UniqueEntityID(dto.id));
 
@@ -32,7 +32,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
       id: robotType.id.toString(),
       designation: robotType.designation.toString(),
       brand: robotType.brand.toString(),
-      model: robotType.model.toString(),
+      modelRobot: robotType.modelRobot.toString(),
       task: robotType.task
     };
   }

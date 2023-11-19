@@ -15,7 +15,7 @@ const RobotTypeSchema = new mongoose.Schema(
       index: true,
     },
 
-    model: {
+    modelRobot: {
       type: String,
       required: [true, 'Please enter the model of the robot'],
       index: true,

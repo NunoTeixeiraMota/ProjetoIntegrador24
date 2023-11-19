@@ -8,9 +8,6 @@ import { Document, FilterQuery, Model } from 'mongoose';
 import { IBuildingsPersistence } from '../dataschema/IBuildingsPersistence';
 import IBuildingsRepo from '../services/IRepos/IBuildingsRepo';
 import IBuildingDTO from '../dto/IBuildingDTO';
-import { Floor } from '../domain/floor';
-import { FloorMap } from '../mappers/FloorMap';
-
 
 @Service()
 export default class BuildingsRepo implements IBuildingsRepo {

@@ -1,10 +1,7 @@
-import { Container } from 'typedi';
 import { Mapper } from '../core/infra/Mapper';
 import IBuildingDTO from '../dto/IBuildingDTO';
 import { Building } from '../domain/building';
 import { UniqueEntityID } from '../core/domain/UniqueEntityID';
-import { floor, forEach } from 'lodash';
-import { FloorMap } from './FloorMap';
 
 export class BuildingsMap extends Mapper<Building> {
   public static toDTO(building: Building): IBuildingDTO {
@@ -18,7 +15,7 @@ export class BuildingsMap extends Mapper<Building> {
     } as IBuildingDTO;
   }
 
-  public static  toDomain(dto: IBuildingDTO): Building {
+  public static toDomain(dto: IBuildingDTO): Building {
     const buildingOrError = Building.create({
       name: dto.name,
       localizationoncampus: dto.localizationoncampus,

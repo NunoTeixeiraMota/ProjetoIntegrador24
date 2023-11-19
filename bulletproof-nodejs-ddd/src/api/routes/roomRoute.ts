@@ -25,7 +25,6 @@ export default (app: Router) => {
           }),
           floor: Joi.object({
               id: Joi.string().required(),
-              name: Joi.string().required(),
               building: Joi.object({
                 id: Joi.string().required(),
                 localizationoncampus: Joi.string().required(),
@@ -33,6 +32,7 @@ export default (app: Router) => {
                 lifts: Joi.number().required(),
                 maxCel: Joi.array().items(Joi.number().required()).required(),
                 }),
+              name: Joi.string().required(),
               description: Joi.string().required(),
               hall: Joi.string().required(),
               room: Joi.number().required(),

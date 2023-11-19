@@ -20,13 +20,16 @@ export default class RobotRepo implements IRobotRepo {
   async save(robot: Robot): Promise<Robot> {
     const query = {domainId: robot.id.toString()};
 
-    const robotDocument = await this.robotSchema.findOne(query);
-    const existingNickname = await this.robotSchema.findOne({ nickname: robot.nickname });
-    const existingSerialNumber = await this.robotSchema.findOne({ serialNumber: robot.serialNumber });
+    const [existingNickname, existingSerialNumber] = await Promise.all([
+      this.robotSchema.findOne({ nickname: robot.nickname }),
+      this.robotSchema.findOne({ serialNumber: robot.serialNumber }),
+    ]);
 
-    if(existingNickname != null || existingSerialNumber != null){
-        throw new Error('Nickname or serial number already exist.');
+    if (existingNickname || existingSerialNumber) {
+      throw new Error('Nickname or serial number already exist.');
     }
+
+    const robotDocument = await this.robotSchema.findOne(query);
 
     try{
       if(robotDocument === null){
@@ -45,6 +48,16 @@ export default class RobotRepo implements IRobotRepo {
     }catch(err){
       throw err;
     }
+  }
 
+  public async findById (id : string): Promise <Robot> {
+    const query = {domainId: id};
+    const robotRecord = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
+
+    if (robotRecord != null){
+      return RobotMap.toDomain(robotRecord);
+    }else {
+      return null;
+    }
   }
 }

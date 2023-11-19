@@ -13,29 +13,53 @@ export default (app: Router) => {
     route.post(
         '/create',
         celebrate({
-        body: Joi.object({
-            name: Joi.string().required(),
-            building: Joi.string().required(),
-            description: Joi.string().required(),
-            hall: Joi.string().required(),
-            room: Joi.number().required(),
-            floorMap: Joi.string().required(),
-            hasElevator: Joi.boolean().required(),
-        }),
-        }),
-        (req, res, next) => ctrl.createFloor(req, res, next)
-    );
+            body: Joi.object({
+                id: Joi.string().required(),
+                building: Joi.object({
+                    id: Joi.string().required(),
+                    name: Joi.string().required(),
+                    localizationoncampus: Joi.string().required(),
+                    floors: Joi.number().required(),
+                    lifts: Joi.number().required(),
+                    maxCel: Joi.array().items(Joi.number().required()).required(),
+                }),
+                name: Joi.string().required(),
+                description: Joi.string().required(),
+                hall: Joi.string().required(),
+                room: Joi.number().required(),
+                floorMap: Joi.string().required(),
+                hasElevator: Joi.boolean().required(),
+                passages: Joi.array().items(Joi.object({
+                    id: Joi.string().required(),
+                    name: Joi.string().required(),
+                    description: Joi.string().required(),
+                    hall: Joi.string().required(),
+                    room: Joi.number().required(),
+                    floorMap: Joi.string().required(),
+                    hasElevator: Joi.boolean().required()
+                }))
+            }),
+        }), (req, res, next) => ctrl.createFloor(req, res, next));
+
   route.put(
     '/updateFloor',
     celebrate({
         body: Joi.object({
             id: Joi.string().required(),
+            building: Joi.object({
+                id: Joi.string().required(),
+                name: Joi.string().required(),
+                localizationoncampus: Joi.string().required(),
+                floors: Joi.number().required(),
+                lifts: Joi.number().required(),
+                maxCel: Joi.array().items(Joi.number().required()).required(),
+            }),
             name: Joi.string().required(),
             description: Joi.string().required(),
             hall: Joi.string().required(),
             room: Joi.number().required(),
             floorMap: Joi.string().required(),
-            hasElevator: Joi.string().required(),
+            hasElevator: Joi.boolean().required(),
             passages: Joi.array().items(Joi.object({
                 id: Joi.string().required(),
                 name: Joi.string().required(),
@@ -44,7 +68,7 @@ export default (app: Router) => {
                 room: Joi.number().required(),
                 floorMap: Joi.string().required(),
                 hasElevator: Joi.boolean().required()
-            })).required()
+            }))
         }),
     }), (req, res, next) => ctrl.updateFloor(req, res, next));
 

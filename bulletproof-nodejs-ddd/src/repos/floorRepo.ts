@@ -30,18 +30,14 @@ export default class FloorRepo implements IFloorRepo {
     }
   }
   
-
-
   public async save (floor: Floor): Promise<Floor> {
    const query = {domainId : floor.id.toString()};
    const floorDocument = await this.floorSchema.findOne(query);
     try {
       if(floorDocument === null){
-
-
-      const rawFloor: any = FloorMap.toPersistence(floor);
-      const floorCreated = await this.floorSchema.create(rawFloor);
-      return FloorMap.toDomain(floorCreated);
+        const rawFloor: any = FloorMap.toPersistence(floor);
+        const floorCreated = await this.floorSchema.create(rawFloor);
+        return FloorMap.toDomain(floorCreated);
       } else {
         floorDocument.name = floor.name;
         floorDocument.description = floor.description;

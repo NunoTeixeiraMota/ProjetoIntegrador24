@@ -36,6 +36,10 @@ export class Robot extends AggregateRoot<RobotProps> {
     return this.props.isActive;
   }
 
+  set isActive ( value: boolean) {
+    this.props.isActive = value;
+  }
+
   private constructor(props: RobotProps, id?: UniqueEntityID) {
     super(props, id);
   }

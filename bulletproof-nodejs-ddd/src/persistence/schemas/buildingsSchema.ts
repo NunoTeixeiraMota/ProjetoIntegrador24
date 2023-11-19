@@ -1,5 +1,5 @@
 import { IBuildingsPersistence } from '../../dataschema/IBuildingsPersistence';
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const BuildingsSchema = new mongoose.Schema(
   {
@@ -31,10 +31,6 @@ const BuildingsSchema = new mongoose.Schema(
       default: 0,
       min: [1, 'At least one cel is required'],
     },
-    floorOnBuilding: [{
-      type: Schema.Types.ObjectId,
-      ref: 'floor',
-    }],
   },
   { timestamps: true }
 );

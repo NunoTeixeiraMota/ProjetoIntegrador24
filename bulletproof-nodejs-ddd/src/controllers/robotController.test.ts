@@ -30,7 +30,7 @@ describe('RobotController (Integration Test)', function () {
         "id": 123,
         "designation": "robolindo",
         "brand": "Croissants",
-        "model": "do Lidl",
+        "modelRobot": "do Lidl",
         "task": 2
     };
     
@@ -50,7 +50,7 @@ describe('RobotController (Integration Test)', function () {
       "id": req.body.id,
       "designation": req.body.designation,
       "brand": req.body.brand,
-      "model": req.body.model,
+      "modelRobot": req.body.modelRobot,
       "task": req.body.task
     };
 
@@ -58,7 +58,7 @@ describe('RobotController (Integration Test)', function () {
       "id": req.body.id,
       "designation": req.body.designation,
       "brand": req.body.brand,
-      "model": req.body.model,
+      "modelRobot": req.body.modelRobot,
       "task": req.body.task
     }));
 
@@ -76,7 +76,7 @@ describe('RobotController (Integration Test)', function () {
         "id": 123,
         "designation": "robolindo",
         "brand": "Croissants",
-        "model": "do Lidl",
+        "modelRobot": "do Lidl",
         "task": 2
     };
 

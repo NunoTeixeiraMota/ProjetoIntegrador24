@@ -3,9 +3,8 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { Result } from "../core/logic/Result";
 import { Building } from "./building";
-    
-    
-    interface FloorProps {
+      
+  interface FloorProps {
     building: Building;
     name: string;
     description: string;
@@ -27,7 +26,7 @@ import { Building } from "./building";
       this.props.name = value;
     }
     get building(): Building {
-      return this.building;
+      return this.props.building;
     }
     set building ( value: Building) { 
       this.props.building = value;
@@ -89,6 +88,5 @@ import { Building } from "./building";
       const floor = new Floor(FloorProps,id);
       return Result.ok<Floor>(floor);
     }
-    
   }
 }

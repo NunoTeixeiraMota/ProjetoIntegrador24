@@ -5,7 +5,7 @@ import { Result } from "../core/logic/Result";
 interface RobotTypeProps {
   designation: string;
   brand: string;
-  model: string;
+  modelRobot: string;
   task: number; //0 - vigilance 1 - pickup & delivery 2 - both
 }
 
@@ -22,8 +22,8 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     return this.props.brand;
   }
 
-  get model(): string {
-    return this.props.model;
+  get modelRobot(): string {
+    return this.props.modelRobot;
   }
 
   get task(): number {
@@ -35,15 +35,15 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
   }
 
   public static create(robotTypeProps: RobotTypeProps, id?: UniqueEntityID): Result<RobotType> {
-    const { designation, brand, model, task} = robotTypeProps;
+    const { designation, brand, modelRobot, task} = robotTypeProps;
 
     if (!designation || designation.length === 0) {
       return Result.fail<RobotType>("Must provide a designation for the robot type");
-    } else if (!task || task < 0 || task > 2) {
+    } else if (task < 0 || task > 3) {
       return Result.fail<RobotType>("Must provide a valid task");
     } else if (!brand || brand.length === 0) {
       return Result.fail<RobotType>("Must provide the brand of the robot");
-    } else if (!model || model.length === 0) {
+    } else if (!modelRobot || modelRobot.length === 0) {
       return Result.fail<RobotType>("Must provide the model of the robot");
     } else {
       const robotType = new RobotType(robotTypeProps, id);

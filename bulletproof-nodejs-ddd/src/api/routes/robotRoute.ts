@@ -20,8 +20,8 @@ export default (app: Router) => {
           type: Joi.object({id: Joi.string().required(),
                             designation: Joi.string().required(),
                             brand: Joi.string().required(),
-                            model: Joi.string().required(),
-                            task: Joi.string().required()
+                            modelRobot: Joi.string().required(),
+                            task: Joi.number().required()
                         }),
           serialNumber: Joi.string().required(),
           description: Joi.string().required(),
@@ -35,7 +35,7 @@ export default (app: Router) => {
             id: Joi.string().required(),
             designation: Joi.string().required(),
             brand: Joi.string().required(),
-            model: Joi.string().required(),
+            modelRobot: Joi.string().required(),
             task: Joi.number().required()
           }),
         }),(req,res,next) => ctrl.createRobotType(req,res,next));
