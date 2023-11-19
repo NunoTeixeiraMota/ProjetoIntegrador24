@@ -7,15 +7,12 @@ import { Result } from '../src/core/logic/Result';
 import BuildingsController from '../src/controllers/buildingsController';
 import IBuildingService from '../src/services/IServices/IBuildingsService';
 import {Building} from '../src/domain/building';
-
-import { FloorId } from '../src/domain/floorId';
-import { Floor } from '../src/domain/floor';
 import { FloorMap } from '../src/mappers/FloorMap';
 import IFloorDTO from '../src/dto/IFloorDTO';
 
 describe('BuildingsController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
-  const building: IBuildingDTO = {
+  const building = {
     "id": "123",
     "name": "Building 123", // Make sure 'name' is defined
     "localizationoncampus": "Campus XYZ",
@@ -25,7 +22,7 @@ describe('BuildingsController (Unit Test)', function () {
   };
   const floorDataPassage: IFloorDTO = {
     "id": "456",
-    "building": building,
+    "building": Building.create(building).getValue(),
     "name": "Floor 456",
     "description": "This floor offers a beautiful view of the city skyline.",
     "hall": "Main Hall",
@@ -267,7 +264,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockPassageFloorDTOs: IFloorDTO[] = [
         {
             id: 'passage1',
-            building: building,
+            building: Building.create(building).getValue(),
             name: 'Passage 1',
             description: 'Description for Passage 1',
             hall: 'Hall X',
@@ -278,7 +275,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: 'passage2',
-            building: building,
+            building: Building.create(building).getValue(),
             name: 'Passage 2',
             description: 'Description for Passage 2',
             hall: 'Hall Y',
@@ -295,7 +292,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockFloorsWithPassagesDTO: IFloorDTO[] = [
         {
             id: '1',
-            building: building,
+            building: Building.create(building).getValue(),
             name: 'Floor 1 with Passage',
             description: 'Description for Floor 1',
             hall: 'Hall A',
@@ -306,7 +303,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: '3',
-            building: building,
+            building: Building.create(building).getValue(),
             name: 'Floor 3',
             description: 'Description for Floor 3',
             hall: 'Hall C',

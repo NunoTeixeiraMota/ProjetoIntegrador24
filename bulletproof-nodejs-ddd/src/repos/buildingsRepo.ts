@@ -80,7 +80,6 @@ export default class BuildingsRepo implements IBuildingsRepo {
         const buildingCreated = await this.buildingsSchema.create(rawBuilding) as unknown as IBuildingDTO;
         return BuildingsMap.toDomain(buildingCreated);
       } else {
-        const FloorsDTO = 
         buildingDocument.name = building.name;
         buildingDocument.localizationoncampus = building.localizationoncampus;
         buildingDocument.floors = building.floors;
@@ -115,6 +114,4 @@ export default class BuildingsRepo implements IBuildingsRepo {
       throw err;
     }
   }
-  
-
 }

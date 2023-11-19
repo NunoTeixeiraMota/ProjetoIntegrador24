@@ -10,6 +10,7 @@ import IFloorDTO from '../dto/IFloorDTO';
 import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
 import IBuildingDTO from '../dto/IBuildingDTO';
+import { Building } from '../domain/building';
 
 describe('FloorController (Integration Test)', function () {
   beforeEach(function () {
@@ -163,7 +164,7 @@ describe('FloorController (Integration Test)', function () {
     };
     const floorData: IFloorDTO = {
       "id": "123",
-      "building": building,
+      "building": Building.create(building).getValue(),
       "name": "Floor 123",
       "description": "Welcome to floor 123",
       "hall": "dadad",
@@ -175,7 +176,7 @@ describe('FloorController (Integration Test)', function () {
   
     const floorDataPassage: IFloorDTO = {
       "id": "456",
-      "building": building,
+      "building": Building.create(building).getValue(),
       "name": "Floor 456",
       "description": "This floor offers a beautiful view of the city skyline.",
       "hall": "Main Hall",

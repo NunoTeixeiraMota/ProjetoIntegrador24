@@ -11,10 +11,11 @@ import roomController from '../controllers/roomController';
 import IBuildingDTO from '../dto/IBuildingDTO';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
+import { Building } from '../domain/building';
 
 describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
-    const building: IBuildingDTO = {
+    const building = {
         "id": "123",
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
@@ -24,7 +25,7 @@ describe('RoomRepo', () => {
       };
     const floorDataPassage: IFloorDTO = {
         "id": "456",
-        "building": building,
+        "building": Building.create(building).getValue(),
         "name": "Floor 456",
         "description": "This floor offers a beautiful view of the city skyline.",
         "hall": "Main Hall",
@@ -82,7 +83,6 @@ describe('RoomRepo', () => {
   });
 
   it('should save a room with valid data', async () => {
-        let floorIds: FloorId[] = [new FloorId(1), new FloorId(2), new FloorId(3)];
         const buildingData = {
             "id": "123",
             "name": "Building 123",
@@ -114,7 +114,7 @@ describe('RoomRepo', () => {
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
             "id": floorData.id,
-            "building": building,
+            "building": Building.create(buildingData).getValue(),
             "name": floorData.name,
             "description": floorData.description,
             "hall": floorData.hall,

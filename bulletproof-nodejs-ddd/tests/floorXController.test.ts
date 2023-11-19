@@ -6,9 +6,9 @@ import IFloorDTO from '../src/dto/IFloorDTO';
 import { Result } from '../src/core/logic/Result';
 import FloorController from '../src/controllers/floorController';
 import IFloorService from '../src/services/IServices/IFloorService';
-import { Floor } from '../src/domain/floor';
 import {FloorMap} from '../src/mappers/FloorMap';
 import IBuildingDTO from '../src/dto/IBuildingDTO';
+import { Building } from '../src/domain/building';
 
 describe('FloorController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
@@ -159,7 +159,7 @@ describe('FloorController (Unit Test)', function () {
   });
   it('addPassages: returns JSON with added passages data', async function () {
     const floorServiceInstance = Container.get("FloorService");
-    const building: IBuildingDTO = {
+    const building = {
       "id": "123",
       "name": "Building 123", // Make sure 'name' is defined
       "localizationoncampus": "Campus XYZ",
@@ -169,7 +169,7 @@ describe('FloorController (Unit Test)', function () {
     };
     const floorData: IFloorDTO = {
       "id": "123",
-      "building": building,
+      "building": Building.create(building).getValue(),
       "name": "Floor 123",
       "description": "Welcome to floor 123",
       "hall": "dadad",
@@ -181,7 +181,7 @@ describe('FloorController (Unit Test)', function () {
   
     const floorDataPassage: IFloorDTO = {
       "id": "456",
-      "building": building,
+      "building": Building.create(building).getValue(),
       "name": "Floor 456",
       "description": "This floor offers a beautiful view of the city skyline.",
       "hall": "Main Hall",

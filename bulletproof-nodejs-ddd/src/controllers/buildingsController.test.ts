@@ -10,6 +10,7 @@ import buildingService from '../services/buildingsService';
 import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
+import { Building } from '../domain/building';
 
 describe('BuildingsController (Integration Test)', function () {
     beforeEach(function () {
@@ -144,7 +145,7 @@ describe('BuildingsController (Integration Test)', function () {
     });
     
     it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
-      const building : IBuildingDTO= {
+      const building = {
         "id": "123",
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
@@ -152,7 +153,7 @@ describe('BuildingsController (Integration Test)', function () {
         "lifts": 2,
         "maxCel": [1,2],
       };
-      const building2 : IBuildingDTO= {
+      const building2 = {
         "id": "1234",
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
@@ -164,7 +165,7 @@ describe('BuildingsController (Integration Test)', function () {
       const mockPassageFloorDTOs: IFloorDTO[] = [
           {
               id: 'passage1',
-              building: building,
+              building: Building.create(building).getValue(),
               name: 'Passage 1',
               description: 'Description for Passage 1',
               hall: 'Hall X',
@@ -175,7 +176,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: 'passage2',
-              building: building,
+              building: Building.create(building).getValue(),
               name: 'Passage 2',
               description: 'Description for Passage 2',
               hall: 'Hall Y',
@@ -192,7 +193,7 @@ describe('BuildingsController (Integration Test)', function () {
       const mockFloorsWithPassagesDTO: IFloorDTO[] = [
           {
               id: '1',
-              building: building2,
+              building: Building.create(building2).getValue(),
               name: 'Floor 1 with Passage',
               description: 'Description for Floor 1',
               hall: 'Hall A',
@@ -203,7 +204,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: '3',
-              building: building2,
+              building: Building.create(building2).getValue(),
               name: 'Floor 3',
               description: 'Description for Floor 3',
               hall: 'Hall C',
