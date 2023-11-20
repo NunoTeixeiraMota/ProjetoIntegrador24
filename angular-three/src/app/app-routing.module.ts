@@ -9,9 +9,9 @@ import { CreateFloorComponent } from './component/create-floor.component/create-
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
   { path: 'create-building', component: CreateBuildingComponent },
-  {path: 'create-floor', component: CreateFloorComponent},
-  { path: 'createRoom', component: CreateRoomComponent },
-  { path: 'mainMenu', component: MainMenuComponent },
+  { path: 'create-floor', component: CreateFloorComponent},
+  { path: 'create-room', component: CreateRoomComponent },
+  { path: 'main-menu', component: MainMenuComponent },
 ];
 
 @NgModule({
