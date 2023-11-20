@@ -55,13 +55,6 @@ export default class robotService implements IRobotService {
 
       await this.robotTypeRepo.save(robotTypeResult);
 
-      const robotTypeDTOResult = {
-        designation: robotTypeResult.designation,
-        brand: robotTypeResult.brand,
-        modelRobot: robotTypeResult.modelRobot,
-        task: robotTypeResult.task
-      };
-
       return Result.ok<IRobotTypeDTO>(robotTypeDTO);
     } catch (e) {
       console.error(e);
