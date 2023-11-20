@@ -25,6 +25,7 @@ export default (app: Router) => {
                         }),
           serialNumber: Joi.string().required(),
           description: Joi.string().required(),
+          isActive: Joi.boolean()
         }),
       }), (req,res,next) => ctrl.addRobot(req,res,next));
 

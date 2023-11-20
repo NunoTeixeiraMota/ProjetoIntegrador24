@@ -13,7 +13,6 @@ export class CreateRoomComponent implements OnInit {
 
   room = {
     id: "",
-    building: {id: "",name: "",localizationoncampus: "",floors: 0,lifts: 0,maxCel: [0, 0]},
     floor: {id: "",name: "",description: "",hall: "",room: 0,floorMap: "",hasElevator: true,building: {id: "",name: "",localizationoncampus: "",floors: 0,lifts: 0,maxCel: [0, 0]},passages: []},
     name: "",
     category: RoomCategory.Gabinete,

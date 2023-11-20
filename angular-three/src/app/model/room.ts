@@ -11,7 +11,6 @@ export enum RoomCategory {
 
 export default interface Room {
   id: string;
-  building: Building;
   floor: Floor;
   name: string;
   category: RoomCategory;

@@ -3,22 +3,22 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Location } from '@angular/common';
 import { MessageService } from 'src/app/service/message/message.service';
 import { of, throwError } from 'rxjs';
-import { RoomCreateComponent } from './createRoom.component';
+import { CreateRoomComponent } from './createRoom.component';
 import { RoomCategory } from 'src/app/model/room';
 import Room from 'src/app/model/room';
 
-describe('RoomCreateComponent', () => {
-  let component: RoomCreateComponent;
-  let fixture: ComponentFixture<RoomCreateComponent>;
+describe('CreateRoomComponent', () => {
+  let component: CreateRoomComponent;
+  let fixture: ComponentFixture<CreateRoomComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ RoomCreateComponent ]
+      declarations: [ CreateRoomComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RoomCreateComponent);
+    fixture = TestBed.createComponent(CreateRoomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -33,7 +33,6 @@ describe('RoomCreateComponent', () => {
 
     let room: Room = {
         id: "1",
-        building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},
         floor: {id: "3",name: "a",building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []},
         name: "a",
         category: RoomCategory.Gabinete,
@@ -53,10 +52,9 @@ describe('RoomCreateComponent', () => {
       }
     }));
 
-    component = new RoomCreateComponent(fakeLocation,fakeService,fakeMessageService);
+    component = new CreateRoomComponent(fakeLocation,fakeService,fakeMessageService);
 
     component.room.id = "1";
-    component.room.building = {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]};
     component.room.floor = {id: "3",name: "a",building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []};
     component.room.name = "a";
     component.room.category = RoomCategory.Gabinete;
@@ -81,7 +79,7 @@ describe('RoomCreateComponent', () => {
       }
     }));
 
-    component = new RoomCreateComponent(fakeLocation,fakeService,fakeMessageService);
+    component = new CreateRoomComponent(fakeLocation,fakeService,fakeMessageService);
 
     component.createRoom();
 

@@ -16,13 +16,6 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
           id: Joi.string().required(),
-          building: Joi.object({
-              id: Joi.string().required(),
-              localizationoncampus: Joi.string().required(),
-              floors: Joi.number().required(),
-              lifts: Joi.number().required(),
-              maxCel: Joi.array().items(Joi.number().required()).required(),
-          }),
           floor: Joi.object({
               id: Joi.string().required(),
               building: Joi.object({
@@ -38,7 +31,7 @@ export default (app: Router) => {
               room: Joi.number().required(),
               floorMap: Joi.string().required(),
               hasElevator: Joi.boolean().required(),
-          }),
+          }).required,
           name: Joi.string().required(),
           category: Joi.string().required(),
           description: Joi.string().required(),
