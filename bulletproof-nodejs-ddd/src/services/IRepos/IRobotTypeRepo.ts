@@ -3,5 +3,6 @@ import { RobotType } from "../../domain/robotType";
 
 export default interface IRobotTypeRepo extends Repo<RobotType> {
   save(robotType: RobotType): Promise<RobotType>;
-  findByDesignation(designation: string): Promise<RobotType>;
+  findById(id: string): Promise<RobotType>;
+  findByDesignation(des: string): Promise<RobotType>;
 }

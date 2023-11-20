@@ -34,7 +34,7 @@ export default class robotService implements IRobotService {
 
   public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
-      const existingRobotType = await this.robotTypeRepo.findByDesignation(robotTypeDTO.designation);
+      const existingRobotType = await this.robotTypeRepo.findById(robotTypeDTO.id);
 
       if (existingRobotType) {
         return Result.fail<IRobotTypeDTO>('Robot type with the same designation already exists');
@@ -52,9 +52,7 @@ export default class robotService implements IRobotService {
       }
 
       const robotTypeResult = robotTypeOrError.getValue();
-
       await this.robotTypeRepo.save(robotTypeResult);
-
       return Result.ok<IRobotTypeDTO>(robotTypeDTO);
     } catch (e) {
       console.error(e);
@@ -64,10 +62,11 @@ export default class robotService implements IRobotService {
 
   public async addRobot(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
     try {
+      const type = await this.robotTypeRepo.findById(robot.id);
       const robotOrError = Robot.create({
         nickname: robot.nickname,
         isActive: robot.isActive,
-        type: robot.type,
+        type: type,
         serialNumber: robot.serialNumber,
         description: robot.description
       });
@@ -79,16 +78,7 @@ export default class robotService implements IRobotService {
       const robotResult = robotOrError.getValue();
       await this.robotRepo.save(robotResult);
 
-      const robotDTOResult = {
-        id: robotResult.id.toString(),
-        isActive: robotResult.isActive,
-        nickname: robotResult.nickname,
-        type: robotResult.type,
-        serialNumber: robotResult.serialNumber,
-        description: robotResult.description
-      };
-
-      return Result.ok<IRobotDTO>(robotDTOResult);
+      return Result.ok<IRobotDTO>(RobotMap.toDTO(robotResult));
     } catch (e) {
       console.error(e);
       throw e;
