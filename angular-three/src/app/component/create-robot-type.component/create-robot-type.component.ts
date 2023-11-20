@@ -1,28 +1,26 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { MessageService } from 'src/app/service/message/message.service';
-import { RoomService } from 'src/app/service/Room/Room.service';
-import { RoomCategory } from 'src/app/model/room';
+import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 
 @Component({
-  selector: 'app-room-create',
-  templateUrl: './create-room.component.html',
-  styleUrls: ['./create-room.component.css']
+  selector: 'app-robot-type-create',
+  templateUrl: './create-robot-type.component.html',
+  styleUrls: ['./create-robot-type.component.css']
 })
-export class CreateRoomComponent implements OnInit {
+export class CreateRobotTypeComponent implements OnInit {
 
-  room = {
+  robotType = {
     id: "Identifier",
-    floor: {id: "Identifier",name: "Name",description: "Description",hall: "Hall",room: 0,floorMap: "Floor Map",hasElevator: true,building: {id: "Identifier",name: "Name",localizationoncampus: "Localization On Campus",floors: 0,lifts: 0,maxCel: [0, 0]},passages: []},
-    name: "Name",
-    category: RoomCategory.Gabinete,
-    description: "Description",
-    dimension: [0, 0]
-  };
+    designation: "Designation",
+    brand: "Brand",
+    modelRobot: "Robot Model",
+    task: 0
+};
 
   constructor(
     private location: Location,
-    private RoomService: RoomService,
+    private robotService: RobotService,
     private messageService: MessageService
   ) { }
 
@@ -31,8 +29,8 @@ export class CreateRoomComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createRoom() {
-    let errorOrSuccess: any = this.RoomService.createRoom(this.room);
+  createRobotType() {
+    let errorOrSuccess: any = this.robotService.createRobot(this.robotType);
 
     errorOrSuccess.subscribe(
       (data: any) => {

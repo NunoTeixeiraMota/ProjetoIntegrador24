@@ -63,7 +63,7 @@ describe('CreateRoomComponent', () => {
 
     component.createRoom();
 
-    expect(fakeService.createWarehouse).toHaveBeenCalled();
+    expect(fakeService.createRoom).toHaveBeenCalled();
     expect(component.finalMessage).toBe("Success warehouse creation!");
   })
 
@@ -83,7 +83,7 @@ describe('CreateRoomComponent', () => {
 
     component.createRoom();
 
-    expect(fakeService.createWarehouse).toHaveBeenCalled();
+    expect(fakeService.createRoom).toHaveBeenCalled();
     expect(component.finalMessage).toBe("error");
   })
 });

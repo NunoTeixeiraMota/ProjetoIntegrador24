@@ -12,6 +12,7 @@ import { CreateBuildingComponent } from './component/create-building.component/c
 import { CreateFloorComponent } from './component/create-floor.component/create-floor.component';
 import { CreateLiftComponent } from './component/create-lift.component/create-lift.component';
 import { UpdateBuildingComponent } from './component/update-building.component/update-building.component';
+import { ListBuildingsComponent } from './component/list-buildings.component/list-buildings.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UpdateBuildingComponent } from './component/update-building.component/u
     CreateFloorComponent,
     CreateLiftComponent,
     UpdateBuildingComponent,
+    ListBuildingsComponent,
     // ... any other components
   ],
   imports: [
