@@ -14,6 +14,7 @@ export default (app: Router) => {
     '/create',
     celebrate({
       body: Joi.object({
+        id: Joi.string().required(),
         name: Joi.string().required(),
         localizationoncampus: Joi.string().required(),
         floors: Joi.number().required(),

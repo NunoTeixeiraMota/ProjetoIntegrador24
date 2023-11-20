@@ -45,7 +45,6 @@ export default class BuildingService implements IBuildingService {
       return buildingsInRange;
     } catch (error) {
       console.log(error)
-      // Handle any errors that occur during the operation, e.g., database errors.
       throw error;
     }
   }
@@ -54,11 +53,8 @@ export default class BuildingService implements IBuildingService {
       const buildingID = new BuildingId(buildingDTO.id);
       try {
           const buildingDocument = await this.buildingsRepo.findByDomainId(buildingID);
-          
           await this.buildingsRepo.save(buildingDocument);
-  
           const BDTOP = BuildingsMap.toDTO(buildingDocument);
-  
           return Result.ok(BDTOP);
       } catch (error) {
           return Result.fail<IBuildingDTO>("Failed to update building");
@@ -77,7 +73,6 @@ export default class BuildingService implements IBuildingService {
       if (found) {
         return Result.fail<IBuildingDTO>('Building with the same name already exists');
       }
-      // create an array called FloorsDTO as an array of FloorDTO
 
       const building = await BuildingsMap.toDomain(buildingDTO);
       if (building == null) {
@@ -100,6 +95,7 @@ export default class BuildingService implements IBuildingService {
       throw err;
     }
   }
+
   //TODO
   async getAllFloorsInBuilding(buildingId: BuildingId): Promise<IFloorDTO[]> {
     try {
@@ -112,10 +108,8 @@ export default class BuildingService implements IBuildingService {
       const floorsInBuildingDTO: IFloorDTO[] = [];
       return floorsInBuildingDTO;
     } catch (err) {
-      throw err; // Handle or log errors here
+      throw err;
     }
-
-
   }
 }
 
