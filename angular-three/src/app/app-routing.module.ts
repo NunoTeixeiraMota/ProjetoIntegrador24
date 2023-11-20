@@ -7,6 +7,7 @@ import { CreateBuildingComponent } from './component/create-building.component/c
 import { CreateFloorComponent } from './component/create-floor.component/create-floor.component';
 import { UpdateBuildingComponent } from './component/update-building.component/update-building.component';
 import { CreateLiftComponent } from './component/create-lift.component/create-lift.component';
+import {ListBuildingsComponent} from './component/list-buildings.component/list-buildings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'main-menu', component: MainMenuComponent },
   { path: 'update-building', component: UpdateBuildingComponent },
   { path: 'create-lift', component: CreateLiftComponent },
+  { path: 'list-buildings', component: ListBuildingsComponent },
 ];
 
 @NgModule({
