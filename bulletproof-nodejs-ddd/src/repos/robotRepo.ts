@@ -3,7 +3,7 @@ import { Model, Document, FilterQuery } from 'mongoose';
 import IRobotPersistance from '../dataschema/IRobotPersistance';
 import { Robot } from '../domain/robot';
 import { RobotMap } from '../mappers/robotMap';
-import IRobotRepo from '../services/IRepos/IRobotRepo';
+import IRobotRepo from './IRepos/IRobotRepo';
 
 @Service()
 export default class RobotRepo implements IRobotRepo {

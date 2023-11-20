@@ -1,6 +1,6 @@
 import { Service, Inject } from 'typedi';
 import { Document, FilterQuery, Model } from 'mongoose';
-import ILiftRepo from '../services/IRepos/ILiftRepo';
+import ILiftRepo from './IRepos/ILiftRepo';
 import { Lift } from '../domain/lift';
 import { liftId } from '../domain/liftID';
 import { LiftMap } from '../mappers/LiftMap';

@@ -3,7 +3,7 @@ import { Service, Inject } from 'typedi';
 import { Document, Model } from 'mongoose';
 import { IUserPersistence } from '../dataschema/IUserPersistence';
 
-import IUserRepo from "../services/IRepos/IUserRepo";
+import IUserRepo from "./IRepos/IUserRepo";
 import { User } from "../domain/user";
 import { UserId } from "../domain/userId";
 import { UserEmail } from "../domain/userEmail";

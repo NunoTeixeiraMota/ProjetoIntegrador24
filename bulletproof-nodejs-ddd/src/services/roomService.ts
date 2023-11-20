@@ -1,12 +1,12 @@
 import { Service, Inject } from 'typedi';
 import config from "../../config";
 import { Result } from "../core/logic/Result";
-import IRoomRepo from './IRepos/IRoomRepo';
+import IRoomRepo from '../repos/IRepos/IRoomRepo';
 import { room } from '../domain/room';
 import { roomMap } from '../mappers/roomMap';
 import IRoomService from './IServices/IRoomService';
 import IRoomDTO from '../dto/IRoomDTO';
-import IFloorRepo from './IRepos/IFloorRepo';
+import IFloorRepo from '../repos/IRepos/IFloorRepo';
 
 @Service()
 export default class roomService implements IRoomService {

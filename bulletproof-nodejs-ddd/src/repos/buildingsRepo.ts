@@ -6,7 +6,7 @@ import { BuildingsMap } from "../mappers/BuildingsMap";
 
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IBuildingsPersistence } from '../dataschema/IBuildingsPersistence';
-import IBuildingsRepo from '../services/IRepos/IBuildingsRepo';
+import IBuildingsRepo from './IRepos/IBuildingsRepo';
 import IBuildingDTO from '../dto/IBuildingDTO';
 
 @Service()
