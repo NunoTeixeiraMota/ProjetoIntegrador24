@@ -3,7 +3,7 @@ import { BuildingService } from '../../service/Building/building.service'
 
 @Component({
   selector: 'app-update-building',
-  templateUrl: './update-building.component.html',
+  templateUrl:  './update-building.component.html',
   styleUrls: ['./update-building.component.css']
 })
 export class UpdateBuildingComponent {
