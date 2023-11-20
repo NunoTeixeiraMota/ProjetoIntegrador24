@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Location } from '@angular/common';
 import { MessageService } from 'src/app/service/message/message.service';
 import { of, throwError } from 'rxjs';
-import { CreateRoomComponent } from './createRoom.component';
+import { CreateRoomComponent } from './create-room.component';
 import { RoomCategory } from 'src/app/model/room';
 import Room from 'src/app/model/room';
 

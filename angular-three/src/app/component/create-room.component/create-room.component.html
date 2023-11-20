@@ -1,0 +1,89 @@
+<h1>Create a Room</h1>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th><label>Room Identifier: </label></th>
+        <th><input [(ngModel)]="room.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Room Name: </label></th>
+        <th><input [(ngModel)]="room.name" /></th>
+      </tr>
+      <tr>
+        <th><label>Category: </label></th>
+        <th><input [(ngModel)]="room.category" /></th>
+      </tr>
+      <tr>
+        <th><label>Room Description: </label></th>
+        <th><input [(ngModel)]="room.description" /></th>
+      </tr>
+      <tr>
+        <th><label>Room Dimension: </label></th>
+        <th><input [(ngModel)]="room.dimension" /></th>
+      </tr>
+      <h3>Room Floor</h3>
+      <tr>
+        <th><label>Floor Identifier: </label></th>
+        <th><input [(ngModel)]="room.floor.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Floor Name: </label></th>
+        <th><input [(ngModel)]="room.floor.name" /></th>
+      </tr>
+      <tr>
+        <th><label>Floor Description: </label></th>
+        <th><input [(ngModel)]="room.floor.description" /></th>
+      </tr>
+      <tr>
+        <th><label>Hall: </label></th>
+        <th><input [(ngModel)]="room.floor.hall" /></th>
+      </tr>
+      <tr>
+        <th><label>Room: </label></th>
+        <th><input [(ngModel)]="room.floor.room" /></th>
+      </tr>
+      <tr>
+        <th><label>Floor Map: </label></th>
+        <th><input [(ngModel)]="room.floor.floorMap" /></th>
+      </tr>
+      <tr>
+        <th><label>Has Elevator: </label></th>
+        <th><input [(ngModel)]="room.floor.hasElevator" /></th>
+      </tr>
+      <tr>
+        <th><label>Passages: </label></th>
+        <th><input [(ngModel)]="room.floor.passages" /></th>
+      </tr>
+      <h3>Floor Building</h3>
+      <tr>
+        <th><label>Building Identifier: </label></th>
+        <th><input [(ngModel)]="room.floor.building.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Name: </label></th>
+        <th><input [(ngModel)]="room.floor.building.name" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Localization: </label></th>
+        <th><input [(ngModel)]="room.floor.building.localizationoncampus" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Floors: </label></th>
+        <th><input [(ngModel)]="room.floor.building.floors" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Lifts: </label></th>
+        <th><input [(ngModel)]="room.floor.building.lifts" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Maximum Cels: </label></th>
+        <th><input [(ngModel)]="room.floor.building.maxCel" /></th>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <button class="buttonBack" (click)="goBack()">Back</button>
+    <button (click)="createRoom()">Create</button>
+  </div>
+</div>

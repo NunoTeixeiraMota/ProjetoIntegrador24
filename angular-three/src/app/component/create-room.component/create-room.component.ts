@@ -6,8 +6,8 @@ import { RoomCategory } from 'src/app/model/room';
 
 @Component({
   selector: 'app-room-create',
-  templateUrl: './createRoom.component.html',
-  styleUrls: ['./CreateRoom.component.css']
+  templateUrl: './create-room.component.html',
+  styleUrls: ['./create-room.component.css']
 })
 export class CreateRoomComponent implements OnInit {
 
