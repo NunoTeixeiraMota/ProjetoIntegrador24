@@ -36,12 +36,9 @@ export default class RoomRepo implements IRoomRepo {
 
         try {
             if (existingId === null && existingName === null) {
-                const roomBuildingId = room.building().id;
                 const roomFloorId = room.floor().id;
-
                 const roomsSameFloor = await this.roomSchema.find({
                     $and: [
-                        { 'building.id': roomBuildingId },
                         { 'floor.id': roomFloorId },
                     ],
                 });
@@ -52,7 +49,6 @@ export default class RoomRepo implements IRoomRepo {
                     const isOverlap = roomInstances.some((otherRoom) => {
                         const tempRoom = {
                             id: otherRoom.id,
-                            building: otherRoom.building,
                             floor: otherRoom.floor,
                             name: otherRoom.name,
                             category: otherRoom.category,

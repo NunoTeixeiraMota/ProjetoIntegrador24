@@ -7,7 +7,6 @@ export class roomMap extends Mapper<room> {
   public static toDTO(room: room): IRoomDTO {
     return {
       id: room.id.toString(),
-      building: room.building(),
       floor: room.floor(),
       name: room.name.toString(),
       category: room.category(),
@@ -18,7 +17,6 @@ export class roomMap extends Mapper<room> {
 
   public static async toDomain(dto: IRoomDTO): Promise<room> {
     const roomTypeOrError = room.create({
-      building: dto.building,
       floor: dto.floor,
       name: dto.name,
       category: dto.category,
@@ -34,7 +32,6 @@ export class roomMap extends Mapper<room> {
   public static toPersistence(room: room): IRoomDTO {
     return {
       id: room.id.toString(),
-      building: room.building(),
       floor: room.floor(),
       name: room.name.toString(),
       category: room.category(),

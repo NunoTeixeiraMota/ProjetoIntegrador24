@@ -40,8 +40,8 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
 
   }
   
-  async findById(id: string): Promise<RobotType> {
-    const query = {domainId: id};
+  async findById(robotTypeId: string): Promise<RobotType> {
+    const query = {id: robotTypeId};
     const robotTypeRecord = await this.robotTypeSchema.findOne(query as FilterQuery<IRobotTypePersistance & Document>);
 
     if(robotTypeRecord != null){

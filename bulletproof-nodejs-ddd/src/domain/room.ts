@@ -12,7 +12,6 @@ export enum RoomCategory {
 }
 
 interface RoomProps {
-    building: Building;
     floor: Floor;
     name: string;
     category: RoomCategory;
@@ -23,10 +22,6 @@ interface RoomProps {
 export class room extends AggregateRoot<RoomProps> {
   get id(): UniqueEntityID {
     return this.id;
-  }
-
-  public building(): Building {
-    return this.props.building;
   }
 
   public floor(): Floor {
@@ -54,11 +49,9 @@ export class room extends AggregateRoot<RoomProps> {
   }
 
   public static create(roomProps: RoomProps, id?: UniqueEntityID): Result<room> {
-      const { building, floor, name, category, description, dimension} = roomProps;
+      const { floor, name, category, description, dimension} = roomProps;
 
-      if (!building) {
-        return Result.fail<room>("Must provide a valid building");
-      } else if (!floor) {
+      if (!floor) {
         return Result.fail<room>("Must provide a valid floor");
       } else if (!name || name.length > 50) {
         return Result.fail<room>("Must provide a valid name (Max: 50 characters)");

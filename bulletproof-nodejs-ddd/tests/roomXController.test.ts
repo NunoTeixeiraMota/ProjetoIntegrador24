@@ -17,7 +17,7 @@ describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
     const building = {
         "id": "123",
-        "name": "Building 123", // Make sure 'name' is defined
+        "name": "Building 123",
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2,
@@ -34,10 +34,10 @@ describe('RoomRepo', () => {
         "hasElevator": false,
         "passages": []
       };
-     const floorarraydatapassage = [floorDataPassage];
-      // Assume FloorMap.toDomain converts IFloorDTO to the domain object
-      const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
-      const FloorArray = [FloorPassaDomain];
+    const floorarraydatapassage = [floorDataPassage];
+    const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
+    const FloorArray = [FloorPassaDomain];
+
   beforeEach(function () {
     Container.reset();
     const floorSchemaInstance = require("../src/persistence/schemas/floorSchema").default;
@@ -148,7 +148,6 @@ describe('RoomRepo', () => {
 
         const expectedResult : IRoomDTO = {
             "id" : req.body.id,
-            "building" : req.body.building,
             "floor" : req.body.floor,
             "name" : req.body.name,
             "category" : req.body.category,

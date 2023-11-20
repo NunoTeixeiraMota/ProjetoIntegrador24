@@ -10,13 +10,14 @@ import IRobotDTO from '../dto/IRobotDTO';
 import { Robot } from '../domain/robot';
 import IRobotRepo from './IRepos/IRobotRepo';
 import { RobotMap } from '../mappers/robotMap';
+import config from '../../config';
 
 @Service()
 export default class robotService implements IRobotService {
   constructor(
     @Inject('logger') private logger,
-    @Inject('robotTypeRepo') private robotTypeRepo: IRobotTypeRepo,
-    @Inject('RobotRepo') private robotRepo: IRobotRepo
+    @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo,
+    @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
   ) { }
 
   public async changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>> {

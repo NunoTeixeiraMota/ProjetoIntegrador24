@@ -23,9 +23,7 @@ export default class RoleRepo implements IRoleRepo {
   }
 
   public async exists(role: Role): Promise<boolean> {
-    
     const idX = role.id instanceof RoleId ? (<RoleId>role.id).toValue() : role.id;
-
     const query = { domainId: idX}; 
     const roleDocument = await this.roleSchema.findOne( query as FilterQuery<IRolePersistence & Document>);
 
@@ -34,15 +32,12 @@ export default class RoleRepo implements IRoleRepo {
 
   public async save (role: Role): Promise<Role> {
     const query = { domainId: role.id.toString()}; 
-
     const roleDocument = await this.roleSchema.findOne( query );
 
     try {
       if (roleDocument === null ) {
         const rawRole: any = RoleMap.toPersistence(role);
-
         const roleCreated = await this.roleSchema.create(rawRole);
-
         return RoleMap.toDomain(roleCreated);
       } else {
         roleDocument.name = role.name;

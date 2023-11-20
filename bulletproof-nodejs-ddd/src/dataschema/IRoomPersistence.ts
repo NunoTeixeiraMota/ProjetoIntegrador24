@@ -1,10 +1,8 @@
-import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
 import { RoomCategory } from '../domain/room';
 
 export interface IRoomPersistence {
     id: string;
-    building: Building;
     floor: Floor;
     name: string;
     category: RoomCategory;

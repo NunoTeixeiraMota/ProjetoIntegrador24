@@ -1,26 +1,20 @@
 import { Container, Service, Inject } from 'typedi';
-
-
 import IBuildingService from './IServices/IBuildingsService';
 import { BuildingsMap } from '../mappers/BuildingsMap';
 import IBuildingDTO from '../dto/IBuildingDTO';
-
-import IBuildingRepo from './IRepos/IBuildingsRepo';
-
 import { Building } from '../domain/building';
-
 import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
-import { FloorMap } from '../mappers/FloorMap';
 import { BuildingId } from '../domain/buildingId';
 import IFloorService from './IServices/IFloorService';
-import { forEach } from 'lodash';
+import IBuildingsRepo from './IRepos/IBuildingsRepo';
+
 @Service()
 export default class BuildingService implements IBuildingService {
   constructor(
-    @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingRepo,
+    @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingsRepo,
     @Inject(config.services.floor.name) private floorServiceInstance: IFloorService
   ) { }
   findByDomainId(buildingId: BuildingId): Promise<Building> {

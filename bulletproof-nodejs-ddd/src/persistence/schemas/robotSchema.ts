@@ -3,6 +3,10 @@ import IRobotPersistance from '../../dataschema/IRobotPersistance';
 
 const RobotSchema = new mongoose.Schema(
   {
+    id: { 
+      type: String, 
+      unique: true
+    },
     nickname: {
       type: String,
       required: [true, 'Please enter the nickname of the robot'],

@@ -4,7 +4,6 @@ import { RoomCategory } from '../domain/room';
 
 export default interface IRoomDTO {
   id: string;
-  building: Building;
   floor: Floor;
   name: string;
   category: RoomCategory;
