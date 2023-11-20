@@ -21,7 +21,7 @@ import { UpdateBuildingComponent } from './component/update-building.component/u
     MainMenuComponent,
     CreateBuildingComponent,
     CreateFloorComponent,
-    CreateLiftComponent
+    CreateLiftComponent,
     UpdateBuildingComponent,
     // ... any other components
   ],
