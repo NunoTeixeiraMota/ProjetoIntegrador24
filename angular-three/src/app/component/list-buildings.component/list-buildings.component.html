@@ -1,0 +1,14 @@
+<div>
+  <h2>List of Buildings</h2>
+
+  <ul *ngIf="buildings.length > 0; else noBuildings">
+    <li *ngFor="let building of buildings">
+      {{ building.name }} - {{ building.localizationoncampus }}
+
+    </li>
+  </ul>
+
+  <ng-template #noBuildings>
+    <p>No buildings available.</p>
+  </ng-template>
+</div>

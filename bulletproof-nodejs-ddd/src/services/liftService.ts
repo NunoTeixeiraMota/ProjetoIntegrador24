@@ -31,7 +31,7 @@ export default class LiftService implements ILiftService {
   public async createLift(liftDTO: ILiftDTO): Promise<Result<ILiftDTO>> {
     try {
       const liftOrError = Lift.create(liftDTO);
-
+      console.log(liftOrError);
       if (liftOrError.isFailure) {
         return Result.fail<ILiftDTO>(liftOrError.errorValue());
       }
