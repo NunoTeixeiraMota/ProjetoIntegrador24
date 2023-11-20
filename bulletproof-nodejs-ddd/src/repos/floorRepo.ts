@@ -6,7 +6,7 @@ import { FloorMap } from '../mappers/FloorMap';
 
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence'; 
-import IFloorRepo from '../services/IRepos/IFloorRepo'; 
+import IFloorRepo from './IRepos/IFloorRepo'; 
 import IFloorDTO from '../dto/IFloorDTO';
 import { Building } from '../domain/building';
 
@@ -62,20 +62,9 @@ export default class FloorRepo implements IFloorRepo {
     const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
     return !!floorDocument === true;
   }
-
-  public async findByDomainId (floorId : FloorId | string): Promise <Floor> {
-    const query = {id : floorId};
-    const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO;
-
-    if (floorRecord != null){
-      return FloorMap.toDomain(floorRecord);
-    }else {
-      return null;
-    }
-  }
   
   public async findByID(id: FloorId | string): Promise<Floor> {
-    const query = { domainId: FloorId };
+    const query = { domainId: id };
     const floor = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO;
 
     if (floor != null) {

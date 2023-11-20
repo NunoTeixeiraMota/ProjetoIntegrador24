@@ -5,12 +5,13 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './component/appComponent/app.component';
-import { MessagesComponent } from './component/messages/messages.component';
-import { CreateRoomComponent } from './component/createRoom/createRoom.component';
-import { MainMenuComponent } from './component/mainMenu/mainMenu.component';
+import { MessagesComponent } from './component/messages.component/messages.component';
+import { CreateRoomComponent } from './component/create-room.component/create-room.component';
+import { MainMenuComponent } from './component/main-menu.component/main-menu.component';
 import { CreateBuildingComponent } from './component/create-building.component/create-building.component'; // Import CreateBuildingComponent
 import { CreateFloorComponent } from './component/create-floor.component/create-floor.component';
 import { CreateLiftComponent } from './component/create-lift.component/create-lift.component';
+import { UpdateBuildingComponent } from './component/update-building.component/update-building.component';
 
 @NgModule({
   declarations: [
@@ -18,17 +19,18 @@ import { CreateLiftComponent } from './component/create-lift.component/create-li
     MessagesComponent,
     CreateRoomComponent,
     MainMenuComponent,
-    CreateBuildingComponent, // Declare CreateBuildingComponent
+    CreateBuildingComponent,
     CreateFloorComponent,
     CreateLiftComponent
+    UpdateBuildingComponent,
     // ... any other components
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule, // Add HttpClientModule here
-    // ... any other modules
+    HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

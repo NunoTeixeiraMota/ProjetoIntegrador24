@@ -2,7 +2,7 @@ import { Service, Inject } from 'typedi';
 import { Model, Document} from 'mongoose';
 import { room } from '../domain/room';
 import { IRoomPersistence } from '../dataschema/IRoomPersistence';
-import IRoomRepo from '../services/IRepos/IRoomRepo';
+import IRoomRepo from './IRepos/IRoomRepo';
 import { roomMap } from "../mappers/roomMap";
 
 function doRoomsOverlap(roomA: room, roomB: room): boolean {

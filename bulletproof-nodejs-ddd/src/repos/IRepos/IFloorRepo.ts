@@ -9,4 +9,5 @@ export default interface IFloorRepo extends Repo<Floor>{
     save(floor: Floor): Promise<Floor>;
     findByID(id: FloorId | string): Promise<Floor>;
     findByBuildingID(building: Building): Promise<IFloorDTO[]>;
+    exists (floor: Floor): Promise<boolean>;
 }

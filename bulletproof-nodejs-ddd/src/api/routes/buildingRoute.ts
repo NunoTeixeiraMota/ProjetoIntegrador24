@@ -14,7 +14,6 @@ export default (app: Router) => {
     '/create',
     celebrate({
       body: Joi.object({
-        id: Joi.string().required(),
         name: Joi.string().required(),
         localizationoncampus: Joi.string().required(),
         floors: Joi.number().required(),
@@ -36,4 +35,18 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.listBuildingsByFloors(req, res, next)
   )
+  route.put(
+    '/update',
+    celebrate({
+        body: Joi.object({
+        id: Joi.string().required(),
+        name: Joi.string().required(),
+        localizationoncampus: Joi.string().required(),
+        floors: Joi.number().required(),
+        lifts: Joi.number().required(),
+        maxCel: Joi.array().items(Joi.number().required()).required(),
+    }),
+}),
+(req,res,next)=> ctrl.updateBuilding(req,res,next)
+  );
 }

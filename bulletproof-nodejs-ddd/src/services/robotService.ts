@@ -1,14 +1,14 @@
 import { Service, Inject } from 'typedi';
 
 import IRobotService from './IServices/IRobotService';
-import IRobotTypeRepo from './IRepos/IRobotTypeRepo';
+import IRobotTypeRepo from '../repos/IRepos/IRobotTypeRepo';
 import IRobotTypeDTO from '../dto/IRobotTypeDTO';
 
 import { RobotType } from '../domain/robotType';
 import { Result } from '../core/logic/Result';
 import IRobotDTO from '../dto/IRobotDTO';
 import { Robot } from '../domain/robot';
-import IRobotRepo from './IRepos/IRobotRepo';
+import IRobotRepo from '../repos/IRepos/IRobotRepo';
 import { RobotMap } from '../mappers/robotMap';
 import config from '../../config';
 

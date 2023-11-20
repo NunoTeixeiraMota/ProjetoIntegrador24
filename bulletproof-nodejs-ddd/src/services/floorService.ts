@@ -2,12 +2,12 @@ import { Service, Inject } from 'typedi';
 import IFloorService from './IServices/IFloorService';
 import { FloorMap } from '../mappers/FloorMap';
 import IFloorDTO from '../dto/IFloorDTO';
-import IFloorRepo from './IRepos/IFloorRepo';
+import IFloorRepo from '../repos/IRepos/IFloorRepo';
 import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
-import IBuildingsRepo from './IRepos/IBuildingsRepo';
+import IBuildingsRepo from '../repos/IRepos/IBuildingsRepo';
 
 
 @Service()
@@ -102,6 +102,7 @@ export default class FloorService implements IFloorService {
         return Result.ok<IFloorDTO>(floorDTOResult);
       }
     } catch (e) {
+      console.error(e);
       throw e;
     }
   }

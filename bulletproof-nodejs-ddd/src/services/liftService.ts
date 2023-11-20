@@ -2,7 +2,7 @@ import { Service, Inject } from 'typedi';
 import config from "../../config";
 import ILiftDTO from '../dto/ILiftDTO';
 import { Lift } from "../domain/lift";
-import ILiftRepo from './IRepos/ILiftRepo';
+import ILiftRepo from '../repos/IRepos/ILiftRepo';
 import ILiftService from './IServices/ILiftService';
 import { Result } from "../core/logic/Result";
 import { LiftMap } from "../mappers/LiftMap";

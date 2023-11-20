@@ -4,7 +4,7 @@ import { Container} from 'typedi';
 
 import config from '../../config';
 
-import IUserRepo from '../services/IRepos/IUserRepo';
+import IUserRepo from '../repos/IRepos/IUserRepo';
 
 import { UserMap } from "../mappers/UserMap";
 import { IUserDTO } from '../dto/IUserDTO';

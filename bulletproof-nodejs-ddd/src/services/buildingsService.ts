@@ -9,7 +9,7 @@ import { Floor } from '../domain/floor';
 import IFloorDTO from '../dto/IFloorDTO';
 import { BuildingId } from '../domain/buildingId';
 import IFloorService from './IServices/IFloorService';
-import IBuildingsRepo from './IRepos/IBuildingsRepo';
+import IBuildingsRepo from '../repos/IRepos/IBuildingsRepo';
 
 @Service()
 export default class BuildingService implements IBuildingService {

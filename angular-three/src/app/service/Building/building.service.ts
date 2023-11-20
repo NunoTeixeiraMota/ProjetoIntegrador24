@@ -13,4 +13,8 @@ export class BuildingService {
     console.log('buildingData: ', buildingData);
     return this.http.post(`${this.apiBaseUrl}/building/create`, buildingData);
   }
+  updateBuilding (buildingData: any){
+    console.log('buildingData',buildingData);
+    return this.http.put(`${this.apiBaseUrl}/building/update`,buildingData);
+  }
 }
