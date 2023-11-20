@@ -25,7 +25,7 @@ describe('RoomRepo', () => {
       };
     const floorDataPassage: IFloorDTO = {
         "id": "456",
-        "building": Building.create(building).getValue(),
+        "building": building,
         "name": "Floor 456",
         "description": "This floor offers a beautiful view of the city skyline.",
         "hall": "Main Hall",
@@ -114,7 +114,7 @@ describe('RoomRepo', () => {
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
             "id": floorData.id,
-            "building": Building.create(buildingData).getValue(),
+            "building": building,
             "name": floorData.name,
             "description": floorData.description,
             "hall": floorData.hall,

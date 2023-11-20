@@ -22,7 +22,7 @@ describe('BuildingsController (Unit Test)', function () {
   };
   const floorDataPassage: IFloorDTO = {
     "id": "456",
-    "building": Building.create(building).getValue(),
+    "building": building,
     "name": "Floor 456",
     "description": "This floor offers a beautiful view of the city skyline.",
     "hall": "Main Hall",
@@ -264,7 +264,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockPassageFloorDTOs: IFloorDTO[] = [
         {
             id: 'passage1',
-            building: Building.create(building).getValue(),
+            building: building,
             name: 'Passage 1',
             description: 'Description for Passage 1',
             hall: 'Hall X',
@@ -275,7 +275,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: 'passage2',
-            building: Building.create(building).getValue(),
+            building: building,
             name: 'Passage 2',
             description: 'Description for Passage 2',
             hall: 'Hall Y',
@@ -292,7 +292,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockFloorsWithPassagesDTO: IFloorDTO[] = [
         {
             id: '1',
-            building: Building.create(building).getValue(),
+            building: building,
             name: 'Floor 1 with Passage',
             description: 'Description for Floor 1',
             hall: 'Hall A',
@@ -303,7 +303,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: '3',
-            building: Building.create(building).getValue(),
+            building: building,
             name: 'Floor 3',
             description: 'Description for Floor 3',
             hall: 'Hall C',

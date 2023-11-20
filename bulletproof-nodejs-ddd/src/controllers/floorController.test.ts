@@ -5,9 +5,7 @@ import config from '../../config';
 import FloorController from '../controllers/floorController';
 import IFloorService from '../services/IServices/IFloorService';
 import { Result } from '../core/logic/Result';
-import FloorService from '../services/floorService';
 import IFloorDTO from '../dto/IFloorDTO';
-import { Floor } from '../domain/floor';
 import { FloorMap } from '../mappers/FloorMap';
 import IBuildingDTO from '../dto/IBuildingDTO';
 import { Building } from '../domain/building';
@@ -164,7 +162,7 @@ describe('FloorController (Integration Test)', function () {
     };
     const floorData: IFloorDTO = {
       "id": "123",
-      "building": Building.create(building).getValue(),
+      "building": building,
       "name": "Floor 123",
       "description": "Welcome to floor 123",
       "hall": "dadad",
@@ -176,7 +174,7 @@ describe('FloorController (Integration Test)', function () {
   
     const floorDataPassage: IFloorDTO = {
       "id": "456",
-      "building": Building.create(building).getValue(),
+      "building": building,
       "name": "Floor 456",
       "description": "This floor offers a beautiful view of the city skyline.",
       "hall": "Main Hall",

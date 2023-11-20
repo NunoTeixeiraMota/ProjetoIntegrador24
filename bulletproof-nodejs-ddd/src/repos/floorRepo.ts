@@ -20,7 +20,7 @@ export default class FloorRepo implements IFloorRepo {
     const buildingId = building.id.toString();
     try {
       const query = { buildingId: buildingId };
-      const floorDocuments = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO[];
+      const floorDocuments = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>);
       if (!floorDocuments || floorDocuments.length === 0) {
         return [];
       }

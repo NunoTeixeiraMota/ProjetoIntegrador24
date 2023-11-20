@@ -15,29 +15,14 @@ export default (app: Router) => {
         celebrate({
             body: Joi.object({
                 id: Joi.string().required(),
-                building: Joi.object({
-                    id: Joi.string().required(),
-                    name: Joi.string().required(),
-                    localizationoncampus: Joi.string().required(),
-                    floors: Joi.number().required(),
-                    lifts: Joi.number().required(),
-                    maxCel: Joi.array().items(Joi.number().required()).required(),
-                }),
+                building: Joi.string().required(),
                 name: Joi.string().required(),
                 description: Joi.string().required(),
                 hall: Joi.string().required(),
                 room: Joi.number().required(),
                 floorMap: Joi.string().required(),
                 hasElevator: Joi.boolean().required(),
-                passages: Joi.array().items(Joi.object({
-                    id: Joi.string().required(),
-                    name: Joi.string().required(),
-                    description: Joi.string().required(),
-                    hall: Joi.string().required(),
-                    room: Joi.number().required(),
-                    floorMap: Joi.string().required(),
-                    hasElevator: Joi.boolean().required()
-                }))
+                passages: Joi.array().items(Joi.string().required())
             }),
         }), (req, res, next) => ctrl.createFloor(req, res, next));
 

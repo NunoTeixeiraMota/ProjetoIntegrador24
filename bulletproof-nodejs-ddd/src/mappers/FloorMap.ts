@@ -10,10 +10,11 @@ export class FloorMap extends Mapper<Floor> {
     return {
       id: floor.id.toString(),
       name: floor.name,
+      building: BuildingsMap.toDTO(floor.building),
       description: floor.description,
       hall: floor.hall,
       room: floor.room,
-      floorMap: floor.floorMap || '', 
+      floorMap: floor.floorMap,
       hasElevator: floor.hasElevator,
       passages: floor.passages,
     } as IFloorDTO;
@@ -22,7 +23,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toDomain(dto: IFloorDTO): Floor {
     const florOrError = Floor.create( {
       name: dto.name,
-      building: dto.building,
+      building: BuildingsMap.toDomain(dto.building),
       description: dto.description,
       hall: dto.hall,
       room: dto.room,
@@ -38,7 +39,7 @@ export class FloorMap extends Mapper<Floor> {
   public static toPersistence(floor: Floor): IFloorDTO {
     return {
       id: floor.id.toString(),
-      building: floor.building,
+      building: BuildingsMap.toDTO(floor.building),
       name: floor.name,
       description: floor.description,
       hall: floor.hall,
