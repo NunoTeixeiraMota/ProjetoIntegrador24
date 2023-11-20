@@ -18,6 +18,6 @@ export class RoomService {
     
     const body = JSON.stringify(room);
     console.log(body);
-    return this.http.post<room>(this.roomAPI_URL + "/create-room", body, {'headers':headers , observe: 'response'})
+    return this.http.post<room>(this.roomAPI_URL + "/createRoom", body, {'headers':headers , observe: 'response'})
   }
 }
