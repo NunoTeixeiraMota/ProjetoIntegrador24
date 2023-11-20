@@ -1,0 +1,18 @@
+<form (ngSubmit)="createLift()">
+  <div>
+    <label for="localization">Localization:</label>
+    <input type="text" id="localization" [(ngModel)]="liftData.localization" name="localization" required>
+  </div>
+
+  <div>
+    <label for="state">State:</label>
+    <input type="text" id="state" [(ngModel)]="liftData.state" name="state" required>
+  </div>
+
+  <div>
+    <label for="building">Building:</label>
+    <input type="text" id="building" [(ngModel)]="liftData.building" name="building" required>
+  </div>
+
+  <button type="submit">Create Lift</button>
+</form>

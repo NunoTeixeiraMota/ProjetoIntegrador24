@@ -10,6 +10,7 @@ import { CreateRoomComponent } from './component/createRoom/createRoom.component
 import { MainMenuComponent } from './component/mainMenu/mainMenu.component';
 import { CreateBuildingComponent } from './component/create-building.component/create-building.component'; // Import CreateBuildingComponent
 import { CreateFloorComponent } from './component/create-floor.component/create-floor.component';
+import { CreateLiftComponent } from './component/create-lift.component/create-lift.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CreateFloorComponent } from './component/create-floor.component/create-
     MainMenuComponent,
     CreateBuildingComponent, // Declare CreateBuildingComponent
     CreateFloorComponent,
+    CreateLiftComponent
     // ... any other components
   ],
   imports: [
