@@ -20,11 +20,8 @@ export default (app: Router) => {
         lifts: Joi.number().required(),
         maxCel: Joi.array().items(Joi.number().required()).required(),
       }),
-    }),
-    (req, res, next) => ctrl.createBuilding(req, res, next)
-  );
+    }),(req, res, next) => ctrl.createBuilding(req, res, next));
   
-
   route.get(
     '/MinMaxFloors',
     celebrate({
@@ -33,34 +30,22 @@ export default (app: Router) => {
         maxFloors: Joi.number().required(),
       }),
     }),
-    (req, res, next) => ctrl.listBuildingsByFloors(req, res, next)
-  )
+    (req, res, next) => ctrl.listBuildingsByFloors(req, res, next));
+
   route.put(
     '/update',
     celebrate({
         body: Joi.object({
-        id: Joi.string().required(),
-        name: Joi.string().required(),
-        localizationoncampus: Joi.string().required(),
-        floors: Joi.number().required(),
-        lifts: Joi.number().required(),
-        maxCel: Joi.array().items(Joi.number().required()).required(),
-    }),
-}),
-(req,res,next)=> ctrl.updateBuilding(req,res,next)
-  );
-  route.get(
-    '/update',
-    celebrate({
-        body: Joi.object({
-        id: Joi.string().required(),
-        name: Joi.string().required(),
-        localizationoncampus: Joi.string().required(),
-        floors: Joi.number().required(),
-        lifts: Joi.number().required(),
-        maxCel: Joi.array().items(Joi.number().required()).required(),
-    }),
-}),
-(req,res,next)=> ctrl.findAll(req,res,next)
-  );
+          id: Joi.string().required(),
+          name: Joi.string().required(),
+          localizationoncampus: Joi.string().required(),
+          floors: Joi.number().required(),
+          lifts: Joi.number().required(),
+          maxCel: Joi.array().items(Joi.number().required()).required(),
+      }),
+    }),(req,res,next)=> ctrl.updateBuilding(req,res,next));
+  
+    route.get(
+      '/list',
+      celebrate({}),(req, res, next) => ctrl.findAll(req, res, next));    
 }
