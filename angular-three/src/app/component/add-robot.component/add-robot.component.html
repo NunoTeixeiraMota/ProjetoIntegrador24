@@ -4,7 +4,7 @@
     <table>
       <tr>
         <th><label>Robot Identifier: </label></th>
-        <th><input [(ngModel)]="robot.id" /></th>
+        <th><input type="number" [(ngModel)]="robot.id" /></th>
       </tr>
       <tr>
         <th><label>Nickname: </label></th>
@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <th><label>Robot Type: </label></th>
-        <th><input [(ngModel)]="robot.type" /></th>
+        <th><input type="number" [(ngModel)]="robot.type" /></th>
       </tr>
       <tr>
         <th><label>Serial Number: </label></th>
@@ -24,7 +24,7 @@
       </tr>
       <tr>
         <th><label>Is Active: </label></th>
-        <th><input [(ngModel)]="robot.isActive" /></th>
+        <th><input type="checkbox" [(ngModel)]="robot.isActive" /></th>
       </tr>
     </table>
   </div>
