@@ -4,7 +4,7 @@
     <table>
       <tr>
         <th><label>Floor Identifier: </label></th>
-        <th><input [(ngModel)]="floor.id" /></th>
+        <th><input type="number" [(ngModel)]="floor.id" /></th>
       </tr>
       <tr>
         <th><label>Floor Name: </label></th>
@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <th><label>Building Identifier: </label></th>
-        <th><input [(ngModel)]="floor.building" /></th>
+        <th><input type="number" [(ngModel)]="floor.building" /></th>
       </tr>
       <tr>
         <th><label>Description: </label></th>
@@ -24,7 +24,7 @@
       </tr>
       <tr>
         <th><label>Room: </label></th>
-        <th><input [(ngModel)]="floor.room" /></th>
+        <th><input type="number" [(ngModel)]="floor.room" /></th>
       </tr>
       <tr>
         <th><label>Floor Map: </label></th>
@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <th><label>Has Elevator: </label></th>
-        <th><input [(ngModel)]="floor.hasElevator" /></th>
+        <th><input type="checkbox" [(ngModel)]="floor.hasElevator" /></th>
       </tr>
       <tr>
         <th><label>Passages Identifiers: </label></th>

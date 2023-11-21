@@ -11,9 +11,9 @@ import { MessageService } from 'src/app/service/message/message.service';
 
 export class EditFloorComponent implements OnInit {
   floor = {
-    id: "Floor Identifier",
+    id: 0,
     name: 'Name',
-    building: 'Building Identifier',
+    building: 0,
     description: 'Description',
     hall: 'Hall',
     room: 0,
