@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import floor from 'src/app/model/floor';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,13 @@ export class FloorService {
   createFloor(floordata: any) {
     console.log('floordata: ', floordata);
     return this.http.post(`${this.apiBaseUrl}/floor/create`, floordata);
+  }
+
+  editFloor(floordata: any) {
+    const headers = {'content-type': 'application/json'};
+    
+    const body = JSON.stringify(floordata);
+    console.log(body);
+    return this.http.post<floor>(this.apiBaseUrl + "/floor/updateFloor", body, {'headers':headers , observe: 'response'})
   }
 }

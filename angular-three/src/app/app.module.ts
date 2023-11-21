@@ -14,6 +14,7 @@ import { CreateLiftComponent } from './component/create-lift.component/create-li
 import { UpdateBuildingComponent } from './component/update-building.component/update-building.component';
 import { ListBuildingsComponent } from './component/list-buildings.component/list-buildings.component';
 import { CreateRobotTypeComponent } from './component/create-robot-type.component/create-robot-type.component';
+import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreateRobotTypeComponent } from './component/create-robot-type.componen
     CreateLiftComponent,
     UpdateBuildingComponent,
     ListBuildingsComponent,
-    CreateRobotTypeComponent
+    CreateRobotTypeComponent,
+    EditFloorComponent,
     // ... any other components
   ],
   imports: [

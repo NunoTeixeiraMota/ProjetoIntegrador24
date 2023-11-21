@@ -9,6 +9,7 @@ import { UpdateBuildingComponent } from './component/update-building.component/u
 import { CreateLiftComponent } from './component/create-lift.component/create-lift.component';
 import {ListBuildingsComponent} from './component/list-buildings.component/list-buildings.component';
 import { CreateRobotTypeComponent } from './component/create-robot-type.component/create-robot-type.component';
+import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'create-lift', component: CreateLiftComponent },
   { path: 'list-buildings', component: ListBuildingsComponent },
   { path: 'create-robot', component: CreateRobotTypeComponent },
+  { path: 'edit-floor', component: EditFloorComponent },
+
 ];
 
 @NgModule({
