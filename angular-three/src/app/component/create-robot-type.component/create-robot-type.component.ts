@@ -15,7 +15,7 @@ export class CreateRobotTypeComponent implements OnInit {
     designation: "Designation",
     brand: "Brand",
     modelRobot: "Robot Model",
-    task: 0
+    task: "//0 - vigilance, 1 - pickup & delivery, 2 - both"
 };
 
   constructor(
