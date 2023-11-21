@@ -19,8 +19,6 @@ export class BuildingService {
     return this.http.put(`${this.apiBaseUrl}/building/update`,buildingData);
   }
   getBuildings(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiBaseUrl}/list`);
+    return this.http.get<any[]>(`${this.apiBaseUrl}/building/list`);
   }
-
-  
 }
