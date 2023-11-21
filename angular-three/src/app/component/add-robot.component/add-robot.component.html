@@ -1,0 +1,35 @@
+<h1>Add a robot</h1>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th><label>Robot Identifier: </label></th>
+        <th><input [(ngModel)]="robot.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Nickname: </label></th>
+        <th><input [(ngModel)]="robot.nickname" /></th>
+      </tr>
+      <tr>
+        <th><label>Robot Type: </label></th>
+        <th><input [(ngModel)]="robot.robotType.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Serial Number: </label></th>
+        <th><input [(ngModel)]="robot.serialNumber" /></th>
+      </tr>
+      <tr>
+        <th><label>Description: </label></th>
+        <th><input [(ngModel)]="robot.description" /></th>
+      </tr>
+      <tr>
+        <th><label>Is Active: </label></th>
+        <th><input [(ngModel)]="robot.isActive" /></th>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <button class="buttonBack" (click)="goBack()">Back</button>
+    <button (click)="addRobot()">Add</button>
+  </div>
+</div>
