@@ -2,14 +2,9 @@ import { IFloorPersistence } from "../../dataschema/IFloorPersistence";
 import mongoose, { Schema } from "mongoose";
 
 const FloorSchema = new mongoose.Schema({
-    id: { 
-      type: String, 
-      unique: true
-    },
     building: {
         type: Schema.Types.ObjectId,
         ref: 'Building',
-        required: true,
       },
     
     name: {

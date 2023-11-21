@@ -143,7 +143,7 @@ describe('BuildingsController (Integration Test)', function () {
     });
     
     it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
-      const building = {
+      const building: IBuildingDTO = {
         "id": "123",
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",
@@ -151,7 +151,7 @@ describe('BuildingsController (Integration Test)', function () {
         "lifts": 2,
         "maxCel": [1,2],
       };
-      const building2 = {
+      const building2: IBuildingDTO = {
         "id": "1234",
         "name": "Building 123", // Make sure 'name' is defined
         "localizationoncampus": "Campus XYZ",

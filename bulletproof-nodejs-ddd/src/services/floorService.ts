@@ -1,4 +1,4 @@
-import { Service, Inject } from 'typedi';
+import Container, { Service, Inject } from 'typedi';
 import IFloorService from './IServices/IFloorService';
 import { FloorMap } from '../mappers/FloorMap';
 import IFloorDTO from '../dto/IFloorDTO';
@@ -9,6 +9,7 @@ import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
 import IBuildingsRepo from '../repos/IRepos/IBuildingsRepo';
 import { BuildingsMap } from '../mappers/BuildingsMap';
+import IBuildingsService from './IServices/IBuildingsService';
 
 
 @Service()
@@ -40,13 +41,14 @@ export default class FloorService implements IFloorService {
 
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
+      const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
       const passages = await Promise.all(floorDTO.passages.map(async floor => {
         return await this.floorRepo.findByID(floor.id);
       }));
 
       const floorOrError = Floor.create ({
         name: floorDTO.name,
-        building: BuildingsMap.toDomain(floorDTO.building),
+        building: await buildingsrv.findByDomainId(floorDTO.building.id),
         description: floorDTO.description,
         hall: floorDTO.hall,
         room: floorDTO.room,
@@ -72,7 +74,7 @@ export default class FloorService implements IFloorService {
   public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
       const floor = await this.floorRepo.findByID(floorDTO.id)
-
+      const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
       if (floor === null) {
         return Result.fail<IFloorDTO>("Floor not found");
       } else {
@@ -82,7 +84,7 @@ export default class FloorService implements IFloorService {
 
         const floorOrError = Floor.create ({
           name: floorDTO.name,
-          building: BuildingsMap.toDomain(floorDTO.building),
+          building: await buildingsrv.findByDomainId(floorDTO.building.id),
           description: floorDTO.description,
           hall: floorDTO.hall,
           room: floorDTO.room,

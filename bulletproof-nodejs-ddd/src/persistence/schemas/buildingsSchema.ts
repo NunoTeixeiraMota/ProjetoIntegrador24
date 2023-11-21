@@ -3,10 +3,6 @@ import mongoose from 'mongoose';
 
 const BuildingsSchema = new mongoose.Schema(
   {
-    id: { 
-      type: String, 
-      unique: true
-    },
     name: {
       type: String,
       required: [true, 'Please enter a building name'],
