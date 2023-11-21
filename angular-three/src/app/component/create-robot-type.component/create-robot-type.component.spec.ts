@@ -67,7 +67,7 @@ describe('CreateRobotTypeComponent', () => {
     let fakeLocation = TestBed.inject(Location);
     let fakeMessageService = TestBed.inject(MessageService);
 
-    const fakeService = jasmine.createSpyObj('RoomService', ['createRoom']);
+    const fakeService = jasmine.createSpyObj('RobotService', ['createRobot']);
     fakeService.createRoom.and.returnValue(throwError({
       error: {
         status: 400,
