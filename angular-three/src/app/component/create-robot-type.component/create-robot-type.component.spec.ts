@@ -6,7 +6,7 @@ import { of, throwError } from 'rxjs';
 import { CreateRobotTypeComponent } from './create-robot-type.component';
 import robotType from 'src/app/model/robotType';
 
-describe('CreateRoomComponent', () => {
+describe('CreateRobotTypeComponent', () => {
   let component: CreateRobotTypeComponent;
   let fixture: ComponentFixture<CreateRobotTypeComponent>;
 
@@ -57,10 +57,10 @@ describe('CreateRoomComponent', () => {
     component.robotType.modelRobot = "a";
     component.robotType.task = 0;
 
-    component.createRobot();
+    component.createRobotType();
 
-    expect(fakeService.createRobot).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("Success warehouse creation!");
+    expect(fakeService.createRobotType).toHaveBeenCalled();
+    expect(component.finalMessage).toBe("Success robot type creation!");
   })
 
   it('should fail creation', () => {
@@ -77,9 +77,9 @@ describe('CreateRoomComponent', () => {
 
     component = new CreateRobotTypeComponent(fakeLocation,fakeService,fakeMessageService);
 
-    component.createRobot();
+    component.createRobotType();
 
-    expect(fakeService.createRobot).toHaveBeenCalled();
+    expect(fakeService.createRobotType).toHaveBeenCalled();
     expect(component.finalMessage).toBe("error");
   })
 });
