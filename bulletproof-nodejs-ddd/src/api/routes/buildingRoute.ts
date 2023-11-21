@@ -47,5 +47,7 @@ export default (app: Router) => {
   
     route.get(
       '/list',
-      celebrate({}),(req, res, next) => ctrl.findAll(req, res, next));    
+      celebrate({body: Joi.object({
+        value: Joi.object().optional(),
+      }),}),(req, res, next) => ctrl.findAll(req, res, next));    
 }
