@@ -25,4 +25,4 @@ We've developed a custom script called "ghscript" to automate the process of cre
 
 
 ## BACK-END NODE.JS API DOCS
-[Swagger] (https://app.swaggerhub.com/apis/JNMTEIXEIRA/g-045/1.0.0)
+[Swagger](https://app.swaggerhub.com/apis/JNMTEIXEIRA/g-045/1.0.0)
