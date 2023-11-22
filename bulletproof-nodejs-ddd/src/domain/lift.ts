@@ -1,11 +1,7 @@
 import { AggregateRoot } from "../core/domain/AggregateRoot";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
-
 import { Result } from "../core/logic/Result";
-import { liftId } from "./liftID";
-
 import { Building } from "./building";
-import ILiftDTO from "../dto/ILiftDTO";
 
 interface LiftProps {
 	localization: string;
@@ -25,42 +21,26 @@ export class Lift extends AggregateRoot<LiftProps> {
     this.props.building = value;
   }
 
-
   get id (): UniqueEntityID {
     return this._id;
-  }
-
-  get liftId (): liftId {
-    return new liftId(this.liftId.toValue());
   }
 
   private constructor (props: LiftProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
-  public static create(liftDTO: ILiftDTO, id?: UniqueEntityID): Result<Lift> {
-    const {localization, state, building } = liftDTO;
-
+  public static create(lift: LiftProps, id?: UniqueEntityID): Result<Lift> {
+    const {localization,state,building } = lift;
+  
     if (!localization || localization.trim() === "") {
       return Result.fail<Lift>('Must provide a lift localization');
-    }
-  
-    if (!state || state.trim() === "") {
+    }else if (!state || state.trim() === "") {
       return Result.fail<Lift>('Must provide a lift state');
-    }
-  
-    if (!building) {
+    }else if (!building) {
       return Result.fail<Lift>('Must provide a lift building');
+    }else{
+      const lift1 = new Lift(lift, id);
+      return Result.ok<Lift>(lift1);
     }
-  
-    const liftProps: LiftProps = {
-      localization,
-      state,
-      building,
-    };
-  
-    const lift = new Lift(liftProps, id);
-    return Result.ok<Lift>(lift);
   }
-  
 }

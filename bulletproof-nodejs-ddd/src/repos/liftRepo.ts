@@ -28,22 +28,14 @@ export default class LiftRepo implements ILiftRepo {
   }
 
   public async save(lift: Lift): Promise<Lift> {
-    const query = { domainId: lift.id.toString() };
-
+    const query = { _id: lift.id };
     const liftDocument = await this.liftSchema.findOne(query);
 
     try {
       if (liftDocument === null) {
         const rawLift: any = LiftMap.toPersistence(lift);
-
         const liftCreated = await this.liftSchema.create(rawLift);
-
         return LiftMap.toDomain(liftCreated);
-      } else {
-        liftDocument.id = lift.id;
-        await liftDocument.save();
-
-        return lift;
       }
     } catch (err) {
       throw err;
@@ -51,7 +43,7 @@ export default class LiftRepo implements ILiftRepo {
   }
 
   public async findByDomainId(liftId: liftId | string): Promise<Lift> {
-    const query = { domainId: liftId };
+    const query = { _id: liftId };
     const liftRecord = await this.liftSchema.findOne(query as FilterQuery<ILiftPersistence & Document>);
 
     if (liftRecord != null) {

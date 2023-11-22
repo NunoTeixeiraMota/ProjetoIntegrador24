@@ -1,15 +1,16 @@
 import Container, { Service, Inject } from 'typedi';
 import config from "../../config";
 import ILiftDTO from '../dto/ILiftDTO';
-import { Lift } from "../domain/lift";
 import ILiftRepo from '../repos/IRepos/ILiftRepo';
 import ILiftService from './IServices/ILiftService';
 import { Result } from "../core/logic/Result";
 import { LiftMap } from "../mappers/LiftMap";
 import IBuildingsService from './IServices/IBuildingsService';
+import { Lift } from '../domain/lift';
 
 @Service()
 export default class LiftService implements ILiftService {
+  buildingRepo: any;
   constructor(
     @Inject(config.repos.lift.name) private liftRepo: ILiftRepo
   ) {}
@@ -28,24 +29,24 @@ export default class LiftService implements ILiftService {
       throw e;
     }
   }
-
+  
   public async createLift(liftDTO: ILiftDTO): Promise<Result<ILiftDTO>> {
     try {
       const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
-      const liftOrError = Lift.create({
+
+      const liftOrError = Lift.create ({
         localization: liftDTO.localization,
         state: liftDTO.state,
         building: await buildingsrv.findByDomainId(liftDTO.building.id)
       });
 
-      console.log(liftOrError);
-      if (liftOrError.isFailure) {
-        return Result.fail<ILiftDTO>(liftOrError.errorValue());
+      if (liftOrError.isFailure){
+        throw Result.fail<ILiftDTO>(liftOrError.errorValue());
       }
-      const liftresult = liftOrError.getValue();
-      await this.liftRepo.save(liftresult);
-      const liftDTOResult = LiftMap.toDTO(liftresult) as ILiftDTO;
-      return Result.ok<ILiftDTO>(liftDTOResult);
+
+      const liftResult = liftOrError.getValue();
+      await this.liftRepo.save(liftResult); 
+      return Result.ok<ILiftDTO>(LiftMap.toDTO(liftResult));
     } catch (e) {
       throw e;
     }
@@ -60,7 +61,7 @@ export default class LiftService implements ILiftService {
       } else {
         lift.localization = liftDTO.localization;
         lift.state = liftDTO.state;
-        lift.building = liftDTO.building; // Assuming building is a reference
+        lift.building = liftDTO.building;
 
         await this.liftRepo.save(lift);
 
