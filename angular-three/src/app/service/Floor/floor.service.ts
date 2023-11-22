@@ -13,4 +13,9 @@ export class FloorService {
     console.log('floordata: ', floordata);
     return this.http.post(`${this.apiBaseUrl}/floor/create`, floordata);
   }
+  
+  createFloorMap(mapdata: any) {
+    console.log('mapdata: ', mapdata);
+    return this.http.post(`${this.apiBaseUrl}/floor/uploadmap`, mapdata);
+  }
 }

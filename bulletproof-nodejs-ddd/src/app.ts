@@ -5,6 +5,14 @@ import config from '../config';
 import express from 'express';
 
 import Logger from './loaders/logger';
+import { Request } from 'express';
+declare global {
+  namespace Express {
+    interface Request {
+      file: any; // Adjust the type based on your file handling strategy
+    }
+  }
+}
 
 async function startServer() {
   const app = express();

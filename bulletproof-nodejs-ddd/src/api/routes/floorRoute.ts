@@ -3,6 +3,34 @@ import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import IFloorController from '../../controllers/IControllers/IFloorController';
 import config from '../../../config';
+import multer from 'multer';
+import path from 'path';
+const storage = multer.diskStorage({
+  destination: 'flormaps/', // Your destination folder
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const originalExt = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + originalExt);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/jpg'
+  ) {
+    cb(null, true); // Allow the file
+  } else {
+    cb(new Error('Only PNG or JPG files are allowed!'), false); // Reject the file
+  }
+};
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter // Apply the file filter
+});
+
 
 const route = Router();
 
@@ -14,7 +42,6 @@ export default (app: Router) => {
         '/create',
         celebrate({
             body: Joi.object({
-                id: Joi.string().required(),
                 building: Joi.string().required(),
                 name: Joi.string().required(),
                 description: Joi.string().required(),
@@ -68,4 +95,20 @@ export default (app: Router) => {
               })).required()
           }),
       }), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
+      
+      route.patch(
+        '/uploadmap',
+        upload.single('file'), // Assuming the Angular FormData appends the file as 'file'
+        (req, res, next) => {
+          // Access the uploaded file via req.file
+          if (!req.file) {
+            return res.status(400).send('No file uploaded.');
+          }
+      
+          // Process the uploaded file here
+          // Example: Save the file, perform operations, etc.
+      
+          // Return a success response
+          return res.status(200).send(req.file.filename);
+        })
 };
