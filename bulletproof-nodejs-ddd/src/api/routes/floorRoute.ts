@@ -20,7 +20,7 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true); // Allow the file
   } else {
-    cb(new Error('Only PNG or JPG files are allowed!'), false); // Reject the file
+    cb(new Error('Only JSON files are allowed!'), false); // Reject the file
   }
 };
 
