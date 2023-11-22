@@ -1,4 +1,3 @@
-import { Building } from "./building";
 import { Floor } from "./floor";
 import { AggregateRoot } from "../core/domain/AggregateRoot";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
@@ -19,9 +18,9 @@ interface RoomProps {
     dimension: number[]; //x,y,width,height
 }
 
-export class room extends AggregateRoot<RoomProps> {
+export class Room extends AggregateRoot<RoomProps> {
   get id(): UniqueEntityID {
-    return this.id;
+    return this._id;
   }
 
   public floor(): Floor {
@@ -48,20 +47,22 @@ export class room extends AggregateRoot<RoomProps> {
     super(props, id);
   }
 
-  public static create(roomProps: RoomProps, id?: UniqueEntityID): Result<room> {
+  public static create(roomProps: RoomProps, id?: UniqueEntityID): Result<Room> {
       const { floor, name, category, description, dimension} = roomProps;
 
       if (!floor) {
-        return Result.fail<room>("Must provide a valid floor");
+        return Result.fail<Room>("Must provide a valid floor");
       } else if (!name || name.length > 50) {
-        return Result.fail<room>("Must provide a valid name (Max: 50 characters)");
+        return Result.fail<Room>("Must provide a valid name (Max: 50 characters)");
       } else if (!description || description.length > 250) {
-        return Result.fail<room>("Must provide a valid description (Max: 250 characters)");
+        return Result.fail<Room>("Must provide a valid description (Max: 250 characters)");
       } else if (dimension[0] < 0 || dimension[1] < 0 || dimension[2] < 1 || dimension[3] < 1){
-        return Result.fail<room>("Must provide a valid dimensions for the room (Min: 1 cell)");
+        return Result.fail<Room>("Must provide a valid dimensions for the room (Min: 1 cell)");
+      } else if(!(Object.values(RoomCategory).includes(category as unknown as RoomCategory))){
+        return Result.fail<Room>("Must provide a valid category for the room (Gabinete, Afinteatro, Laboratório, Outro)");
       } else {
-        const room1 = new room(roomProps);
-        return Result.ok<room>(room1);
+        const room1 = new Room(roomProps, id);
+        return Result.ok<Room>(room1);
       }
   }
 }

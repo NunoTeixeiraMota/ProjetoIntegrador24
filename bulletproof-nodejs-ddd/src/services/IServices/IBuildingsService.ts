@@ -1,7 +1,6 @@
 import { Result } from "../../core/logic/Result";
 import { Building } from "../../domain/building";
 import { BuildingId } from "../../domain/buildingId";
-import { Floor } from "../../domain/floor";
 import IBuildingDTO from "../../dto/IBuildingDTO";
 import IFloorDTO from "../../dto/IFloorDTO";
 

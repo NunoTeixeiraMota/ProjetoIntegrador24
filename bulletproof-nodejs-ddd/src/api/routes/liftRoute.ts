@@ -16,14 +16,7 @@ export default (app: Router) => {
       body: Joi.object({
         localization: Joi.string().required(),
         state: Joi.string().required(),
-        building: Joi.object({
-          id: Joi.string().required(),
-          name: Joi.string().required(),
-          localizationoncampus: Joi.string().required(),
-          floors: Joi.number().required(),
-          lifts: Joi.number().required(),
-          maxCel: Joi.array().items(Joi.number().required()).required(),
-      })
+        building: Joi.string().required()
       }),
     }),
     (req, res, next) => ctrl.createLift(req, res, next)

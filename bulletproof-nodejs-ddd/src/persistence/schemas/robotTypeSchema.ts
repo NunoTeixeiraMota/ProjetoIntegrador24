@@ -24,8 +24,6 @@ const RobotTypeSchema = new mongoose.Schema(
     task: {
       type: Number,
       default: 0,
-      min: 0,
-      max: 2
     },
   },
   { timestamps: true }
