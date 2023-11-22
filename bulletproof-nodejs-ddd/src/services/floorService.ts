@@ -7,8 +7,6 @@ import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
-import IBuildingsRepo from '../repos/IRepos/IBuildingsRepo';
-import { BuildingsMap } from '../mappers/BuildingsMap';
 import IBuildingsService from './IServices/IBuildingsService';
 
 
@@ -16,7 +14,6 @@ import IBuildingsService from './IServices/IBuildingsService';
 export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo, 
-    @Inject(config.repos.buildings.name) private buildingsRepo: IBuildingsRepo,
   ) {}
   getFloorsOnBuilding(building: Building): Promise<IFloorDTO[]> {
     throw new Error('Method not implemented.');

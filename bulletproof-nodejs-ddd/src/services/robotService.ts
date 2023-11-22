@@ -1,4 +1,4 @@
-import { Service, Inject } from 'typedi';
+import Container, { Service, Inject } from 'typedi';
 
 import IRobotService from './IServices/IRobotService';
 import IRobotTypeRepo from '../repos/IRepos/IRobotTypeRepo';
@@ -35,7 +35,7 @@ export default class robotService implements IRobotService {
 
   public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
-      const existingRobotType = await this.robotTypeRepo.findById(robotTypeDTO.id);
+      const existingRobotType = await this.robotTypeRepo.findByDomainId(robotTypeDTO.id);
 
       if (existingRobotType) {
         return Result.fail<IRobotTypeDTO>('Robot type with the same designation already exists');
@@ -63,7 +63,8 @@ export default class robotService implements IRobotService {
 
   public async addRobot(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
     try {
-      const type = await this.robotTypeRepo.findById(robot.id);
+      const type = await this.robotTypeRepo.findByDomainId(robot.type.id);
+
       const robotOrError = Robot.create({
         nickname: robot.nickname,
         isActive: robot.isActive,
