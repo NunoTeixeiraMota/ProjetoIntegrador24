@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import Building from 'src/app/model/building';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class BuildingService {
     console.log('buildingData',buildingData);
     return this.http.put(`${this.apiBaseUrl}/building/update`,buildingData);
   }
-  getBuildings(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiBaseUrl}/building/list`);
+ 
+  getBuildings(): Observable<Building[]> {
+    return this.http.get<Building[]>(`${this.apiBaseUrl}/building/list`);
   }
 }

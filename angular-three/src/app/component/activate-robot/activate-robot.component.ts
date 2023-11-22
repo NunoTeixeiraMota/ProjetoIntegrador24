@@ -1,14 +1,14 @@
-import { Component, Output } from '@angular/core';
+import { Component, Output,NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 import { MessageService } from 'src/app/service/message/message.service';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-activate-robot',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './activate-robot.component.html',
-  styleUrl: './activate-robot.component.css'
+  styleUrls: ['./activate-robot.component.css']
 })
 export class ActivateRobotComponent {
   @Output() finalMessage: string = '';
@@ -42,3 +42,9 @@ export class ActivateRobotComponent {
 
 }
 }
+@NgModule({
+  declarations: [ActivateRobotComponent],
+  imports: [CommonModule,FormsModule,],
+})
+export class ActivateRobotModule { }
+

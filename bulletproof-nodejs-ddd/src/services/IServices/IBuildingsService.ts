@@ -10,7 +10,7 @@ export default interface IBuildingsService {
   createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   getBuilding(buildingId: string): Promise<Result<IBuildingDTO>>;
-  findAll(): Promise<string[]>;
+  findAll(): Promise<Building[]>;
   listBuildingsByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]>;
   getAllFloorsInBuilding(buildingId: BuildingId): Promise<IFloorDTO[]>;
 }

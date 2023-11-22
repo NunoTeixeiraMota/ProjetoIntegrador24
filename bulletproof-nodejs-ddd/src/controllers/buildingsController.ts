@@ -33,17 +33,19 @@ export default class BuildingsController implements IBuildingsController {
   public async updateBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const buildingOrError = await this.buildingsServiceInstance.updateBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
-
+  
       if (buildingOrError.isFailure) {
-        res.status(404).send();
+        res.status(400).json({ error: 'Invalid request or resource not found' });
       } else {
-        const buildingDTO = buildingOrError.getValue();
-        res.status(200).json(buildingDTO);
+        const updatedBuildingDTO = buildingOrError.getValue();
+        res.status(200).json(updatedBuildingDTO);
       }
     } catch (e) {
+      console.error('Error in updateBuilding:', e);
       next(e);
     }
   }
+  
   public async findAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const buildingNames = await this.buildingsServiceInstance.findAll();

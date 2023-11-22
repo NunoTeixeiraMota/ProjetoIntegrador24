@@ -1,3 +1,4 @@
+// src/app/component/list-buildings.component/list-buildings.component.ts
 import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
@@ -8,7 +9,8 @@ import Building from 'src/app/model/building';
   styleUrls: ['./list-buildings.component.css']
 })
 export class ListBuildingsComponent implements OnInit {
-  buildings: Building[] = []; // Assuming you have a Building model
+  buildings: Building[] = [];
+  loading: boolean = true;
 
   constructor(private buildingService: BuildingService) {}
 
@@ -20,10 +22,36 @@ export class ListBuildingsComponent implements OnInit {
     this.buildingService.getBuildings().subscribe(
       (data: Building[]) => {
         this.buildings = data;
+        this.loading = false;
+  
+        // Log the actual values of building objects
+        console.log('Buildings:', this.buildings);
+  
+        // Optional: Log each building object
+        this.buildings.forEach(building => console.log('Building:', building));
       },
       error => {
         console.error('Error:', error);
+        this.loading = false;
       }
     );
   }
+  
+
+  getBuildingProp(building: Building, propPath: string): any {
+    const props = propPath.split('.');
+    let result: any = building;
+  
+    for (const prop of props) {
+      if (result && result[prop] !== undefined) {
+        result = result[prop];
+      } else {
+        return null;
+      }
+    }
+  
+    return result;
+  }
+  
+  
 }

@@ -1,14 +1,10 @@
-<div>
-  <h2>List of Buildings</h2>
-
-  <ul *ngIf="buildings.length > 0; else noBuildings">
-    <li *ngFor="let building of buildings">
-      {{ building.name }} - {{ building.localizationoncampus }}
-
-    </li>
-  </ul>
-
-  <ng-template #noBuildings>
-    <p>No buildings available.</p>
-  </ng-template>
+<div *ngFor="let building of buildings">
+  <div>
+    <strong>Name:</strong> {{ getBuildingProp(building, 'props.name')?.toString() ?? 'N/A' }} <br>
+    <strong>Localization on Campus:</strong> {{ getBuildingProp(building, 'props.localizationoncampus')?.toString() ?? 'N/A' }} <br>
+    <strong>Floors:</strong> {{ getBuildingProp(building, 'props.floors')?.toString() ?? 'N/A' }} <br>
+    <strong>Lifts:</strong> {{ getBuildingProp(building, 'props.lifts')?.toString() ?? 'N/A' }} <br>
+    <strong>Max Ceiling:</strong> {{ getBuildingProp(building, 'props.maxCel')?.toString() }} <br>
+    <hr>
+  </div>
 </div>
