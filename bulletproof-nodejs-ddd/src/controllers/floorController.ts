@@ -44,10 +44,7 @@ export default class FloorController implements IFloorController {
 
   public async patchFloorMap(req: Request, res: Response, next: NextFunction) {
     try {
-      const floorId = req.params.id;
-      const floorUpdates: Partial<IFloorDTO> = req.body;
-  
-      const result = await this.floorServiceInstance.patchFloorMap(floorId, floorUpdates);
+      const result = await this.floorServiceInstance.patchFloorMap(req.body as IFloorDTO) as Result<IFloorDTO>;
   
       if (result.isSuccess) {
         res.status(200).json(result.getValue());
@@ -62,10 +59,7 @@ export default class FloorController implements IFloorController {
 
   public async patchPassageBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      const floorId = req.params.id;
-      const floorUpdates: Partial<IFloorDTO> = req.body;
-  
-      const result = await this.floorServiceInstance.patchPassageBuilding(floorId, floorUpdates);
+      const result = await this.floorServiceInstance.patchFloorMap(req.body as IFloorDTO) as Result<IFloorDTO>;
   
       if (result.isSuccess) {
         res.status(200).json(result.getValue());

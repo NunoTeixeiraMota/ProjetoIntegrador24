@@ -99,26 +99,16 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async patchFloorMap(floorId: string, updates: Partial<IFloorDTO>): Promise<Result<IFloorDTO>> {
+  public async patchFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      const floor = await this.floorRepo.findByID(floorId);
-  
+      const floor = await this.floorRepo.findByID(floorDTO.id);
       if (!floor) {
         return Result.fail<IFloorDTO>('Floor not found');
       }
-  
-      for (const key in updates) {
-        if (updates.hasOwnProperty(key)) {
-          if (key === 'floorMap') {
-            floor.floorMap = updates.floorMap;
-          } else {
-            floor[key] = updates[key];
-          }
-        }
-      }
+      
+      floor.floorMap = floorDTO.floorMap;
   
       await this.floorRepo.save(floor);
-  
       const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
       return Result.ok<IFloorDTO>(floorDTOResult);
     } catch (e) {
@@ -126,23 +116,17 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async patchPassageBuilding(floorId: string, updates: Partial<IFloorDTO>): Promise<Result<IFloorDTO>> {
+  public async patchPassageBuilding(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      const floor = await this.floorRepo.findByID(floorId);
-  
+      const floor = await this.floorRepo.findByID(floorDTO.id);
       if (!floor) {
         return Result.fail<IFloorDTO>('Floor not found');
       }
-  
-      for (const key in updates) {
-        if (updates.hasOwnProperty(key)) {
-          if (key === 'passages') {
-            floor.passages = updates.passages;
-          } else {
-            floor[key] = updates[key];
-          }
-        }
-      }
+      const passages = await Promise.all(floorDTO.passages.map(async floor => {
+        return await this.floorRepo.findByID(floor.id);
+      }));
+
+      floor.passages = passages;
   
       await this.floorRepo.save(floor);
   
