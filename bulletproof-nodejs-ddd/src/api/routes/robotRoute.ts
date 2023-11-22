@@ -39,7 +39,6 @@ export default (app: Router) => {
         celebrate({
           body: Joi.object({
             id: Joi.string().required(),
-            state: Joi.string().required()
           }),
         }),(req,res,next) => ctrl.changeRobotState(req,res,next));
 };

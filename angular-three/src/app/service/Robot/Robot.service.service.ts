@@ -28,4 +28,13 @@ export class RobotService {
     console.log(body);
     return this.http.post<robotType>(this.roomAPI_URL + "/addRobot", body, {'headers':headers , observe: 'response'})
   }
+
+  changerobotState(rt: any) {
+    const headers = {'content-type': 'application/json'};
+    
+    const body = JSON.stringify(rt);
+    console.log(body);
+    return this.http.post<robotType>(this.roomAPI_URL + "/changeRobotState", body, {'headers':headers , observe: 'response'})
+  }
+
 }

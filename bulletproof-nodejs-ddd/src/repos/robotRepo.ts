@@ -53,7 +53,7 @@ export default class RobotRepo implements IRobotRepo {
   public async findById (robotId : string): Promise <Robot> {
     const query = {id: robotId};
     const robotRecord = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
-
+    console.log(robotRecord)
     if (robotRecord != null){
       return RobotMap.toDomain(robotRecord);
     }else {
