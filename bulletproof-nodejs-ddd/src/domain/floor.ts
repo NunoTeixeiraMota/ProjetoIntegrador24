@@ -72,6 +72,7 @@ import { Building } from "./building";
     set passages ( value: Floor[]) { 
       this.props.passages = value;
     }
+
    public static create (FloorProps: FloorProps,id?: UniqueEntityID): Result<Floor>{
     const {building,name,description,hall,room,floorMap,hasElevator} = FloorProps;
     if(!building){

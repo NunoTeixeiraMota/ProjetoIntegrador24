@@ -1,4 +1,4 @@
-import { Service, Inject } from 'typedi';
+import Container, { Service, Inject } from 'typedi';
 import config from "../../config";
 import ILiftDTO from '../dto/ILiftDTO';
 import { Lift } from "../domain/lift";
@@ -6,6 +6,7 @@ import ILiftRepo from '../repos/IRepos/ILiftRepo';
 import ILiftService from './IServices/ILiftService';
 import { Result } from "../core/logic/Result";
 import { LiftMap } from "../mappers/LiftMap";
+import IBuildingsService from './IServices/IBuildingsService';
 
 @Service()
 export default class LiftService implements ILiftService {
@@ -30,17 +31,20 @@ export default class LiftService implements ILiftService {
 
   public async createLift(liftDTO: ILiftDTO): Promise<Result<ILiftDTO>> {
     try {
-      const liftOrError = Lift.create(liftDTO);
+      const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
+      const liftOrError = Lift.create({
+        localization: liftDTO.localization,
+        state: liftDTO.state,
+        building: await buildingsrv.findByDomainId(liftDTO.building.id)
+      });
+
       console.log(liftOrError);
       if (liftOrError.isFailure) {
         return Result.fail<ILiftDTO>(liftOrError.errorValue());
       }
-
-      const liftResult = liftOrError.getValue();
-
-      await this.liftRepo.save(liftResult);
-
-      const liftDTOResult = LiftMap.toDTO(liftResult) as ILiftDTO;
+      const liftresult = liftOrError.getValue();
+      await this.liftRepo.save(liftresult);
+      const liftDTOResult = LiftMap.toDTO(liftresult) as ILiftDTO;
       return Result.ok<ILiftDTO>(liftDTOResult);
     } catch (e) {
       throw e;
@@ -49,7 +53,7 @@ export default class LiftService implements ILiftService {
 
   public async updateLift(liftDTO: ILiftDTO): Promise<Result<ILiftDTO>> {
     try {
-      const lift = await this.liftRepo.findByDomainId(liftDTO._id);
+      const lift = await this.liftRepo.findByDomainId(liftDTO.id);
 
       if (lift === null) {
         return Result.fail<ILiftDTO>("Lift not found");

@@ -8,7 +8,6 @@ import { Building } from "./building";
 import ILiftDTO from "../dto/ILiftDTO";
 
 interface LiftProps {
-  _id: string;
 	localization: string;
 	state: string;
 	building: Building;
@@ -40,12 +39,8 @@ export class Lift extends AggregateRoot<LiftProps> {
   }
 
   public static create(liftDTO: ILiftDTO, id?: UniqueEntityID): Result<Lift> {
-    const { _id, localization, state, building } = liftDTO;
-  
-    if (!_id || !_id.trim()) {
-      return Result.fail<Lift>('Must provide a lift ID');
-    }
-  
+    const {localization, state, building } = liftDTO;
+
     if (!localization || localization.trim() === "") {
       return Result.fail<Lift>('Must provide a lift localization');
     }
@@ -59,7 +54,6 @@ export class Lift extends AggregateRoot<LiftProps> {
     }
   
     const liftProps: LiftProps = {
-      _id,
       localization,
       state,
       building,
