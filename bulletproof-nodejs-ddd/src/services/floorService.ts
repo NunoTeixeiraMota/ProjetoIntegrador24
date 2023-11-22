@@ -87,7 +87,7 @@ export default class FloorService implements IFloorService {
         floor.room = floorDTO.room;
         floor.floorMap = floorDTO.floorMap;
         floor.hasElevator = floorDTO.hasElevator;
-        floor.passages = floorDTO.passages;
+        floor.passages = passages;
 
         await this.floorRepo.save(floor); 
         const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO; 
