@@ -18,21 +18,20 @@ export default class RobotRepo implements IRobotRepo {
     }
 
   async save(robot: Robot): Promise<Robot> {
-    const query = {domainId: robot.id.toString()};
-
-    const [existingNickname, existingSerialNumber] = await Promise.all([
-      this.robotSchema.findOne({ nickname: robot.nickname }),
-      this.robotSchema.findOne({ serialNumber: robot.serialNumber }),
-    ]);
-
-    if (existingNickname || existingSerialNumber) {
-      throw new Error('Nickname or serial number already exist.');
-    }
-
-    const robotDocument = await this.robotSchema.findOne(query);
+    const query = { _id: robot.id };
+    const robotDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
 
     try{
       if(robotDocument === null){
+        const [existingNickname, existingSerialNumber] = await Promise.all([
+          this.robotSchema.findOne({ nickname: robot.nickname }),
+          this.robotSchema.findOne({ serialNumber: robot.serialNumber }),
+        ]);
+    
+        if (existingNickname || existingSerialNumber) {
+          throw new Error('Nickname or serial number already exist.');
+        }
+        
         const rawRobot: any = RobotMap.toPersistence(robot);
         const robotCreated = await this.robotSchema.create(rawRobot);
         return RobotMap.toDomain(robotCreated);
@@ -41,6 +40,7 @@ export default class RobotRepo implements IRobotRepo {
         robotDocument.type = robot.type;
         robotDocument.serialNumber = robot.serialNumber;
         robotDocument.description = robot.description;
+        robotDocument.isActive = robot.isActive;
         await robotDocument.save();
 
         return robot;
@@ -50,13 +50,13 @@ export default class RobotRepo implements IRobotRepo {
     }
   }
 
-  public async findById (robotId : string): Promise <Robot> {
-    const query = {id: robotId};
+  async findByDomainId(robotId: Robot["id"] | string): Promise<Robot> {
+    const query = { _id: robotId };
     const robotRecord = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
-    console.log(robotRecord)
-    if (robotRecord != null){
+
+    if(robotRecord != null){
       return RobotMap.toDomain(robotRecord);
-    }else {
+    }else{
       return null;
     }
   }

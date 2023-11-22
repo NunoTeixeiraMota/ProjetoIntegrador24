@@ -17,14 +17,14 @@ export default class FloorRepo implements IFloorRepo {
   ) {}
   
   public async save (floor: Floor): Promise<Floor> {
-   const query = {domainId : floor.id.toString()};
-   const floorDocument = await this.floorSchema.findOne(query);
+    const query = { _id: floor.id };
+    const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+
     try {
       if(floorDocument === null){
-
-      const rawFloor = FloorMap.toPersistence(floor);
-      const floorCreated = await this.floorSchema.create(rawFloor) as unknown as IFloorDTO;
-      return FloorMap.toDomain(floorCreated);
+        const rawFloor = FloorMap.toPersistence(floor);
+        const floorCreated = await this.floorSchema.create(rawFloor) as unknown as IFloorDTO;
+        return FloorMap.toDomain(floorCreated);
       } else {
         floorDocument.name = floor.name;
         floorDocument.description = floor.description;
@@ -49,8 +49,8 @@ export default class FloorRepo implements IFloorRepo {
     return !!floorDocument === true;
   }
   
-  public async findByID(id: FloorId | string): Promise<Floor> {
-    const query = { domainId: id };
+  public async findByID(floorId: FloorId | string): Promise<Floor> {
+    const query = { _id: floorId };
     const floor = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO;
 
     if (floor != null) {
