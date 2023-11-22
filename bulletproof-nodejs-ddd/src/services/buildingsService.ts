@@ -56,12 +56,12 @@ export default class BuildingService implements IBuildingService {
               throw new Error('Building not found')         
             }
             else{
-              console.log(buildingDocument)
               buildingDocument.name = buildingDTO.name;
               buildingDocument.localizationoncampus = buildingDTO.localizationoncampus;
               buildingDocument.floors = buildingDTO.floors;
               buildingDocument.lifts = buildingDTO.lifts;
               buildingDocument.maxCel = buildingDTO.maxCel;
+              
               await this.buildingsRepo.save(buildingDocument);
               const BDTOP = BuildingsMap.toDTO(buildingDocument);
               return Result.ok(BDTOP);

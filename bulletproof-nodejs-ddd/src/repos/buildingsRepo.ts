@@ -63,7 +63,7 @@ export default class BuildingsRepo implements IBuildingsRepo {
   }
 
   public async save(building: Building): Promise<Building> {
-    const query = { domainId: building.id.toString() };
+    const query = { _id: building.id };
     const buildingDocument = await this.buildingsSchema.findOne(query);
 
     try {
@@ -87,7 +87,7 @@ export default class BuildingsRepo implements IBuildingsRepo {
   }
 
   public async findByDomainId(buildingId: BuildingId | string): Promise<Building> {
-    const query = { id: buildingId };
+    const query = { _id: buildingId };
     const buildingRecord = await this.buildingsSchema.findOne(query as FilterQuery<IBuildingsPersistence & Document>);
   
     if (buildingRecord != null) {
