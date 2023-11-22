@@ -31,10 +31,8 @@ export default class RoomRepo implements IRoomRepo {
     }
     
     async save(r: Room): Promise<Room> {
-        const existingName = await this.roomSchema.findOne({ name: r.name });
-        console.log(r.name);
-        console.log(existingName.name);
-        
+        const existingName = await this.roomSchema.findOne({ name: r.name() });
+                
         try {
             if (existingName === null) {
                 const query = { domainId: r.floor().id}; 
@@ -58,7 +56,6 @@ export default class RoomRepo implements IRoomRepo {
                     }
                 }
 
-                console.log(r.name);
                 const rawRoom: any = roomMap.toPersistence(r);
                 const roomCreated = await this.roomSchema.create(rawRoom);
                 return roomMap.toDomain(roomCreated);
