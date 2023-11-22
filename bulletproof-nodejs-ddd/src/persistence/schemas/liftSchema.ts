@@ -3,11 +3,6 @@ import { ILiftPersistence } from '../../dataschema/ILiftPersistence';
 
 const Lift = new mongoose.Schema(
   {
-  domainId: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   localization: {
     type: String,
     required: true,

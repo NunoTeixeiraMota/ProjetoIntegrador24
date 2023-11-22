@@ -14,6 +14,8 @@ import { CreateLiftComponent } from './component/create-lift.component/create-li
 import { UpdateBuildingComponent } from './component/update-building.component/update-building.component';
 import { ListBuildingsComponent } from './component/list-buildings.component/list-buildings.component';
 import { CreateRobotTypeComponent } from './component/create-robot-type.component/create-robot-type.component';
+import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
+import { AddRobotComponent } from './component/add-robot.component/add-robot.component';
 import { SingleFileUploadComponent } from './component/single-file-upload/single-file-upload.component';
 
 @NgModule({
@@ -28,7 +30,9 @@ import { SingleFileUploadComponent } from './component/single-file-upload/single
     UpdateBuildingComponent,
     ListBuildingsComponent,
     CreateRobotTypeComponent,
-    SingleFileUploadComponent
+    EditFloorComponent,
+    AddRobotComponent,
+    SingleFileUploadComponent,
     // ... any other components
   ],
   imports: [

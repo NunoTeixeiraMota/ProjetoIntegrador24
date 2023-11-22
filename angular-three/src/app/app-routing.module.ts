@@ -10,6 +10,8 @@ import { CreateLiftComponent } from './component/create-lift.component/create-li
 import {ListBuildingsComponent} from './component/list-buildings.component/list-buildings.component';
 import { CreateRobotTypeComponent } from './component/create-robot-type.component/create-robot-type.component';
 import { SingleFileUploadComponent } from './component/single-file-upload/single-file-upload.component';
+import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
+import { AddRobotComponent } from './component/add-robot.component/add-robot.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
@@ -22,6 +24,9 @@ const routes: Routes = [
   { path: 'list-buildings', component: ListBuildingsComponent },
   { path: 'create-robot', component: CreateRobotTypeComponent },
   {path: 'single-file-upload', component: SingleFileUploadComponent},
+  { path: 'edit-floor', component: EditFloorComponent },
+  { path: 'add-robot', component: AddRobotComponent },
+
 ];
 
 @NgModule({

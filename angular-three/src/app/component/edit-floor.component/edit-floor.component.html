@@ -1,0 +1,47 @@
+<h1>Edit Floor</h1>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th><label>Floor Identifier: </label></th>
+        <th><input type="number" [(ngModel)]="floor.id" /></th>
+      </tr>
+      <tr>
+        <th><label>Floor Name: </label></th>
+        <th><input [(ngModel)]="floor.name" /></th>
+      </tr>
+      <tr>
+        <th><label>Building Identifier: </label></th>
+        <th><input type="number" [(ngModel)]="floor.building" /></th>
+      </tr>
+      <tr>
+        <th><label>Description: </label></th>
+        <th><input [(ngModel)]="floor.description" /></th>
+      </tr>
+      <tr>
+        <th><label>Hall: </label></th>
+        <th><input [(ngModel)]="floor.hall" /></th>
+      </tr>
+      <tr>
+        <th><label>Room: </label></th>
+        <th><input type="number" [(ngModel)]="floor.room" /></th>
+      </tr>
+      <tr>
+        <th><label>Floor Map: </label></th>
+        <th><input [(ngModel)]="floor.floorMap" /></th>
+      </tr>
+      <tr>
+        <th><label>Has Elevator: </label></th>
+        <th><input type="checkbox" [(ngModel)]="floor.hasElevator" /></th>
+      </tr>
+      <tr>
+        <th><label>Passages Identifiers: </label></th>
+        <th><input [(ngModel)]="floor.passages" /></th>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <button class="buttonBack" (click)="goBack()">Back</button>
+    <button (click)="editFloor()">Edit</button>
+  </div>
+</div>

@@ -15,7 +15,6 @@ export default (app: Router) => {
     '/addRobot',
     celebrate({
         body: Joi.object({
-          id: Joi.string().required(),
           nickname: Joi.string().required(),
           type: Joi.string().required(),
           serialNumber: Joi.string().required(),
@@ -28,7 +27,6 @@ export default (app: Router) => {
     '/createRobot',
         celebrate({
           body: Joi.object({
-            id: Joi.string().required(),
             designation: Joi.string().required(),
             brand: Joi.string().required(),
             modelRobot: Joi.string().required(),

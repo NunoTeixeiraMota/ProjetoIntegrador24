@@ -2,7 +2,7 @@ import { Service, Inject } from 'typedi';
 import config from "../../config";
 import { Result } from "../core/logic/Result";
 import IRoomRepo from '../repos/IRepos/IRoomRepo';
-import { room } from '../domain/room';
+import { Room } from '../domain/room';
 import { roomMap } from '../mappers/roomMap';
 import IRoomService from './IServices/IRoomService';
 import IRoomDTO from '../dto/IRoomDTO';
@@ -19,7 +19,7 @@ export default class roomService implements IRoomService {
     try {
       const floor = await this.floorRepo.findByID(roomDto.floor.id);
 
-      const roomOrError = room.create ({
+      const roomOrError = Room.create ({
         floor: floor,
         name: roomDto.name,
         category: roomDto.category,
@@ -32,6 +32,7 @@ export default class roomService implements IRoomService {
       }
 
       const roomResult = roomOrError.getValue();
+      console.log(roomResult.name);
       await this.roomRepo.save(roomResult);
       return Result.ok<IRoomDTO>( roomMap.toDTO(roomResult))
     } catch (e) {

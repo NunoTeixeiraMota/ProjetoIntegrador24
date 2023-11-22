@@ -1,4 +1,3 @@
-import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
 import { RoomCategory } from '../domain/room';
 

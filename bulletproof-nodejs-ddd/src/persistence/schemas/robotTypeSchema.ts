@@ -3,10 +3,6 @@ import { IRobotTypePersistance } from '../../dataschema/IRobotTypePersistance';
 
 const RobotTypeSchema = new mongoose.Schema(
   {
-    id: { 
-      type: String, 
-      unique: true
-    },
     designation: {
       type: String,
       required: [true, 'Please enter the designation of the robot type'],
@@ -28,8 +24,6 @@ const RobotTypeSchema = new mongoose.Schema(
     task: {
       type: Number,
       default: 0,
-      min: 0,
-      max: 2
     },
   },
   { timestamps: true }
