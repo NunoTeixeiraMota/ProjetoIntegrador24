@@ -22,3 +22,7 @@ The burndown chart is updated regularly to reflect the latest status of our proj
 We've developed a custom script called "ghscript" to automate the process of creating GitHub issues based on the information provided in the Excel file. This script streamlines the issue creation process and ensures that our project management is efficient and organized!
 
 [View Script](ghissues.sh)
+
+
+## BACK-END NODE.JS API DOCS
+[Swagger] (https://app.swaggerhub.com/apis/JNMTEIXEIRA/g-045/1.0.0)
