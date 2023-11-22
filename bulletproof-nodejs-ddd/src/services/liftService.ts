@@ -7,6 +7,7 @@ import { Result } from "../core/logic/Result";
 import { LiftMap } from "../mappers/LiftMap";
 import IBuildingsService from './IServices/IBuildingsService';
 import { Lift } from '../domain/lift';
+import { BuildingId } from '../domain/buildingId';
 
 @Service()
 export default class LiftService implements ILiftService {
@@ -37,7 +38,7 @@ export default class LiftService implements ILiftService {
       const liftOrError = Lift.create ({
         localization: liftDTO.localization,
         state: liftDTO.state,
-        building: await buildingsrv.findByDomainId(liftDTO.building.id)
+        building: await buildingsrv.findByDomainId((liftDTO.building.toString()) as unknown as BuildingId)
       });
 
       if (liftOrError.isFailure){

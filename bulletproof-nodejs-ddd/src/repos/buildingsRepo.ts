@@ -8,6 +8,7 @@ import { Document, FilterQuery, Model } from 'mongoose';
 import { IBuildingsPersistence } from '../dataschema/IBuildingsPersistence';
 import IBuildingsRepo from './IRepos/IBuildingsRepo';
 import IBuildingDTO from '../dto/IBuildingDTO';
+import { ObjectId } from 'mongodb';
 
 @Service()
 export default class BuildingsRepo implements IBuildingsRepo {
@@ -62,9 +63,12 @@ export default class BuildingsRepo implements IBuildingsRepo {
     return !!buildingDocument === true;
   }
 
-  public async save(building: Building): Promise<Building> {
-    const query = { _id: building.id };
-    const buildingDocument = await this.buildingsSchema.findOne(query);
+  public async save(building: Building): Promise<Building> {    
+    let buildingDocument = null;
+    if(ObjectId.isValid(building.id.toString())){
+      const query = { _id: building.id };
+      buildingDocument = await this.buildingsSchema.findOne(query);
+    }
 
     try {
       if (buildingDocument === null) {

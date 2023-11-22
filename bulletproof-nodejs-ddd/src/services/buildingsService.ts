@@ -33,7 +33,7 @@ export default class BuildingService implements IBuildingService {
       throw new Error('Building not found');
     }
 
-    const floors= this.floorServiceInstance.getFloorsOnBuilding(buildingDocument);
+    const floors= this.getAllFloorsInBuilding(buildingDocument.id);
     const floorsWithPassages = (await floors).filter(floor => floor.passages.length > 0);
     const floorsDTO: IFloorDTO[] = floorsWithPassages;
     return floorsDTO;

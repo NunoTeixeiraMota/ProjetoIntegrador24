@@ -4,6 +4,7 @@ import { Model, Document, FilterQuery } from 'mongoose';
 import { IRobotTypePersistance } from '../dataschema/IRobotTypePersistance';
 import { RobotTypeMap } from '../mappers/robotTypeMap';
 import IRobotTypeRepo from './IRepos/IRobotTypeRepo';
+import { ObjectId } from 'mongodb';
 
 @Service()
 export default class RobotTypeRepo implements IRobotTypeRepo {
@@ -16,9 +17,11 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
   }
 
   async save(robotType: RobotType): Promise<RobotType> {
-    const query = {domainId: robotType.id.toString()};
-
-    const robotTypeDocument = await this.robotTypeSchema.findOne(query);
+    let robotTypeDocument = null;
+    if(ObjectId.isValid(robotType.id.toString())){
+      const query = { _id: robotType.id };
+      robotTypeDocument = await this.robotTypeSchema.findOne(query as FilterQuery<IRobotTypePersistance & Document>);
+    }
 
     try{
       if(robotTypeDocument === null){

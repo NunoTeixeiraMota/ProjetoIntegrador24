@@ -4,6 +4,7 @@ import { Room} from '../domain/room';
 import { IRoomPersistence } from '../dataschema/IRoomPersistence';
 import IRoomRepo from './IRepos/IRoomRepo';
 import { roomMap } from "../mappers/roomMap";
+import { ObjectId } from 'mongodb';
 
 function doRoomsOverlap(roomA: Room, roomB: Room): boolean {
     const roomATopLeft = { x: roomA.dimension[0], y: roomA.dimension[1] };
@@ -35,8 +36,11 @@ export default class RoomRepo implements IRoomRepo {
                 
         try {
             if (existingName === null) {
-                const query = { domainId: r.floor().id}; 
-                const roomsSameFloor = await this.roomSchema.find( query as FilterQuery<IRoomPersistence & Document>);
+                let roomsSameFloor = null;
+                if(ObjectId.isValid(r.floor().id.toString())){
+                    const query = { _id: r.floor().id };
+                    roomsSameFloor = await this.floorSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
+                }
                 const roomInstances = roomsSameFloor.map((doc: any) => roomMap.toDTO(doc));
 
                 if (roomInstances != null) {

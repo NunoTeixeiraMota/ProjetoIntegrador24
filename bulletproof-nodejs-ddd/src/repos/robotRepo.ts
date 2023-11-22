@@ -4,6 +4,7 @@ import IRobotPersistance from '../dataschema/IRobotPersistance';
 import { Robot } from '../domain/robot';
 import { RobotMap } from '../mappers/robotMap';
 import IRobotRepo from './IRepos/IRobotRepo';
+import { ObjectId } from 'mongodb';
 
 @Service()
 export default class RobotRepo implements IRobotRepo {
@@ -18,8 +19,11 @@ export default class RobotRepo implements IRobotRepo {
     }
 
   async save(robot: Robot): Promise<Robot> {
-    const query = { _id: robot.id };
-    const robotDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
+    let robotDocument = null;
+    if(ObjectId.isValid(robot.id.toString())){
+      const query = { _id: robot.id };
+      robotDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistance & Document>);
+    }
 
     try{
       if(robotDocument === null){

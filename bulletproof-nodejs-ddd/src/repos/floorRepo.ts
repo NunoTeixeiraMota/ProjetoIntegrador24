@@ -8,6 +8,7 @@ import { Document, FilterQuery, IfAny, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence'; 
 import IFloorRepo from './IRepos/IFloorRepo'; 
 import IFloorDTO from '../dto/IFloorDTO';
+import { ObjectId } from 'mongodb';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -26,11 +27,12 @@ export default class FloorRepo implements IFloorRepo {
     }
   }
   
-  
-  
   public async save (floor: Floor): Promise<Floor> {
-    const query = { _id: floor.id };
-    const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+    let floorDocument = null;
+    if(ObjectId.isValid(floor.id.toString())){
+      const query = { _id: floor.id };
+      floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+    }
 
     try {
       if(floorDocument === null){

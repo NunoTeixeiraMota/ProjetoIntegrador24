@@ -5,6 +5,8 @@ import { Lift } from '../domain/lift';
 import { liftId } from '../domain/liftID';
 import { LiftMap } from '../mappers/LiftMap';
 import { ILiftPersistence } from '../dataschema/ILiftPersistence';
+import { ObjectId } from 'mongodb';
+import { raw } from 'body-parser';
 
 @Service()
 export default class LiftRepo implements ILiftRepo {
@@ -28,8 +30,11 @@ export default class LiftRepo implements ILiftRepo {
   }
 
   public async save(lift: Lift): Promise<Lift> {
-    const query = { _id: lift.id };
-    const liftDocument = await this.liftSchema.findOne(query);
+    let liftDocument = null;
+    if(ObjectId.isValid(lift.id.toString())){
+      const query = { _id: lift.id };
+      liftDocument = await this.liftSchema.findOne(query as FilterQuery<ILiftPersistence & Document>);
+    }
 
     try {
       if (liftDocument === null) {

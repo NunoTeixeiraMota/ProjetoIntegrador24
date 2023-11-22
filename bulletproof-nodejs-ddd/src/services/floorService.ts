@@ -5,7 +5,6 @@ import IFloorDTO from '../dto/IFloorDTO';
 import IFloorRepo from '../repos/IRepos/IFloorRepo';
 import { Result } from '../core/logic/Result';
 import config from '../../config';
-import { Building } from '../domain/building';
 import { Floor } from '../domain/floor';
 import IBuildingsService from './IServices/IBuildingsService';
 
@@ -61,7 +60,6 @@ export default class FloorService implements IFloorService {
       const floorDTOResult = FloorMap.toDTO(floorResult) as IFloorDTO; 
       return Result.ok<IFloorDTO>(floorDTOResult);
     } catch (e) {
-      console.error('Error in createFloor:', e);
       throw e;
     }
   }
