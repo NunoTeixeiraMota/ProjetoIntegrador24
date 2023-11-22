@@ -89,13 +89,14 @@ export default class BuildingsRepo implements IBuildingsRepo {
   public async findByDomainId(buildingId: BuildingId | string): Promise<Building> {
     const query = { id: buildingId };
     const buildingRecord = await this.buildingsSchema.findOne(query as FilterQuery<IBuildingsPersistence & Document>);
-
+  
     if (buildingRecord != null) {
       return BuildingsMap.toDomain(buildingRecord);
     } else {
-      return null;
+      throw new Error(`Building record with ID ${buildingId} not found.`);
     }
   }
+  
 
   public async findAll(): Promise<string[]> {
     try {
