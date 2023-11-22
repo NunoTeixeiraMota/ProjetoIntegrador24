@@ -22,15 +22,13 @@ export default class robotService implements IRobotService {
 
   public async changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
     try {
-      console.log(robot.id)
-      const existingRobot = await this.robotRepo.findById(robot.id);
-      console.log(existingRobot)
+      const existingRobot = await this.robotRepo.findByDomainId(robot.id);
       existingRobot.isActive = !existingRobot.isActive;
+      
       await this.robotRepo.save(existingRobot);
       const robotDTOResult = RobotMap.toDTO(existingRobot) as IRobotDTO;
       return Result.ok<IRobotDTO>(robotDTOResult);
     } catch (e) {
-      this.logger.error(e);
       throw e;
     }
   }

@@ -7,18 +7,18 @@ export class RobotTypeMap extends Mapper<RobotType> {
   public static toDTO(robotType: RobotType): IRobotTypeDTO {
     return {
       id: robotType.id.toString(),
-      designation: robotType.designation.toString(),
-      brand: robotType.brand.toString(),
-      modelRobot: robotType.modelRobot.toString(),
+      designation: robotType.designation,
+      brand: robotType.brand,
+      modelRobot: robotType.modelRobot,
       task: robotType.task
     } as IRobotTypeDTO;
   }
 
   public static async toDomain(dto: IRobotTypeDTO): Promise<RobotType> {
     const robotTypeOrError = RobotType.create({
-      designation: dto.designation.toString(),
-      brand: dto.brand.toString(),
-      modelRobot: dto.modelRobot.toString(),
+      designation: dto.designation,
+      brand: dto.brand,
+      modelRobot: dto.modelRobot,
       task: dto.task
     }, new UniqueEntityID(dto.id));
 
@@ -30,9 +30,9 @@ export class RobotTypeMap extends Mapper<RobotType> {
   public static toPersistence(robotType: RobotType): IRobotTypeDTO {
     return {
       id: robotType.id.toString(),
-      designation: robotType.designation.toString(),
-      brand: robotType.brand.toString(),
-      modelRobot: robotType.modelRobot.toString(),
+      designation: robotType.designation,
+      brand: robotType.brand,
+      modelRobot: robotType.modelRobot,
       task: robotType.task
     };
   }
