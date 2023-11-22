@@ -28,11 +28,11 @@ export default class Maze {
             this.object = new THREE.Group();
 
             // Create the ground
-            this.ground = new Ground({ textureUrl: description.groundTextureUrl, size: description.size });
+            this.ground = new Ground({ textureUrl: './textures/isep_ground.jpg', size: description.size });
             this.object.add(this.ground.object);
 
             // Create a wall
-            this.wall = new Wall({ textureUrl: description.wallTextureUrl });
+            this.wall = new Wall({ textureUrl: './textures/isep_wall.jpg' });
 
             // Build the maze
             let wallObject;

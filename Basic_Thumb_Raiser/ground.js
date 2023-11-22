@@ -12,9 +12,9 @@ export default class Ground {
         for (const [key, value] of Object.entries(parameters)) {
             this[key] = value;
         }
-
+        
         // Create a texture
-        const texture = new THREE.TextureLoader().load(this.textureUrl);
+        const texture = new THREE.TextureLoader().load('./textures/isep_ground.jpg');
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
