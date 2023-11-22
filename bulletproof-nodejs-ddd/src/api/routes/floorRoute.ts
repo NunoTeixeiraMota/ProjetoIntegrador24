@@ -101,4 +101,13 @@ export default (app: Router) => {
           // Return a success response
           return res.status(200).send(req.file.filename);
         })
-};
+
+        route.get(
+          '/listBuildingsByFloors',
+          celebrate({body: Joi.object({
+            buildingId : Joi.string().required(),
+            }),
+          }),
+          (req, res, next) => ctrl.listAllFloorsInBuilding(req, res, next));
+
+}

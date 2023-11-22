@@ -6,10 +6,29 @@ import IFloorController from './IControllers/IFloorController';
 import IFloorService from '../services/IServices/IFloorService';
 import IFloorDTO from '../dto/IFloorDTO';
 import { Result } from '../core/logic/Result';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
 
 @Service()
 export default class FloorController implements IFloorController {
   constructor(@Inject(config.services.floor.name) private floorServiceInstance: IFloorService) {}
+  
+
+
+  public async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const buildingId = req.query.buildingId as string;
+      const result = await this.floorServiceInstance.findByBuildingId(buildingId);
+      if (result.isSuccess) {
+        res.status(200).json(result.getValue());
+      } else {
+        res.status(400).json({ error: 'Bad Request', message: result.error });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
 
   public async createFloor(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

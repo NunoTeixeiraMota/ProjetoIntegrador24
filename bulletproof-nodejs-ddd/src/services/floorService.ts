@@ -15,9 +15,7 @@ export default class FloorService implements IFloorService {
   constructor(
     @Inject(config.repos.floor.name) private floorRepo: IFloorRepo, 
   ) {}
-  getFloorsOnBuilding(building: Building): Promise<IFloorDTO[]> {
-    throw new Error('Method not implemented.');
-  }
+
   async addPassages(floor: IFloorDTO, passageData: any): Promise<Result<IFloorDTO>> {
     try {
       const errorOrFloor = await this.floorRepo.findByID(floor.id);
@@ -132,6 +130,15 @@ export default class FloorService implements IFloorService {
   
       const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
       return Result.ok<IFloorDTO>(floorDTOResult);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async findByBuildingId(buildingId: string): Promise<Result<IFloorDTO[]>> {
+    try {
+      const floors = await this.floorRepo.findByBuildingId(buildingId);
+      return Result.ok<IFloorDTO[]>(floors);
     } catch (e) {
       throw e;
     }

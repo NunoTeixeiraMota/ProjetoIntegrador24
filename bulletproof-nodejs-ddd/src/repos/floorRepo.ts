@@ -4,7 +4,7 @@ import { Floor } from '../domain/floor';
 import { FloorId } from '../domain/floorId';
 import { FloorMap } from '../mappers/FloorMap'; 
 
-import { Document, FilterQuery, Model } from 'mongoose';
+import { Document, FilterQuery, IfAny, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence'; 
 import IFloorRepo from './IRepos/IFloorRepo'; 
 import IFloorDTO from '../dto/IFloorDTO';
@@ -15,6 +15,18 @@ export default class FloorRepo implements IFloorRepo {
   constructor(
     @Inject('floorSchema') private floorSchema: Model<IFloorPersistence & Document>, 
   ) {}
+  async findByBuildingId(buildingId: string): Promise<IFloorDTO[]> {
+    try {
+      const query = { building: buildingId };
+      const floorsFromDB = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO[];
+      return floorsFromDB;
+    } catch (error) {
+      console.error("Error fetching floors:", error);
+      throw error;
+    }
+  }
+  
+  
   
   public async save (floor: Floor): Promise<Floor> {
     const query = { _id: floor.id };
