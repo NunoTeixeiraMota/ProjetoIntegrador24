@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FloorService } from '../../service/Floor/floor.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
+import Floor from 'src/app/model/floor';
 
 @Component({
   selector: 'app-create-floor',
@@ -9,16 +10,17 @@ import Building from 'src/app/model/building';
   styleUrls: ['./create-floor.component.css']
 })
 export class CreateFloorComponent implements OnInit {
+
   floorData = {
     name: '',
-    building: '',
     description: '',
+    building: '',
     hall: '',
     room: '',
     floorMap: '',
     hasElevator: false,
+    passages: []
   };
-
   buildings: Building[] = [];
   isFormReadyToSubmit: boolean = false;
   uploadedFileName: string | undefined;

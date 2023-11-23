@@ -14,7 +14,7 @@ interface UploadResponse {
 export class SingleFileUploadComponent {
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   file: File | null = null;
-  @Output() uploadSuccess = new EventEmitter<string>(); // Define an Output
+  @Output() uploadSuccess = new EventEmitter<string>(); // Emitting a string
 
 
   constructor(private http: HttpClient) {}
@@ -34,13 +34,15 @@ export class SingleFileUploadComponent {
       formData.append("file", this.file, this.file.name);
   
       // Update the URL to match your server endpoint
-      const upload$ = this.http.patch<UploadResponse>("http://localhost:4000/api/floor/uploadmap", formData);
-  
+      const upload$ = this.http.patch<string>("http://localhost:4000/api/floor/uploadmap", formData, {
+        responseType: 'text' as 'json'
+      });
+        
       this.status = "uploading";
       upload$.subscribe({
         next: (response) => {  // Include the response parameter here
           this.status = "success";
-          this.uploadSuccess.emit(response.filename); // Access the filename property
+          this.uploadSuccess.emit(response); // Access the filename property
         },
         error: (error: any) => {
           if (error.status === 200) {
