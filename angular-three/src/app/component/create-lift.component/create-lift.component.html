@@ -11,7 +11,9 @@
 
   <div>
     <label for="building">Building:</label>
-    <input type="text" id="building" [(ngModel)]="liftData.building" name="building" required>
+    <select id="building" [(ngModel)]="liftData.building" name="building" required>
+      <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
+    </select>
   </div>
 
   <button type="submit">Create Lift</button>

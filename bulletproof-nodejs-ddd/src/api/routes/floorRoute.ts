@@ -15,14 +15,13 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype ==='json'
-  ) {
-    cb(null, true); // Allow the file
+  if (file.mimetype === 'application/json') {
+    cb(null, true);
   } else {
-    cb(new Error('Only JSON files are allowed!'), false); // Reject the file
+    cb(new Error('Only JSON files are allowed!'), false);
   }
 };
+
 
 const upload = multer({ 
   storage: storage,
@@ -88,17 +87,11 @@ export default (app: Router) => {
       
       route.patch(
         '/uploadmap',
-        upload.single('file'), // Assuming the Angular FormData appends the file as 'file'
+        upload.single('file'),
         (req, res, next) => {
-          // Access the uploaded file via req.file
           if (!req.file) {
             return res.status(400).send('No file uploaded.');
           }
-      
-          // Process the uploaded file here
-          // Example: Save the file, perform operations, etc.
-      
-          // Return a success response
           return res.status(200).send(req.file.filename);
         })
 

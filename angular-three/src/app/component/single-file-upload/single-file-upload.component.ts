@@ -2,6 +2,9 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 import { throwError, timer } from "rxjs";
+interface UploadResponse {
+  filename: string;
+}
 
 @Component({
   selector: "app-single-file-upload",
@@ -11,7 +14,7 @@ import { throwError, timer } from "rxjs";
 export class SingleFileUploadComponent {
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   file: File | null = null;
-  @Output() uploadSuccess = new EventEmitter<string>(); // Define an Output
+  @Output() uploadSuccess = new EventEmitter<string>(); // Emitting a string
 
 
   constructor(private http: HttpClient) {}
@@ -29,16 +32,17 @@ export class SingleFileUploadComponent {
     if (this.file) {
       const formData = new FormData();
       formData.append("file", this.file, this.file.name);
-
+  
       // Update the URL to match your server endpoint
-      const upload$ = this.http.patch("http://localhost:4000/api/floor/uploadmap", formData);
-
+      const upload$ = this.http.patch<string>("http://localhost:4000/api/floor/uploadmap", formData, {
+        responseType: 'text' as 'json'
+      });
+        
       this.status = "uploading";
       upload$.subscribe({
-        next: () => {
+        next: (response) => {  // Include the response parameter here
           this.status = "success";
-          if(this.file != null)
-          this.uploadSuccess.emit(this.file.name); // Emit the file name to the parent component
+          this.uploadSuccess.emit(response); // Access the filename property
         },
         error: (error: any) => {
           if (error.status === 200) {
@@ -52,4 +56,5 @@ export class SingleFileUploadComponent {
       });
     }
   }
+  
 }
