@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'add-robot', component: AddRobotComponent },
   {path: 'change-robot-state', component: ChangeRobotStateComponent},
   { path: 'building-selection', component: BuildingSelectionComponent },
-  { path: 'update-building/:id', component: UpdateBuildingComponent },
+  { path: 'update-building', component: UpdateBuildingComponent },
 
 ];
 

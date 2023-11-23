@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
 
@@ -19,33 +18,43 @@ export class UpdateBuildingComponent implements OnInit {
     maxCel: [5000]
   };
 
-  constructor(private route: ActivatedRoute, private buildingService: BuildingService) {
-    
-    this.buildingId = buildingService.getBuildingId();
-  }
+  buildings: Building[] = [];
+
+  constructor(private buildingService: BuildingService) {}
 
   ngOnInit() {
-    if (this.buildingId) {
-      this.buildingService.getBuildingDetails(this.buildingId).subscribe(
-        (selectedBuilding: Building) => {
-          this.buildingData = selectedBuilding;
-        },
-        error => {
-          console.error('Error fetching building details:', error);
-        }
+    this.getBuildings();
+  }
+
+  getBuildings(): void {
+    this.buildingService.getBuildings().subscribe(
+      (buildings: Building[]) => {
+        this.buildings = buildings;
+      },
+      (error: any) => {
+        console.error('Error fetching buildings', error);
+      }
+    );
+  }
+
+  updateBuilding() {
+    const selectedBuilding = this.buildings.find(building => building._id === this.buildingData._id);
+    if (selectedBuilding) {
+      selectedBuilding.name = this.buildingData.name;
+      selectedBuilding.localizationoncampus = this.buildingData.localizationoncampus;
+      selectedBuilding.floors = this.buildingData.floors;
+      selectedBuilding.lifts = this.buildingData.lifts;
+      selectedBuilding.maxCel = this.buildingData.maxCel;
+
+      this.buildingService.updateBuilding(selectedBuilding).subscribe(
+        response => console.log('Building updated:', response),
+        error => console.error('Error updating building:', error)
       );
     }
   }
 
-  updateBuilding() {
-    this.buildingData._id = this.buildingId || ''; // Assign the building ID
-    this.buildingService.updateBuilding(this.buildingData).subscribe(
-      response => console.log('Building updated:', response),
-      error => console.error('Error updating building:', error)
-    );
-  }
   addMaxCel() {
-    this.buildingData.maxCel.push(0); 
+    this.buildingData.maxCel.push(0);
   }
 
   removeMaxCel(index: number) {
