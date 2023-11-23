@@ -1,9 +1,17 @@
 <div>
   <div>
-    <input type="text" [(ngModel)]="selectedBuildingId" placeholder="Enter Building ID">
-    <button (click)="ListFloorsFromBuildingComponent(selectedBuildingId)">List Floors</button>
+    <table>
+      <tr>
+        <th><label>Building: </label></th>
+        <th>
+          <select [(ngModel)]="selectedBuildingId">
+            <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
+          </select>
+          <button (click)="listFloorsFromBuilding()">List Floors</button>
+        </th>
+      </tr>
+    </table>
   </div>
-  
   <div *ngIf="Floors.length > 0">
     <ul>
       <li *ngFor="let floor of Floors">
