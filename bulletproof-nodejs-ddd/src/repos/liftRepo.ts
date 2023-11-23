@@ -7,6 +7,7 @@ import { LiftMap } from '../mappers/LiftMap';
 import { ILiftPersistence } from '../dataschema/ILiftPersistence';
 import { ObjectId } from 'mongodb';
 import { raw } from 'body-parser';
+import ILiftDTO from '../dto/ILiftDTO';
 
 @Service()
 export default class LiftRepo implements ILiftRepo {
@@ -39,7 +40,7 @@ export default class LiftRepo implements ILiftRepo {
     try {
       if (liftDocument === null) {
         const rawLift: any = LiftMap.toPersistence(lift);
-        const liftCreated = await this.liftSchema.create(rawLift);
+        const liftCreated = await this.liftSchema.create(rawLift) as unknown as ILiftDTO;
         return LiftMap.toDomain(liftCreated);
       }
     } catch (err) {

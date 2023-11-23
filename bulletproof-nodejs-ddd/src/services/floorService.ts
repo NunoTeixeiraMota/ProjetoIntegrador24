@@ -7,6 +7,8 @@ import { Result } from '../core/logic/Result';
 import config from '../../config';
 import { Floor } from '../domain/floor';
 import IBuildingsService from './IServices/IBuildingsService';
+import IBuildingsRepo from '../repos/IRepos/IBuildingsRepo';
+import { BuildingId } from '../domain/buildingId';
 
 
 @Service()
@@ -35,14 +37,14 @@ export default class FloorService implements IFloorService {
 
   async createFloor(floorDTO:IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      const buildingsrv = Container.get<IBuildingsService>(config.services.buildings.name);
+      const buildingsrv = Container.get<IBuildingsRepo>(config.repos.buildings.name);
       const passages = await Promise.all(floorDTO.passages.map(async floor => {
         return await this.floorRepo.findByID(floor.id);
       }));
 
       const floorOrError = Floor.create ({
         name: floorDTO.name,
-        building: await buildingsrv.findByDomainId(floorDTO.building.id),
+        building: await buildingsrv.findByDomainId((floorDTO.building.toString()) as unknown as BuildingId),
         description: floorDTO.description,
         hall: floorDTO.hall,
         room: floorDTO.room,
@@ -77,7 +79,7 @@ export default class FloorService implements IFloorService {
         }));
 
         floor.name = floorDTO.name;
-        floor.building = await buildingsrv.findByDomainId(floorDTO.building.id);
+        floor.building = await buildingsrv.findByDomainId((floorDTO.building.toString()) as unknown as BuildingId);
         floor.description = floorDTO.description;
         floor.hall = floorDTO.hall;
         floor.room = floorDTO.room;
