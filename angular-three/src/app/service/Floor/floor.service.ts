@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import floor from 'src/app/model/floor';
+import Floor from 'src/app/model/floor';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -28,6 +29,13 @@ export class FloorService {
     console.log('mapdata: ', mapdata);
     return this.http.post(`${this.apiBaseUrl}/floor/uploadmap`, mapdata);
   }
+
+  ListFloorsFromBuildingComponent(buildingId: string) {
+    const requestBody = { buildingId: buildingId };
+    return this.http.post<Floor[]>(this.apiBaseUrl + "/floor/listBuildingsByFloors", requestBody);
+  }
+  
+  
 
   listFloors(): Observable<floor[]> {
     return this.http.get<floor[]>(`${this.apiBaseUrl}/floor/list`);

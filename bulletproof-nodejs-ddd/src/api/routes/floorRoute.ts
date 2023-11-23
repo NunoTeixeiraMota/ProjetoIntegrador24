@@ -102,7 +102,7 @@ export default (app: Router) => {
           return res.status(200).send(req.file.filename);
         })
 
-        route.get(
+        route.post(
           '/listBuildingsByFloors',
           celebrate({body: Joi.object({
             buildingId : Joi.string().required(),

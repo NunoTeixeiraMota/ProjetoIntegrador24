@@ -48,6 +48,6 @@ export default (app: Router) => {
     route.get(
       '/list',
       celebrate({body: Joi.object({
-        value: Joi.object().optional(),
+        value: Joi.object().required(),
       }),}),(req, res, next) => ctrl.findAll(req, res, next));    
 }

@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <input type="text" [(ngModel)]="selectedBuildingId" placeholder="Enter Building ID">
+    <button (click)="ListFloorsFromBuildingComponent(selectedBuildingId)">List Floors</button>
+  </div>
+  
+  <div *ngIf="Floors.length > 0">
+    <ul>
+      <li *ngFor="let floor of Floors">
+        {{ floor.name }}
+        <!-- Display the floor map image -->
+        <div>
+          <img [src]="floor.floorMap" alt="Floor Map" style="max-width: 100%; height: auto;">
+        </div>
+      </li> 
+    </ul>
+  </div>
+  <div *ngIf="Floors.length === 0">
+    <p>No floors found for this building.</p>
+  </div>
+</div>

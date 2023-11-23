@@ -1,4 +1,3 @@
-// src/app/component/list-buildings.component/list-buildings.component.ts
 import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
