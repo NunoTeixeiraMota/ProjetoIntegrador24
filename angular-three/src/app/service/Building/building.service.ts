@@ -8,7 +8,7 @@ import Building from 'src/app/model/building';
 })
 export class BuildingService {
   private apiBaseUrl = 'http://localhost:4000/api'; // Adjust the URL as needed
-
+  private selectedBuildingId: string | null = null;
   constructor(private http: HttpClient) {}
 
   createBuilding(buildingData: any) {
@@ -23,4 +23,15 @@ export class BuildingService {
   getBuildings(): Observable<Building[]> {
     return this.http.get<Building[]>(`${this.apiBaseUrl}/building/list`);
   }
+  getBuildingDetails(buildingId: string): Observable<Building> {
+    return this.http.get<Building>(`${this.apiBaseUrl}/building/details/${buildingId}`);
+  }
+  setBuildingId(buildingId: string): void {
+    this.selectedBuildingId = buildingId;
+  }
+
+  getBuildingId(): string | null {
+    return this.selectedBuildingId;
+  }
+
 }
