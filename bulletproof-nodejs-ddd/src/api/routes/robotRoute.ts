@@ -41,4 +41,11 @@ export default (app: Router) => {
             id: Joi.string().required(),
           }),
         }),(req,res,next) => ctrl.changeRobotState(req,res,next));
+  
+  route.get(
+    '/list',
+    celebrate({body: Joi.object({
+      value: Joi.object().optional(),
+    }),
+  }),(req, res, next) => ctrl.listAllRobotTypes(req, res, next));
 };

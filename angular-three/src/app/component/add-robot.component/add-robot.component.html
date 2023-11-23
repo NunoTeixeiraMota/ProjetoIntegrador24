@@ -4,19 +4,23 @@
     <table>
       <tr>
         <th><label>Nickname: </label></th>
-        <th><input [(ngModel)]="robot.nickname" /></th>
+        <th><input [(ngModel)]="robot.nickname" placeholder="Robot nickname" required/></th>
       </tr>
       <tr>
         <th><label>Robot Type: </label></th>
-        <th><input [(ngModel)]="robot.type" /></th>
-      </tr>
+        <th>
+          <select [(ngModel)]="selectedTypeId">
+            <option *ngFor="let robot of rt" [ngValue]="robot._id">{{ robot.designation }}</option>
+          </select>
+        </th>
+      </tr>      
       <tr>
         <th><label>Serial Number: </label></th>
-        <th><input [(ngModel)]="robot.serialNumber" /></th>
+        <th><input [(ngModel)]="robot.serialNumber" placeholder="Robot serial number" required/></th>
       </tr>
       <tr>
         <th><label>Description: </label></th>
-        <th><input [(ngModel)]="robot.description" /></th>
+        <th><input [(ngModel)]="robot.description" placeholder="Robot description" required/></th>
       </tr>
       <tr>
         <th><label>Is Active: </label></th>

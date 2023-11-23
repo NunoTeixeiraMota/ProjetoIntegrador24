@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from '../message/message.service';
 import { HttpClient } from '@angular/common/http';
 import robotType from 'src/app/model/robotType';
-import robot from 'src/app/model/robot';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,10 @@ export class RobotService {
   addRobot(rt: any) {
     console.log(rt);
     return this.http.post(`${this.robotAPI_URL}/addRobot`, rt, {'headers':{'content-type': 'application/json'} , observe: 'response'})
+  }
+
+  listRobotType(): Observable<robotType[]> {
+    return this.http.get<robotType[]>(`${this.robotAPI_URL}/list`);
   }
 
   changerobotState(rt: any) {

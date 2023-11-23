@@ -1,5 +1,5 @@
 export default interface robotType {
-    id: string;
+    _id: string;
     designation: string;
     brand: string;
     modelRobot: string;
