@@ -1,0 +1,12 @@
+<!-- src/app/component/select-building.component/select-building.component.html -->
+<div *ngFor="let building of buildings" class="building-item">
+    <div>
+      <strong>Name:</strong> {{ getBuildingProp(building, 'props.name')?.toString() ?? 'N/A' }} <br>
+      <strong>Localization on Campus:</strong> {{ getBuildingProp(building, 'props.localizationoncampus')?.toString() ?? 'N/A' }} <br>
+      <strong>Floors:</strong> {{ getBuildingProp(building, 'props.floors')?.toString() ?? 'N/A' }} <br>
+      <strong>Lifts:</strong> {{ getBuildingProp(building, 'props.lifts')?.toString() ?? 'N/A' }} <br>
+      <strong>Max Ceiling:</strong> {{ getBuildingProp(building, 'props.maxCel')?.toString() }} <br>
+      <button [routerLink]="['/update-building', building.id]">Select</button>
+      <hr>
+    </div>
+  </div>

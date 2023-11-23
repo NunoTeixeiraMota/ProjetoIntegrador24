@@ -1,0 +1,24 @@
+
+.building-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .building-details {
+    margin-bottom: 10px;
+  }
+  
+
+  .building-list li:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  
+div {
+  margin-bottom: 20px;  
+}
+
+button {
+  margin-top: 10px; 
+}

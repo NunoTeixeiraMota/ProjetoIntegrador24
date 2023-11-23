@@ -13,20 +13,22 @@ import { SingleFileUploadComponent } from './component/single-file-upload/single
 import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
 import { AddRobotComponent } from './component/add-robot.component/add-robot.component';
 import {ActivateRobotComponent} from './component/activate-robot/activate-robot.component';
+import { BuildingSelectionComponent } from './component/select-building.component/select-building.component';
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
   { path: 'create-building', component: CreateBuildingComponent },
   { path: 'create-floor', component: CreateFloorComponent},
   { path: 'create-room', component: CreateRoomComponent },
   { path: 'main-menu', component: MainMenuComponent },
-  { path: 'update-building', component: UpdateBuildingComponent },
   { path: 'create-lift', component: CreateLiftComponent },
   { path: 'list-buildings', component: ListBuildingsComponent },
   { path: 'create-robot', component: CreateRobotTypeComponent },
   {path: 'single-file-upload', component: SingleFileUploadComponent},
   { path: 'edit-floor', component: EditFloorComponent },
   { path: 'add-robot', component: AddRobotComponent },
-  {path: 'change-robot-state', component: ActivateRobotComponent}
+  {path: 'change-robot-state', component: ActivateRobotComponent},
+  { path: 'building-selection', component: BuildingSelectionComponent },
+  { path: 'update-building/:id', component: UpdateBuildingComponent },
 
 ];
 
