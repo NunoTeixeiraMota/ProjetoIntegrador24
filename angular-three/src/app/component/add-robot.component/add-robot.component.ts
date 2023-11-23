@@ -10,9 +10,9 @@ import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 })
 export class AddRobotComponent implements OnInit {
   robot = {
-    id: 0,
+    id: "",
     nickname: 'Robot nickname',
-    type: 0,
+    type: "Robot Type Identifier",
     serialNumber: "Robot serial number",
     description: "Robot description",
     isActive: true
