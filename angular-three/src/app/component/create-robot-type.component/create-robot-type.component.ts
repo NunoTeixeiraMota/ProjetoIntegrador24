@@ -11,11 +11,11 @@ import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 export class CreateRobotTypeComponent implements OnInit {
 
   robotType = {
-    id: "Identifier",
+    id: "",
     designation: "Designation",
     brand: "Brand",
     modelRobot: "Robot Model",
-    task: "//0 - vigilance, 1 - pickup & delivery, 2 - both"
+    task: 0
 };
 
   constructor(
