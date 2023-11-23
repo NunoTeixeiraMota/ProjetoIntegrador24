@@ -17,7 +17,6 @@ import { CreateRobotTypeComponent } from './component/create-robot-type.componen
 import { EditFloorComponent } from './component/edit-floor.component/edit-floor.component';
 import { AddRobotComponent } from './component/add-robot.component/add-robot.component';
 import { SingleFileUploadComponent } from './component/single-file-upload/single-file-upload.component';
-import { BuildingSelectionComponent } from './component/select-building.component/select-building.component';
 import { ChangeRobotStateComponent } from './component/change-robot-state.component/change-robot-statecomponent';
 import { ListFloorsFromBuildingComponent } from './component/list-floors-from-building.component/list-floors-from-building.component';
 
@@ -36,7 +35,6 @@ import { ListFloorsFromBuildingComponent } from './component/list-floors-from-bu
     EditFloorComponent,
     AddRobotComponent,
     SingleFileUploadComponent,
-    BuildingSelectionComponent,
     ChangeRobotStateComponent,
     ListFloorsFromBuildingComponent
     // ... any other components
