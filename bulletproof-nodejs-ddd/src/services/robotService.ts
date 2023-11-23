@@ -23,8 +23,6 @@ export default class robotService implements IRobotService {
   public async changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>> {
     try {
       const existingRobot = await this.robotRepo.findByDomainId(robot.id);
-      console.log(robot.id);
-      
       existingRobot.isActive = !existingRobot.isActive;
       
       await this.robotRepo.save(existingRobot);
@@ -37,10 +35,10 @@ export default class robotService implements IRobotService {
 
   public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
-      const existingRobotType = await this.robotTypeRepo.findByDomainId(robotTypeDTO.id);
+      const existingRobotType = await this.robotTypeRepo.findByDesignation(robotTypeDTO.designation);
 
       if (existingRobotType) {
-        return Result.fail<IRobotTypeDTO>('Robot type with the same designation already exists');
+        return Result.fail('Robot type with the same designation already exists');
       }
 
       const robotTypeOrError = RobotType.create({

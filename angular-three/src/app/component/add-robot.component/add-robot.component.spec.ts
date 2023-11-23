@@ -61,7 +61,6 @@ describe('AddRobotComponent', () => {
     }));
 
     component = new AddRobotComponent(fakeLocation,fakeService,fakeMessageService);
-    component.robot.id = "1";
     component.robot.nickname = "a";
     component.robot.type = "1";
     component.robot.serialNumber = "a";

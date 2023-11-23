@@ -54,8 +54,7 @@ describe('CreateRoomComponent', () => {
 
     component = new CreateRoomComponent(fakeLocation,fakeService,fakeMessageService);
 
-    component.room.id = "1";
-    component.room.floor = {id: "3",name: "a",building: {id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []};
+    component.room.floor = "3";
     component.room.name = "a";
     component.room.category = RoomCategory.Gabinete;
     component.room.description = "a";

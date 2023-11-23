@@ -11,10 +11,9 @@ import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 export class CreateRobotTypeComponent implements OnInit {
 
   robotType = {
-    id: "",
-    designation: "Designation",
-    brand: "Brand",
-    modelRobot: "Robot Model",
+    designation: '',
+    brand: '',
+    modelRobot: '',
     task: 0
 };
 
@@ -30,13 +29,19 @@ export class CreateRobotTypeComponent implements OnInit {
   }
 
   createRobotType() {
-    let errorOrSuccess: any = this.robotService.createRobot(this.robotType);
+    this.robotService.createRobot(this.robotType).subscribe(
+      response => console.log('Building created:', response),
+      error => console.error('Error:', error)
+    );
 
+    /*
+    let errorOrSuccess: any = this.robotService.createRobot(this.robotType);
+    
     errorOrSuccess.subscribe(
       (data: any) => {
         //success
-        this.messageService.add("Success room creation!");
-        this.finalMessage = "Success room creation!";
+        this.messageService.add("Success robot type creation!");
+        this.finalMessage = "Success robot type creation!";
         this.location.back();
       },
       
@@ -45,7 +50,7 @@ export class CreateRobotTypeComponent implements OnInit {
         this.messageService.add(error.error.message);
         this.finalMessage = error.error.message;
       }
-    );
+    );*/
   }
 
   goBack(): void {

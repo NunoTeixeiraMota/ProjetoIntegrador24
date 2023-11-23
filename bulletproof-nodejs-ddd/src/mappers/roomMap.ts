@@ -7,11 +7,11 @@ export class roomMap extends Mapper<Room> {
   public static toDTO(room: Room): IRoomDTO {
     return {
       id: room.id.toString(),
-      floor: room.floor(),
-      name: room.name(),
-      category: room.category(),
-      description: room.description(),
-      dimension: room.dimension()
+      floor: room.floor,
+      name: room.name,
+      category: room.category,
+      description: room.description,
+      dimension: room.dimension
     } as IRoomDTO;
   }
 
@@ -32,11 +32,11 @@ export class roomMap extends Mapper<Room> {
   public static toPersistence(room: Room): IRoomDTO {
     return {
       id: room.id.toString(),
-      floor: room.floor(),
-      name: room.name(),
-      category: room.category(),
-      description: room.description(),
-      dimension: room.dimension()
+      floor: room.floor,
+      name: room.name,
+      category: room.category,
+      description: room.description,
+      dimension: room.dimension
     };
   }
 }
