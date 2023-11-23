@@ -5,6 +5,7 @@ import { IRoomPersistence } from '../dataschema/IRoomPersistence';
 import IRoomRepo from './IRepos/IRoomRepo';
 import { roomMap } from "../mappers/roomMap";
 import { ObjectId } from 'mongodb';
+import IRoomDTO from '../dto/IRoomDTO';
 
 function doRoomsOverlap(roomA: Room, roomB: Room): boolean {
     const roomATopLeft = { x: roomA.dimension[0], y: roomA.dimension[1] };
@@ -30,18 +31,20 @@ export default class RoomRepo implements IRoomRepo {
     exists(t: Room): Promise<boolean> {
         throw new Error('Method not implemented.');
     }
-    
-    async save(r: Room): Promise<Room> {
-        const existingName = await this.roomSchema.findOne({ name: r.name() });
+
+    async save(room: Room): Promise<Room> {
+        const existingName = await this.roomSchema.findOne({ name: room.name() });
                 
         try {
             if (existingName === null) {
-                let roomsSameFloor = null;
-                if(ObjectId.isValid(r.floor().id.toString())){
-                    const query = { _id: r.floor().id };
-                    roomsSameFloor = await this.floorSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
+                let roomDocument = null;
+                if(ObjectId.isValid(room.id.toString())){
+                    const query = { _id: room.id };
+                    roomDocument = await this.roomSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
                 }
-                const roomInstances = roomsSameFloor.map((doc: any) => roomMap.toDTO(doc));
+
+                const roomSameFloor = await this.roomSchema.find({ floor: room.floor().id } as FilterQuery<IRoomPersistence & Document>);
+                const roomInstances = roomSameFloor.map((doc: any) => roomMap.toDTO(doc));
 
                 if (roomInstances != null) {
                     const isOverlap = roomInstances.some((otherRoom) => {
@@ -52,7 +55,7 @@ export default class RoomRepo implements IRoomRepo {
                             description: otherRoom.description,
                             dimension: otherRoom.dimension
                         } as any;
-                        return doRoomsOverlap(r, tempRoom);
+                        return doRoomsOverlap(room, tempRoom);
                     });
 
                     if (isOverlap) {
@@ -60,8 +63,8 @@ export default class RoomRepo implements IRoomRepo {
                     }
                 }
 
-                const rawRoom: any = roomMap.toPersistence(r);
-                const roomCreated = await this.roomSchema.create(rawRoom);
+                const rawRoom: any = roomMap.toPersistence(room);
+                const roomCreated = await this.roomSchema.create(rawRoom) as unknown as IRoomDTO;
                 return roomMap.toDomain(roomCreated);
             } else {
                 throw new Error('Name is not unique.');

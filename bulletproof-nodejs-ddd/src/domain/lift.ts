@@ -25,6 +25,18 @@ export class Lift extends AggregateRoot<LiftProps> {
     return this._id;
   }
 
+  get localization(): string {
+    return this.props.localization;
+  }
+
+  get state(): string {
+    return this.props.state;
+  }
+
+  get building(): Building {
+    return this.props.building;
+  }
+
   private constructor (props: LiftProps, id?: UniqueEntityID) {
     super(props, id);
   }

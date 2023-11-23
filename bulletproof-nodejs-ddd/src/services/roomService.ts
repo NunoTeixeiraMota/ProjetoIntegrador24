@@ -1,4 +1,4 @@
-import { Service, Inject } from 'typedi';
+import Container, { Service, Inject } from 'typedi';
 import config from "../../config";
 import { Result } from "../core/logic/Result";
 import IRoomRepo from '../repos/IRepos/IRoomRepo';
@@ -7,6 +7,7 @@ import { roomMap } from '../mappers/roomMap';
 import IRoomService from './IServices/IRoomService';
 import IRoomDTO from '../dto/IRoomDTO';
 import IFloorRepo from '../repos/IRepos/IFloorRepo';
+import { Floor } from '../domain/floor';
 
 @Service()
 export default class roomService implements IRoomService {
@@ -17,10 +18,10 @@ export default class roomService implements IRoomService {
 
   public async createRoom(roomDto: IRoomDTO): Promise<Result<IRoomDTO>> {
     try {
-      const floor = await this.floorRepo.findByID(roomDto.floor.id);
+      const floor = Container.get<IFloorRepo>(config.repos.floor.name);
 
       const roomOrError = Room.create ({
-        floor: floor,
+        floor: await floor.findByID((roomDto.floor.toString()) as unknown as Floor["id"]),
         name: roomDto.name,
         category: roomDto.category,
         description: roomDto.description,
@@ -31,6 +32,7 @@ export default class roomService implements IRoomService {
         return Result.fail<IRoomDTO>(roomOrError.errorValue());
       }
       const roomResult = roomOrError.getValue();
+      console.log(roomResult.name());
       await this.roomRepo.save(roomResult);
       return Result.ok<IRoomDTO>( roomMap.toDTO(roomResult))
     } catch (e) {
