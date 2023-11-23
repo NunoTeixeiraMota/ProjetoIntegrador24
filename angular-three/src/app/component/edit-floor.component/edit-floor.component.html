@@ -4,39 +4,41 @@
     <table>
       <tr>
         <th><label>Floor Identifier: </label></th>
-        <th><input [(ngModel)]="floor.id" /></th>
+        <th><input [(ngModel)]="floor.id" placeholder="Floor Identifier"/></th>
       </tr>
       <tr>
         <th><label>Floor Name: </label></th>
-        <th><input [(ngModel)]="floor.name" /></th>
+        <th><input [(ngModel)]="floor.name" placeholder="Floor Name"/></th>
       </tr>
       <tr>
         <th><label>Building Identifier: </label></th>
-        <th><input [(ngModel)]="floor.building" /></th>
+        <th><input [(ngModel)]="floor.building" placeholder="Building Identifier"/></th>
       </tr>
       <tr>
         <th><label>Description: </label></th>
-        <th><input [(ngModel)]="floor.description" /></th>
+        <th><input [(ngModel)]="floor.description" placeholder="Description"/></th>
       </tr>
       <tr>
         <th><label>Hall: </label></th>
-        <th><input [(ngModel)]="floor.hall" /></th>
+        <th><input [(ngModel)]="floor.hall" placeholder="Hall"/></th>
       </tr>
       <tr>
-        <th><label>Room: </label></th>
-        <th><input type="number" [(ngModel)]="floor.room" /></th>
+        <th><label>Number of rooms: </label></th>
+        <th><input type="number" [(ngModel)]="floor.room" placeholder="Number of rooms"/></th>
       </tr>
       <tr>
         <th><label>Floor Map: </label></th>
-        <th><input [(ngModel)]="floor.floorMap" /></th>
+        <th><input [(ngModel)]="floor.floorMap" placeholder="Floor Map"/></th>
       </tr>
       <tr>
         <th><label>Has Elevator: </label></th>
         <th><input type="checkbox" [(ngModel)]="floor.hasElevator" /></th>
       </tr>
-      <tr>
-        <th><label>Passages Identifiers: </label></th>
-        <th><input [(ngModel)]="floor.passages" /></th>
+      <tr *ngFor="let passage of floor.passages; let i = index">
+        <th><label for="passage{{i}}">Passage {{i + 1}}: Passages Identifiers:</label></th>
+        <th><input [(ngModel)]="floor.passages[i]" id="passage{{i}}" placeholder="Passage Identifier"/></th>
+        <button type="button" (click)="addPassage()">Add Passage</button>
+        <button type="button" (click)="removePassage(i)">Remove Passage</button>
       </tr>
     </table>
   </div>

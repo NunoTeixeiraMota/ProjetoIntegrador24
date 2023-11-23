@@ -9,6 +9,7 @@ import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 import IFloorRepo from './IRepos/IFloorRepo'; 
 import IFloorDTO from '../dto/IFloorDTO';
 import { ObjectId } from 'mongodb';
+import { floor } from 'lodash';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -21,6 +22,16 @@ export default class FloorRepo implements IFloorRepo {
       const query = { building: buildingId };
       const floorsFromDB = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO[];
       return floorsFromDB;
+    } catch (error) {
+      console.error("Error fetching floors:", error);
+      throw error;
+    }
+  }
+
+  async findAll(): Promise<IFloorDTO[]> {
+    try {
+      const floor = await this.floorSchema.find() as IFloorDTO[];
+      return floor;
     } catch (error) {
       console.error("Error fetching floors:", error);
       throw error;

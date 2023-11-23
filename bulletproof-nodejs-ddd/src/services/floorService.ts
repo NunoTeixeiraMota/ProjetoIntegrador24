@@ -140,4 +140,13 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
+
+  public async findAll(): Promise<Result<IFloorDTO[]>> {
+    try {
+      const floors = await this.floorRepo.findAll();
+      return Result.ok<IFloorDTO[]>(floors);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

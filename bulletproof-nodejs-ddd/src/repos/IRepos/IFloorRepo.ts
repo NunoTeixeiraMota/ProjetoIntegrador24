@@ -8,4 +8,5 @@ export default interface IFloorRepo extends Repo<Floor>{
     findByID(id: FloorId | string): Promise<Floor>;
     exists (floor: Floor): Promise<boolean>;
     findByBuildingId(buildingId: string): Promise<IFloorDTO[]>;
+    findAll(): Promise<IFloorDTO[]>;
 }

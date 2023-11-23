@@ -110,4 +110,10 @@ export default (app: Router) => {
           }),
           (req, res, next) => ctrl.listAllFloorsInBuilding(req, res, next));
 
+        route.get(
+            '/list',
+            celebrate({body: Joi.object({
+              value: Joi.object().optional(),
+            }),
+          }),(req, res, next) => ctrl.listAllFloors(req, res, next));
 }

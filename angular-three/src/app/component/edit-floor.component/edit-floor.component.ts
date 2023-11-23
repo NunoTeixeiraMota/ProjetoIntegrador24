@@ -11,15 +11,15 @@ import { MessageService } from 'src/app/service/message/message.service';
 
 export class EditFloorComponent implements OnInit {
   floor = {
-    id: 0,
-    name: 'Name',
-    building: 0,
-    description: 'Description',
-    hall: 'Hall',
+    id: '',
+    name: '',
+    building: '',
+    description: '',
+    hall: '',
     room: 0,
-    floorMap: 'Floor Map',
+    floorMap: '',
     hasElevator: false,
-    passages: "Passages identifiers"
+    passages: [""]
   };
 
   constructor(
@@ -50,6 +50,14 @@ export class EditFloorComponent implements OnInit {
         this.finalMessage = error.error.message;
       }
     );
+  }
+
+  addPassage() {
+    this.floor.passages.push("");
+  }
+
+  removePassage(index: number) {
+    this.floor.passages.splice(index, 1);
   }
 
   goBack(): void {
