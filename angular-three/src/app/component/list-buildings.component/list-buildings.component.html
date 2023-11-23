@@ -1,10 +1,10 @@
 <div *ngFor="let building of buildings">
   <div>
-    <strong>Name:</strong> {{ getBuildingProp(building, 'props.name')?.toString() ?? 'N/A' }} <br>
-    <strong>Localization on Campus:</strong> {{ getBuildingProp(building, 'props.localizationoncampus')?.toString() ?? 'N/A' }} <br>
-    <strong>Floors:</strong> {{ getBuildingProp(building, 'props.floors')?.toString() ?? 'N/A' }} <br>
-    <strong>Lifts:</strong> {{ getBuildingProp(building, 'props.lifts')?.toString() ?? 'N/A' }} <br>
-    <strong>Max Ceiling:</strong> {{ getBuildingProp(building, 'props.maxCel')?.toString() }} <br>
+    <strong>Name:</strong> {{ building.name || 'N/A' }} <br>
+    <strong>Localization on Campus:</strong> {{ building.localizationoncampus || 'N/A' }} <br>
+    <strong>Floors:</strong> {{ building.floors.toString() || 'N/A' }} <br>
+    <strong>Lifts:</strong> {{ building.lifts.toString() || 'N/A' }} <br>
+    <strong>Max Ceiling:</strong> {{ building.maxCel.toString() || 'N/A' }} <br>
     <hr>
   </div>
 </div>
