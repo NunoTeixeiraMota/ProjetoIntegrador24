@@ -82,7 +82,7 @@ export default (app: Router) => {
       celebrate({
           body: Joi.object({
               id: Joi.string().required(),
-              passages: Joi.array().items(Joi.object({id: Joi.string().required()})).required()
+              passages: Joi.array().items(Joi.string().required()).required()
           }),
       }), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
       

@@ -63,6 +63,7 @@ export default class FloorController implements IFloorController {
 
   public async patchFloorMap(req: Request, res: Response, next: NextFunction) {
     try {
+      
       const result = await this.floorServiceInstance.patchFloorMap(req.body as IFloorDTO) as Result<IFloorDTO>;
   
       if (result.isSuccess) {
@@ -78,7 +79,7 @@ export default class FloorController implements IFloorController {
 
   public async patchPassageBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await this.floorServiceInstance.patchFloorMap(req.body as IFloorDTO) as Result<IFloorDTO>;
+      const result = await this.floorServiceInstance.patchPassageBuilding(req.body as IFloorDTO) as Result<IFloorDTO>;
   
       if (result.isSuccess) {
         res.status(200).json(result.getValue());

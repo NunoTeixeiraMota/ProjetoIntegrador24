@@ -43,7 +43,7 @@ const FloorSchema = new mongoose.Schema({
       passages: [{
           type: Schema.Types.ObjectId,
           ref: 'Floor',
-        },],
+        }],
     },
     { timestamps: true }
 );

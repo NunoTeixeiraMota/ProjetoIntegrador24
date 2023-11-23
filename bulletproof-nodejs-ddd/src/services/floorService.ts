@@ -105,7 +105,6 @@ export default class FloorService implements IFloorService {
       }
       
       floor.floorMap = floorDTO.floorMap;
-  
       await this.floorRepo.save(floor);
       const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
       return Result.ok<IFloorDTO>(floorDTOResult);
@@ -121,13 +120,11 @@ export default class FloorService implements IFloorService {
         return Result.fail<IFloorDTO>('Floor not found');
       }
       const passages = await Promise.all(floorDTO.passages.map(async floor => {
-        return await this.floorRepo.findByID(floor.id);
+        return await this.floorRepo.findByID(floor as unknown as Floor["id"]);
       }));
 
       floor.passages = passages;
-  
       await this.floorRepo.save(floor);
-  
       const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
       return Result.ok<IFloorDTO>(floorDTOResult);
     } catch (e) {
