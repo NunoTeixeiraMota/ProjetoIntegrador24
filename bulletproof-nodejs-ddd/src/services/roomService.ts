@@ -32,7 +32,6 @@ export default class roomService implements IRoomService {
         return Result.fail<IRoomDTO>(roomOrError.errorValue());
       }
       const roomResult = roomOrError.getValue();
-      console.log(roomResult.name());
       await this.roomRepo.save(roomResult);
       return Result.ok<IRoomDTO>( roomMap.toDTO(roomResult))
     } catch (e) {

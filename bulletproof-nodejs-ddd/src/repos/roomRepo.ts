@@ -33,7 +33,7 @@ export default class RoomRepo implements IRoomRepo {
     }
 
     async save(room: Room): Promise<Room> {
-        const existingName = await this.roomSchema.findOne({ name: room.name() });
+        const existingName = await this.roomSchema.findOne({ name: room.name });
                 
         try {
             if (existingName === null) {
@@ -43,7 +43,7 @@ export default class RoomRepo implements IRoomRepo {
                     roomDocument = await this.roomSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
                 }
 
-                const roomSameFloor = await this.roomSchema.find({ floor: room.floor().id } as FilterQuery<IRoomPersistence & Document>);
+                const roomSameFloor = await this.roomSchema.find({ floor: room.floor.id } as FilterQuery<IRoomPersistence & Document>);
                 const roomInstances = roomSameFloor.map((doc: any) => roomMap.toDTO(doc));
 
                 if (roomInstances != null) {

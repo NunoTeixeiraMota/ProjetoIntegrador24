@@ -12,12 +12,8 @@ export class RoomService {
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
-  createRoom(room: room) {
-   
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(room);
-    console.log(body);
-    return this.http.post<room>(this.roomAPI_URL + "/createRoom", body, {'headers':headers , observe: 'response'})
+  createRoom(room: any) {
+    console.log(room);
+    return this.http.post(`${this.roomAPI_URL}/createRoom`, room, {'headers':{'content-type': 'application/json'} , observe: 'response'})
   }
 }

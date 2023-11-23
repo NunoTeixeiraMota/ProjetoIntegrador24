@@ -23,23 +23,23 @@ export class Room extends AggregateRoot<RoomProps> {
     return this._id;
   }
 
-  public floor(): Floor {
+  get floor(): Floor {
     return this.props.floor;
   }
 
-  public name(): string {
+  get name(): string {
     return this.props.name;
   }
 
-  public category(): RoomCategory {
+  get category(): RoomCategory {
     return this.props.category;
   }
 
-  public description(): string {
+  get description(): string {
     return this.props.description;
   }
 
-  public dimension(): number[] {
+  get dimension(): number[] {
       return this.props.dimension;
   }
 

@@ -9,32 +9,23 @@ import robot from 'src/app/model/robot';
 })
 
 export class RobotService {
-  private roomAPI_URL = 'http://localhost:4000/api/robot';
+  private robotAPI_URL = 'http://localhost:4000/api/robot';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   createRobot(rt: any) {
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(rt);
-    console.log(body);
-    return this.http.post<robotType>(this.roomAPI_URL + "/createRobot", body, {'headers':headers , observe: 'response'})
+    console.log(rt);
+    return this.http.post(`${this.robotAPI_URL}/createRobot`, rt, {'headers':{'content-type': 'application/json'} , observe: 'response'})
   }
 
   addRobot(rt: any) {
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(rt);
-    console.log(body);
-    return this.http.post<robotType>(this.roomAPI_URL + "/addRobot", body, {'headers':headers , observe: 'response'})
+    console.log(rt);
+    return this.http.post(`${this.robotAPI_URL}/addRobot`, rt, {'headers':{'content-type': 'application/json'} , observe: 'response'})
   }
 
   changerobotState(rt: any) {
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(rt);
-    console.log(body);
-    return this.http.post<robotType>(this.roomAPI_URL + "/changeRobotState", body, {'headers':headers , observe: 'response'})
+    console.log(rt);
+    return this.http.post(`${this.robotAPI_URL}/changeRobotState`, rt, {'headers':{'content-type': 'application/json'} , observe: 'response'})
   }
 
 }

@@ -12,8 +12,7 @@ import { RoomCategory } from 'src/app/model/room';
 export class CreateRoomComponent implements OnInit {
 
   room = {
-    id: "Room Identifier",
-    floor: {id: "Floor Identifier",name: "Name",description: "Description",hall: "Hall",room: 0,floorMap: "Floor Map",hasElevator: true,building: {id: "Identifier",name: "Name",localizationoncampus: "Localization On Campus",floors: 0,lifts: 0,maxCel: [0, 0]},passages: []},
+    floor: "Floor Identifier",
     name: "Name",
     category: RoomCategory.Gabinete,
     description: "Description",
