@@ -103,8 +103,8 @@ export default class BuildingsRepo implements IBuildingsRepo {
 
   async findAll(): Promise<IBuildingDTO[]> {
     try {
-      const floor = await this.buildingsSchema.find() as IBuildingDTO[];
-      return floor;
+      const building = await this.buildingsSchema.find() as IBuildingDTO[];
+      return building;
     } catch (error) {
       throw error;
     }
