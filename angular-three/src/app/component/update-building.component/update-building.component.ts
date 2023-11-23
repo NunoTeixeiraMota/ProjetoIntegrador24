@@ -49,6 +49,6 @@ export class UpdateBuildingComponent implements OnInit {
   }
 
   removeMaxCel(index: number) {
-    this.buildingData.maxCel.splice(index, 1); /
+    this.buildingData.maxCel.splice(index, 1);
   }
 }
