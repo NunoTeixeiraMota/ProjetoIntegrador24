@@ -33,7 +33,6 @@ export default class FloorRepo implements IFloorRepo {
       const floor = await this.floorSchema.find() as IFloorDTO[];
       return floor;
     } catch (error) {
-      console.error("Error fetching floors:", error);
       throw error;
     }
   }

@@ -100,21 +100,13 @@ export default class BuildingsRepo implements IBuildingsRepo {
       throw new Error(`Building record with ID ${buildingId} not found.`);
     }
   }
-  
 
-  public async findAll(): Promise<Building[]> {
+  async findAll(): Promise<IBuildingDTO[]> {
     try {
-      const buildingDocuments = await this.buildingsSchema.find({});
-      const buildings = buildingDocuments.map(async (doc) => {
-        const building = await this.save(BuildingsMap.toDomain(doc));
-        return building;
-      });
-  
-      return Promise.all(buildings);
-    } catch (err) {
-      throw err;
+      const floor = await this.buildingsSchema.find() as IBuildingDTO[];
+      return floor;
+    } catch (error) {
+      throw error;
     }
   }
-  
-  
 }
