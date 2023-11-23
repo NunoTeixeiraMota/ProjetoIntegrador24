@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import floor from 'src/app/model/floor';
 import Floor from 'src/app/model/floor';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +36,8 @@ export class FloorService {
   }
   
   
+
+  listFloors(): Observable<floor[]> {
+    return this.http.get<floor[]>(`${this.apiBaseUrl}/floor/list`);
+  }
 }

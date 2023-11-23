@@ -3,24 +3,32 @@
   <div>
     <table>
       <tr>
-        <th><label>Floor Identifier: </label></th>
-        <th><input [(ngModel)]="room.floor" /></th>
-      </tr>
+        <th><label>Floor: </label></th>
+        <th>
+          <select [(ngModel)]="room.floor">
+            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+          </select>
+        </th>
+      </tr>      
       <tr>
         <th><label>Room Name: </label></th>
-        <th><input [(ngModel)]="room.name" /></th>
+        <th><input [(ngModel)]="room.name" placeholder="Room Name"/></th>
       </tr>
       <tr>
         <th><label>Category: </label></th>
-        <th><input [(ngModel)]="room.category" /></th>
+        <th>
+          <select [(ngModel)]="room.category">
+            <option *ngFor="let category of roomCategories" [ngValue]="category">{{ category }}</option>
+          </select>
+        </th>
       </tr>
       <tr>
         <th><label>Room Description: </label></th>
-        <th><input [(ngModel)]="room.description" /></th>
+        <th><input [(ngModel)]="room.description" placeholder="Room Description"/></th>
       </tr>
       <tr>
         <th><label>Room Dimension: </label></th>
-        <th><input [(ngModel)]="room.dimension" /></th>
+        <th><input [(ngModel)]="room.dimension" placeholder="Room Dimension"/></th>
       </tr>
     </table>
   </div>

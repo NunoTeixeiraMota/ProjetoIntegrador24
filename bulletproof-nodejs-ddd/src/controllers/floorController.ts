@@ -30,6 +30,20 @@ export default class FloorController implements IFloorController {
     }
   }
 
+  public async listAllFloors(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await this.floorServiceInstance.findAll();
+      if (result.isSuccess) {
+        res.status(200).json(result.getValue());
+      } else {
+        res.status(400).json({ error: 'Bad Request', message: result.error });
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+
   public async createFloor(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const floorDTO = req.body as IFloorDTO;

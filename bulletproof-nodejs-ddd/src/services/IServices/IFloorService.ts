@@ -9,4 +9,5 @@ export default interface IFloorService {
   updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
   patchFloorMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
   patchPassageBuilding(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
+  findAll(): Promise<Result<IFloorDTO[]>>;
 }

@@ -36,10 +36,10 @@ export class BuildingSelectionComponent implements OnInit {
 
   selectBuilding(building: Building) {
     // Set the selected building ID in the service
-    this.buildingService.setBuildingId(building.id);
+    this.buildingService.setBuildingId(building._id);
 
     // Navigate to the update-building route with the selected building ID
-    this.router.navigate(['/update-building', building.id]);
+    this.router.navigate(['/update-building', building._id]);
   }
 
   getBuildingProp(building: Building, propPath: string): any {

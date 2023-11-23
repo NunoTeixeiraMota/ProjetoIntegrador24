@@ -4,20 +4,26 @@
     <table>
       <tr>
         <th><label>Designation: </label></th>
-        <th><input [(ngModel)]="robotType.designation" /></th>
+        <th><input [(ngModel)]="robotType.designation" placeholder="Robot Designation"/></th>
       </tr>
       <tr>
         <th><label>Brand: </label></th>
-        <th><input [(ngModel)]="robotType.brand" /></th>
+        <th><input [(ngModel)]="robotType.brand" placeholder="Robot Brand"/></th>
       </tr>
       <tr>
         <th><label>Robot Model: </label></th>
-        <th><input [(ngModel)]="robotType.modelRobot" /></th>
+        <th><input [(ngModel)]="robotType.modelRobot" placeholder="Robot Model"/></th>
       </tr>
       <tr>
         <th><label>Task: </label></th>
-        <th><input type="number" [(ngModel)]="robotType.task" /></th>
-      </tr>
+        <th>
+          <select [(ngModel)]="robotType.task">
+            <option value="0">Vigilance</option>
+            <option value="1">PickUp and Delivery</option>
+            <option value="2">Vigilance, PickUp and Delivery</option>
+          </select>
+        </th>
+      </tr>      
     </table>
   </div>
   <div>
