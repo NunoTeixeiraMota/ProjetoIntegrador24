@@ -5,8 +5,8 @@
       <tr>
         <th><label>Building: </label></th>
         <th>
-          <select [(ngModel)]="buildings">
-            <option *ngFor="let building of buildings" [ngValue]="building">{{ building.name }}</option>
+          <select [(ngModel)]="selectedBuildingId">
+            <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
         </th>
       </tr>
@@ -31,7 +31,7 @@
         <input type="number" [(ngModel)]="buildingData.maxCel[i]" name="cell{{i}}" id="cell{{i}}" placeholder="Max Cell Value">
         <button type="button" (click)="addMaxCel()">Add Max Cell</button>
         <button type="button" (click)="removeMaxCel(i)">Remove</button>
-    </div>
+      </div>
     </table>
   </div>
   <div>

@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <th><label>Floor Name: </label></th>
-        <th><input [(ngModel)]="floor.name" placeholder="Floor Name"/></th>
+        <th><input [(ngModel)]="floor.name" placeholder="Floor Name" required/></th>
       </tr>
       <tr>
         <th><label>Building: </label></th>
@@ -24,23 +24,23 @@
       </tr>
       <tr>
         <th><label>Description: </label></th>
-        <th><input [(ngModel)]="floor.description" placeholder="Description"/></th>
+        <th><input [(ngModel)]="floor.description" placeholder="Description" required/></th>
       </tr>
       <tr>
         <th><label>Hall: </label></th>
-        <th><input [(ngModel)]="floor.hall" placeholder="Hall"/></th>
+        <th><input [(ngModel)]="floor.hall" placeholder="Hall" required/></th>
       </tr>
       <tr>
         <th><label>Number of rooms: </label></th>
-        <th><input type="number" [(ngModel)]="floor.room" placeholder="Number of rooms"/></th>
+        <th><input type="number" [(ngModel)]="floor.room" placeholder="Number of rooms" required/></th>
       </tr>
       <tr>
         <th><label>Floor Map: </label></th>
-        <th><input [(ngModel)]="floor.floorMap" placeholder="Floor Map"/></th>
+        <th><input [(ngModel)]="floor.floorMap" placeholder="Floor Map" required/></th>
       </tr>
       <tr>
         <th><label>Has Elevator: </label></th>
-        <th><input type="checkbox" [(ngModel)]="floor.hasElevator" /></th>
+        <th><input type="checkbox" [(ngModel)]="floor.hasElevator"/></th>
       </tr>
       <tr *ngFor="let passage of floor.passages; let i = index">
         <th><label for="passage{{i}}">Passage {{i + 1}}: </label></th>

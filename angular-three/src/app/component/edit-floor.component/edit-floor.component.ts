@@ -68,8 +68,7 @@ export class EditFloorComponent implements OnInit {
   editFloor() {
     const selectedFloor = this.floors.find(floor => floor._id === this.selectedFloorId);
     const selectedBuilding = this.buildings.find(building => building._id === this.floor.building);
-    console.log(selectedBuilding);
-    console.log(this.floor.building);
+
     if(selectedFloor && selectedBuilding){
       this.floor.id = selectedFloor._id;
       this.floor.building = selectedBuilding._id;
