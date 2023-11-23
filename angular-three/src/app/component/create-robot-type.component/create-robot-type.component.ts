@@ -29,12 +29,6 @@ export class CreateRobotTypeComponent implements OnInit {
   }
 
   createRobotType() {
-    this.robotService.createRobot(this.robotType).subscribe(
-      response => console.log('Building created:', response),
-      error => console.error('Error:', error)
-    );
-
-    /*
     let errorOrSuccess: any = this.robotService.createRobot(this.robotType);
     
     errorOrSuccess.subscribe(
@@ -50,7 +44,7 @@ export class CreateRobotTypeComponent implements OnInit {
         this.messageService.add(error.error.message);
         this.finalMessage = error.error.message;
       }
-    );*/
+    );
   }
 
   goBack(): void {
