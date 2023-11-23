@@ -1,7 +1,7 @@
 import Building from "./building";
 
 export default interface Floor {
-    id: string;
+    _id: string;
     name: string;
     building: Building
     description: string;
