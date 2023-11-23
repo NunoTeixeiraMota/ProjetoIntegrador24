@@ -3,7 +3,7 @@
   <div>
     <table>
       <tr>
-        <th><label>Floor Identifier: </label></th>
+        <th><label>Floor: </label></th>
         <th>
           <select [(ngModel)]="room.floor">
             <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>

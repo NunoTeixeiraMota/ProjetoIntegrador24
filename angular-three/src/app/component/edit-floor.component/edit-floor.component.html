@@ -4,15 +4,23 @@
     <table>
       <tr>
         <th><label>Floor Identifier: </label></th>
-        <th><input [(ngModel)]="floor.id" placeholder="Floor Identifier"/></th>
+        <th>
+          <select [(ngModel)]="floor">
+            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+          </select>
+        </th>
       </tr>
       <tr>
         <th><label>Floor Name: </label></th>
         <th><input [(ngModel)]="floor.name" placeholder="Floor Name"/></th>
       </tr>
       <tr>
-        <th><label>Building Identifier: </label></th>
-        <th><input [(ngModel)]="floor.building" placeholder="Building Identifier"/></th>
+        <th><label>Building: </label></th>
+        <th>
+          <select [(ngModel)]="floor.building">
+            <option *ngFor="let building of buildings" [ngValue]="floor.building">{{ building.name }}</option>
+          </select>
+        </th>
       </tr>
       <tr>
         <th><label>Description: </label></th>
