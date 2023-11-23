@@ -19,6 +19,7 @@ import { AddRobotComponent } from './component/add-robot.component/add-robot.com
 import { SingleFileUploadComponent } from './component/single-file-upload/single-file-upload.component';
 import { BuildingSelectionComponent } from './component/select-building.component/select-building.component';
 import { ChangeRobotStateComponent } from './component/change-robot-state.component/change-robot-statecomponent';
+import { ListFloorsFromBuildingComponent } from './component/list-floors-from-building.component/list-floors-from-building.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ChangeRobotStateComponent } from './component/change-robot-state.compon
     SingleFileUploadComponent,
     BuildingSelectionComponent,
     ChangeRobotStateComponent,
+    ListFloorsFromBuildingComponent
     // ... any other components
   ],
   imports: [

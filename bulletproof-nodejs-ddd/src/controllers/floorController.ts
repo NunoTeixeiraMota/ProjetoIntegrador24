@@ -17,7 +17,7 @@ export default class FloorController implements IFloorController {
 
   public async listAllFloorsInBuilding(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const buildingId = req.query.buildingId as string;
+      const buildingId = req.body.buildingId as string;
       const result = await this.floorServiceInstance.findByBuildingId(buildingId);
       if (result.isSuccess) {
         res.status(200).json(result.getValue());

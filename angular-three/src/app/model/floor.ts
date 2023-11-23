@@ -1,6 +1,6 @@
 import Building from "./building";
 
-export default interface floor {
+export default interface Floor {
     id: string;
     name: string;
     building: Building
@@ -9,5 +9,5 @@ export default interface floor {
     room: number;
     floorMap: string;
     hasElevator: boolean;
-    passages: floor[];
+    passages: Floor[];
 }
