@@ -8,7 +8,7 @@ import room from 'src/app/model/room';
 })
 
 export class RoomService {
-  private roomAPI_URL = 'https://localhost:4000/api/room';
+  private roomAPI_URL = 'http://localhost:4000/api/room';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 

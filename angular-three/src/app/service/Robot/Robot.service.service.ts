@@ -9,7 +9,7 @@ import robot from 'src/app/model/robot';
 })
 
 export class RobotService {
-  private roomAPI_URL = 'https://localhost:4000/api/robot';
+  private roomAPI_URL = 'http://localhost:4000/api/robot';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
