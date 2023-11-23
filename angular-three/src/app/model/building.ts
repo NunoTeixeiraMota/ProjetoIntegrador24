@@ -1,5 +1,5 @@
 export default interface Building {
-  id: string;
+  _id: string;
   name: string;
   localizationoncampus: string;
   floors: number;

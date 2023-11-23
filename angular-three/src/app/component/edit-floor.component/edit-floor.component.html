@@ -3,7 +3,7 @@
   <div>
     <table>
       <tr>
-        <th><label>Floor Identifier: </label></th>
+        <th><label>Floor: </label></th>
         <th>
           <select [(ngModel)]="floor">
             <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
@@ -43,11 +43,16 @@
         <th><input type="checkbox" [(ngModel)]="floor.hasElevator" /></th>
       </tr>
       <tr *ngFor="let passage of floor.passages; let i = index">
-        <th><label for="passage{{i}}">Passage {{i + 1}}: Passages Identifiers:</label></th>
-        <th><input [(ngModel)]="floor.passages[i]" id="passage{{i}}" placeholder="Passage Identifier"/></th>
+        <th><label for="passage{{i}}">Passage {{i + 1}}: </label></th>
+        <th>
+          <select [(ngModel)]="floor.passages[i]" id="passage{{i}}">
+            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+          </select>
+        </th>
         <button type="button" (click)="addPassage()">Add Passage</button>
         <button type="button" (click)="removePassage(i)">Remove Passage</button>
       </tr>
+      
     </table>
   </div>
   <div>

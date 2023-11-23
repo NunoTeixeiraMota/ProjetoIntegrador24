@@ -14,9 +14,9 @@ import Building from 'src/app/model/building';
 
 export class EditFloorComponent implements OnInit {
   floor = {
-    id: '',
+    id: "",
     name: '',
-    building: '',
+    building: "",
     description: '',
     hall: '',
     room: 0,
@@ -65,37 +65,32 @@ export class EditFloorComponent implements OnInit {
     );
   }
 
-  onFloorSelection(): void {
-    const selectedFloor = this.floors.find(floor => floor._id);
+  editFloor() {
 
-    if (selectedFloor) {
-      this.floor.name = selectedFloor.name;
-      this.floor.description = selectedFloor.description;
-      this.floor.floorMap = selectedFloor.floorMap;
-      this.floor.hall = selectedFloor.hall;
-      this.floor.hasElevator = selectedFloor.hasElevator;      
-    } else {
+    const selectedFloor = this.floors.find(floor => floor._id === this.floor.id);
+    const selectedBuilding = this.floors.find(floor => floor.building._id === this.floor.building);
+    if(selectedFloor && selectedBuilding){
+      this.floor.id = selectedFloor._id;
+      this.floor.building = selectedBuilding._id;
+      let errorOrSuccess: any = this.floorService.editFloor(this.floor);
+
+      errorOrSuccess.subscribe(
+        (data: any) => {
+          //success
+          this.messageService.add("Success room creation!");
+          this.finalMessage = "Success room creation!";
+          this.location.back();
+        },
+        
+        (error: any) => {
+          //error
+          this.messageService.add(error.error.message);
+          this.finalMessage = error.error.message;
+        }
+      );
+    }else{
       console.error('Selected floor does not exist.');
     }
-  }
-
-  editFloor() {
-    let errorOrSuccess: any = this.floorService.editFloor(this.floor);
-
-    errorOrSuccess.subscribe(
-      (data: any) => {
-        //success
-        this.messageService.add("Floor edited with success!");
-        this.finalMessage = "Floor edited with success!";
-        this.location.back();
-      },
-      
-      (error: any) => {
-        //error
-        this.messageService.add(error.error.message);
-        this.finalMessage = error.error.message;
-      }
-    );
   }
 
   addPassage() {

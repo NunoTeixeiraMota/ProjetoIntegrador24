@@ -72,7 +72,6 @@ export class CreateRoomComponent implements OnInit {
     }else{
       console.error('Selected floor does not exist.');
     }
-    
   }
 
   goBack(): void {

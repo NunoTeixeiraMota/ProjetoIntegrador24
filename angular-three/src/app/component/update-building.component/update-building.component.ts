@@ -11,7 +11,7 @@ import Building from 'src/app/model/building';
 export class UpdateBuildingComponent implements OnInit {
   buildingId!: string | null;
   buildingData = {
-    id: '',
+    _id: '',
     name: '',
     localizationoncampus: '',
     floors: 0,
@@ -38,7 +38,7 @@ export class UpdateBuildingComponent implements OnInit {
   }
 
   updateBuilding() {
-    this.buildingData.id = this.buildingId || ''; // Assign the building ID
+    this.buildingData._id = this.buildingId || ''; // Assign the building ID
     this.buildingService.updateBuilding(this.buildingData).subscribe(
       response => console.log('Building updated:', response),
       error => console.error('Error updating building:', error)
