@@ -32,7 +32,7 @@ export class RobotService {
   changerobotState(rt: any) {
     const headers = {'content-type': 'application/json'};
     
-    const body = JSON.stringify(rt);
+    const body = { id: rt };
     console.log(body);
     return this.http.post<robotType>(this.roomAPI_URL + "/changeRobotState", body, {'headers':headers , observe: 'response'})
   }

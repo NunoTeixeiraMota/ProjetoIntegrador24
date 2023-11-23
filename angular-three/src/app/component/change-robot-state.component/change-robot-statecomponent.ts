@@ -6,27 +6,20 @@ import { FormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-activate-robot',
-  templateUrl: './activate-robot.component.html',
-  styleUrls: ['./activate-robot.component.css']
+  selector: 'app-change-robot-state',
+  templateUrl: './change-robot-state.component.html',
+  styleUrls: ['./change-robot-state.component.css']
 })
-export class ActivateRobotComponent {
+export class ChangeRobotStateComponent {
   @Output() finalMessage: string = '';
-  robot = {
-    id: 0,
-    nickname: 'Robot nickname',
-    type: 0,
-    serialNumber: "Robot serial number",
-    description: "Robot description",
-    isActive: true
-  };
+   id = 0;
   constructor(
     private robotService: RobotService,
     private messageService: MessageService
   ) { }
   changeRobotState(){
-    let errorOrSuccess: any = this.robotService.changerobotState(this.robot.id);
-    errorOrSuccess.subscribe(
+    let errorOrSuccess: any = this.robotService.changerobotState(this.id);
+    errorOrSuccess.subscribe( 
       (data: any) => {
         //success
         this.messageService.add("Robot added with success!");
@@ -42,9 +35,5 @@ export class ActivateRobotComponent {
 
 }
 }
-@NgModule({
-  declarations: [ActivateRobotComponent],
-  imports: [CommonModule,FormsModule,],
-})
 export class ActivateRobotModule { }
 
