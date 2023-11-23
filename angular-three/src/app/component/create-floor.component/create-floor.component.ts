@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FloorService } from '../../service/Floor/floor.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
-import Floor from 'src/app/model/floor';
 
 @Component({
   selector: 'app-create-floor',
@@ -12,15 +11,16 @@ import Floor from 'src/app/model/floor';
 export class CreateFloorComponent implements OnInit {
 
   floorData = {
+    building: '',
     name: '',
     description: '',
-    building: '',
     hall: '',
-    room: '',
+    room: 0,
     floorMap: '',
     hasElevator: false,
     passages: []
   };
+
   buildings: Building[] = [];
   isFormReadyToSubmit: boolean = false;
   uploadedFileName: string | undefined;
@@ -34,21 +34,20 @@ export class CreateFloorComponent implements OnInit {
   }
 
   createFloor() {
-      this.floorService.createFloor(this.floorData).subscribe(
-        response => console.log('Floor created:', response),
-        error => console.error('Error:', error));
+    console.log(this.floorData);
+    this.floorService.createFloor(this.floorData).subscribe(
+      response => console.log('Floor created:', response),
+      error => console.error('Error:', error));
   }
 
   handleUploadSuccess(filename: string) {
-    this.floorData.floorMap = filename; // Update the floorMap property
+    this.floorData.floorMap = filename;
     this.isFormReadyToSubmit = true;
   }
   
-
   getBuildings(): void {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
-        console.log('Fetched Buildings:', buildings);
         this.buildings = buildings;
       },
       (error: any) => {
