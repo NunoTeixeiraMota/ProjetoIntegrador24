@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActivateRobotComponent } from './activate-robot.component';
+import { ActivateRobotComponent } from './change-robot-statecomponent';
 
 describe('ActivateRobotComponent', () => {
   let component: ActivateRobotComponent;

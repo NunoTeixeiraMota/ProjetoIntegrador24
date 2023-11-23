@@ -1,0 +1,14 @@
+<h1>Change a robot</h1>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th><label for="id">Robot Identifier: </label></th>
+        <th><input type="string" id="id" [(ngModel)]="id" name="id" /></th>
+      </tr>
+    </table>
+    <button (click)="changeRobotState()">Change</button>
+  </div>
+</div>
+
+<p>{{ finalMessage }}</p>

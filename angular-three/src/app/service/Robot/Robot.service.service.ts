@@ -24,8 +24,11 @@ export class RobotService {
   }
 
   changerobotState(rt: any) {
-    console.log(rt);
-    return this.http.post(`${this.robotAPI_URL}/changeRobotState`, rt, {'headers':{'content-type': 'application/json'} , observe: 'response'})
+    const headers = {'content-type': 'application/json'};
+    
+    const body = { id: rt };
+    console.log(body);
+    return this.http.post<robotType>(this.robotAPI_URL + "/changeRobotState", body, {'headers':headers , observe: 'response'})
   }
 
 }
