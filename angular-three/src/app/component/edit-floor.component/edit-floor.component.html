@@ -5,7 +5,7 @@
       <tr>
         <th><label>Floor: </label></th>
         <th>
-          <select [(ngModel)]="floor">
+          <select [(ngModel)]="selectedFloorId">
             <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
           </select>
         </th>
@@ -18,7 +18,7 @@
         <th><label>Building: </label></th>
         <th>
           <select [(ngModel)]="floor.building">
-            <option *ngFor="let building of buildings" [ngValue]="floor.building">{{ building.name }}</option>
+            <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
         </th>
       </tr>
@@ -46,13 +46,12 @@
         <th><label for="passage{{i}}">Passage {{i + 1}}: </label></th>
         <th>
           <select [(ngModel)]="floor.passages[i]" id="passage{{i}}">
-            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+            <option *ngFor="let passageFloor of floors" [ngValue]="passageFloor._id">{{ passageFloor.name }}</option>
           </select>
         </th>
         <button type="button" (click)="addPassage()">Add Passage</button>
         <button type="button" (click)="removePassage(i)">Remove Passage</button>
       </tr>
-      
     </table>
   </div>
   <div>
