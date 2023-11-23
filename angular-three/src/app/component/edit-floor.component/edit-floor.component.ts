@@ -25,6 +25,7 @@ export class EditFloorComponent implements OnInit {
     passages: [""]
   };
 
+  selectedFloorId: string = '';
   floors: floor[] = [];
   buildings: Building[] = [];
   
@@ -56,7 +57,6 @@ export class EditFloorComponent implements OnInit {
   getBuilding(): void {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
-        console.log('Fetched Floors:', buildings);
         this.buildings = buildings;
       },
       (error: any) => {
@@ -66,8 +66,9 @@ export class EditFloorComponent implements OnInit {
   }
 
   editFloor() {
-    const selectedFloor = this.floors.find(floor => floor._id === this.floor.id);
-    const selectedBuilding = this.floors.find(floor => floor.building._id === this.floor.building);
+    const selectedFloor = this.floors.find(floor => floor._id === this.selectedFloorId);
+    const selectedBuilding = this.buildings.find(building => building._id === this.floor.building);
+
     if(selectedFloor && selectedBuilding){
       this.floor.id = selectedFloor._id;
       this.floor.building = selectedBuilding._id;
@@ -76,8 +77,8 @@ export class EditFloorComponent implements OnInit {
       errorOrSuccess.subscribe(
         (data: any) => {
           //success
-          this.messageService.add("Success room creation!");
-          this.finalMessage = "Success room creation!";
+          this.messageService.add("Floor Updated with success!");
+          this.finalMessage = "Floor Updated with success!";
           this.location.back();
         },
         
@@ -88,7 +89,7 @@ export class EditFloorComponent implements OnInit {
         }
       );
     }else{
-      console.error('Selected floor does not exist.');
+      console.error('Please select a floor and a building.');
     }
   }
 

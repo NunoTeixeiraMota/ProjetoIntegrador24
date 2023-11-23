@@ -22,7 +22,7 @@ export class FloorService {
     
     const body = JSON.stringify(floordata);
     console.log(body);
-    return this.http.post<floor>(this.apiBaseUrl + "/floor/updateFloor", body, {'headers':headers , observe: 'response'})
+    return this.http.put<floor>(this.apiBaseUrl + "/floor/updateFloor", body, {'headers':headers , observe: 'response'})
   }
   
   createFloorMap(mapdata: any) {

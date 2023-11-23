@@ -8,9 +8,8 @@ import Building from 'src/app/model/building';
   styleUrls: ['./update-building.component.css']
 })
 export class UpdateBuildingComponent implements OnInit {
-  buildingId!: string | null;
   buildingData = {
-    _id: '',
+    id: '',
     name: '',
     localizationoncampus: '',
     floors: 0,
@@ -18,6 +17,7 @@ export class UpdateBuildingComponent implements OnInit {
     maxCel: [5000]
   };
 
+  selectedBuildingId: string = '';
   buildings: Building[] = [];
 
   constructor(private buildingService: BuildingService) {}
@@ -38,15 +38,12 @@ export class UpdateBuildingComponent implements OnInit {
   }
 
   updateBuilding() {
-    const selectedBuilding = this.buildings.find(building => building._id === this.buildingData._id);
-    if (selectedBuilding) {
-      selectedBuilding.name = this.buildingData.name;
-      selectedBuilding.localizationoncampus = this.buildingData.localizationoncampus;
-      selectedBuilding.floors = this.buildingData.floors;
-      selectedBuilding.lifts = this.buildingData.lifts;
-      selectedBuilding.maxCel = this.buildingData.maxCel;
+    const selectedBuilding = this.buildings.find(building => building._id === this.selectedBuildingId);
 
-      this.buildingService.updateBuilding(selectedBuilding).subscribe(
+    if (selectedBuilding) {
+      this.buildingData.id = selectedBuilding._id;
+
+      this.buildingService.updateBuilding(this.buildingData).subscribe(
         response => console.log('Building updated:', response),
         error => console.error('Error updating building:', error)
       );
