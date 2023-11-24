@@ -54,7 +54,9 @@ export default class FloorRepo implements IFloorRepo {
         floorDocument.description = floor.description;
         floorDocument.hall = floor.hall;
         floorDocument.room = floor.room;
-        floorDocument.floorMap = floor.floorMap;
+        if(floor.floorMap != "1"){
+          floorDocument.floorMap = floor.floorMap; //UI can commit without floor map but sends 1 to keep the existing map
+        }
         floorDocument.hasElevator = floor.hasElevator;
         floorDocument.passages = floor.passages;
         await floorDocument.save();

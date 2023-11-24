@@ -13,8 +13,11 @@ export class FloorService {
   constructor(private http: HttpClient) {}
 
   createFloor(floordata: any) {
-    console.log('floordata: ', floordata);
-    return this.http.post(`${this.apiBaseUrl}/floor/create`, floordata);
+    const headers = {'content-type': 'application/json'};
+    
+    const body = JSON.stringify(floordata);
+    console.log(body);
+    return this.http.post<floor>(this.apiBaseUrl + "/floor/create", body, {'headers':headers , observe: 'response'})
   }
 
   editFloor(floordata: any) {

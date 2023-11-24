@@ -5,6 +5,8 @@ import { IRobotTypePersistance } from '../dataschema/IRobotTypePersistance';
 import { RobotTypeMap } from '../mappers/robotTypeMap';
 import IRobotTypeRepo from './IRepos/IRobotTypeRepo';
 import { ObjectId } from 'mongodb';
+import IRobotTypeDTO from '../dto/IRobotTypeDTO';
+import IRobotDTO from '../dto/IRobotDTO';
 
 @Service()
 export default class RobotTypeRepo implements IRobotTypeRepo {
@@ -41,6 +43,15 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
       throw err;
     }
 
+  }
+
+  async findAll(): Promise<IRobotTypeDTO[]> {
+    try {
+      const rt = await this.robotTypeSchema.find() as IRobotTypeDTO[];
+      return rt;
+    } catch (error) {
+      throw error;
+    }
   }
   
   async findByDomainId(robotTypeId: RobotType["id"] | string): Promise<RobotType> {
