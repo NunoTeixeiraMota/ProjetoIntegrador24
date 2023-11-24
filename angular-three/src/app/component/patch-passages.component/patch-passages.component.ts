@@ -5,20 +5,19 @@ import { MessageService } from 'src/app/service/message/message.service';
 import floor from 'src/app/model/floor';
 
 @Component({
-  selector: 'app-patch-floor-map',
-  templateUrl: './patch-floor-map.component.html',
-  styleUrls: ['./patch-floor-map.component.css']
+  selector: 'app-patch-passages',
+  templateUrl: './patch-passages.component.html',
+  styleUrls: ['./patch-passages.component.css']
 })
 
-export class PatchFloorMapComponent implements OnInit {
+export class PatchPassagesComponent implements OnInit {
   floor = {
     id: "",
-    floorMap: ''
+    passages: [""]
   };
 
   selectedFloorId: string = '';
   floors: floor[] = [];
-  floorMapFile: boolean = false;
   
   constructor(
     private location: Location,
@@ -43,15 +42,11 @@ export class PatchFloorMapComponent implements OnInit {
     );
   }
 
-  handleUploadSuccess(filename: string) {
-    this.floor.floorMap = filename;
-    this.floorMapFile = true;
-  }
+  editFloor() {
 
-  editFloorMap() {
-    if(this.selectedFloorId && this.floorMapFile){
+    if(this.selectedFloorId){
       this.floor.id = this.selectedFloorId;
-      let errorOrSuccess: any = this.floorService.patchFloorMap(this.floor);
+      let errorOrSuccess: any = this.floorService.editFloor(this.floor);
 
       errorOrSuccess.subscribe(
         (data: any) => {
@@ -70,6 +65,14 @@ export class PatchFloorMapComponent implements OnInit {
     }else{
       console.error('Please select a floor and a building.');
     }
+  }
+
+  addPassage() {
+    this.floor.passages.push("");
+  }
+
+  removePassage(index: number) {
+    this.floor.passages.splice(index, 1);
   }
 
   goBack(): void {

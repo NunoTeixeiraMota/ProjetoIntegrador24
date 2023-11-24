@@ -26,6 +26,7 @@ export class EditFloorComponent implements OnInit {
   };
 
   selectedFloorId: string = '';
+  selectedBuildingId: string = '';
   floors: floor[] = [];
   buildings: Building[] = [];
   floorMapFile: boolean = false;
@@ -72,12 +73,9 @@ export class EditFloorComponent implements OnInit {
   }
 
   editFloor() {
-    const selectedFloor = this.floors.find(floor => floor._id === this.selectedFloorId);
-    const selectedBuilding = this.buildings.find(building => building._id === this.floor.building);
-
-    if(selectedFloor && selectedBuilding){
-      this.floor.id = selectedFloor._id;
-      this.floor.building = selectedBuilding._id;
+    if(this.selectedFloorId && this.selectedBuildingId){
+      this.floor.id = this.selectedFloorId;
+      this.floor.building = this.selectedBuildingId;
       if(!this.floorMapFile){
         this.floor.floorMap = "1";
       }

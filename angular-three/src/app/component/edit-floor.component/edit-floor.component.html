@@ -17,7 +17,7 @@
       <tr>
         <th><label>Building: </label></th>
         <th>
-          <select [(ngModel)]="floor.building">
+          <select [(ngModel)]="selectedBuildingId">
             <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
         </th>

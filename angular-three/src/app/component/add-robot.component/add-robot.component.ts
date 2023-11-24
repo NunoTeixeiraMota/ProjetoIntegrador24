@@ -46,8 +46,7 @@ export class AddRobotComponent implements OnInit {
   }
 
   addRobot() {
-    const selectedRobotType = this.rt.find(robotType => robotType._id === this.selectedTypeId);
-    if(selectedRobotType){
+    if(this.selectedTypeId){
       this.robot.type = this.selectedTypeId;
       let errorOrSuccess: any = this.robotService.addRobot(this.robot);
 
