@@ -34,7 +34,6 @@ export class CreateFloorComponent implements OnInit {
   }
 
   createFloor() {
-    console.log(this.floorData);
     this.floorService.createFloor(this.floorData).subscribe(
       response => console.log('Floor created:', response),
       error => console.error('Error:', error));

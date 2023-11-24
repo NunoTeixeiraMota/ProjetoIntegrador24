@@ -28,6 +28,7 @@ export class EditFloorComponent implements OnInit {
   selectedFloorId: string = '';
   floors: floor[] = [];
   buildings: Building[] = [];
+  floorMapFile: boolean = false;
   
   constructor(
     private location: Location,
@@ -54,6 +55,11 @@ export class EditFloorComponent implements OnInit {
     );
   }
 
+  handleUploadSuccess(filename: string) {
+    this.floor.floorMap = filename;
+    this.floorMapFile = true;
+  }
+
   getBuilding(): void {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
@@ -72,6 +78,9 @@ export class EditFloorComponent implements OnInit {
     if(selectedFloor && selectedBuilding){
       this.floor.id = selectedFloor._id;
       this.floor.building = selectedBuilding._id;
+      if(!this.floorMapFile){
+        this.floor.floorMap = "1";
+      }
       let errorOrSuccess: any = this.floorService.editFloor(this.floor);
 
       errorOrSuccess.subscribe(

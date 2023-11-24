@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <th><label>Floor Map: </label></th>
-        <th><input [(ngModel)]="floor.floorMap" placeholder="Floor Map" required/></th>
+        <app-single-file-upload (uploadSuccess)="handleUploadSuccess($event)"></app-single-file-upload>
       </tr>
       <tr>
         <th><label>Has Elevator: </label></th>
