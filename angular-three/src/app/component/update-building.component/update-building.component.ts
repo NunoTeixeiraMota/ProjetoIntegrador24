@@ -38,11 +38,9 @@ export class UpdateBuildingComponent implements OnInit {
   }
 
   updateBuilding() {
-    const selectedBuilding = this.buildings.find(building => building._id === this.selectedBuildingId);
-
-    if (selectedBuilding) {
-      this.buildingData.id = selectedBuilding._id;
-
+    console.log(this.selectedBuildingId);
+    if (this.selectedBuildingId) {
+      this.buildingData.id = this.selectedBuildingId;
       this.buildingService.updateBuilding(this.buildingData).subscribe(
         response => console.log('Building updated:', response),
         error => console.error('Error updating building:', error)
