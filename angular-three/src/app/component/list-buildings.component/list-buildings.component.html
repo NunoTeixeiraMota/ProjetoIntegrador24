@@ -1,10 +1,28 @@
-<div *ngFor="let building of buildings">
-  <div>
-    <strong>Name:</strong> {{ building.name || 'N/A' }} <br>
-    <strong>Localization on Campus:</strong> {{ building.localizationoncampus || 'N/A' }} <br>
-    <strong>Floors:</strong> {{ building.floors.toString() || 'N/A' }} <br>
-    <strong>Lifts:</strong> {{ building.lifts.toString() || 'N/A' }} <br>
-    <strong>Max Ceiling:</strong> {{ building.maxCel.toString() || 'N/A' }} <br>
-    <hr>
+<head>
+  <link rel="stylesheet" href="list-buildings.component.css">
+</head>
+
+<div class="building-container" *ngFor="let building of buildings">
+  <div class="building-info">
+      <div class="info-item">
+          <span class="label">Name:</span>
+          <span class="value">{{ building.name || 'N/A' }}</span>
+      </div>
+      <div class="info-item">
+          <span class="label">Localization on Campus:</span>
+          <span class="value">{{ building.localizationoncampus || 'N/A' }}</span>
+      </div>
+      <div class="info-item">
+          <span class="label">Floors:</span>
+          <span class="value">{{ building.floors.toString() || 'N/A' }}</span>
+      </div>
+      <div class="info-item">
+          <span class="label">Lifts:</span>
+          <span class="value">{{ building.lifts.toString() || 'N/A' }}</span>
+      </div>
+      <div class="info-item">
+          <span class="label">Dimensions:</span>
+          <span class="value">{{ building.maxCel.toString() || 'N/A' }}</span>
+      </div>
   </div>
 </div>

@@ -1,40 +1,41 @@
-<h1>Edit Building</h1>
-<div>
-  <div>
-    <table>
-      <tr>
-        <th><label>Building: </label></th>
-        <th>
-          <select [(ngModel)]="selectedBuildingId">
-            <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
+<head>
+  <link rel="stylesheet" href="update-building.component.css">
+</head>
+
+<div class="edit-building">
+  <div class="edit-form">
+      <div class="form-row">
+          <label for="selectedBuildingId">Select Building:</label>
+          <select [(ngModel)]="selectedBuildingId" id="selectedBuildingId">
+              <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
-        </th>
-      </tr>
-      <tr>
-        <th><label>Building Name: </label></th>
-        <th><input type="text" [(ngModel)]="buildingData.name" name="name" id="name" placeholder="Building Name" required/></th>
-      </tr>
-      <tr>
-        <th><label>Localization on campus: </label></th>
-        <th><input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required/></th>
-      </tr>
-      <tr>
-        <th><label>Number of floors: </label></th>
-        <th><input type="number" [(ngModel)]="buildingData.floors" name="floors" id="floors" placeholder="Number of Floors" required/></th>
-      </tr>
-      <tr>
-        <th><label>Number of lifts: </label></th>
-        <th><input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required/></th>
-      </tr>
-      <div *ngFor="let cell of buildingData.maxCel; let i = index">
-        <label for="cell{{i}}">Max Cell Value {{i + 1}}:</label>
-        <input type="number" [(ngModel)]="buildingData.maxCel[i]" name="cell{{i}}" id="cell{{i}}" placeholder="Max Cell Value">
-        <button type="button" (click)="addMaxCel()">Add Max Cell</button>
-        <button type="button" (click)="removeMaxCel(i)">Remove</button>
       </div>
-    </table>
-  </div>
-  <div>
-    <button (click)="updateBuilding()">Update</button>
+      <div class="form-row">
+          <label for="name">Building Name:</label>
+          <input type="text" [(ngModel)]="buildingData.name" name="name" id="name" placeholder="Building Name" required>
+      </div>
+      <div class="form-row">
+          <label for="localizationoncampus">Localization on Campus:</label>
+          <input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required>
+      </div>
+      <div class="form-row">
+          <label for="floors">Number of Floors:</label>
+          <input type="number" [(ngModel)]="buildingData.floors" name="floors" id="floors" placeholder="Number of Floors" required>
+      </div>
+      <div class="form-row">
+          <label for="lifts">Number of Lifts:</label>
+          <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required>
+      </div>
+      <div *ngFor="let cell of buildingData.maxCel; let i = index" class="form-row">
+          <label for="cell{{i}}">Max Cell Value {{i + 1}}:</label>
+          <input type="number" [(ngModel)]="buildingData.maxCel[i]" name="cell{{i}}" id="cell{{i}}" placeholder="Max Cell Value">
+      </div>
+      <div class="button-row">
+          <button type="button" (click)="addMaxCel()">Add Max Cell</button>
+          <button type="button" (click)="removeMaxCel(buildingData.maxCel.length - 1)">Remove Last Cell</button>
+      </div>
+      <div class="button-row">
+          <button (click)="updateBuilding()">Update</button>
+      </div>
   </div>
 </div>

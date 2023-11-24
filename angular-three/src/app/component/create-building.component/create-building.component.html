@@ -1,3 +1,8 @@
+<head>
+    <link rel="stylesheet" href="create-building.component.css">
+</head>
+<section class="main-content">
+
 <form (ngSubmit)="createBuilding()">
     <label for="name">Building Name:</label>
     <input type="text" [(ngModel)]="buildingData.name" name="name" id="name" placeholder="Building Name" required>
@@ -11,12 +16,13 @@
     <label for="lifts">Number of Lifts:</label>
     <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required>
 
-    <div *ngFor="let cell of buildingData.maxCel; let i = index">
-        <label for="cell{{i}}">Max Cell Value {{i + 1}}:</label>
-        <input type="number" [(ngModel)]="buildingData.maxCel[i]" name="cell{{i}}" id="cell{{i}}" placeholder="Max Cell Value">
-        <button type="button" (click)="removeMaxCel(i)">Remove</button>
-    </div>
-    <button type="button" (click)="addMaxCel()">Add Max Cell</button>
+    <label for="length">Length:</label>
+    <input type="number" [(ngModel)]="buildingData.maxCel[0]" name="length" id="length" placeholder="Length" required>
+
+    <label for="width">Width:</label>
+    <input type="number" [(ngModel)]="buildingData.maxCel[1]" name="width" id="width" placeholder="Width" required>
     
     <button type="submit">Create Building</button>
 </form>
+
+</section>

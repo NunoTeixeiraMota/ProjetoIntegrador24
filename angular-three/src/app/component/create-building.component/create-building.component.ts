@@ -12,7 +12,7 @@ export class CreateBuildingComponent {
     localizationoncampus: '',
     floors: 0,
     lifts: 0,
-    maxCel: [5000] // Start with one default value or empty array
+    maxCel: [0,0] // Start with one default value or empty array
   };
 
   constructor(private buildingService: BuildingService) {}

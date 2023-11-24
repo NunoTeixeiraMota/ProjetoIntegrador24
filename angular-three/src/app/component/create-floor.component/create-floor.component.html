@@ -1,43 +1,50 @@
-<app-single-file-upload (uploadSuccess)="handleUploadSuccess($event)"></app-single-file-upload>
+<head>
+  <link rel="stylesheet" href="create-floor.component.css">
+</head>
 
-<form (ngSubmit)="createFloor()" *ngIf="buildings.length > 0"> 
-  <div>
-    <label for="name">Floor Name:</label>
-    <input type="text" id="name" [(ngModel)]="floorData.name" name="name" required>
+
+<form (ngSubmit)="createFloor()" *ngIf="buildings.length > 0" class="prettier-form">
+  <div class="form-row">
+      <label for="name">Floor Name:</label>
+      <input type="text" id="name" [(ngModel)]="floorData.name" name="name" required>
   </div>
 
-  <div>
-    <label for="building">Building:</label>
-    <select id="building" [(ngModel)]="floorData.building" name="building" required>
-      <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
-    </select>
+  <div class="form-row">
+      <label for="building">Building:</label>
+      <select id="building" [(ngModel)]="floorData.building" name="building" required>
+          <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
+      </select>
   </div>
 
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="floorData.description" name="description" required></textarea>
+  <div class="form-row">
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="floorData.description" name="description" required></textarea>
   </div>
 
-  <div>
-    <label for="hall">Hall:</label>
-    <input type="text" id="hall" [(ngModel)]="floorData.hall" name="hall" required>
+  <div class="form-row">
+      <label for="hall">Hall:</label>
+      <input type="text" id="hall" [(ngModel)]="floorData.hall" name="hall" required>
   </div>
 
-  <div>
-    <label for="room">Room:</label>
-    <input type="number" id="room" [(ngModel)]="floorData.room" name="room" required>
+  <div class="form-row">
+      <label for="room">Room:</label>
+      <input type="number" id="room" [(ngModel)]="floorData.room" name="room" required>
   </div>
 
-  <div>
-    <div>Current Floor Map: {{ floorData.floorMap }}</div>
+  <div class="form-row">
+    <app-single-file-upload (uploadSuccess)="handleUploadSuccess($event)"></app-single-file-upload>
+
+      <div>Current Floor Map: {{ floorData.floorMap }}</div>
   </div>
 
-  <div>
-    <label for="hasElevator">Has Elevator:</label>
-    <input type="checkbox" id="hasElevator" [(ngModel)]="floorData.hasElevator" name="hasElevator">
+  <div class="form-row">
+      <label for="hasElevator">Has Elevator:</label>
+      <input type="checkbox" id="hasElevator" [(ngModel)]="floorData.hasElevator" name="hasElevator">
   </div>
 
-  <button type="submit">Create Floor</button>
+  <div class="form-row">
+      <button type="submit">Create Floor</button>
+  </div>
 </form>
 
 <div *ngIf="buildings.length === 0">

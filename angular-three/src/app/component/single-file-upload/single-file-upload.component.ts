@@ -41,8 +41,8 @@ export class SingleFileUploadComponent {
       this.status = "uploading";
       upload$.subscribe({
         next: (response) => {  // Include the response parameter here
-          this.status = "success";
           this.uploadSuccess.emit(response); // Access the filename property
+          this.status = "success";
         },
         error: (error: any) => {
           if (error.status === 200) {

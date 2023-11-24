@@ -1,15 +1,45 @@
-<nav>
-    <a routerLink="/create-building"> Create Building</a>
-    <a routerLink="/create-floor">Create Floor</a>
-    <a routerLink="/create-room">Create Room</a>
-    <a routerLink="/create-lift">Create Lift</a>
-    <a routerLink="/create-robot">Create Robot Type</a>
-    <a routerLink="/list-buildings">List Buildings</a>
-    <a routerLink="/edit-floor">Edit Floor</a>
-    <a routerLink="/add-robot">Add Robot</a>
-    <a routerLink="/change-robot-state">Change Robot State </a>
-    <a routerLink="/update-building">Update Building</a>
-    <a routerLink="/list-floors-from-building"> List floors in building</a>
-    <a routerLink="/patch-floor-map"> Update floor map</a>
-    <a routerLink="/patch-passages"> Create/Update passages</a>
-</nav>
+<body>
+    <section class="main-content">
+    
+    <aside>
+        <section>
+            <h2>Building</h2>
+            <nav>
+                <a routerLink="/create-building"> Create Building</a>
+                <a routerLink="/list-buildings">List Buildings</a>
+                <a routerLink="/update-building">Update Building</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Floor</h2>
+            <nav>
+                <a routerLink="/create-floor">Create Floor</a>
+                <a routerLink="/edit-floor">Edit Floor</a>
+                <a routerLink="/list-floors-from-building"> List floors in building</a>
+                <a routerLink="/patch-floor-map"> Update floor map</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Room</h2>
+            <nav>
+                <a routerLink="/create-room">Create Room</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Lift</h2>
+            <nav>
+                <a routerLink="/create-lift">Create Lift</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Robot</h2>
+            <nav>
+                <a routerLink="/create-robot">Create Robot Type</a>
+                <a routerLink="/add-robot">Add Robot</a>
+                <a routerLink="/change-robot-state">Change Robot State</a>
+                <a routerLink="/patch-passages">Create/Update passages</a>
+            </nav>
+        </section>
+    </aside>
+</section>
+</body>

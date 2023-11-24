@@ -1,18 +1,35 @@
-/* src/app/component/list-buildings.component/list-buildings.component.css */
-
-/* Optional: Add some styling to the building list */
-.building-list {
-  list-style: none;
-  padding: 0;
+/* Building Container */
+.building-container {
+  max-width: 400px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Optional: Style the building details */
-.building-details {
+/* Building Info */
+.building-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Info Item */
+.info-item {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 10px;
 }
 
-/* Optional: Add a border between buildings */
-.building-list li:not(:last-child) {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
+/* Label styles */
+.label {
+  font-weight: bold;
+  color: #333;
+  min-width: 120px;
+}
+
+/* Value styles */
+.value {
+  color: #555;
 }

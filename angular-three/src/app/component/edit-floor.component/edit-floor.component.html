@@ -1,61 +1,62 @@
-<h1>Edit Floor</h1>
-<div>
-  <div>
-    <table>
-      <tr>
-        <th><label>Floor: </label></th>
-        <th>
-          <select [(ngModel)]="selectedFloorId">
-            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+<head>
+  <link rel="stylesheet" href="edit-floor.component.css">
+</head>
+
+<form (ngSubmit)="editFloor()" class="prettier-form">
+  <div class="form-container">
+      <div class="form-row">
+          <label for="selectedFloorId">Floor:</label>
+          <select [(ngModel)]="selectedFloorId" id="selectedFloorId">
+              <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
           </select>
-        </th>
-      </tr>
-      <tr>
-        <th><label>Floor Name: </label></th>
-        <th><input [(ngModel)]="floor.name" placeholder="Floor Name" required/></th>
-      </tr>
-      <tr>
-        <th><label>Building: </label></th>
-        <th>
-          <select [(ngModel)]="selectedBuildingId">
-            <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
+      </div>
+
+      <div class="form-row">
+          <label for="floorName">Floor Name:</label>
+          <input [(ngModel)]="floor.name" id="floorName" placeholder="Floor Name" required>
+      </div>
+
+      <div class="form-row">
+          <label for="building">Building:</label>
+          <select [(ngModel)]="selectedBuildingId" id="building">
+              <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
-        </th>
-      </tr>
-      <tr>
-        <th><label>Description: </label></th>
-        <th><input [(ngModel)]="floor.description" placeholder="Description" required/></th>
-      </tr>
-      <tr>
-        <th><label>Hall: </label></th>
-        <th><input [(ngModel)]="floor.hall" placeholder="Hall" required/></th>
-      </tr>
-      <tr>
-        <th><label>Number of rooms: </label></th>
-        <th><input type="number" [(ngModel)]="floor.room" placeholder="Number of rooms" required/></th>
-      </tr>
-      <tr>
-        <th><label>Floor Map: </label></th>
-        <app-single-file-upload (uploadSuccess)="handleUploadSuccess($event)"></app-single-file-upload>
-      </tr>
-      <tr>
-        <th><label>Has Elevator: </label></th>
-        <th><input type="checkbox" [(ngModel)]="floor.hasElevator"/></th>
-      </tr>
-      <tr *ngFor="let passage of floor.passages; let i = index">
-        <th><label for="passage{{i}}">Passage {{i + 1}}: </label></th>
-        <th>
+      </div>
+
+      <div class="form-row">
+          <label for="description">Description:</label>
+          <input [(ngModel)]="floor.description" id="description" placeholder="Description" required>
+      </div>
+
+      <div class="form-row">
+          <label for="hall">Hall:</label>
+          <input [(ngModel)]="floor.hall" id="hall" placeholder="Hall" required>
+      </div>
+
+      <div class="form-row">
+          <label for="numberOfRooms">Number of rooms:</label>
+          <input type="number" [(ngModel)]="floor.room" id="numberOfRooms" placeholder="Number of rooms" required>
+      </div>
+
+      <div class="form-row">
+          <label for="floorMap">Floor Map:</label>
+          <app-single-file-upload (uploadSuccess)="handleUploadSuccess($event)"></app-single-file-upload>
+      </div>
+
+      <div class="form-row">
+          <label for="hasElevator">Has Elevator:</label>
+          <input type="checkbox" [(ngModel)]="floor.hasElevator" id="hasElevator">
+      </div>
+
+      <div class="form-row" *ngFor="let passage of floor.passages; let i = index">
+          <label for="passage{{i}}">Passage {{i + 1}}:</label>
           <select [(ngModel)]="floor.passages[i]" id="passage{{i}}">
-            <option *ngFor="let passageFloor of floorsWS" [ngValue]="passageFloor._id">{{ passageFloor.name }}</option>
+              <option *ngFor="let passageFloor of floorsWS" [ngValue]="passageFloor._id">{{ passageFloor.name }}</option>
           </select>
-        </th>
-        <button type="button" (click)="addPassage()">Add Passage</button>
-        <button type="button" (click)="removePassage(i)">Remove Passage</button>
-      </tr>
-    </table>
+          <button type="button" (click)="addPassage()">Add Passage</button>
+          <button type="button" (click)="removePassage(i)">Remove Passage</button>
+      </div>
+      <button class="buttonBack" (click)="goBack()">Back</button>
+      <button type="submit">Edit</button>
   </div>
-  <div>
-    <button class="buttonBack" (click)="goBack()">Back</button>
-    <button (click)="editFloor()">Edit</button>
-  </div>
-</div>
+</form>

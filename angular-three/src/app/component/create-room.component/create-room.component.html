@@ -1,39 +1,43 @@
-<h1>Create a Room</h1>
-<div>
-  <div>
-    <table>
-      <tr>
-        <th><label>Floor: </label></th>
-        <th>
-          <select [(ngModel)]="room.floor">
-            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
-          </select>
-        </th>
-      </tr>      
-      <tr>
-        <th><label>Room Name: </label></th>
-        <th><input [(ngModel)]="room.name" placeholder="Room Name"/></th>
-      </tr>
-      <tr>
-        <th><label>Category: </label></th>
-        <th>
-          <select [(ngModel)]="room.category">
-            <option *ngFor="let category of roomCategories" [ngValue]="category">{{ category }}</option>
-          </select>
-        </th>
-      </tr>
-      <tr>
-        <th><label>Room Description: </label></th>
-        <th><input [(ngModel)]="room.description" placeholder="Room Description"/></th>
-      </tr>
-      <tr>
-        <th><label>Room Dimension: </label></th>
-        <th><input [(ngModel)]="room.dimension" placeholder="Room Dimension"/></th>
-      </tr>
-    </table>
+<head>
+  <link rel="stylesheet" href="create-room.component.css">
+</head>
+
+<div class="container">
+  <div class="table-section">
+      <table>
+          <tr>
+              <th><label>Floor:</label></th>
+              <td>
+                  <select [(ngModel)]="room.floor">
+                      <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <th><label>Room Name:</label></th>
+              <td><input [(ngModel)]="room.name" placeholder="Room Name"></td>
+          </tr>
+          <tr>
+              <th><label>Category:</label></th>
+              <td>
+                  <select [(ngModel)]="room.category">
+                      <option *ngFor="let category of roomCategories" [ngValue]="category">{{ category }}</option>
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <th><label>Room Description:</label></th>
+              <td><input [(ngModel)]="room.description" placeholder="Room Description"></td>
+          </tr>
+          <tr>
+              <th><label>Room Dimension:</label></th>
+              <td><input [(ngModel)]="room.dimension" placeholder="Room Dimension"></td>
+          </tr>
+      </table>
   </div>
-  <div>
-    <button class="buttonBack" (click)="goBack()">Back</button>
-    <button (click)="createRoom()">Create</button>
+
+  <div class="button-section">
+      <button class="buttonBack" (click)="goBack()">Back</button>
+      <button (click)="createRoom()">Create</button>
   </div>
 </div>
