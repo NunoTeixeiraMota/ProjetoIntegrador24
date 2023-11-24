@@ -15,10 +15,10 @@
   <div *ngIf="Floors.length > 0">
     <ul>
       <li *ngFor="let floor of Floors">
-        {{ floor.name }}
-        <!-- Display the floor map image -->
-        <div>
-          <img [src]="floor.floorMap" alt="Floor Map" style="max-width: 100%; height: auto;">
+        <Strong>Floor name: </Strong> {{ floor.name }}
+        <div >
+         <Strong>Description: </Strong> {{ floor.description }} <br>
+         <Strong>Hall: </Strong> {{ floor.hall }} <br>
         </div>
       </li> 
     </ul>
