@@ -18,6 +18,7 @@ export class PatchPassagesComponent implements OnInit {
 
   selectedFloorId: string = '';
   floors: floor[] = [];
+  floorsWS: floor[] = [];
   
   constructor(
     private location: Location,
@@ -29,6 +30,9 @@ export class PatchPassagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFloors();
+    setInterval(() => {
+      this.getFloorsWithoutSelected();
+    }, 1000);
   }
 
   getFloors(): void {
@@ -42,17 +46,27 @@ export class PatchPassagesComponent implements OnInit {
     );
   }
 
-  editFloor() {
+  getFloorsWithoutSelected(): void {
+    this.floorService.listFloors().subscribe(
+      (floors: floor[]) => {
+        this.floorsWS = floors.filter(floor => floor._id !== this.selectedFloorId);
+      },
+      (error: any) => {
+        console.error('Error fetching floors', error);
+      }
+    );
+  }
 
+  patchFloorPassages() {
     if(this.selectedFloorId){
       this.floor.id = this.selectedFloorId;
-      let errorOrSuccess: any = this.floorService.editFloor(this.floor);
+      let errorOrSuccess: any = this.floorService.patchPassages(this.floor);
 
       errorOrSuccess.subscribe(
         (data: any) => {
           //success
-          this.messageService.add("Floor Updated with success!");
-          this.finalMessage = "Floor Updated with success!";
+          this.messageService.add("Floor passages created/updated with success!");
+          this.finalMessage = "Floor passages created/updated with success!";
           this.location.back();
         },
         

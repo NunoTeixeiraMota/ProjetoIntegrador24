@@ -38,6 +38,11 @@ export class FloorService {
     return this.http.patch(`${this.apiBaseUrl}/floor/patchFloorMap`, data);
   }
 
+  patchPassages(data: any) {
+    console.log(data);
+    return this.http.patch(`${this.apiBaseUrl}/floor/patchPassages`, data);
+  }
+
   ListFloorsFromBuildingComponent(buildingId: string) {
     const requestBody = { buildingId: buildingId };
     return this.http.post<Floor[]>(this.apiBaseUrl + "/floor/listBuildingsByFloors", requestBody);
