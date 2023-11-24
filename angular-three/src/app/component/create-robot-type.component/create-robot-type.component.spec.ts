@@ -31,7 +31,7 @@ describe('CreateRobotTypeComponent', () => {
     let fakeMessageService = TestBed.inject(MessageService);
 
     let rt: robotType = {
-      id: "1",
+      _id: "1",
       designation: "a",
       brand: "a",
       modelRobot: "a",
@@ -51,7 +51,6 @@ describe('CreateRobotTypeComponent', () => {
     }));
 
     component = new CreateRobotTypeComponent(fakeLocation,fakeService,fakeMessageService);
-    component.robotType.id = "1";
     component.robotType.designation = "a";
     component.robotType.brand = "a";
     component.robotType.modelRobot = "a";
@@ -66,20 +65,21 @@ describe('CreateRobotTypeComponent', () => {
   it('should fail creation', () => {
     let fakeLocation = TestBed.inject(Location);
     let fakeMessageService = TestBed.inject(MessageService);
-
+  
     const fakeService = jasmine.createSpyObj('RobotService', ['createRobot']);
-    fakeService.createRoom.and.returnValue(throwError({
+    fakeService.createRobot.and.returnValue(throwError({
       error: {
         status: 400,
         message: "error"
       }
     }));
-
-    component = new CreateRobotTypeComponent(fakeLocation,fakeService,fakeMessageService);
-
+  
+    component = new CreateRobotTypeComponent(fakeLocation, fakeService, fakeMessageService);
+  
     component.createRobotType();
-
-    expect(fakeService.createRobotType).toHaveBeenCalled();
+  
+    expect(fakeService.createRobot).toHaveBeenCalled();
     expect(component.finalMessage).toBe("error");
-  })
+  });
+  
 });

@@ -4,9 +4,16 @@
   margin: 0 auto;
   font-family: 'Roboto', sans-serif;
   background-color: #fff;
+  opacity: 0.95;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  background-image: url('../../../assets/image.jpg');
+  background-size: cover; 
+  height: calc(100vh - 40px); 
 }
 
 /* Table section styles */
@@ -28,7 +35,7 @@
 /* Button section styles */
 .button-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 

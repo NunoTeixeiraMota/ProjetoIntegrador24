@@ -18,7 +18,7 @@ export class CreateRoomComponent implements OnInit {
     name: "",
     category: RoomCategory.Anfiteatro,
     description: "",
-    dimension: [0]
+    dimension: [0,0]
   };
 
   roomCategories = Object.values(RoomCategory);
