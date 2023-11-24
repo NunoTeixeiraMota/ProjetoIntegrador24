@@ -14,7 +14,7 @@
         <th><label for="passage{{i}}">Passage {{i + 1}}: </label></th>
         <th>
           <select [(ngModel)]="floor.passages[i]" id="passage{{i}}">
-            <option *ngFor="let passageFloor of floors" [ngValue]="passageFloor._id">{{ passageFloor.name }}</option>
+            <option *ngFor="let passageFloor of floorsWS" [ngValue]="passageFloor._id">{{ passageFloor.name }}</option>
           </select>
         </th>
         <button type="button" (click)="addPassage()">Add Passage</button>
@@ -24,6 +24,6 @@
   </div>
   <div>
     <button class="buttonBack" (click)="goBack()">Back</button>
-    <button (click)="editFloor()">Edit</button>
+    <button (click)="patchFloorPassages()">Edit</button>
   </div>
 </div>

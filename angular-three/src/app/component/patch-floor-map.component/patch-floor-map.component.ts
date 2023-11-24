@@ -56,8 +56,8 @@ export class PatchFloorMapComponent implements OnInit {
       errorOrSuccess.subscribe(
         (data: any) => {
           //success
-          this.messageService.add("Floor Updated with success!");
-          this.finalMessage = "Floor Updated with success!";
+          this.messageService.add("Floor map updated with success!");
+          this.finalMessage = "Floor map updated with success!";
           this.location.back();
         },
         

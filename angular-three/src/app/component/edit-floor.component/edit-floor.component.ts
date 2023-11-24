@@ -28,6 +28,7 @@ export class EditFloorComponent implements OnInit {
   selectedFloorId: string = '';
   selectedBuildingId: string = '';
   floors: floor[] = [];
+  floorsWS: floor[] = [];
   buildings: Building[] = [];
   floorMapFile: boolean = false;
   
@@ -42,13 +43,26 @@ export class EditFloorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFloors();
-    this.getBuilding();
+    setInterval(() => {
+      this.getFloorsWithoutSelected();
+    }, 1000);
   }
 
   getFloors(): void {
     this.floorService.listFloors().subscribe(
       (floors: floor[]) => {
         this.floors = floors;
+      },
+      (error: any) => {
+        console.error('Error fetching floors', error);
+      }
+    );
+  }
+
+  getFloorsWithoutSelected(): void {
+    this.floorService.listFloors().subscribe(
+      (floors: floor[]) => {
+        this.floorsWS = floors.filter(floor => floor._id !== this.selectedFloorId);
       },
       (error: any) => {
         console.error('Error fetching floors', error);
