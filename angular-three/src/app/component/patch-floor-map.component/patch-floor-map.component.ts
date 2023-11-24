@@ -48,7 +48,7 @@ export class PatchFloorMapComponent implements OnInit {
     this.floorMapFile = true;
   }
 
-  editFloor() {
+  editFloorMap() {
     const selectedFloor = this.floors.find(floor => floor._id === this.selectedFloorId);
 
     if(selectedFloor && this.floorMapFile){
