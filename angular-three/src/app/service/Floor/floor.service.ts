@@ -33,12 +33,15 @@ export class FloorService {
     return this.http.post(`${this.apiBaseUrl}/floor/uploadmap`, mapdata);
   }
 
+  patchFloorMap(data: any) {
+    console.log(data);
+    return this.http.patch(`${this.apiBaseUrl}/floor/patchFloorMap`, data);
+  }
+
   ListFloorsFromBuildingComponent(buildingId: string) {
     const requestBody = { buildingId: buildingId };
     return this.http.post<Floor[]>(this.apiBaseUrl + "/floor/listBuildingsByFloors", requestBody);
   }
-  
-  
 
   listFloors(): Observable<floor[]> {
     return this.http.get<floor[]>(`${this.apiBaseUrl}/floor/list`);

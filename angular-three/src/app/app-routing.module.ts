@@ -14,6 +14,8 @@ import { EditFloorComponent } from './component/edit-floor.component/edit-floor.
 import { AddRobotComponent } from './component/add-robot.component/add-robot.component';
 import {ChangeRobotStateComponent} from './component/change-robot-state.component/change-robot-statecomponent';
 import { ListFloorsFromBuildingComponent } from './component/list-floors-from-building.component/list-floors-from-building.component';
+import { PatchFloorMapComponent } from './component/patch-floor-map.component/patch-floor-map.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
   { path: 'create-building', component: CreateBuildingComponent },
@@ -28,7 +30,8 @@ const routes: Routes = [
   { path: 'add-robot', component: AddRobotComponent },
   { path: 'change-robot-state', component: ChangeRobotStateComponent},
   { path: 'update-building', component: UpdateBuildingComponent },
-  { path: 'list-floors-from-building', component: ListFloorsFromBuildingComponent }
+  { path: 'list-floors-from-building', component: ListFloorsFromBuildingComponent },
+  { path: 'patch-floor-map', component: PatchFloorMapComponent }
 
 ];
 

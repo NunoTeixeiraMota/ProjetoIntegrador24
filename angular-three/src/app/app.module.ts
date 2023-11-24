@@ -19,6 +19,7 @@ import { AddRobotComponent } from './component/add-robot.component/add-robot.com
 import { SingleFileUploadComponent } from './component/single-file-upload/single-file-upload.component';
 import { ChangeRobotStateComponent } from './component/change-robot-state.component/change-robot-statecomponent';
 import { ListFloorsFromBuildingComponent } from './component/list-floors-from-building.component/list-floors-from-building.component';
+import { PatchFloorMapComponent } from './component/patch-floor-map.component/patch-floor-map.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ListFloorsFromBuildingComponent } from './component/list-floors-from-bu
     AddRobotComponent,
     SingleFileUploadComponent,
     ChangeRobotStateComponent,
-    ListFloorsFromBuildingComponent
+    ListFloorsFromBuildingComponent,
+    PatchFloorMapComponent,
     // ... any other components
   ],
   imports: [
