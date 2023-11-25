@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  NodeJS_Test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,13 +23,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
       working-directory: ./bulletproof-nodejs-ddd
 
-    - name: Run build
-      run: npm run build --if-present
+    - name: Install Mocha
+      run: npm install mocha
       working-directory: ./bulletproof-nodejs-ddd
 
     - name: Run tests
       run: npm test
       working-directory: ./bulletproof-nodejs-ddd
+
