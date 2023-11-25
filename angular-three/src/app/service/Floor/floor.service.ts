@@ -51,4 +51,10 @@ export class FloorService {
   listFloors(): Observable<floor[]> {
     return this.http.get<floor[]>(`${this.apiBaseUrl}/floor/list`);
   }
+
+  listPassagesBetweenBuildings(buildingId1: string, buildingId2: string): Observable<Floor[]> {
+    const requestBody = { buildingId1, buildingId2 };
+
+    return this.http.post<Floor[]>(`${this.apiBaseUrl}/floor/listPassagesBetweenBuildings`, requestBody);
+  }
 }
