@@ -30,10 +30,6 @@ jobs:
       run: npm install mocha
       working-directory: ./bulletproof-nodejs-ddd
 
-    - name: Run build
-      run: npm run build --if-present
-      working-directory: ./bulletproof-nodejs-ddd
-
     - name: Run tests
       run: npm test
       working-directory: ./bulletproof-nodejs-ddd
