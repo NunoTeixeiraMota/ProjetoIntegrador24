@@ -9,6 +9,7 @@ import IBuildingService from '../services/IServices/IBuildingsService';
 import buildingService from '../services/buildingsService';
 import IFloorDTO from '../dto/IFloorDTO';
 import { FloorMap } from '../mappers/FloorMap';
+import { Building } from '../domain/building';
 
 describe('BuildingsController (Integration Test)', function () {
     beforeEach(function () {
@@ -143,27 +144,25 @@ describe('BuildingsController (Integration Test)', function () {
     });
     
     it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
-      const building: IBuildingDTO = {
-        "id": "123",
-        "name": "Building 123", // Make sure 'name' is defined
+      const building = Building.create({
+        "name": "Building 1",
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2,
         "maxCel": [1,2],
-      };
-      const building2: IBuildingDTO = {
-        "id": "1234",
-        "name": "Building 123", // Make sure 'name' is defined
+      });
+      const building2 = Building.create ({
+        "name": "Building 2",
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2,
         "maxCel": [1,2],
-      };
+      });
       // Mock IFloorDTO entities for passages
       const mockPassageFloorDTOs: IFloorDTO[] = [
           {
               id: 'passage1',
-              building: building,
+              building: building.getValue(),
               name: 'Passage 1',
               description: 'Description for Passage 1',
               hall: 'Hall X',
@@ -174,7 +173,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: 'passage2',
-              building: building,
+              building: building.getValue(),
               name: 'Passage 2',
               description: 'Description for Passage 2',
               hall: 'Hall Y',
@@ -191,7 +190,7 @@ describe('BuildingsController (Integration Test)', function () {
       const mockFloorsWithPassagesDTO: IFloorDTO[] = [
           {
               id: '1',
-              building: building2,
+              building: building2.getValue(),
               name: 'Floor 1 with Passage',
               description: 'Description for Floor 1',
               hall: 'Hall A',
@@ -202,7 +201,7 @@ describe('BuildingsController (Integration Test)', function () {
           },
           {
               id: '3',
-              building: building2,
+              building: building2.getValue(),
               name: 'Floor 3',
               description: 'Description for Floor 3',
               hall: 'Hall C',

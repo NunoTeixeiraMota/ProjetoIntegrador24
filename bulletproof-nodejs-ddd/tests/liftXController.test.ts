@@ -41,7 +41,7 @@ describe('Lift controller', function () {
     let next: Partial<NextFunction>  = () => {};
 
     let liftServiceInstance = Container.get("LiftService");
-    sinon.stub(liftServiceInstance, "createLift").returns( Result.ok<ILiftDTO>( {"_id": "123", "localization": req.body.localization, "state": req.body.state, "building": req.body.building} ));
+    sinon.stub(liftServiceInstance, "createLift").returns( Result.ok<ILiftDTO>( {"id": "123", "localization": req.body.localization, "state": req.body.state, "building": req.body.building} ));
 
     const ctrl = new LiftController(liftServiceInstance as ILiftService);
 
@@ -50,7 +50,7 @@ describe('Lift controller', function () {
 
     // Assert
     sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, sinon.match({ "_id": "123", "localization": req.body.localization, "state": req.body.state, "building": req.body.building}));
+    sinon.assert.calledWith(res.json, sinon.match({ "id": "123", "localization": req.body.localization, "state": req.body.state, "building": req.body.building}));
   });
 
   // Add more test cases as needed for other scenarios

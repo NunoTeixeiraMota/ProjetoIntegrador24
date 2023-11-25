@@ -15,17 +15,16 @@ import { Building } from '../domain/building';
 
 describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
-    const building = {
-        "id": "123",
+    const building = Building.create({
         "name": "Building 123",
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2,
         "maxCel": [1,2],
-      };
+      });
     const floorDataPassage: IFloorDTO = {
         "id": "456",
-        "building": building,
+        "building": building.getValue(),
         "name": "Floor 456",
         "description": "This floor offers a beautiful view of the city skyline.",
         "hall": "Main Hall",
@@ -114,7 +113,7 @@ describe('RoomRepo', () => {
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
             "id": floorData.id,
-            "building": building,
+            "building": building.getValue(),
             "name": floorData.name,
             "description": floorData.description,
             "hall": floorData.hall,

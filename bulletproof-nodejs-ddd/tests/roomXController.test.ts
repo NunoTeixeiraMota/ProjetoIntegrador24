@@ -14,17 +14,16 @@ import { Building } from '../src/domain/building';
 
 describe('RoomRepo', () => {
     const sandbox = sinon.createSandbox();
-    const building = {
-        "id": "123",
+    const building = Building.create({
         "name": "Building 123",
         "localizationoncampus": "Campus XYZ",
         "floors": 5,
         "lifts": 2,
         "maxCel": [1,2],
-      };
+      });
     const floorDataPassage: IFloorDTO = {
         "id": "456",
-        "building": building,
+        "building": building.getValue(),
         "name": "Floor 456",
         "description": "This floor offers a beautiful view of the city skyline.",
         "hall": "Main Hall",
@@ -82,23 +81,13 @@ describe('RoomRepo', () => {
   });
 
   it('should save a room with valid data', async () => {
-        const buildingData = {
-            "id": "123",
+        const buildingData = Building.create({
             "name": "Building 123",
             "localizationoncampus": "Campus XYZ",
             "floors": 5,
             "lifts": 2,
             "maxCel": [1,2],
-        };
-
-        sinon.stub(Container.get("buildingsService"), "createBuilding").returns( Result.ok<IBuildingDTO>( {
-            "id": buildingData.id,
-            "name": buildingData.name,
-            "localizationoncampus": buildingData.localizationoncampus,
-            "floors": buildingData.floors,
-            "lifts": buildingData.lifts,
-            "maxCel": buildingData.maxCel,
-        }));
+        });
     
         const floorData = {
             "id": "1",
@@ -113,7 +102,7 @@ describe('RoomRepo', () => {
 
         sinon.stub(Container.get("FloorService"), "createFloor").returns( Result.ok<IFloorDTO>( {
             "id": floorData.id,
-            "building": buildingData,
+            "building": buildingData.getValue(),
             "name": floorData.name,
             "description": floorData.description,
             "hall": floorData.hall,
