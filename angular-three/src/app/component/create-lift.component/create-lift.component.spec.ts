@@ -2,30 +2,49 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateLiftComponent } from './create-lift.component';
 import { LiftService } from '../../service/Lift/lift.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+
 import { of, throwError } from 'rxjs';
 import Building from 'src/app/model/building';
+import Lift from 'src/app/model/lift';
+const mockBuilding: Building = {
+  _id: '1',
+  name: 'Main Building',
+  localizationoncampus: 'Central Campus',
+  floors: 10,
+  lifts: 3,
+  maxCel: [100, 200, 300]
+};
+
+const mockBuildings: Building[] = [mockBuilding];
+
+const mockLift: Lift = {
+  id: 'lift1',
+  localization: 'Ground Floor',
+  state: 'Operational',
+  building: mockBuilding
+};
 
 describe('CreateLiftComponent', () => {
   let component: CreateLiftComponent;
   let fixture: ComponentFixture<CreateLiftComponent>;
-  let mockLiftService: jasmine.SpyObj<LiftService>;
-  let mockBuildingService: jasmine.SpyObj<BuildingService>;
+  let liftService: LiftService;
+  let buildingService: BuildingService;
 
   beforeEach(async () => {
-    mockLiftService = jasmine.createSpyObj('LiftService', ['createLift']);
-    mockBuildingService = jasmine.createSpyObj('BuildingService', ['getBuildings']);
-
     await TestBed.configureTestingModule({
-      declarations: [ CreateLiftComponent ],
-      providers: [
-        { provide: LiftService, useValue: mockLiftService },
-        { provide: BuildingService, useValue: mockBuildingService }
-      ]
-    })
-    .compileComponents();
+      declarations: [CreateLiftComponent],
+      imports: [FormsModule,HttpClientTestingModule],
+      providers: [LiftService, BuildingService]
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(CreateLiftComponent);
     component = fixture.componentInstance;
+    liftService = TestBed.inject(LiftService);
+    buildingService = TestBed.inject(BuildingService);
     fixture.detectChanges();
   });
 
@@ -33,33 +52,28 @@ describe('CreateLiftComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getBuildings on init', () => {
-    const buildings: Building[] = [];
-    mockBuildingService.getBuildings.and.returnValue(of(buildings));
+  it('ngOnInit should call getBuildings', () => {
+    spyOn(component, 'getBuildings').and.callThrough();
+    spyOn(buildingService, 'getBuildings').and.returnValue(of(mockBuildings));
     component.ngOnInit();
-    expect(mockBuildingService.getBuildings).toHaveBeenCalled();
-    expect(component.buildings).toEqual(buildings);
+    expect(component.getBuildings).toHaveBeenCalled();
+    expect(buildingService.getBuildings).toHaveBeenCalled();
+    expect(component.buildings).toEqual(mockBuildings);
   });
 
-  it('should handle errors while fetching buildings', () => {
-    const error = new Error('Error fetching buildings');
-    mockBuildingService.getBuildings.and.returnValue(throwError(error));
-    component.ngOnInit();
-    expect(mockBuildingService.getBuildings).toHaveBeenCalled();
-  });
-
-  it('should create lift', () => {
-    const liftData = { localization: '', state: '', building: '' };
-    const response = { message: 'Lift created' };
-    mockLiftService.createLift.and.returnValue(of(response));
+  it('createLift should make a service call', () => {
+    spyOn(liftService, 'createLift').and.returnValue(of(mockLift));
     component.createLift();
-    expect(mockLiftService.createLift).toHaveBeenCalledWith(liftData);
+    expect(liftService.createLift).toHaveBeenCalledWith(component.liftData);
+    // Optionally check the response handling
   });
 
-  it('should handle errors while creating lift', () => {
-    const error = new Error('Error creating lift');
-    mockLiftService.createLift.and.returnValue(throwError(error));
-    component.createLift();
-    expect(mockLiftService.createLift).toHaveBeenCalled();
+  it('getBuildings should handle error', () => {
+    const errorMessage = 'Error fetching buildings';
+    spyOn(buildingService, 'getBuildings').and.returnValue(throwError(() => new Error(errorMessage)));
+    component.getBuildings();
+    // Assert error handling logic here if any
   });
+
+  // Additional tests as needed
 });

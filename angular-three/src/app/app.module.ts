@@ -22,6 +22,7 @@ import { ListFloorsFromBuildingComponent } from './component/list-floors-from-bu
 import { PatchFloorMapComponent } from './component/patch-floor-map.component/patch-floor-map.component';
 import { PatchPassagesComponent } from './component/patch-passages.component/patch-passages.component';
 import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildings-Passage.component/list-2-Buildings-Passage.component';
+import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max.component/list-buildings-min-max.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildi
     PatchFloorMapComponent,
     PatchPassagesComponent,
     ListPassageBetween2BuildingsComponent,
+    ListBuildingsMinMaxComponent,
     // ... any other components
   ],
   imports: [

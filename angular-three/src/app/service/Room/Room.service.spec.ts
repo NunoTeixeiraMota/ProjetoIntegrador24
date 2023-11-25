@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+/*import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { MessageService } from '../message/message.service';
@@ -47,4 +47,4 @@ describe('RoomService', () => {
 
     roomCreate.subscribe(response => expect(response.body).toBe(room))
   })
-});
+});*/

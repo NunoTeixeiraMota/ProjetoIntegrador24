@@ -33,5 +33,8 @@ export class BuildingService {
   getBuildingId(): string | null {
     return this.selectedBuildingId;
   }
+  getBuildingMaxMinFloor(minfloor:number,maxFloor:number): Observable<Building[]> {
+    return this.http.get<Building[]>(`${this.apiBaseUrl}/building/MinMaxFloors?minFloors=${minfloor}&maxFloors=${maxFloor}`);
+  }
 
 }
