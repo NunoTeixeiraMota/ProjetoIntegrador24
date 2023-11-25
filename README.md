@@ -1,3 +1,6 @@
+[![Node.js CI](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejs.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejs.yml)
+
+[![Deploy to VPS](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml)
 # SEM_5_PI_G045 README
 
 ## Project Overview
@@ -26,4 +29,3 @@ We've developed a custom script called "ghscript" to automate the process of cre
 
 ## BACK-END NODE.JS API DOCS
 [Swagger](https://app.swaggerhub.com/apis/JNMTEIXEIRA/g-045/1.0.0)
-  
