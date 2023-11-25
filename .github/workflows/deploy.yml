@@ -1,0 +1,34 @@
+name: Deploy to VPS
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Replace with your Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build # Replace with your build script if different
+
+    - name: Deploy to VPS
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        ARGS: "-avzr --delete"
+        SOURCE: "bulletproof-nodejs-ddd/"
+        REMOTE_HOST: ${{ secrets.HOST }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        REMOTE_PORT: ${{ secrets.PORT }}
+        TARGET: "/root/bulletproof-nodejs-ddd"
