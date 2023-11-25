@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  NodeJS Test:
     runs-on: ubuntu-latest
 
     strategy:
