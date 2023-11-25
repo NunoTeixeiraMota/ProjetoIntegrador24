@@ -152,17 +152,16 @@ describe('FloorController (Integration Test)', function () {
   });
   it('addPassages: returns JSON with added passages data', async function () {
     const floorServiceInstance = Container.get("FloorService");
-    const building: IBuildingDTO = {
-      "id": "123",
+    const building = Building.create({
       "name": "Building 123", // Make sure 'name' is defined
       "localizationoncampus": "Campus XYZ",
       "floors": 5,
       "lifts": 2,
       "maxCel": [1,2],
-    };
+    });
     const floorData: IFloorDTO = {
       "id": "123",
-      "building": building,
+      "building": building.getValue(),
       "name": "Floor 123",
       "description": "Welcome to floor 123",
       "hall": "dadad",
@@ -174,7 +173,7 @@ describe('FloorController (Integration Test)', function () {
   
     const floorDataPassage: IFloorDTO = {
       "id": "456",
-      "building": building,
+      "building": building.getValue(),
       "name": "Floor 456",
       "description": "This floor offers a beautiful view of the city skyline.",
       "hall": "Main Hall",

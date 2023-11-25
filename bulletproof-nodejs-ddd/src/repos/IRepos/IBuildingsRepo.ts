@@ -7,6 +7,6 @@ export default interface IBuildingsRepo extends Repo<Building> {
   save(building: Building): Promise<Building>;
   findByDomainId(buildingId: BuildingId | string): Promise<Building>;
   findByName(id: BuildingId | string): Promise<Building>;
-  findAll(): Promise<IBuildingDTO[]>;
+  findAll(): Promise<Building[]>;
   findByFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]>;
 }
