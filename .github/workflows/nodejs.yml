@@ -24,4 +24,5 @@ jobs:
       run: cd ./bulletproof-nodejs-ddd
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: mocha -r ts-node/register **/*.test.ts --timeout 10000
+
