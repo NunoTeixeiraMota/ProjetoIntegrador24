@@ -33,7 +33,4 @@ jobs:
     - name: Run tests
       run: npm test
       working-directory: ./bulletproof-nodejs-ddd
-      
-    - name: Run tests
-      run: npm test
-      working-directory: ./bulletproof-nodejs-ddd
+
