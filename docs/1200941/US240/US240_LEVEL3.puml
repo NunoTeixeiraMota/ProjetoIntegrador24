@@ -1,4 +1,4 @@
-@startuml sd
+@startuml US240_LEVEL3
 
 participant "User" as U
 participant "IFloorController" as IFC

@@ -1,4 +1,4 @@
-@startuml sd
+@startuml US220_LEVEL3
 
 participant "User" as A
 participant "IBuildingController" as IB

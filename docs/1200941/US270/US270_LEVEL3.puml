@@ -1,10 +1,13 @@
-@startuml sd
-
+@startuml US270_LEVEL3
 participant "User" as A
 participant "ILiftController" as IL
 participant "LiftController" as L
 participant "ILiftService" as IS
 participant "LiftService" as S
+participant "IBuildingService" as IBS  
+participant "BuildingService" as BS    
+participant "IBuildingRepo" as IBR
+participant "BuildingRepo" as BR
 participant "ILiftRepo" as IR
 participant "LiftRepo" as R
 participant "LiftMap" as M
@@ -32,43 +35,63 @@ activate IS
 IS -> S: createLift(req.body as ILiftDTO)
 activate S
 
-S -> M: ToDomain(req.body as ILiftDTO)
-activate M
+S -> IBS: findByDomainId(req.body.buildingId)
+activate IBS
+IBS -> BS: findByDomainId(req.body.buildingId)
+activate BS
+BS -> IBR: findByDomainId(req.body.buildingId)
+activate IBR
+IBR -> BR: findById(req.body.buildingId)
+activate BR
+BR --> IBR: buildingDocument (or null)
+deactivate BR
+IBR --> BS: buildingDocument (or null)
+deactivate IBR
+BS --> IBS: buildingDocument (or null)
+deactivate BS
+IBS --> S: buildingDocument (or null)
+deactivate IBS
 
-M -> E: .create(ILiftDTO)
-activate E
-
-E --> S: createdLift
-deactivate E
-deactivate M
-
-alt creation successful
-    S -> IR: save(createdLift)
-    activate IR
-    IR -> R: save(createdLift)
-    activate R
-    R -> M: toPersistence(createdLift)
+alt Building found
+    S -> M: ToDomain(req.body as ILiftDTO)
     activate M
-    M --> R : return rawLift
+    M -> E: .create(ILiftDTO)
+    activate E
+    E --> S: createdLift
+    deactivate E
     deactivate M
-    R --> I: create(rawLift)
-    activate I
-    I --> R : return liftDocument
-    deactivate I
-    R --> IR: saved liftDocument
-    deactivate R
-    IR --> S: saved liftDocument
-    deactivate IR
-    
-    S -> M: toDTO(createdLift)
-    activate M
-    M --> S: liftDTOResult
-    deactivate M
-    S --> IS : liftDTOResult
-    IS --> L: Return successful Result with DTO
-else creation failed
-    S --> IS: Error Result
-    IS --> L: Error Result
+
+    alt creation successful
+        S -> IR: save(createdLift)
+        activate IR
+        IR -> R: save(createdLift)
+        activate R
+        R -> M: toPersistence(createdLift)
+        activate M
+        M --> R : return rawLift
+        deactivate M
+        R --> I: create(rawLift)
+        activate I
+        I --> R : return liftDocument
+        deactivate I
+        R --> IR: saved liftDocument
+        deactivate R
+        IR --> S: saved liftDocument
+        deactivate IR
+        
+        S -> M: toDTO(createdLift)
+        activate M
+        M --> S: liftDTOResult
+        deactivate M
+        S --> IS : liftDTOResult
+        IS --> L: Return successful Result with DTO
+    else creation failed
+        S --> IS: Error Result
+        IS --> L: Error Result
+    end
+else Building not found
+    S --> IS: Building not found Error
+    IS --> L: Building not found Error
 end
 
 alt LiftService returns a failure Result
@@ -81,5 +104,4 @@ end
 
 deactivate S
 deactivate L
-
 @enduml
