@@ -14,7 +14,7 @@ export class UpdateBuildingComponent implements OnInit {
     localizationoncampus: '',
     floors: 0,
     lifts: 0,
-    maxCel: [5000]
+    maxCel: [0,0]
   };
 
   selectedBuildingId: string = '';
