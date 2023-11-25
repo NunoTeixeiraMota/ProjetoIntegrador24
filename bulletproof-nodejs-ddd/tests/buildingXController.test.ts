@@ -12,30 +12,6 @@ import IFloorDTO from '../src/dto/IFloorDTO';
 
 describe('BuildingsController (Unit Test)', function () {
   const sandbox = sinon.createSandbox();
-  const building = {
-    "id": "123",
-    "name": "Building 123", // Make sure 'name' is defined
-    "localizationoncampus": "Campus XYZ",
-    "floors": 5,
-    "lifts": 2,
-    "maxCel": [1,2],
-  };
-  const floorDataPassage: IFloorDTO = {
-    "id": "456",
-    "building": building,
-    "name": "Floor 456",
-    "description": "This floor offers a beautiful view of the city skyline.",
-    "hall": "Main Hall",
-    "room": 8,
-    "floorMap": "dasdasd",
-    "hasElevator": false,
-    "passages": []
-  };
-const floorarraydatapassage = [floorDataPassage];
-
-  // Assume FloorMap.toDomain converts IFloorDTO to the domain object
-  const FloorPassaDomain =  FloorMap.toDomain(floorDataPassage);
-  const FloorArray = [FloorPassaDomain];
 
     beforeEach(function() {
       Container.reset();
@@ -252,19 +228,18 @@ const floorarraydatapassage = [floorDataPassage];
 
   it('ListBuildingFloorWithPassageToOtherBuilding: returns an array of floors for a specific building ID with passages', async function () {
     const buildingId = '123'; // Use a specific building ID
-    const building: IBuildingDTO = {
-      "id": "123",
+    const building = Building.create({
       "name": "Building 123", // Make sure 'name' is defined
       "localizationoncampus": "Campus XYZ",
       "floors": 5,
       "lifts": 2,
       "maxCel": [1,2],
-    };
+    });
     // Mock IFloorDTO entities for passages
     const mockPassageFloorDTOs: IFloorDTO[] = [
         {
             id: 'passage1',
-            building: building,
+            building: building.getValue(),
             name: 'Passage 1',
             description: 'Description for Passage 1',
             hall: 'Hall X',
@@ -275,7 +250,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: 'passage2',
-            building: building,
+            building: building.getValue(),
             name: 'Passage 2',
             description: 'Description for Passage 2',
             hall: 'Hall Y',
@@ -292,7 +267,7 @@ const floorarraydatapassage = [floorDataPassage];
     const mockFloorsWithPassagesDTO: IFloorDTO[] = [
         {
             id: '1',
-            building: building,
+            building: building.getValue(),
             name: 'Floor 1 with Passage',
             description: 'Description for Floor 1',
             hall: 'Hall A',
@@ -303,7 +278,7 @@ const floorarraydatapassage = [floorDataPassage];
         },
         {
             id: '3',
-            building: building,
+            building: building.getValue(),
             name: 'Floor 3',
             description: 'Description for Floor 3',
             hall: 'Hall C',
