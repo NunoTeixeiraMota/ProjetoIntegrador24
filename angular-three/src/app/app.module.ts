@@ -21,6 +21,8 @@ import { ChangeRobotStateComponent } from './component/change-robot-state.compon
 import { ListFloorsFromBuildingComponent } from './component/list-floors-from-building.component/list-floors-from-building.component';
 import { PatchFloorMapComponent } from './component/patch-floor-map.component/patch-floor-map.component';
 import { PatchPassagesComponent } from './component/patch-passages.component/patch-passages.component';
+import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildings-Passage.component/list-2-Buildings-Passage.component';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { PatchPassagesComponent } from './component/patch-passages.component/pat
     ListFloorsFromBuildingComponent,
     PatchFloorMapComponent,
     PatchPassagesComponent,
+    ListPassageBetween2BuildingsComponent,
     // ... any other components
   ],
   imports: [
