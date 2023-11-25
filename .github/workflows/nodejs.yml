@@ -24,6 +24,7 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      run: npm install mocha
       working-directory: ./bulletproof-nodejs-ddd
 
     - name: Run build
