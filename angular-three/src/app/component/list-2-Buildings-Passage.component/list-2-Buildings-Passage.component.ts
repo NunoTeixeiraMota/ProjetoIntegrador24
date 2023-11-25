@@ -10,26 +10,17 @@ import { FloorService } from 'src/app/service/Floor/floor.service';
   styleUrls: ['./list-2-Buildings-Passage.component.css']
 })
 export class ListPassageBetween2BuildingsComponent implements OnInit {
-
   selectedBuildingID1: string = '';
   selectedBuildingID2: string = '';
-
 
   FloorsFromBuilding1 : Floor [] = [];
   FloorsFromBuilding2 : Floor [] = [];
   buildings : Building [] = [];
   
-
-
-
   constructor(
     private buildingService: BuildingService,
     private floorService: FloorService,
     ) {}
-  
-  
-  
-  
   
   ngOnInit(): void {
     this.getBuildings();
@@ -48,10 +39,7 @@ export class ListPassageBetween2BuildingsComponent implements OnInit {
     );
   }
 
-  ListPassageBetween2Buildings() {
-    console.log(this.selectedBuildingID1);
-    console.log(this.selectedBuildingID2);
-  
+  ListPassageBetween2Buildings() {  
     if (this.selectedBuildingID1 && this.selectedBuildingID2) {
       const building1 = this.buildings.find(building => building._id === this.selectedBuildingID1);
       const building2 = this.buildings.find(building => building._id === this.selectedBuildingID2);
@@ -94,8 +82,4 @@ export class ListPassageBetween2BuildingsComponent implements OnInit {
     }
     return null;
   }
-  
-  
 }
-  
-
