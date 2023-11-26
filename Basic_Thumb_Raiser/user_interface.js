@@ -3,7 +3,6 @@ import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 export default class UserInteraction {
     constructor(scene, renderer, lights, fog, object, animations, thumbRaiser) {
-        this.thumbRaiser = thumbRaiser;
 
         function colorCallback(object, color) {
             object.color.set(color);
@@ -89,37 +88,6 @@ export default class UserInteraction {
         for (let i = 0; i < expressions.length; i++) {
             expressionsFolder.add(face.morphTargetInfluences, i, 0.0, 1.0, 0.01).name(expressions[i]);
         }
-
-        const floorsFolder = this.gui.addFolder("Floors");
-
-        this.listFloors().then((floors) => {
-            floors.forEach((floor) => {
-                const mazeData = {
-                    url: "../bulletproof-nodejs-ddd/flormaps/" + floor.floorMap,
-                    scale: new THREE.Vector3(1.0, 1.0, 1.0),
-                };
-
-                const floorElement = floorsFolder.add({ name: floor.name }, floor.name).onChange(() => {
-                    this.thumbRaiser.updateMaze(mazeData);
-                });
-
-                floorElement.domElement.querySelector('input').style.display = 'none';
-                floorElement.domElement.style.cursor = "pointer";
-                floorElement.domElement.style.border = "1px solid #ccc";
-                floorElement.domElement.style.padding = "5px";
-                floorElement.domElement.style.margin = "2px";
-                floorElement.domElement.style.textAlign = "center";
-
-                floorElement.domElement.addEventListener('mouseenter', () => {
-                    floorElement.domElement.style.backgroundColor = "#eee";
-                });
-
-                floorElement.domElement.addEventListener('mouseleave', () => {
-                    floorElement.domElement.style.backgroundColor = "";
-                });
-            });
-        });
-
     }
 
     setVisibility(visible) {
@@ -128,11 +96,5 @@ export default class UserInteraction {
         } else {
             this.gui.hide();
         }
-    }
-
-    listFloors() {
-        return fetch("http://localhost:4000/api/floor/list")
-            .then((response) => response.json())
-            .then((json) => json);
     }
 }

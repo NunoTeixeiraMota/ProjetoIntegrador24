@@ -115,6 +115,23 @@
         <div id="views-panel">
             <table class="views">
                 <tr>
+                    <div>
+                        <label for="floors-dropdown">Select Floor:</label>
+                        <select id="floors-dropdown">
+                            <option value="A1">Floor A1</option>
+                            <option value="A2">Floor A2</option>
+                            <option value="B1">Floor B1</option>
+                            <option value="B2">Floor B2</option>
+                            <option value="B3">Floor B3</option>
+                            <option value="C1">Floor C1</option>
+                            <option value="c2">Floor C2</option>
+                            <option value="C3">Floor C3</option>
+                            <option value="C4">Floor C4</option>
+                            <option value="D1">Floor D1</option>
+                            <option value="D2">Floor D2</option>
+                            <option value="D3">Floor D3</option>
+                        </select>
+                    </div>
                     <td>
                         <label>View:</label>
                         <select id="view">
@@ -309,18 +326,25 @@
             }
         }
     </script>
-    <script src="../lodash/lodash.js"></script>
+    <script src="../Lodash/lodash.js"></script>
     <script type="module">
         import * as THREE from "three";
         import Orientation from "./orientation.js";
         import ThumbRaiser from "./thumb_raiser.js";
 
         let thumbRaiser;
+        let animationFrameID;
 
         function initialize() {
+            const mazeData = {
+                url: "./mazes/Loquitas.json",
+                credits: "Maze designed by Cecília Fernandes and Nikita.",
+                scale: new THREE.Vector3(1.0, 1.0, 1.0)
+            }
             // Create the game
             thumbRaiser = new ThumbRaiser(
                 {}, // General Parameters
+                mazeData,
                 { scale: new THREE.Vector3(1.0, 0.5, 1.0) }, // Maze parameters
                 {}, // Player parameters
                 { ambientLight: { intensity: 0.1 }, pointLight1: { intensity: 50.0, distance: 20.0, position: new THREE.Vector3(-3.5, 10.0, 2.5) }, pointLight2: { intensity: 50.0, distance: 20.0, position: new THREE.Vector3(3.5, 10.0, -2.5) } }, // Lights parameters
@@ -333,14 +357,62 @@
             );
         }
 
+        function initializeCustom(mazeData) {
+            // Create the game
+            thumbRaiser = new ThumbRaiser(
+                {}, // General Parameters
+                mazeData,
+                { scale: new THREE.Vector3(1.0, 0.5, 1.0) }, // Maze parameters
+                {}, // Player parameters
+                { ambientLight: { intensity: 0.1 }, pointLight1: { intensity: 50.0, distance: 20.0, position: new THREE.Vector3(-3.5, 10.0, 2.5) }, pointLight2: { intensity: 50.0, distance: 20.0, position: new THREE.Vector3(3.5, 10.0, -2.5) } }, // Lights parameters
+                {}, // Fog parameters
+                { view: "fixed", multipleViewsViewport: new THREE.Vector4(0.0, 1.0, 0.45, 0.5) }, // Fixed view camera parameters
+                { view: "first-person", multipleViewsViewport: new THREE.Vector4(1.0, 1.0, 0.55, 0.5), initialOrientation: new Orientation(0.0, -10.0), initialDistance: 2.0, distanceMin: 1.0, distanceMax: 4.0 }, // First-person view camera parameters
+                { view: "third-person", multipleViewsViewport: new THREE.Vector4(0.0, 0.0, 0.55, 0.5), initialOrientation: new Orientation(0.0, -20.0), initialDistance: 2.0, distanceMin: 1.0, distanceMax: 4.0 }, // Third-person view camera parameters
+                { view: "top", multipleViewsViewport: new THREE.Vector4(1.0, 0.0, 0.45, 0.5), initialOrientation: new Orientation(0.0, -90.0), initialDistance: 4.0, distanceMin: 1.0, distanceMax: 16.0 }, // Top view camera parameters
+                { view: "mini-map", multipleViewsViewport: new THREE.Vector4(0.99, 0.02, 0.3, 0.3), initialOrientation: new Orientation(180.0, -90.0), initialZoom: 0.64 } // Mini-msp view camera parameters
+            );
+        }
+
+
         function animate() {
-            requestAnimationFrame(animate);
+            animationFrameID = requestAnimationFrame(animate);
             // Update the game
             thumbRaiser.update();
         }
 
+        function ngOnDestroy(){
+            cancelAnimationFrame(animationFrameID);
+        }
+
         initialize();
         animate();
+
+        document.getElementById("floors-dropdown").addEventListener("change", function () {
+            const selectedValue = this.value;
+
+            listFloors().then((floors) => {
+                for (const floor of floors) {
+                    if (floor.name === selectedValue) {
+                        const mazeData = {
+                            url: `./mazes/${floor.floorMap}`,
+                            credits: "Maze designed by Cecília Fernandes and Nikita.",
+                            scale: new THREE.Vector3(1.0, 1.0, 1.0)
+                        }
+                        ngOnDestroy();
+                        initializeCustom(mazeData);
+                        animate();
+                        break;
+                    }
+                }
+            });
+        });
+
+        function listFloors() {
+        return fetch("http://localhost:4000/api/floor/list")
+            .then((response) => response.json())
+            .then((json) => json);
+    }
     </script>
 </body>
 
