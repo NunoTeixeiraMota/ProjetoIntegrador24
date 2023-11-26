@@ -90,7 +90,6 @@ export default class UserInteraction {
             expressionsFolder.add(face.morphTargetInfluences, i, 0.0, 1.0, 0.01).name(expressions[i]);
         }
 
-        // Create the floors folder
         const floorsFolder = this.gui.addFolder("Floors");
 
         this.listFloors().then((floors) => {
@@ -100,14 +99,27 @@ export default class UserInteraction {
                     scale: new THREE.Vector3(1.0, 1.0, 1.0),
                 };
 
-                const floorElement = floorsFolder.add({ name: floor.name }, 'name').onChange(() => {
+                const floorElement = floorsFolder.add({ name: floor.name }, floor.name).onChange(() => {
                     this.thumbRaiser.updateMaze(mazeData);
                 });
 
                 floorElement.domElement.querySelector('input').style.display = 'none';
                 floorElement.domElement.style.cursor = "pointer";
+                floorElement.domElement.style.border = "1px solid #ccc";
+                floorElement.domElement.style.padding = "5px";
+                floorElement.domElement.style.margin = "2px";
+                floorElement.domElement.style.textAlign = "center";
+
+                floorElement.domElement.addEventListener('mouseenter', () => {
+                    floorElement.domElement.style.backgroundColor = "#eee";
+                });
+
+                floorElement.domElement.addEventListener('mouseleave', () => {
+                    floorElement.domElement.style.backgroundColor = "";
+                });
             });
         });
+
     }
 
     setVisibility(visible) {
