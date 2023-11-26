@@ -16,7 +16,7 @@ This section provides information about the members of the project team.
 
 We use a burndown chart to visualize our project's progress over time. This chart helps us track the completion of tasks and identify potential delays. Below is a link to our live burndown chart:
 
-[View Burndown Chart](https://example.com/burndown)
+[View Burndown Chart](https://github.com/users/JoseTeixeira1200941/projects/1/insights?xAxis%5BdataSource%5D%5Bcolumn%5D=64687177&xAxis%5BgroupBy%5D=)
 
 The burndown chart is updated regularly to reflect the latest status of our project.
 
