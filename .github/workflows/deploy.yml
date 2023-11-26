@@ -14,7 +14,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18' # Replace with your Node.js version
+        node-version: '18' 
 
     - name: Install dependencies
       run: npm install
@@ -29,7 +29,7 @@ jobs:
       working-directory: ./bulletproof-nodejs-ddd
 
     - name: Build
-      run: npm run build # Replace with your build script if different
+      run: npm run build 
       working-directory: ./bulletproof-nodejs-ddd
 
     - name: Deploy to VPS
