@@ -1,0 +1,18 @@
+@startuml
+autonumber
+'hide footbox
+actor "Admin" as admin
+
+participant ":System" as sys
+
+activate admin
+
+admin -> sys: initialize ListBuildings
+activate sys
+
+sys --> admin: getBuildings()
+admin -> sys: buildings
+sys --> admin: display buildings
+
+deactivate sys
+@enduml
