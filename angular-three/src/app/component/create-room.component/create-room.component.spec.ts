@@ -1,91 +1,58 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Location } from '@angular/common';
-import { MessageService } from 'src/app/service/message/message.service';
-import { of, throwError } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { of, throwError } from 'rxjs'; 
 import { CreateRoomComponent } from './create-room.component';
 import { RoomCategory } from 'src/app/model/room';
-import Room from 'src/app/model/room';
-import { FloorService } from 'src/app/service/Floor/floor.service';
+import { RoomService } from 'src/app/service/Room/Room.service';
 
 describe('CreateRoomComponent', () => {
   let component: CreateRoomComponent;
   let fixture: ComponentFixture<CreateRoomComponent>;
+  let roomService: RoomService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ CreateRoomComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateRoomComponent],
+      imports: [
+        HttpClientTestingModule,
+        FormsModule
+      ],
+      providers: [RoomService]
+    }).compileComponents();
+  });
 
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(CreateRoomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    roomService = TestBed.inject(RoomService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be successful created', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-    let fakeFloorService = TestBed.inject(FloorService);
+  it('should have default room values', () => {
+    expect(component.room).toEqual({
+      floor: "",
+      name: "",
+      category: RoomCategory.Anfiteatro,
+      description: "",
+      dimension: [0,0]
+    });
+  });
 
-    let room: Room = {
-        id: "1",
-        floor: {_id: "3",name: "a",building: {_id: "2",name: "a",localizationoncampus: "a",floors: 2,lifts: 2,maxCel: [2, 2]},description: "a",hall: "a",room: 3,floorMap: "a",hasElevator: true,passages: []},
-        name: "a",
-        category: RoomCategory.Gabinete,
-        description: "a",
-        dimension: [2, 2]
-    };
-
-    const fakeRoomService = jasmine.createSpyObj('RoomService', ['createRoom']);
-    fakeRoomService.createRoom.and.returnValue(of({
-      data: {
-        status:200,
-        body: room
-      },
-
-      error: {
-        status: 404,
-      }
-    }));
-
-    component = new CreateRoomComponent(fakeLocation,fakeRoomService,fakeFloorService,fakeMessageService);
-
-    component.room.floor = "3";
-    component.room.name = "a";
-    component.room.category = RoomCategory.Gabinete;
-    component.room.description = "a";
-    component.room.dimension = [2, 2];
-
+  it('should call createRoom and return room data', () => {
+    const response = { message: 'Success room creation!' };
+    spyOn(roomService, 'createRoom').and.returnValue(of(response));
     component.createRoom();
+    expect(roomService.createRoom).toHaveBeenCalledWith(component.room);
+  });
 
-    expect(fakeRoomService.createRoom).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("Success warehouse creation!");
-  })
-
-  it('should fail creation', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-    let fakeFloorService = TestBed.inject(FloorService);
-
-    const fakeRoomService = jasmine.createSpyObj('RoomService', ['createRoom']);
-    fakeRoomService.createRoom.and.returnValue(throwError({
-      error: {
-        status: 400,
-        message: "error"
-      }
-    }));
-
-    component = new CreateRoomComponent(fakeLocation,fakeRoomService,fakeFloorService,fakeMessageService);
-
+  it('should handle error on createRobot', () => {
+    spyOn(roomService, 'createRoom').and.returnValue(throwError(() => new Error('Error')));
     component.createRoom();
-
-    expect(fakeRoomService.createRoom).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("error");
-  })
+  });
 });

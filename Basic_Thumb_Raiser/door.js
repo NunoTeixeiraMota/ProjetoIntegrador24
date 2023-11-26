@@ -1,12 +1,10 @@
-// door.js
 import * as THREE from "three";
-import TWEEN from "three/addons/libs/tween.module.js"
-import { GUI } from "three/addons/libs/lil-gui.module.min.js";
+import * as TWEEN from "three/addons/libs/tween.module.js";
 
 export default class Door {
-    constructor(parameters) {
-        const frameSize = parameters.frameSize || { width: 0.840, height: 1.788, depth: 0.045 };
-        const doorSize = parameters.doorSize || { width: 0.654, height: 1.686, depth: 0.035, gap: 0.0465 };
+    constructor() {
+        const frameSize = { width: 1.2, height: 0.99, depth: 0.045 };
+        const doorSize = { width: 1.1, height: 1, depth: 0.035, gap: 0.0465 };
 
         // Create a material
         const sideMaterial = new THREE.MeshBasicMaterial({ color: 0xc36e2d });
@@ -52,8 +50,6 @@ export default class Door {
 
         // Create a mesh with the specified geometry and materials
         this.doorMesh = new THREE.Mesh(geometry, [sideMaterial, sideMaterial, sideMaterial, sideMaterial, frontMaterial, backMaterial]);
-        this.doorMesh.translateX(doorSize.width / 2.0);
-        this.doorMesh.translateY(-doorSize.gap);
 
         // Create a group
         this.doorGroup = new THREE.Group();
@@ -66,17 +62,6 @@ export default class Door {
         // Set up the door animation
         this.doorState = "close";
         this.tween = new TWEEN.Tween(this.doorGroup.rotation);
-
-        // Create and configure the GUI for testing
-        this.gui = new GUI();
-        const actions = {
-            open: () => this.openDoor(),
-            stop: () => this.stopDoor(),
-            close: () => this.closeDoor()
-        };
-        this.gui.add(actions, "open");
-        this.gui.add(actions, "stop");
-        this.gui.add(actions, "close");
     }
 
     openDoor() {

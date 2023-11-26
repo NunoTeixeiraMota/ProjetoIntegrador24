@@ -87,6 +87,20 @@ export default class UserInteraction {
         for (let i = 0; i < expressions.length; i++) {
             expressionsFolder.add(face.morphTargetInfluences, i, 0.0, 1.0, 0.01).name(expressions[i]);
         }
+
+        const floorsFolder = this.gui.addFolder("Floors");
+        this.listFloors().then((floors) => {
+            floors.forEach((floor) => {
+                const floorElement = floorsFolder.add({ name: floor.name }, 'name').onChange(() => {
+                    // Use floor map on the map
+                    //dar update no defaultdata e restart no mapa ????
+                });
+                floorElement.domElement.querySelector('input').style.display = 'none';
+                floorElement.domElement.style.cursor = "pointer";
+            });
+        });
+
+
     }
 
     setVisibility(visible) {
@@ -96,5 +110,11 @@ export default class UserInteraction {
         else {
             this.gui.hide();
         }
+    }
+
+    listFloors() {
+        return fetch("http://localhost:4000/api/floor/list")
+            .then((response) => response.json())
+            .then((json) => json);
     }
 }

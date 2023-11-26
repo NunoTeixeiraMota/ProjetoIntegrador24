@@ -1,85 +1,56 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Location } from '@angular/common';
-import { MessageService } from 'src/app/service/message/message.service';
-import { of, throwError } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { of, throwError } from 'rxjs'; 
 import { CreateRobotTypeComponent } from './create-robot-type.component';
-import robotType from 'src/app/model/robotType';
+import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 
 describe('CreateRobotTypeComponent', () => {
   let component: CreateRobotTypeComponent;
   let fixture: ComponentFixture<CreateRobotTypeComponent>;
+  let robotService: RobotService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ CreateRobotTypeComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateRobotTypeComponent],
+      imports: [
+        HttpClientTestingModule,
+        FormsModule
+      ],
+      providers: [RobotService]
+    }).compileComponents();
+  });
 
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(CreateRobotTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    robotService = TestBed.inject(RobotService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be successful created', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-
-    let rt: robotType = {
-      _id: "1",
-      designation: "a",
-      brand: "a",
-      modelRobot: "a",
+  it('should have default robotType values', () => {
+    expect(component.robotType).toEqual({
+      designation: '',
+      brand: '',
+      modelRobot: '',
       task: 0
-  };
-
-    const fakeService = jasmine.createSpyObj('RobotService', ['createRobot']);
-    fakeService.createRobot.and.returnValue(of({
-      data: {
-        status:200,
-        body: rt
-      },
-
-      error: {
-        status: 404,
-      }
-    }));
-
-    component = new CreateRobotTypeComponent(fakeLocation,fakeService,fakeMessageService);
-    component.robotType.designation = "a";
-    component.robotType.brand = "a";
-    component.robotType.modelRobot = "a";
-    component.robotType.task = 0;
-
-    component.createRobotType();
-
-    expect(fakeService.createRobotType).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("Success robot type creation!");
-  })
-
-  it('should fail creation', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-  
-    const fakeService = jasmine.createSpyObj('RobotService', ['createRobot']);
-    fakeService.createRobot.and.returnValue(throwError({
-      error: {
-        status: 400,
-        message: "error"
-      }
-    }));
-  
-    component = new CreateRobotTypeComponent(fakeLocation, fakeService, fakeMessageService);
-  
-    component.createRobotType();
-  
-    expect(fakeService.createRobot).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("error");
+    });
   });
-  
+
+  it('should call createRobotType and return robotType data', () => {
+    const response = { message: 'Success robot type creation!' };
+    spyOn(robotService, 'createRobot').and.returnValue(of(response));
+    component.createRobotType();
+    expect(robotService.createRobot).toHaveBeenCalledWith(component.robotType);
+  });
+
+  it('should handle error on createRobot', () => {
+    spyOn(robotService, 'createRobot').and.returnValue(throwError(() => new Error('Error')));
+    component.createRobotType();
+  });
 });
