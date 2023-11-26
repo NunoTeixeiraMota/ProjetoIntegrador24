@@ -51,19 +51,13 @@ describe('ChangeRobotStateComponent', () => {
     description: 'Test Description',
     isActive: true
   };
-  const mockHttpResponse: HttpResponse<robotType> = new HttpResponse({
-    body: mockrobotType,
-    status: 200,
-    statusText: 'OK',
-    url: '/testurl'
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should set finalMessage to success message on successful robot state change', () => {
-    robotServiceSpy.changerobotState.and.returnValue(of(mockHttpResponse));
+    robotServiceSpy.changerobotState.and.returnValue(of(mockrobotType));
     component.changeRobotState();
     expect(component.finalMessage).toBe("Robot added with success!");
     expect(messageServiceSpy.add).toHaveBeenCalledWith("Robot added with success!");

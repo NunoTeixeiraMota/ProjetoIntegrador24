@@ -1,107 +1,82 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Location } from '@angular/common';
-import { MessageService } from 'src/app/service/message/message.service';
+import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
+import { FloorService } from 'src/app/service/Floor/floor.service';
 import { EditFloorComponent } from './edit-floor.component';
-import floor from 'src/app/model/floor';
+import Floor from 'src/app/model/floor';
 import Building from 'src/app/model/building';
-import { BuildingService } from 'src/app/service/Building/building.service';
 
 describe('EditFloorComponent', () => {
   let component: EditFloorComponent;
   let fixture: ComponentFixture<EditFloorComponent>;
+  let floorService: FloorService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ EditFloorComponent ]
-    })
-    .compileComponents();
+      declarations: [EditFloorComponent],
+      imports: [
+        HttpClientTestingModule,
+        FormsModule
+      ],
+      providers: [FloorService]
+    }).compileComponents();
+  });
 
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(EditFloorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    floorService = TestBed.inject(FloorService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be successful edited', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-    let fakeBuildingService = TestBed.inject(BuildingService);
-  
-    let building: Building = {
-      _id: "1",
-      name: 'a',
-      localizationoncampus: 'a',
-      floors: 0,
-      lifts: 0,
-      maxCel: [5000]
-    };
-  
-    let floor: floor = {
-      _id: "1",
-      name: 'a',
-      building: building,
-      description: 'a',
-      hall: 'a',
-      room: 2,
-      floorMap: 'a',
+  it('should have default floor values', () => {
+    expect(component.floor).toEqual({
+      id: "",
+      name: '',
+      building: "",
+      description: '',
+      hall: '',
+      room: 0,
+      floorMap: '',
       hasElevator: false,
-      passages: []
+      passages: [""]
+    });
+  });
+
+  it('should call edit passages and return floor data', () => {
+    const mockBuilding: Building = {
+      _id: "1",
+      name: "a",
+      localizationoncampus: "a",
+      floors: 3,
+      lifts: 3,
+      maxCel: [3,2]
     };
-  
-    const fakeFloorService = jasmine.createSpyObj('FloorService', ['editFloor']);
-    fakeFloorService.editFloor.and.returnValue(of({
-      data: {
-        status: 200,
-        body: floor
-      },
-  
-      error: {
-        status: 404,
-      }
-    }));
-  
-    component = new EditFloorComponent(fakeLocation, fakeBuildingService, fakeFloorService, fakeMessageService);
-    component.floor.id = "1";
-    component.floor.name = "a";
-    component.floor.building = "1";
-    component.floor.description = "a";
-    component.floor.hall = "a";
-    component.floor.room = 2;
-    component.floor.floorMap = "a";
-    component.floor.hasElevator = false;
-    component.floor.passages = [""];
-  
+
+    const mockFloor: Floor = {
+      "_id": "b",
+      "name": 'a',
+      "building": mockBuilding,
+      "description": 'a',
+      "hall": 'a',
+      "room": 2,
+      "floorMap": 'a',
+      "hasElevator": false,
+      "passages": []
+    }
+    spyOn(floorService, 'editFloor').and.returnValue(of(mockFloor));
     component.editFloor();
-  
-    expect(fakeFloorService.editFloor).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("Floor Updated with success!");
+    expect(floorService.patchPassages).toHaveBeenCalledWith(mockFloor);
   });
-  
-  it('should fail editing', () => {
-    let fakeLocation = TestBed.inject(Location);
-    let fakeMessageService = TestBed.inject(MessageService);
-    let fakeBuildingService = TestBed.inject(BuildingService);
-  
-    const fakeFloorService = jasmine.createSpyObj('FloorService', ['editFloor']);
-    fakeFloorService.editFloor.and.returnValue(throwError({
-      error: {
-        status: 400,
-        message: "error"
-      }
-    }));
-  
-    component = new EditFloorComponent(fakeLocation, fakeBuildingService, fakeFloorService, fakeMessageService);
-  
+
+  it('should handle error on editFloor', () => {
+    spyOn(floorService, 'editFloor').and.returnValue(throwError(() => new Error('Error')));
     component.editFloor();
-  
-    expect(fakeFloorService.editFloor).toHaveBeenCalled();
-    expect(component.finalMessage).toBe("error");
   });
-  
 });

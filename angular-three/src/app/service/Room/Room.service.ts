@@ -14,6 +14,6 @@ export class RoomService {
 
   createRoom(room: any) {
     console.log(room);
-    return this.http.post(`${this.roomAPI_URL}/createRoom`, room, {'headers':{'content-type': 'application/json'} , observe: 'response'})
+    return this.http.post(`${this.roomAPI_URL}/createRoom`, room)
   }
 }
