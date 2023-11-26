@@ -13,7 +13,7 @@
 import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
 import Orientation from "./orientation.js";
-import { generalData, mazeData, playerData, lightsData, fogData, cameraData } from "./default_data.js";
+import { generalData, playerData, lightsData, fogData, cameraData } from "./default_data.js";
 import { merge } from "./merge.js";
 import Maze from "./maze.js";
 import Player from "./player.js";
@@ -150,7 +150,7 @@ import UserInterface from "./user_interface.js";
  */
 
 export default class ThumbRaiser {
-    constructor(generalParameters, mazeParameters, playerParameters, lightsParameters, fogParameters, fixedViewCameraParameters, firstPersonViewCameraParameters, thirdPersonViewCameraParameters, topViewCameraParameters, miniMapCameraParameters) {
+    constructor(generalParameters, mazeData, mazeParameters, playerParameters, lightsParameters, fogParameters, fixedViewCameraParameters, firstPersonViewCameraParameters, thirdPersonViewCameraParameters, topViewCameraParameters, miniMapCameraParameters) {
         this.generalParameters = merge({}, generalData, generalParameters);
         this.mazeParameters = merge({}, mazeData, mazeParameters);
         this.playerParameters = merge({}, playerData, playerParameters);
@@ -644,13 +644,6 @@ export default class ThumbRaiser {
         this.setViewMode(false);
         // Set the final action
         this.animations.fadeToAction("Dance", 0.2);
-    }
-
-    updateMaze(mazeData) {
-        this.mazeParameters = merge({}, mazeData, mazeParameters);
-        this.scene3D.remove(this.maze.mesh);
-        this.maze = new Maze(this.mazeParameters);
-        this.scene3D.add(this.maze.mesh);
     }
 
     collision(position) {
