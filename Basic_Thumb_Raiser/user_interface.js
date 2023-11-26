@@ -2,14 +2,15 @@ import * as THREE from "three";
 import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 export default class UserInteraction {
-    constructor(scene, renderer, lights, fog, object, animations) {
+    constructor(scene, renderer, lights, fog, object, animations, thumbRaiser) {
+        this.thumbRaiser = thumbRaiser;
 
         function colorCallback(object, color) {
             object.color.set(color);
         }
 
         function shadowsCallback(enabled) {
-            scene.traverseVisible(function (child) { // Modifying the scene graph inside the callback is discouraged: https://threejs.org/docs/index.html?q=object3d#api/en/core/Object3D.traverseVisible
+            scene.traverseVisible(function (child) {
                 if (child.material) {
                     child.material.needsUpdate = true;
                 }
@@ -58,6 +59,7 @@ export default class UserInteraction {
         pointLight2Folder.add(lights.object.pointLight2.position, "y", 0.0, 20.0, 0.01);
         pointLight2Folder.add(lights.object.pointLight2.position, "z", -10.0, 10.0, 0.01);
 
+
         // Create the shadows folder
         const shadowsFolder = this.gui.addFolder("Shadows");
         shadowsFolder.add(renderer.shadowMap, "enabled").onChange(enabled => shadowsCallback(enabled));
@@ -88,26 +90,30 @@ export default class UserInteraction {
             expressionsFolder.add(face.morphTargetInfluences, i, 0.0, 1.0, 0.01).name(expressions[i]);
         }
 
+        // Create the floors folder
         const floorsFolder = this.gui.addFolder("Floors");
+
         this.listFloors().then((floors) => {
             floors.forEach((floor) => {
+                const mazeData = {
+                    url: "../bulletproof-nodejs-ddd/flormaps/" + floor.floorMap,
+                    scale: new THREE.Vector3(1.0, 1.0, 1.0),
+                };
+
                 const floorElement = floorsFolder.add({ name: floor.name }, 'name').onChange(() => {
-                    // Use floor map on the map
-                    //dar update no defaultdata e restart no mapa ????
+                    this.thumbRaiser.updateMaze(mazeData);
                 });
+
                 floorElement.domElement.querySelector('input').style.display = 'none';
                 floorElement.domElement.style.cursor = "pointer";
             });
         });
-
-
     }
 
     setVisibility(visible) {
         if (visible) {
             this.gui.show();
-        }
-        else {
+        } else {
             this.gui.hide();
         }
     }

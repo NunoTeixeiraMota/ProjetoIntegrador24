@@ -646,6 +646,13 @@ export default class ThumbRaiser {
         this.animations.fadeToAction("Dance", 0.2);
     }
 
+    updateMaze(mazeData) {
+        this.mazeParameters = merge({}, mazeData, mazeParameters);
+        this.scene3D.remove(this.maze.mesh);
+        this.maze = new Maze(this.mazeParameters);
+        this.scene3D.add(this.maze.mesh);
+    }
+
     collision(position) {
         return this.maze.distanceToWestWall(position) < this.player.radius || this.maze.distanceToEastWall(position) < this.player.radius || this.maze.distanceToNorthWall(position) < this.player.radius || this.maze.distanceToSouthWall(position) < this.player.radius;
     }
