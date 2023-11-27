@@ -178,7 +178,7 @@ export default class Maze {
 
     distanceToWestWall(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 8) {
+        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 8) {
             return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
         }
         return Infinity;
@@ -187,7 +187,7 @@ export default class Maze {
     distanceToEastWall(position) {
         const indices = this.cartesianToCell(position);
         indices[1]++;
-        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 8) {
+        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 8) {
             return this.cellToCartesian(indices).x - this.scale.x / 2.0 - position.x;
         }
         return Infinity;
@@ -195,7 +195,7 @@ export default class Maze {
 
     distanceToNorthWall(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 7 || this.map[indices[0]][indices[1]] == 9) {
+        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 5 || this.map[indices[0]][indices[1]] == 7 || this.map[indices[0]][indices[1]] == 9) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
         }
         return Infinity;
@@ -204,7 +204,7 @@ export default class Maze {
     distanceToSouthWall(position) {
         const indices = this.cartesianToCell(position);
         indices[0]++;
-        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 7 || this.map[indices[0]][indices[1]] == 9) {
+        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 5 || this.map[indices[0]][indices[1]] == 7 || this.map[indices[0]][indices[1]] == 9) {
             return this.cellToCartesian(indices).z - this.scale.z / 2.0 - position.z;
         }
         return Infinity;
