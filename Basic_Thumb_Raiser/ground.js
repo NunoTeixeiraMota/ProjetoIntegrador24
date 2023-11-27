@@ -14,7 +14,7 @@ export default class Ground {
         }
         
         // Create a texture
-        const texture = new THREE.TextureLoader().load('./textures/isep_ground.jpg');
+        const texture = new THREE.TextureLoader().load('./textures/ground.jpg');
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
