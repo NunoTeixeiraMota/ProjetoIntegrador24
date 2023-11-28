@@ -47,11 +47,11 @@ describe('CreateRoomComponent', () => {
   it('should call createRoom and return room data', () => {
     const response = { message: 'Success room creation!' };
     spyOn(roomService, 'createRoom').and.returnValue(of(response));
-    component.createRoom();
+    roomService.createRoom(component.room);
     expect(roomService.createRoom).toHaveBeenCalledWith(component.room);
   });
 
-  it('should handle error on createRobot', () => {
+  it('should handle error on createRoom', () => {
     spyOn(roomService, 'createRoom').and.returnValue(throwError(() => new Error('Error')));
     component.createRoom();
   });

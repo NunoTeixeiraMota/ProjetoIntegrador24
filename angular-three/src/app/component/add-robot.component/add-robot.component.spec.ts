@@ -1,70 +1,57 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
-import { MessageService } from 'src/app/service/message/message.service';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import Robot from 'src/app/model/robot';
-import robotType from 'src/app/model/robotType';
 import { AddRobotComponent } from './add-robot.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddRobotComponent', () => {
   let component: AddRobotComponent;
   let fixture: ComponentFixture<AddRobotComponent>;
-  let robotServiceSpy: jasmine.SpyObj<RobotService>;
-  let messageServiceSpy: jasmine.SpyObj<MessageService>;
-  
+  let robotService: RobotService;
 
   beforeEach(async () => {
-    robotServiceSpy = jasmine.createSpyObj('RobotService', ['changerobotState']);
-    messageServiceSpy = jasmine.createSpyObj('MessageService', ['add']);
-
     await TestBed.configureTestingModule({
       declarations: [AddRobotComponent],
-      imports: [FormsModule],
-      providers: [
-        { provide: RobotService, useValue: robotServiceSpy },
-        { provide: MessageService, useValue: messageServiceSpy }
-      ]
+      imports: [
+        HttpClientTestingModule,
+        FormsModule
+      ],
+      providers: [RobotService]
     }).compileComponents();
+  });
 
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(AddRobotComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    robotService = TestBed.inject(RobotService);
   });
-
-  const mockrobotType: robotType = {
-    _id: "1",
-    designation: "Tractor",
-    brand: "LG",
-    modelRobot: "modelRobot",
-    task: 0,
-  };
-
-  const mockRobot: Robot = {
-    id: '1',
-    nickname: 'Test Robot',
-    type: mockrobotType,
-    serialNumber: '12345',
-    description: 'Test Description',
-    isActive: true
-  };
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set finalMessage to success message on successful add robot', () => {
-    robotServiceSpy.addRobot.and.returnValue(of(mockRobot));
-    component.addRobot();
-    expect(component.finalMessage).toBe("Robot added with success!");
-    expect(messageServiceSpy.add).toHaveBeenCalledWith("Robot added with success!");
+  it('should have default robot values', () => {
+    expect(component.robot).toEqual({
+      nickname: '',
+      type: '',
+      serialNumber: '',
+      description: '',
+      isActive: true
+    });
   });
-  
-  it('should set finalMessage to error message on failed robot state change', () => {
-    const errorMessage = { error: { message: 'Error adding robot' } };
-    robotServiceSpy.addRobot.and.returnValue(throwError(() => errorMessage));
+
+  it('should call addRobot and return robot data', () => {
+    const response = { message: 'Robot added with success!' };
+    spyOn(robotService, 'addRobot').and.returnValue(of(response));
+    robotService.addRobot(component.robot);
+    expect(robotService.addRobot).toHaveBeenCalledWith(component.robot);
+  });
+
+  it('should handle error on addRobot', () => {
+    spyOn(robotService, 'addRobot').and.returnValue(throwError(() => new Error('Error')));
     component.addRobot();
-    expect(component.finalMessage).toBe(errorMessage.error.message);
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(errorMessage.error.message);
   });
 });

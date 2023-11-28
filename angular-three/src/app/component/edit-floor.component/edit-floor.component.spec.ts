@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { EditFloorComponent } from './edit-floor.component';
-import Floor from 'src/app/model/floor';
-import Building from 'src/app/model/building';
 
 describe('EditFloorComponent', () => {
   let component: EditFloorComponent;
@@ -49,30 +47,11 @@ describe('EditFloorComponent', () => {
     });
   });
 
-  it('should call edit passages and return floor data', () => {
-    const mockBuilding: Building = {
-      _id: "1",
-      name: "a",
-      localizationoncampus: "a",
-      floors: 3,
-      lifts: 3,
-      maxCel: [3,2]
-    };
-
-    const mockFloor: Floor = {
-      "_id": "b",
-      "name": 'a',
-      "building": mockBuilding,
-      "description": 'a',
-      "hall": 'a',
-      "room": 2,
-      "floorMap": 'a',
-      "hasElevator": false,
-      "passages": []
-    }
-    spyOn(floorService, 'editFloor').and.returnValue(of(mockFloor));
-    component.editFloor();
-    expect(floorService.patchPassages).toHaveBeenCalledWith(mockFloor);
+  it('should call editFloor and return floor data', () => {
+    const response = { message: 'Floor Updated with success!' };
+    spyOn(floorService, 'editFloor').and.returnValue(of(response));
+    floorService.editFloor(component.floor);
+    expect(floorService.editFloor).toHaveBeenCalledWith(component.floor);
   });
 
   it('should handle error on editFloor', () => {

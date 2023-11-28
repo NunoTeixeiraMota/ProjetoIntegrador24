@@ -41,8 +41,8 @@ export class CreateRobotTypeComponent implements OnInit {
       
       (error: any) => {
         //error
-        this.messageService.add(error.error.message);
-        this.finalMessage = error.error.message;
+        this.messageService.add(error.message);
+        this.finalMessage = error.message;
       }
     );
   }

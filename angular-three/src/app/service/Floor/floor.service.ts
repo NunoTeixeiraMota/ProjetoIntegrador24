@@ -8,24 +8,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FloorService {
-  private apiBaseUrl = 'http://localhost:4000/api'; // Adjust the URL as needed
+  private apiBaseUrl = 'http://localhost:4000/api';
 
   constructor(private http: HttpClient) {}
 
-  createFloor(floordata: any) {
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(floordata);
-    console.log(body);
-    return this.http.post<floor>(this.apiBaseUrl + "/floor/create", body)
+  createFloor(data: any) {
+    console.log('floorData: ', data);
+    return this.http.post(`${this.apiBaseUrl}/floor/create`, data);
   }
 
-  editFloor(floordata: any) {
-    const headers = {'content-type': 'application/json'};
-    
-    const body = JSON.stringify(floordata);
-    console.log(body);
-    return this.http.put<floor>(this.apiBaseUrl + "/floor/updateFloor", body)
+  editFloor(data: any) {
+    console.log('floorData: ', data);
+    return this.http.put(`${this.apiBaseUrl}/floor/updateFloor`, data);
   }
   
   createFloorMap(mapdata: any) {

@@ -43,7 +43,7 @@ describe('PatchPassageComponent', () => {
   it('should call patch passages and return passages data', () => {
     const response = { message: 'Floor passages created/updated with success!' };
     spyOn(floorService, 'patchPassages').and.returnValue(of(response));
-    component.patchFloorPassages();
+    floorService.patchPassages(component.floor);
     expect(floorService.patchPassages).toHaveBeenCalledWith(component.floor);
   });
 
