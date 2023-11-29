@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Replace these variables with your own values
-CSV_FILE="SPRINT2.csv"
+CSV_FILE="SPRINT3.csv"
 REPO_OWNER="JoseTeixeira1200941"
 REPO_NAME="G046"
 
@@ -29,7 +29,7 @@ tail -n +2 "$CSV_FILE" | while IFS=';' read -r -a values; do
   ISSUE_BODY="**Correspondence between US de Sprint A e Sprint B:** ${data[Correspondência entre US de Sprint A e Sprint B]}
 **U.S./Req. Observation:** ${data[U.S./Req.]} ${data[Observations]}"
 
-  # Create the issue using 'gh'
+  # Create the issue using 'gh'   
   if ! gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" --repo "$REPO_OWNER/$REPO_NAME"; then
     echo "Failed to create issue: $ISSUE_TITLE"
     # You can break the loop or continue depending on how you want to handle the error
