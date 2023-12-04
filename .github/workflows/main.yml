@@ -38,6 +38,6 @@ jobs:
         run: |
           git config --global user.name 'JoseTeixeira1200941e'
           git config --global user.email '1200941@isep.ipp.pt'
-          git add .
+          git add docs/**/*.svg
           git commit -m "Convert PUML to SVG"
           git push
