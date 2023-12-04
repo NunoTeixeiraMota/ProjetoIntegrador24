@@ -31,13 +31,14 @@ jobs:
             echo "Converting $file"
             dir=$(dirname "$file")
             mkdir -p "svg/$dir"
+            outfile="svg/${file%.puml}.svg"
             plantuml -tsvg "$file" -o "../svg/$dir"
+            git add "$outfile"
           done
-
+          
       - name: Commit and push SVG files
         run: |
           git config --global user.name 'JoseTeixeira1200941e'
           git config --global user.email '1200941@isep.ipp.pt'
-          git add 'docs/**/*.svg'
           git commit -m "Convert PUML to SVG"
           git push
