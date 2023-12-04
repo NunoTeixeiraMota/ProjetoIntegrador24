@@ -1,4 +1,4 @@
-@startuml
+@startuml LEVEL1_createlift
 autonumber
 'hide footbox
 actor "Admin" as admin
@@ -7,7 +7,7 @@ participant ":System" as sys
 
 activate admin
 
-admin -> sys: call ListBuildingFloorWithPassageToOtherBuilding
+admin -> sys: call createLift()
 activate sys
 
 sys --> admin: request necessary data()

@@ -1,4 +1,4 @@
-@startuml US270_LEVEL3
+@startuml LEVEL3_createlift
 
 participant "User" as A
 participant ":View" as sys

@@ -1,4 +1,4 @@
-@startuml US240_LEVEL3
+@startuml LEVEL3_createPassageBetweenFloors
 
 participant "User" as U
 participant ":View" as sys

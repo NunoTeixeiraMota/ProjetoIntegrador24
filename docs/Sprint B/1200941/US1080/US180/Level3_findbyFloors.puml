@@ -1,4 +1,4 @@
-@startuml sd
+@startuml findByFloors
 
 participant "User" as A
 participant ":View" as sys

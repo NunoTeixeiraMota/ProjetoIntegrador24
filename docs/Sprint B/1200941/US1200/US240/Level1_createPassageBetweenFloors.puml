@@ -1,4 +1,4 @@
-@startuml US240_LEVEL1
+@startuml LEVEL1_createPassageBetweenFloors
 autonumber
 'hide footbox
 actor "Admin" as admin

@@ -1,4 +1,4 @@
-@startuml
+@startuml findByFloors
 autonumber
 'hide footbox
 actor "Admin" as admin
