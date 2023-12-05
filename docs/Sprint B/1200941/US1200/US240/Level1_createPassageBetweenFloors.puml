@@ -1,15 +1,14 @@
-@startuml
+@startuml LEVEL1_createPassageBetweenFloors
 autonumber
 'hide footbox
+
 actor "Admin" as admin
-
-
 
 participant ":System" as sys
 
 activate admin
 
-admin -> sys: create a Route
+admin -> sys: call createPassageBetweenFloors
 activate sys
 
 sys --> admin: request necessary data()

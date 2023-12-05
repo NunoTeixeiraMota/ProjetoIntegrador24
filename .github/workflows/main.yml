@@ -1,0 +1,44 @@
+name: Convert PUML to SVG
+
+on:
+  push:
+    paths:
+      - 'docs/**/*.puml'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Install PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y plantuml
+
+      - name: Convert PUML to SVG
+        run: |
+          mkdir -p svg
+          find docs -name '*.puml' | while read file; do
+            echo "Converting $file"
+            dir=$(dirname "$file")
+            mkdir -p "svg/$dir"
+            plantuml -tsvg "$file" -o "../svg/$dir"
+          done
+
+      - name: Commit and push SVG files
+        run: |
+          git config --global user.name 'JoseTeixeira1200941'
+          git config --global user.email '1200941@isep.ipp.pt'
+          git add -A
+          git commit -m "Convert PUML to SVG"
+          git push
+

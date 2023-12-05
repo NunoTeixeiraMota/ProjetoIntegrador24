@@ -3,13 +3,11 @@ autonumber
 'hide footbox
 actor "Admin" as admin
 
-
-
 participant ":System" as sys
 
 activate admin
 
-admin -> sys: create a Route
+admin -> sys: create a createBuilding
 activate sys
 
 sys --> admin: request necessary data()
