@@ -1,8 +1,7 @@
 import { Component, Output,NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import Robot from 'src/app/model/robot';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 import { MessageService } from 'src/app/service/message/message.service';
-import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -17,23 +16,21 @@ export class ChangeRobotStateComponent {
     private robotService: RobotService,
     private messageService: MessageService
   ) { }
-  changeRobotState(){
-    let errorOrSuccess: any = this.robotService.changerobotState(this.id);
-    errorOrSuccess.subscribe( 
-      (data: any) => {
-        //success
-        this.messageService.add("Robot added with success!");
-        this.finalMessage = "Robot added with success!";
+  changeRobotState() {
+    this.robotService.changerobotState(this.id).subscribe(
+      (data: any) => { 
+        const robotresponse = data as Robot;  // Type assertion
+        this.messageService.add(`Robot State changed with success! Robot Details: ID :${robotresponse.id} STATE : ${robotresponse.isActive}`);
       },
       
       (error: any) => {
-        //error
-        this.messageService.add(error.error.message);
+        this.messageService.add("ID Invalid / Non Existent");
         this.finalMessage = error.error.message;
       }
     );
+  }
 
 }
-}
+
 export class ActivateRobotModule { }
 

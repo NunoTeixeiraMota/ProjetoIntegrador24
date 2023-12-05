@@ -34,7 +34,7 @@ export default (app: Router) => {
           }),
         }),(req,res,next) => ctrl.createRobotType(req,res,next));
   // /changeRobotState
-  route.post(
+  route.patch(
     '/changeRobotState',
         celebrate({
           body: Joi.object({

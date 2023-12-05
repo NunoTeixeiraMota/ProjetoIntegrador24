@@ -59,8 +59,8 @@ describe('ChangeRobotStateComponent', () => {
   it('should set finalMessage to success message on successful robot state change', () => {
     robotServiceSpy.changerobotState.and.returnValue(of(mockrobotType));
     component.changeRobotState();
-    expect(component.finalMessage).toBe("Robot added with success!");
-    expect(messageServiceSpy.add).toHaveBeenCalledWith("Robot added with success!");
+    expect(component.finalMessage).toBe(`Robot State changed with success! Robot Details: ID :${mockRobot.id} STATE : ${mockRobot.isActive}`);
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(`Robot State changed with success! Robot Details: ID :${mockRobot.id} STATE : ${mockRobot.isActive}`);
   });
   
   it('should set finalMessage to error message on failed robot state change', () => {
@@ -68,8 +68,7 @@ describe('ChangeRobotStateComponent', () => {
     robotServiceSpy.changerobotState.and.returnValue(throwError(() => errorMessage));
     component.changeRobotState();
     expect(component.finalMessage).toBe(errorMessage.error.message);
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(errorMessage.error.message);
+    expect(messageServiceSpy.add).toHaveBeenCalledWith("ID Invalid / Non Existent");
   });
   
-
 });

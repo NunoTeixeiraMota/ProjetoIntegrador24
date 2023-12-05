@@ -56,7 +56,7 @@ export class Robot extends AggregateRoot<RobotProps> {
     } else if (!description || description.length === 0 || description.length > 250) {
       return Result.fail<Robot>("Must provide a valid description");
     } else {
-      robotProps.isActive = true;
+      robotProps.isActive = robotProps.isActive;
       const robot = new Robot(robotProps, id);
       return Result.ok<Robot>(robot);
     }

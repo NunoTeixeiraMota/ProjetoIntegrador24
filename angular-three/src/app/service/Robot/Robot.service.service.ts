@@ -29,7 +29,10 @@ export class RobotService {
   }
 
   changerobotState(rt: any) {
-    console.log(rt);
-    return this.http.post(this.robotAPI_URL + "/changeRobotState", rt)
+    const headers = { 'Content-Type': 'application/json' };
+    const body = { id: rt }; // assuming rt is just the ID value
+    console.log(`${this.robotAPI_URL}/changeRobotState`, body, { headers });
+    return this.http.patch(`${this.robotAPI_URL}/changeRobotState`, body, { headers });
   }
+  
 }

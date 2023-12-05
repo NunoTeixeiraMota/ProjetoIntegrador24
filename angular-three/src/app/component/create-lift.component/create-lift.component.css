@@ -14,6 +14,12 @@
   margin-bottom: 15px;
 }
 
+.form-row button:disabled {
+  background-color: gray;
+  color: white; 
+  cursor: not-allowed; 
+}
+
 /* Label styles */
 .form-row label {
   display: block;
