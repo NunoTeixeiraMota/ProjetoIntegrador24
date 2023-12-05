@@ -36,6 +36,17 @@ export default class FloorRepo implements IFloorRepo {
       throw error;
     }
   }
+
+  async findByName(name: string): Promise<IFloorDTO | null> {
+    try {
+      const query = { name: name };
+      const floor = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>) as IFloorDTO;
+      return floor;
+    } catch (error) {
+      console.error("Error fetching floor by name:", error);
+      throw error;
+    }
+  }
   
   public async save (floor: Floor): Promise<Floor> {
     let floorDocument = null;

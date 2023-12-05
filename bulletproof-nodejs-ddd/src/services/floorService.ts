@@ -42,6 +42,12 @@ export default class FloorService implements IFloorService {
         return await this.floorRepo.findByID(floor.id);
       }));
 
+      // Check if a floor with the same name already exists
+      const existingFloor = await this.floorRepo.findByName(floorDTO.name);
+      if (existingFloor) {
+        return Result.fail<IFloorDTO>('Floor with the same name already exists');
+      }
+
       const floorOrError = Floor.create ({
         name: floorDTO.name,
         building: await buildingsrv.findByDomainId((floorDTO.building.toString()) as unknown as BuildingId),
@@ -56,8 +62,12 @@ export default class FloorService implements IFloorService {
       if (floorOrError.isFailure){
         throw Result.fail<IFloorDTO>(floorOrError.errorValue());
       }
-
+      
       const floorResult = floorOrError.getValue();
+      const found = await this.floorRepo.exists(floorResult);
+      if (found){
+        return Result.fail<IFloorDTO>('Floor Already Exists')
+      }
       await this.floorRepo.save(floorResult); 
       const floorDTOResult = FloorMap.toDTO(floorResult) as IFloorDTO; 
       return Result.ok<IFloorDTO>(floorDTOResult);

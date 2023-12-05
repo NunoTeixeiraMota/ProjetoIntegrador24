@@ -49,27 +49,24 @@ export default class BuildingService implements IBuildingService {
     }
   }
   
-    public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
-      try {
-          const buildingDocument = await this.buildingsRepo.findByDomainId(buildingDTO.id);
-          if (!buildingDocument) {
-              throw new Error('Building not found')         
-            }
-            else{
-              buildingDocument.name = buildingDTO.name;
-              buildingDocument.localizationoncampus = buildingDTO.localizationoncampus;
-              buildingDocument.floors = buildingDTO.floors;
-              buildingDocument.lifts = buildingDTO.lifts;
-              buildingDocument.maxCel = buildingDTO.maxCel;
-              
-              await this.buildingsRepo.save(buildingDocument);
-              const BDTOP = BuildingsMap.toDTO(buildingDocument);
-              return Result.ok(BDTOP);
-            }
-          
-      } catch (error) {
-          return Result.fail<IBuildingDTO>("Failed to update building");
+  public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
+    try {
+      const buildingDocument = await this.buildingsRepo.findByDomainId(buildingDTO.id);
+      if (!buildingDocument) {
+        throw new Error('Building not found')         
       }
+      else{
+        buildingDocument.name = buildingDTO.name;
+        buildingDocument.floors = buildingDTO.floors;
+        buildingDocument.lifts = buildingDTO.lifts;
+        
+        await this.buildingsRepo.save(buildingDocument);
+        const BDTOP = BuildingsMap.toDTO(buildingDocument);
+        return Result.ok(BDTOP);
+      }
+    } catch (error) {
+      return Result.fail<IBuildingDTO>("Failed to update building");
+    }
   }
   
   getBuilding(buildingId: string): Promise<Result<IBuildingDTO>> {
@@ -124,4 +121,3 @@ export default class BuildingService implements IBuildingService {
     }
   }
 }
-
