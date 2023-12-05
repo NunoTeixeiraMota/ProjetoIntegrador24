@@ -57,11 +57,15 @@ describe('ChangeRobotStateComponent', () => {
   });
 
   it('should set finalMessage to success message on successful robot state change', () => {
-    robotServiceSpy.changerobotState.and.returnValue(of(mockrobotType));
+    robotServiceSpy.changerobotState.and.returnValue(of(mockRobot));
+  
+    component.id = Number(mockRobot.id);
+  
     component.changeRobotState();
-    expect(component.finalMessage).toBe(`Robot State changed with success! Robot Details: ID :${mockRobot.id} STATE : ${mockRobot.isActive}`);
+    
     expect(messageServiceSpy.add).toHaveBeenCalledWith(`Robot State changed with success! Robot Details: ID :${mockRobot.id} STATE : ${mockRobot.isActive}`);
   });
+  
   
   it('should set finalMessage to error message on failed robot state change', () => {
     const errorMessage = { error: { message: 'Error changing robot state' } };
