@@ -24,6 +24,8 @@ export class CreateFloorComponent implements OnInit {
   buildings: Building[] = [];
   isFormReadyToSubmit: boolean = false;
   uploadedFileName: string | undefined;
+  errorMessage: string |null= null;
+  successMessage: string|null= null;
 
   constructor(
     private floorService: FloorService, 
@@ -34,9 +36,36 @@ export class CreateFloorComponent implements OnInit {
   }
 
   createFloor() {
+    this.errorMessage = null;
+    this.successMessage = null;
+
+    // Validation checks
+    if (!this.floorData.name.trim()) {
+      this.errorMessage = 'Name cannot be empty.';
+      return;
+    }
+
+    if (!this.floorData.hall.trim()) {
+      this.errorMessage = 'Must insert the floor hall.';
+      return;
+    }
+
+    if (this.floorData.room < 0) {
+      this.errorMessage = 'Floor must have at least 1 room.';
+      return;
+    }
+    
+
+
     this.floorService.createFloor(this.floorData).subscribe(
-      response => console.log('Floor created:', response),
-      error => console.error('Error:', error));
+      response => {
+        console.log('Floor Created:', response);
+        this.successMessage = 'Floor Created successfully!';
+      },
+      error => {
+        console.error('Error creating floor:', error);
+        this.errorMessage = 'Error Creating Floor. Please try again.';
+      });
   }
 
   handleUploadSuccess(filename: string) {

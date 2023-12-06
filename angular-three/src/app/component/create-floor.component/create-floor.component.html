@@ -44,10 +44,18 @@
 
   <div class="form-row">
       <button type="submit">Create Floor</button>
-      <button routerLink="/main-menu">Back</button>
   </div>
 </form>
 
 <div *ngIf="buildings.length === 0">
   <p>Loading buildings...</p>
 </div>
+<!-- Display error message -->
+<div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <!-- Display success message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
