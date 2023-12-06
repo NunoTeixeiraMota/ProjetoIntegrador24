@@ -6,7 +6,7 @@ import Building from 'src/app/model/building';
 @Injectable({
   providedIn: 'root'
 })
-export class BuildingService {
+export class BuildingService {  
   private apiBaseUrl = 'http://localhost:4000/api'; // Adjust the URL as needed
   private selectedBuildingId: string | null = null;
   constructor(private http: HttpClient) {}
