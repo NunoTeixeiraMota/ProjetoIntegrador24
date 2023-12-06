@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs'; 
 import { CreateRobotTypeComponent } from './create-robot-type.component';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
+import robotType from 'src/app/model/robotType';
 
 describe('CreateRobotTypeComponent', () => {
   let component: CreateRobotTypeComponent;
@@ -29,6 +30,14 @@ describe('CreateRobotTypeComponent', () => {
     robotService = TestBed.inject(RobotService);
   });
 
+  const mockrobotType: robotType = {
+    _id: "1",
+    designation: "Tractor",
+    brand: "LG",
+    modelRobot: "modelRobot",
+    task: 0,
+  };
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -43,8 +52,7 @@ describe('CreateRobotTypeComponent', () => {
   });
 
   it('should call createRobotType and return robotType data', () => {
-    const response = { message: 'Success robot type creation!' };
-    spyOn(robotService, 'createRobot').and.returnValue(of(response));
+    spyOn(robotService, 'createRobot').and.returnValue(of(mockrobotType));
     component.createRobotType();
     expect(robotService.createRobot).toHaveBeenCalledWith(component.robotType);
   });

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { EditFloorComponent } from './edit-floor.component';
+import Floor from 'src/app/model/floor';
+import Building from 'src/app/model/building';
 
 describe('EditFloorComponent', () => {
   let component: EditFloorComponent;
@@ -47,9 +49,29 @@ describe('EditFloorComponent', () => {
     });
   });
 
+  const mockBuilding: Building = {
+    _id: "1",
+    name: 'a',
+    localizationoncampus: 'a',
+    floors: 1,
+    lifts: 1,
+    maxCel: [1, 1]
+  }
+
+  const mockFloor: Floor = {
+    _id: "2",
+    name: 'a',
+    building: mockBuilding,
+    description: 'a',
+    hall: 'a',
+    room: 2,
+    floorMap: 'aaaa',
+    hasElevator: true,
+    passages: []
+  }
+
   it('should call editFloor and return floor data', () => {
-    const response = { message: 'Floor Updated with success!' };
-    spyOn(floorService, 'editFloor').and.returnValue(of(response));
+    spyOn(floorService, 'editFloor').and.returnValue(of(mockFloor));
     floorService.editFloor(component.floor);
     expect(floorService.editFloor).toHaveBeenCalledWith(component.floor);
   });

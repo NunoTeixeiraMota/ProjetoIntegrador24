@@ -4,6 +4,8 @@ import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { AddRobotComponent } from './add-robot.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import robotType from 'src/app/model/robotType';
+import Robot from 'src/app/model/robot';
 
 describe('AddRobotComponent', () => {
   let component: AddRobotComponent;
@@ -43,9 +45,25 @@ describe('AddRobotComponent', () => {
     });
   });
 
+  const mockrobotType: robotType = {
+    _id: "1",
+    designation: "Tractor",
+    brand: "LG",
+    modelRobot: "modelRobot",
+    task: 0,
+  };
+
+  const mockRobot: Robot = {
+    id: '1',
+    nickname: 'Test Robot',
+    type: mockrobotType,
+    serialNumber: '12345',
+    description: 'Test Description',
+    isActive: true
+  };
+
   it('should call addRobot and return robot data', () => {
-    const response = { message: 'Robot added with success!' };
-    spyOn(robotService, 'addRobot').and.returnValue(of(response));
+    spyOn(robotService, 'addRobot').and.returnValue(of(mockRobot));
     robotService.addRobot(component.robot);
     expect(robotService.addRobot).toHaveBeenCalledWith(component.robot);
   });

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs'; 
 import { PatchPassagesComponent } from './patch-passages.component';
 import { FloorService } from 'src/app/service/Floor/floor.service';
+import Building from 'src/app/model/building';
+import Floor from 'src/app/model/floor';
 
 describe('PatchPassageComponent', () => {
   let component: PatchPassagesComponent;
@@ -29,6 +31,27 @@ describe('PatchPassageComponent', () => {
     floorService = TestBed.inject(FloorService);
   });
 
+  const mockBuilding: Building = {
+    _id: "1",
+    name: 'a',
+    localizationoncampus: 'a',
+    floors: 1,
+    lifts: 1,
+    maxCel: [1, 1]
+  }
+
+  const mockFloor: Floor = {
+    _id: "2",
+    name: 'a',
+    building: mockBuilding,
+    description: 'a',
+    hall: 'a',
+    room: 2,
+    floorMap: 'aaaa',
+    hasElevator: true,
+    passages: []
+  }
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -41,8 +64,7 @@ describe('PatchPassageComponent', () => {
   });
 
   it('should call patch passages and return passages data', () => {
-    const response = { message: 'Floor passages created/updated with success!' };
-    spyOn(floorService, 'patchPassages').and.returnValue(of(response));
+    spyOn(floorService, 'patchPassages').and.returnValue(of(mockFloor));
     floorService.patchPassages(component.floor);
     expect(floorService.patchPassages).toHaveBeenCalledWith(component.floor);
   });
