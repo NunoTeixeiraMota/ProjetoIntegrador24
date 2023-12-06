@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs'; 
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { PatchFloorMapComponent } from './patch-floor-map.component';
+import Building from 'src/app/model/building';
+import Floor from 'src/app/model/floor';
 
 describe('PatchFloorMapComponent', () => {
   let component: PatchFloorMapComponent;
@@ -29,6 +31,27 @@ describe('PatchFloorMapComponent', () => {
     floorService = TestBed.inject(FloorService);
   });
 
+  const mockBuilding: Building = {
+    _id: "1",
+    name: 'a',
+    localizationoncampus: 'a',
+    floors: 1,
+    lifts: 1,
+    maxCel: [1, 1]
+  }
+
+  const mockFloor: Floor = {
+    _id: "2",
+    name: 'a',
+    building: mockBuilding,
+    description: 'a',
+    hall: 'a',
+    room: 2,
+    floorMap: 'aaaa',
+    hasElevator: true,
+    passages: []
+  }
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -41,8 +64,7 @@ describe('PatchFloorMapComponent', () => {
   });
 
   it('should call patch floor map and return floor map data', () => {
-    const response = { message: "Floor map updated with success!" };
-    spyOn(floorService, 'patchFloorMap').and.returnValue(of(response));
+    spyOn(floorService, 'patchFloorMap').and.returnValue(of(mockFloor));
     floorService.patchFloorMap(component.floor);
     expect(floorService.patchFloorMap).toHaveBeenCalledWith(component.floor);
   });

@@ -4,6 +4,7 @@ import { BuildingService } from '../../service/Building/building.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs'; 
+import Building from 'src/app/model/building';
 
 describe('CreateBuildingComponent', () => {
   let component: CreateBuildingComponent;
@@ -43,9 +44,17 @@ describe('CreateBuildingComponent', () => {
     });
   });
 
+  const mockBuilding: Building = {
+    _id: "1",
+    name: 'a',
+    localizationoncampus: 'a',
+    floors: 1,
+    lifts: 1,
+    maxCel: [1, 1]
+  }
+
   it('should call createBuilding and return building data', () => {
-    const response = { message: 'Building created successfully' };
-    spyOn(buildingService, 'createBuilding').and.returnValue(of(response));
+    spyOn(buildingService, 'createBuilding').and.returnValue(of(mockBuilding));
     component.createBuilding();
     expect(buildingService.createBuilding).toHaveBeenCalledWith(component.buildingData);
   });
