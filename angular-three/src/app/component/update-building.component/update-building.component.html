@@ -6,7 +6,7 @@
   <div class="edit-form">
       <div class="form-row">
           <label for="selectedBuildingId">Select Building:</label>
-          <select [(ngModel)]="selectedBuildingId" id="selectedBuildingId">
+          <select [(ngModel)]="selectedBuildingId" id="selectedBuildingId"(change)="displayPreviousInfo()">
               <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
       </div>
@@ -16,7 +16,7 @@
       </div>
       <div class="form-row">
           <label for="localizationoncampus">Localization on Campus:</label>
-          <input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required>
+          <input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required readonly>
       </div>
       <div class="form-row">
           <label for="floors">Number of Floors:</label>
@@ -27,12 +27,24 @@
           <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required>
       </div>
       <label for="length">Length:</label>
-      <input type="number" [(ngModel)]="buildingData.maxCel[0]" name="length" id="length" placeholder="Length" required>
+      <input type="text" [(ngModel)]="buildingData.maxCel[0]" name="length" id="length" placeholder="Length" required readonly>
   
       <label for="width">Width:</label>
-      <input type="number" [(ngModel)]="buildingData.maxCel[1]" name="width" id="width" placeholder="Width" required>
+      <input type="text" [(ngModel)]="buildingData.maxCel[1]" name="width" id="width" placeholder="Width" required readonly>
       <div class="button-row">
           <button (click)="updateBuilding()">Update</button>
+          <button routerLink="/main-menu">Back</button>
       </div>
   </div>
 </div>
+<!-- Display error message -->
+<div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <!-- Display success message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+  
+  
