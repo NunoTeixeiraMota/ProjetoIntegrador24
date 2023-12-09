@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { MessageService } from 'src/app/service/message/message.service';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 import robotType from 'src/app/model/robotType';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-robot-add',
@@ -24,13 +25,15 @@ export class AddRobotComponent implements OnInit {
   constructor(
     private location: Location,
     private robotService: RobotService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
     this.getRobotType();
+    this.titleService.setTitle('RobDroneGo : Add Robot');
   }
 
   getRobotType(): void {

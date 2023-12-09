@@ -23,6 +23,7 @@ import { PatchFloorMapComponent } from './component/patch-floor-map.component/pa
 import { PatchPassagesComponent } from './component/patch-passages.component/patch-passages.component';
 import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildings-Passage.component/list-2-Buildings-Passage.component';
 import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max.component/list-buildings-min-max.component';
+import { Title } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -55,7 +56,9 @@ import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max
     HttpClientModule,
     
   ],
-  providers: [],
+  providers: [
+    Title
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

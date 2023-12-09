@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { MessageService } from 'src/app/service/message/message.service';
 @Component({
   selector: 'app-MainMenu',
@@ -6,10 +7,13 @@ import { MessageService } from 'src/app/service/message/message.service';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit {
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService,
+    private titleService: Title
+    ) {}
 
   ngOnInit() {
-    this.clearMessages(); 
+    this.clearMessages();
+    this.titleService.setTitle('RobDroneGo');
   }
   private clearMessages() {
     this.messageService.clear(); 
