@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import floor from 'src/app/model/floor';
 import Floor from 'src/app/model/floor';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from 'config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FloorService {
-  private apiBaseUrl = 'http://localhost:4000/api';
+  private apiBaseUrl = API_CONFIG.apiBaseUrl; 
 
   constructor(private http: HttpClient) {}
 

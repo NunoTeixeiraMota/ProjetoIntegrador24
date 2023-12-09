@@ -1,8 +1,10 @@
 <head>
   <link rel="stylesheet" href="list-floors-from-building.component.css">
 </head>
+<section class="main-content">
 
 <div class="container">
+    
   <div class="table-section">
       <table>
           <tr>
@@ -33,5 +35,8 @@
 
   <div *ngIf="Floors.length === 0" class="no-floors">
       <p>No floors found for this building.</p>
+  </div>
+  <div class="button-section">
+    <button routerLink="/main-menu">Back</button>
   </div>
 </div>

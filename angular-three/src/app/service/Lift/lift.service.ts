@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_CONFIG } from 'config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiftService {
-  private apiBaseUrl = 'http://localhost:4000/api'; // Adjust the URL as needed
+  private apiBaseUrl = API_CONFIG.apiBaseUrl; 
 
   constructor(private http: HttpClient) {}
 

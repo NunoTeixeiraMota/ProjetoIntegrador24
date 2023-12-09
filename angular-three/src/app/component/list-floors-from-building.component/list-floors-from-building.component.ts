@@ -3,6 +3,7 @@ import { FloorService } from 'src/app/service/Floor/floor.service';
 import Floor from 'src/app/model/floor'; 
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
+import { MessageService } from 'src/app/service/message/message.service';
 
 @Component({
   selector: 'app-list-floors-from-building',
@@ -16,7 +17,9 @@ export class ListFloorsFromBuildingComponent implements OnInit {
 
   constructor(
     private floorService: FloorService,
-    private buildingService: BuildingService) {}
+    private buildingService: BuildingService,
+    public messageService: MessageService 
+    ) {}
 
   ngOnInit() {
     this.getBuildings();
@@ -25,7 +28,7 @@ export class ListFloorsFromBuildingComponent implements OnInit {
   listFloorsFromBuilding() {
     console.log(this.selectedBuildingId)
     if (!this.selectedBuildingId) {
-      console.error('Please select a building.');
+      this.messageService.add('Please select a building.'); 
       return;
     }
 
@@ -47,7 +50,7 @@ export class ListFloorsFromBuildingComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
-        console.error('Error fetching buildings', error);
+        this.messageService.add('Error fetching buildings');
       }
     );
   }

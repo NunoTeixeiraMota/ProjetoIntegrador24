@@ -20,7 +20,7 @@ export class ChangeRobotStateComponent {
     this.robotService.changerobotState(this.id).subscribe(
       (data: any) => { 
         const robotresponse = data as Robot;  // Type assertion
-        this.messageService.add(`Robot State changed with success! Robot Details: ID :${robotresponse.id} STATE : ${robotresponse.isActive}`);
+        this.messageService.add(`Robot State changed with success! Robot Details: ID :${robotresponse.nickname} STATE : ${robotresponse.isActive}`);
       },
       
       (error: any) => {
@@ -29,8 +29,10 @@ export class ChangeRobotStateComponent {
       }
     );
   }
+  
 
 }
+
 
 export class ActivateRobotModule { }
 

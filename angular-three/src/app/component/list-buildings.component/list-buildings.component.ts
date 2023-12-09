@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
+import { MessageService } from 'src/app/service/message/message.service';
 
 @Component({
   selector: 'app-list-buildings',
@@ -11,7 +12,9 @@ export class ListBuildingsComponent implements OnInit {
   buildings: Building[] = [];
   loading: boolean = true;
 
-  constructor(private buildingService: BuildingService) {}
+  constructor(private buildingService: BuildingService,
+    public messageService: MessageService 
+    ) {}
 
   ngOnInit() {
     this.loadBuildings();
@@ -31,6 +34,7 @@ export class ListBuildingsComponent implements OnInit {
       },
       error => {
         console.error('Error:', error);
+        this.messageService.add("Error fetching Buildings")
         this.loading = false;
       }
     );

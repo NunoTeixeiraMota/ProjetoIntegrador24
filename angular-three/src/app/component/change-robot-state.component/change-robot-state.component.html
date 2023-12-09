@@ -1,6 +1,7 @@
 <head>
   <link rel="stylesheet" href="change-robot-state.component.css">
 </head>
+<section class="main-content">
 
 <div class="container">
   <div class="table-section">
@@ -10,8 +11,12 @@
         <td><input type="text" id="id" [(ngModel)]="id" name="id"></td>
       </tr>
     </table>
-    <button (click)="changeRobotState()">Change</button>
+    <div class="button-section">
+      <button (click)="changeRobotState()">Change</button>
+      <button routerLink="/main-menu">Back</button>
+    </div>
   </div>
 </div>
+
 
 <p>{{ finalMessage }}</p>

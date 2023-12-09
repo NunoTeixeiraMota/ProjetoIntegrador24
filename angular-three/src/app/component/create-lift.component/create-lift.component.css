@@ -1,19 +1,29 @@
-/* Lift form styles */
 .lift-form {
-  max-width: 400px;
+  width: 400px; /* Set the desired width */
   margin: 0 auto;
+  opacity: 0.95;
   font-family: 'Roboto', sans-serif;
   background-color: #fff;
-  padding: 20px;
+  padding: 20px; /* Set overall padding */
+  padding-right: 30px; /* Adjust right padding */
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 
 /* Form row styles */
 .form-row {
   margin-bottom: 15px;
 }
-
+.main-content {
+  background-image: url('../../../assets/image.jpg');
+  background-size: cover; 
+  height: calc(100vh - 40px); 
+}
 .form-row button:disabled {
   background-color: gray;
   color: white; 
@@ -25,6 +35,11 @@
   display: block;
   margin-bottom: 6px;
   color: #333;
+}
+
+span{
+  color: red;
+  margin-left: 3px;
 }
 
 /* Input styles */
@@ -40,6 +55,7 @@
 .form-row button {
   padding: 10px 15px;
   border: none;
+  margin-right: 35px; /* Adjust as needed */
   border-radius: 4px;
   color: #fff;
   background-color: #42545C;
