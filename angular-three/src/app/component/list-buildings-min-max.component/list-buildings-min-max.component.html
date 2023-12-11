@@ -1,17 +1,16 @@
 <head>
     <link rel="stylesheet" href="list-buildings-min-max.component.css">
   </head>
-  
-  <body>
-    <div class="filter-container">
-      <label for="minFloor">Minimum Floor:</label>
-      <input type="number" id="minFloor" [(ngModel)]="minFloor">
-      <label for="maxFloor">Maximum Floor:</label>
-      <input type="number" id="maxFloor" [(ngModel)]="maxFloor">
-  
-      <button (click)="loadBuildings()">Filter Buildings</button>
+  <body class="main-content">
+    <div class="building-container" >
+      <label for="minFloor">Minimum Floor: </label>
+      <input type="number" id="minFloor" [(ngModel)]="minFloor" min="1">
+      <br>
+      <label for="maxFloor">Maximum Floor: </label>
+      <input type="number" id="maxFloor" [(ngModel)]="maxFloor" min="1">
+      <br>
+      <button class="button-row" (click)="loadBuildings()">Filter Buildings</button>
     </div>
-  
     <div class="building-container" *ngFor="let building of buildings">
       <div class="building-info">
         <div class="info-item">
@@ -35,6 +34,9 @@
           <span class="value">{{ building.maxCel?.toString() || 'N/A' }}</span>
         </div>
       </div>
+    </div>
+    <div class="button-row">
+      <button routerLink="/main-menu">Back</button>
     </div>
   </body>
   

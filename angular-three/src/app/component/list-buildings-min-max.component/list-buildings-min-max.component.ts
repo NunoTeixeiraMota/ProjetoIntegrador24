@@ -11,8 +11,8 @@ export class ListBuildingsMinMaxComponent implements OnInit {
   buildings: Building[] = [];
   loading: boolean = true;
 
-  minFloor: number = 0; 
-  maxFloor: number = 10; 
+  minFloor: number = 1; 
+  maxFloor: number = 5; 
 
   constructor(private buildingService: BuildingService) {}
 
