@@ -34,7 +34,7 @@ export class ListBuildingsComponent implements OnInit {
       },
       error => {
         console.error('Error:', error);
-        if(error.code == 404) this.messageService,add("No Connection to Server")
+        if(error.code == 404) this.messageService,add("Error: No Connection to Server")
         this.messageService.add("Error fetching Buildings")
         this.loading = false;
       }

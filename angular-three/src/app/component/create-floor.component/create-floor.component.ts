@@ -81,7 +81,7 @@ export class CreateFloorComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
-        if(error.code == 404) this.messageService.add("No Connection to Server")
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
         console.error('Error fetching buildings', error);
       }
     );

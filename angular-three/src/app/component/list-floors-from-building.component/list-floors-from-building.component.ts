@@ -38,7 +38,7 @@ export class ListFloorsFromBuildingComponent implements OnInit {
           this.Floors = data;
         },
         error => {
-          console.error('Error fetching floors', error);
+          this.messageService.add("Error: listing floors ${error}")
         }
       );
   }
@@ -50,7 +50,7 @@ export class ListFloorsFromBuildingComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
-        if(error.code == 404) this.messageService.add("No Connection to Server")
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
         this.messageService.add('Error fetching buildings');
       }
     );

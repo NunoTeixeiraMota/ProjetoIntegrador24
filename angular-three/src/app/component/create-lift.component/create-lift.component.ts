@@ -41,7 +41,7 @@ export class CreateLiftComponent implements OnInit {
 
       },
       error => {
-        this.messageService.add('Error creating lift: ' + error.message);
+        this.messageService.add('Error: creating lift: ' + error.message);
       }
     );
   }
@@ -51,7 +51,7 @@ export class CreateLiftComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
-        if(error.code == 404) this.messageService.add("No Connection to Server")
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
       }
     );
   }

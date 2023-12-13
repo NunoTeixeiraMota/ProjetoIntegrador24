@@ -1,8 +1,7 @@
 /* MessagesComponent's private CSS styles */
 h2 {
-    color: #A80000;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: lighter;
+    color: #02c5c5;
+    font-family: 'Roboto', sans-serif;
   }
   
   .clear {
@@ -16,4 +15,15 @@ h2 {
   .clear:hover {
     color: white;
     background-color: #42545C;
+  }
+
+  button {
+    width: calc(30% - 10px);
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #42545C;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }

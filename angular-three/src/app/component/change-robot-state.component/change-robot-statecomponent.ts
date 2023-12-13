@@ -24,8 +24,8 @@ export class ChangeRobotStateComponent {
       },
       
       (error: any) => {
-        if(error.code == 404) this.messageService.add("No Connection to Server")
-        this.messageService.add("ID Invalid / Non Existent");
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
+        else this.messageService.add("Error : ID Invalid / Non Existent");
         this.finalMessage = error.error.message;
       }
     );

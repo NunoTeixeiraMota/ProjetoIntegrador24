@@ -56,14 +56,13 @@ export class AddRobotComponent implements OnInit {
       errorOrSuccess.subscribe(
         (data: any) => {
           //success
-          this.messageService.add("Robot added with success!");
+          this.messageService.add("Sucess: Robot added with success!");
           this.finalMessage = "Robot added with success!";
           this.location.back();
         },
         
         (error: any) => {
-          //error
-          this.messageService.add(error.error.message);
+          this.messageService.add("Error: ${error.error.message}");
           this.finalMessage = error.error.message;
         }
       );

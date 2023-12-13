@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service'
 import {MessageService} from '../../service/message/message.service'
+import Building from 'src/app/model/building';
 
 @Component({
   selector: 'app-create-building',
@@ -20,9 +21,15 @@ export class CreateBuildingComponent {
     private messageservice : MessageService) {}
 
   createBuilding() {
+    
     this.buildingService.createBuilding(this.buildingData).subscribe(
-      response => console.log('Building created:', response),
-      error => {if(error.code == 404) this.messageservice.add("No Connection to Server"); else this.messageservice.add("Error Creating Building $(error.message)")}
+
+      response => {
+       const buildingcreatedinfo = response as Building
+       const buildingcreated = `Success: Building created. Details - Name: ${buildingcreatedinfo.name}`;
+       this.messageservice.add(buildingcreated);
+      }
+      error => {if(error.code == 404) this.messageservice.add("Error: No Connection to Server"); else this.messageservice.add("Error Creating Building $(error.message)")}
     );
   }
 
