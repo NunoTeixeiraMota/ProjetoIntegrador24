@@ -36,7 +36,6 @@ export class CreateRobotTypeComponent implements OnInit {
         //success
         this.messageService.add("Success robot type creation!");
         this.finalMessage = "Success robot type creation!";
-        this.location.back();
       },
       
       (error: any) => {

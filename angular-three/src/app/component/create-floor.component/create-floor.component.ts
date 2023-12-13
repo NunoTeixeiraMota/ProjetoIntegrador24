@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FloorService } from '../../service/Floor/floor.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
+import {MessageService} from '../../service/message/message.service'
 
 @Component({
   selector: 'app-create-floor',
@@ -29,7 +30,8 @@ export class CreateFloorComponent implements OnInit {
 
   constructor(
     private floorService: FloorService, 
-    private buildingService: BuildingService) {}
+    private buildingService: BuildingService,
+    private messageService : MessageService) {}
 
   ngOnInit() {
     this.getBuildings();
@@ -79,6 +81,7 @@ export class CreateFloorComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("No Connection to Server")
         console.error('Error fetching buildings', error);
       }
     );

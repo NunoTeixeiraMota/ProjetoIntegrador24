@@ -48,11 +48,10 @@ export class CreateLiftComponent implements OnInit {
   getBuildings(): void {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
-        console.log('Fetched Buildings:', buildings);
         this.buildings = buildings;
       },
       (error: any) => {
-        console.error('Error fetching buildings', error);
+        if(error.code == 404) this.messageService.add("No Connection to Server")
       }
     );
   }
