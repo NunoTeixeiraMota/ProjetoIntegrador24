@@ -8,7 +8,7 @@ participant ":RobotType" as robotType
 
 activate admin
 
-admin -> sys: create a Route
+admin -> sys: create a robot type
 activate sys
 
 sys --> admin: request necessary data()

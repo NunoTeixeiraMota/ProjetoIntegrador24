@@ -7,7 +7,7 @@ participant ":System" as sys
 
 activate admin
 
-admin -> sys: create a Route
+admin -> sys: edit floor
 activate sys
 
 sys --> admin: request necessary data()

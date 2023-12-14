@@ -12,10 +12,8 @@ participant ":RobotMap" as rMap
 participant ":RobotSchema" as rSchema
 
 activate admin
-
 admin -> sys: create a Route
 activate sys
-
 sys --> admin: request necessary data()
 admin -> sys : insert all the data
 activate route
@@ -32,12 +30,13 @@ repo -> rSchema: findOne(nickname)
 repo -> rSchema: findOne(serialNumber) 
 activate rMap
 repo -> rMap: toPersistance(robot)
+deactivate rMap
 repo -> rSchema: create(robot)
 repo --> srvc: robot
 deactivate rSchema
-deactivate rMap
 deactivate repo
 srvc --> ctrl: result
+deactivate srvc
 
 alt successful case
     ctrl --> route : HTTP: 201
@@ -48,5 +47,8 @@ else
     route --> sys: HTTP: 400
     sys --> admin: show failure message
 end
+
+deactivate ctrl
+deactivate route
 deactivate sys
 @enduml

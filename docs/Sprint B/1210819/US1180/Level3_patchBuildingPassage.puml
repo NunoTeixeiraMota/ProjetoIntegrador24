@@ -14,13 +14,11 @@ participant ":FloorMap" as rtMap
 participant ":FloorSchema" as rtSchema
 
 activate admin
-
 admin -> sys: update floor passages
 activate sys
 sys --> admin: request necessary data()
-admin -> sys : insert all the data
-activate comp
 
+activate comp
 sys -> comp : getFloors()
 activate FEsrvc
 comp -> FEsrvc : listFloors()
@@ -38,6 +36,7 @@ deactivate ctrl
 deactivate srvc
 deactivate repo
 
+admin -> sys : insert all the data
 sys -> comp : patchFloorPassages()
 activate FEsrvc
 comp -> FEsrvc : patchPassages(Object{id, passages})

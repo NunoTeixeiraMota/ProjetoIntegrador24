@@ -7,7 +7,7 @@ participant ":System" as sys
 
 activate admin
 
-admin -> sys: create a Route
+admin -> sys: create room
 activate sys
 
 sys --> admin: request necessary data()

@@ -19,13 +19,11 @@ participant ":RoomSchema" as rtSchema
 participant ":Room" as r
 
 activate admin
-
 admin -> sys: add a room
 activate sys
 sys --> admin: request necessary data()
-admin -> sys : insert all the data
-activate comp
 
+activate comp
 sys -> comp : getFloors()
 activate FFEsrvc
 comp -> FFEsrvc : listFloors()
@@ -43,6 +41,7 @@ Fsrvc -> Frepo: findAll()
 deactivate Fsrvc
 deactivate Frepo
 
+admin -> sys : insert all the data
 sys -> comp : createRoom()
 activate FEsrvc
 comp -> FEsrvc : createRoom(room)

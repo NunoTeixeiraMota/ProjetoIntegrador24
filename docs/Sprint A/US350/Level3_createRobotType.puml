@@ -12,10 +12,8 @@ participant ":RobotTypeMap" as rtMap
 participant ":RobotTypeSchema" as rtSchema
 
 activate admin
-
 admin -> sys: create a Route
 activate sys
-
 sys --> admin: request necessary data()
 admin -> sys : insert all the data
 activate route
@@ -32,12 +30,13 @@ srvc -> repo: save(robotType)
 repo -> rtSchema: findOne(id) 
 activate rtMap
 repo -> rtMap: toPersistance(robotType)
+deactivate rtMap
 repo -> rtSchema: create(robotType)
 repo --> srvc: robotType
 deactivate rtSchema
-deactivate rtMap
 deactivate repo
 srvc --> ctrl: result
+deactivate srvc
 
 alt successful case
     ctrl --> route : HTTP: 201
@@ -48,5 +47,8 @@ else
     route --> sys: HTTP: 400
     sys --> admin: show failure message
 end
+
+deactivate ctrl
+deactivate route
 deactivate sys
 @enduml

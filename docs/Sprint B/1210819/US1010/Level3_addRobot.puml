@@ -20,9 +20,8 @@ activate admin
 admin -> sys: wants to introduce a robot
 activate sys
 sys --> admin: request necessary data()
-admin -> sys : insert all the data
-activate comp
 
+activate comp
 sys -> comp : getRobotType()
 activate FEsrvc
 comp -> FEsrvc : listRobotType()
@@ -40,6 +39,7 @@ deactivate ctrl
 deactivate srvc
 deactivate repoT
 
+admin -> sys : insert all the data
 sys -> comp : addRobot()
 activate FEsrvc
 comp -> FEsrvc : addRobot(robot)

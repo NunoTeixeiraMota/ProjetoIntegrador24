@@ -18,9 +18,8 @@ activate admin
 admin -> sys: update floor map
 activate sys
 sys --> admin: request necessary data()
-admin -> sys : insert all the data
-activate comp
 
+activate comp
 sys -> comp : getFloors()
 activate FEsrvc
 comp -> FEsrvc : listFloors()
@@ -38,6 +37,7 @@ deactivate ctrl
 deactivate srvc
 deactivate repo
 
+admin -> sys : insert all the data
 sys -> comp : editFloorMap()
 activate FEsrvc
 comp -> FEsrvc : patchFloorMap(Object{id, floorMap})

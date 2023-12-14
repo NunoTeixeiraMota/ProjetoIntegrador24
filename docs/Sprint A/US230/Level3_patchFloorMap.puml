@@ -11,10 +11,8 @@ participant ":FloorRepo" as repo
 
 
 activate admin
-
 admin -> sys: create a Route
 activate sys
-
 sys --> admin: request necessary data()
 admin -> sys : insert all the data
 activate route
@@ -28,6 +26,7 @@ srvc -> repo: findByID(floorID)
 srvc -> repo: save(floorDTO)
 deactivate repo
 srvc --> ctrl: result
+deactivate srvc
 
 alt successful case
     ctrl --> route : HTTP: 201
@@ -38,6 +37,8 @@ else
     route --> sys: HTTP: 400
     sys --> admin: show failure message
 end
-deactivate floor
+
+deactivate ctrl
+deactivate route
 deactivate sys
 @enduml
