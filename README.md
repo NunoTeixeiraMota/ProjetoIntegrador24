@@ -1,5 +1,4 @@
-[![Node.js CI](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejs.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejs.yml)
-
+[![Node.js CI](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejsTesting.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/nodejsTesting.yml)
 [![Deploy to VPS](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml)
 # SEM_5_PI_G045 README
 
