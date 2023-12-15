@@ -13,4 +13,13 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {
   }
 
+  getMessageStyle(message: string) {
+    if (message.includes('error')) {
+      return { 'color': 'red' };
+    } else if (message.includes('success')) {
+      return { 'color': 'green' };
+    } else {
+      return {};
+    }
+  }
 }

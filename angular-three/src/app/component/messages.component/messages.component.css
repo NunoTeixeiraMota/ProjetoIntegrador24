@@ -1,29 +1,58 @@
 /* MessagesComponent's private CSS styles */
-h2 {
-    color: #02c5c5;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .clear {
-    color: #333;
-    background-color: #eee;
-    margin-bottom: 12px;
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  .clear:hover {
-    color: white;
-    background-color: #42545C;
-  }
+.message-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-  button {
-    width: calc(30% - 10px);
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #42545C;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.message-container h2 {
+  color: #007bff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.message-container .clear {
+  color: #333;
+  background-color: #eee;
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: calc(100% - 20px); /* Adjusted for full width within the container */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.message-container .clear:hover {
+  color: white;
+  background-color: #42545C;
+}
+
+/* General button styles, if needed elsewhere */
+button {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+.error-message {
+  color: red;
+}
+
+.success-message {
+  color: green;
+}
