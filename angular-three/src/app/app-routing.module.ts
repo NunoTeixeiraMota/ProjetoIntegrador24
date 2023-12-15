@@ -18,27 +18,34 @@ import { PatchFloorMapComponent } from './component/patch-floor-map.component/pa
 import { PatchPassagesComponent } from './component/patch-passages.component/patch-passages.component';
 import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildings-Passage.component/list-2-Buildings-Passage.component';
 import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max.component/list-buildings-min-max.component';
+import { AuthGuard } from './auth-guard';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
+ 
+  {path : 'privacy-policy', component: PrivacyPolicyComponent},
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
-  { path: 'create-building', component: CreateBuildingComponent },
-  { path: 'create-floor', component: CreateFloorComponent},
-  { path: 'create-room', component: CreateRoomComponent },
-  { path: 'main-menu', component: MainMenuComponent },
-  { path: 'create-lift', component: CreateLiftComponent },
-  { path: 'list-buildings', component: ListBuildingsComponent },
-  { path: 'create-robot', component: CreateRobotTypeComponent },
-  { path: 'single-file-upload', component: SingleFileUploadComponent},
-  { path: 'edit-floor', component: EditFloorComponent },
-  { path: 'add-robot', component: AddRobotComponent },
-  { path: 'change-robot-state', component: ChangeRobotStateComponent},
-  { path: 'update-building', component: UpdateBuildingComponent },
-  { path: 'list-floors-from-building', component: ListFloorsFromBuildingComponent },
-  { path: 'patch-floor-map', component: PatchFloorMapComponent },
-  { path: 'patch-passages', component: PatchPassagesComponent },
-  { path: 'list-2-buildings-passage', component: ListPassageBetween2BuildingsComponent },
-  { path: 'list-buildings-min-max', component: ListBuildingsMinMaxComponent },
-
+  { path: 'create-building', component: CreateBuildingComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] } },
+  { path: 'create-floor', component: CreateFloorComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'create-room', component: CreateRoomComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'main-menu', component: MainMenuComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
+  { path: 'create-lift', component: CreateLiftComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'list-buildings', component: ListBuildingsComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
+  { path: 'create-robot', component: CreateRobotTypeComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'single-file-upload', component: SingleFileUploadComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'edit-floor', component: EditFloorComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'add-robot', component: AddRobotComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'change-robot-state', component: ChangeRobotStateComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'update-building', component: UpdateBuildingComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'list-floors-from-building', component: ListFloorsFromBuildingComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
+  { path: 'patch-floor-map', component: PatchFloorMapComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'patch-passages', component: PatchPassagesComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'list-2-buildings-passage', component: ListPassageBetween2BuildingsComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
+  { path: 'list-buildings-min-max', component: ListBuildingsMinMaxComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
+  {path: 'login', component: LoginComponent},
+  {path : 'register', component: RegisterComponent},
 ];
 
 @NgModule({

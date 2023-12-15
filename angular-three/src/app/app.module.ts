@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { AppRoutingModule } from './app-routing.module';
 
@@ -24,6 +24,7 @@ import { PatchPassagesComponent } from './component/patch-passages.component/pat
 import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildings-Passage.component/list-2-Buildings-Passage.component';
 import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max.component/list-buildings-min-max.component';
 import { Title } from '@angular/platform-browser';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { Title } from '@angular/platform-browser';
     PatchPassagesComponent,
     ListPassageBetween2BuildingsComponent,
     ListBuildingsMinMaxComponent,
+    LoginComponent,
     // ... any other components
   ],
   imports: [
@@ -54,7 +56,7 @@ import { Title } from '@angular/platform-browser';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    
+    ReactiveFormsModule,
   ],
   providers: [
     Title
