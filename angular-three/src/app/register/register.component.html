@@ -1,0 +1,27 @@
+<div class="horizontal-stepper">
+    <!-- Step 1: User Information -->
+    <div class="register-container">
+        <form>
+            <h3>Register</h3>
+            <div class="form-field">
+                <input name="firstName" type="text" placeholder="First Name" required>
+            </div>
+            <div class="form-field">
+                <input name="lastName" type="text" placeholder="Last Name" required>
+            </div>
+            <div class="form-field">
+                <input name="email" type="email" placeholder="Email" required>
+            </div>
+            <div class="form-field">
+                <input name="password" type="password" placeholder="Password" required>
+            </div>
+            <h3>Privacy Policy</h3>
+            <button type="button" class="button" (click)="openPrivacyPolicyPopup()">Terms and Conditions</button>
+            <div class="checkbox">
+                <input type="checkbox" id="termsAndConditions" name="termsAndConditions" required>
+                <label for="termsAndConditions">I declare I have read and agree to the Terms and Conditions.</label>
+            </div>
+            <button type="button" (click)="register($event)" class="btn btn-primary">Register</button>
+        </form>
+</div>
+</div>
