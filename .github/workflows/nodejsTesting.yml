@@ -2,7 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches-ignore: - main
+    branches:
+      - '*'
+      - '!main'
 
 jobs:
   NodeJS_Test:
