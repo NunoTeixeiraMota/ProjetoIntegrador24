@@ -25,13 +25,20 @@ export class CreateBuildingComponent {
     this.buildingService.createBuilding(this.buildingData).subscribe(
 
       response => {
-       const buildingcreatedinfo = response as Building
+       const buildingcreatedinfo = response as Building;
        const buildingcreated = `Success: Building created. Details - Name: ${buildingcreatedinfo.name}`;
        this.messageservice.add(buildingcreated);
+      },
+      error => {
+        if(error.code == 404) {
+          this.messageservice.add("Error: No Connection to Server"); 
+        } else {
+          this.messageservice.add(`Error Creating Building ${error.message}`);
+        }
       }
-      error => {if(error.code == 404) this.messageservice.add("Error: No Connection to Server"); else this.messageservice.add("Error Creating Building $(error.message)")}
     );
   }
+  
 
   addMaxCel() {
     this.buildingData.maxCel.push(0); // Add a new cell with a default value
