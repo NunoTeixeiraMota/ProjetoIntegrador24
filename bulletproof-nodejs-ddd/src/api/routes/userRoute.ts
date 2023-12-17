@@ -23,24 +23,24 @@ export default (app: Router) => {
         lastName: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required(),
-        role: Joi.string().required()
+        role: Joi.string().default('4393dcc4-06f4-4145-af6a-3bf89b7c818d'), 
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger') as winston.Logger;
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
-
+  
       try {
         const authServiceInstance = Container.get(AuthService);
         const userOrError = await authServiceInstance.SignUp(req.body as IUserDTO);
-
+  
         if (userOrError.isFailure) {
           logger.debug(userOrError.errorValue())
           return res.status(401).send(userOrError.errorValue());
         }
     
-        const {userDTO, token} = userOrError.getValue();
-
+        const { userDTO, token } = userOrError.getValue();
+  
         return res.status(201).json({ userDTO, token });
       } catch (e) {
         //logger.error('🔥 error: %o', e);
@@ -48,6 +48,7 @@ export default (app: Router) => {
       }
     },
   );
+  
 
   route.post(
     '/signin',
@@ -60,6 +61,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger') as winston.Logger;
       logger.debug('Calling Sign-In endpoint with body: %o', req.body)
+      console.log('Calling Sign-In endpoint with body: %o', req.body)
       try {
         const { email, password } = req.body;
         const authServiceInstance = Container.get(AuthService);

@@ -65,7 +65,7 @@ export class AuthService {
       })
     };
     return await this.http.post<any>(
-      `${API_CONFIG.apiBaseUrl}/api/auth/signin`, 
+      `${API_CONFIG.apiBaseUrl}/auth/signin`, 
       user,
       httpOptions
     ).toPromise();
@@ -76,5 +76,8 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+  getCurrentUserRole(): string | null {
+    return localStorage.getItem("role");
   }
 }

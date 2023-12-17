@@ -21,7 +21,7 @@ export class UserMap extends Mapper<User> {
       lastName: user.lastName,
       email: user.email.value,
       password: "",
-      role: user.role.id.toString()
+      role: user.role.name.toString()
     } as IUserDTO;
   }
 

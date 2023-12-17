@@ -5,18 +5,18 @@
         <section>
             <h2>Building</h2>
             <nav>
-                <a routerLink="/create-building"> Create Building</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
                 <a routerLink="/list-buildings">List Buildings</a>
                 <a routerLink="/list-buildings-min-max">List Buildings Min Max</a>
-                <a routerLink="/update-building">Update Building</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
                 <a routerLink = "/list-2-buildings-passage"> Passage Between Buildings</a>
             </nav>
         </section>
         <section>
             <h2>Floor</h2>
             <nav>
-                <a routerLink="/create-floor">Create Floor</a>
-                <a routerLink="/edit-floor">Edit Floor</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
                 <a routerLink="/list-floors-from-building"> List floors in building</a>
                 <a routerLink="/patch-floor-map"> Update floor map</a>
                 <a routerLink="/patch-passages">Create/Update passages</a>
@@ -25,21 +25,21 @@
         <section>
             <h2>Room</h2>
             <nav>
-                <a routerLink="/create-room">Create Room</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
             </nav>
         </section>
         <section>
             <h2>Lift</h2>
             <nav>
-                <a routerLink="/create-lift">Create Lift</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
             </nav>
         </section>
         <section>
             <h2>Robot</h2>
             <nav>
-                <a routerLink="/create-robot">Create Robot Type</a>
-                <a routerLink="/add-robot">Add Robot</a>
-                <a routerLink="/change-robot-state">Change Robot State</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-building">Create Building</a>
             </nav>
         </section>
     </aside>

@@ -32,22 +32,24 @@ export class LoginComponent implements OnInit {
 
   async login(): Promise<void> {
     if (this.loginForm.invalid) {
-      return; // Added early return for invalid form
+      return;
     }
 
-    this.isLoading = true; // Start loading
+    this.isLoading = true;
     const { email, password } = this.loginForm.value;
 
     try {
       const userLogged = await this.authService.sign_in({ email, password });
       if (userLogged?.token) {
         this.authService.login(userLogged.token, userLogged.userDTO.role);
-        this.router.navigate(['']); // Navigate to dashboard or home
+        console.log(userLogged.token);
+        console.log(userLogged.userDTO.role);
+        this.router.navigate(['/main-menu']);
       }
     } catch (error) {
-      console.error('Login failed:', error); // Error handling
+      console.error('Login failed:', error);
     } finally {
-      this.isLoading = false; // Stop loading regardless of success or failure
+      this.isLoading = false;
     }
   }
 

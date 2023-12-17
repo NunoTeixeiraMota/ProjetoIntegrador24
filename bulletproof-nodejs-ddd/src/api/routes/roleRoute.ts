@@ -13,7 +13,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.role.name) as IRoleController;
 
-  route.post('',
+  route.post('/create',
     celebrate({
       body: Joi.object({
         name: Joi.string().required()

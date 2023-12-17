@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/service/User/auth.service';
 import { MessageService } from 'src/app/service/message/message.service';
 @Component({
   selector: 'app-MainMenu',
@@ -7,11 +8,15 @@ import { MessageService } from 'src/app/service/message/message.service';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit {
+  currentUserRole: string | null = null;
+
   constructor(private messageService: MessageService,
-    private titleService: Title
+    private titleService: Title,
+    private authService: AuthService,
     ) {}
 
   ngOnInit() {
+    this.currentUserRole = this.authService.getCurrentUserRole();
     this.clearMessages();
     this.titleService.setTitle('RobDroneGo');
   }
