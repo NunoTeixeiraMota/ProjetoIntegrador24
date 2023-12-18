@@ -1,14 +1,19 @@
 /* Overall container */
+.main-content {
+  background-image: url('../../assets/bcklogreg.jpg');
+  background-size: cover; 
+  height: calc(100vh - 60px); 
+}
 .login-container {
+  padding-left: 20px;
+  padding-right: 20px;
   max-width: 400px;
   margin: 50px auto;
-  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   font-family: 'Roboto', sans-serif;
-
 }
 
 /* Form and form elements styling */
@@ -30,7 +35,7 @@ label {
 
 input[type="email"],
 input[type="password"] {
-  width: 100%;
+  width: calc(100% - 20px); /* Adjust the 20px if necessary */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -39,25 +44,30 @@ input[type="password"] {
 
 /* Button styling */
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background: linear-gradient(100deg, #0BFF35, #00E576, #007bff, #0033b3, #0056b3);
+  border: none;
   color: white;
-  padding: 10px 15px;
+  padding: 15px 15px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  width: calc(100% - 20px); /* Adjust the 20px if necessary to match the inputs */
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Smooth transitions for multiple properties */
+
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background: linear-gradient(200deg, #24fc48, #3de493, #55a1f3, #6c91f0, #b9d0e9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Increased shadow for a "lifted" effect */
+  transform: translateY(-2px); /* Slight upward movement on hover for a "button press" feel */
 }
 
 .btn-primary:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 
 /* Link for registration */
 .register-link {
@@ -69,4 +79,14 @@ input[type="password"] {
 
 .register-link:hover {
   text-decoration: underline;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
 }

@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
         // Handle registration error
 
         console.error("Couldn't register the user. Reason:", error);
-        this.messageservice.add("Error: " + error.error.message);
+        this.messageservice.add("Error: " + error.error);
         // You might want to show an error message to the user
       }
     );

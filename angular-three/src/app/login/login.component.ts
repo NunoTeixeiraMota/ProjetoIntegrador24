@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/User/auth.service';
 import { User } from '../model/user';
+import { MessageService } from '../service/message/message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +17,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder, // Renamed for consistency
-    private router: Router
+    private formBuilder: FormBuilder, 
+    private router: Router,
+    private messageservice: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,20 @@ export class LoginComponent implements OnInit {
       }
     } catch (error) {
       console.error('Login failed:', error);
+      
+      if (error instanceof HttpErrorResponse) {
+        let errorMessage = 'Unknown error occurred';
+        if (error.error && error.error.errors && error.error.errors.message) {
+          errorMessage = error.error.errors.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        this.messageservice.add("Error: " + errorMessage);
+      } else {
+        // If the error is not an instance of HttpErrorResponse
+        this.messageservice.add("Error: An unexpected error occurred");
+      }
+    
     } finally {
       this.isLoading = false;
     }

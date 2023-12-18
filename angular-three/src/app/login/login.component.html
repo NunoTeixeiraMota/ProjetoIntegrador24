@@ -1,14 +1,20 @@
+<section class="main-content">
+
 <div class="login-container">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h1>Login</h1>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" class="form-control" formControlName="email" required>
+      <input type="email" id="email" class="form-control" formControlName="email" placeholder="Type your email" required>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" class="form-control" formControlName="password" required>
+      <input type="password" id="password" class="form-control" formControlName="password" placeholder="Type your password" required>
     </div>
-    <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+    <div class="button-container">
+      <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+    </div>
   </form>
   <p class="register-link" (click)="register()">Don't have an account? Register here.</p>
 </div>
+</section>
