@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { LiftService } from '../../service/Lift/lift.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';

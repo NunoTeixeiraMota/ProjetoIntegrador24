@@ -65,15 +65,32 @@ describe('CreateLiftComponent', () => {
     spyOn(liftService, 'createLift').and.returnValue(of(mockLift));
     component.createLift();
     expect(liftService.createLift).toHaveBeenCalledWith(component.liftData);
-    // Optionally check the response handling
   });
 
   it('getBuildings should handle error', () => {
-    const errorMessage = 'Error fetching buildings';
+    const errorMessage = '';
     spyOn(buildingService, 'getBuildings').and.returnValue(throwError(() => new Error(errorMessage)));
     component.getBuildings();
-    // Assert error handling logic here if any
   });
 
-  // Additional tests as needed
+  it('should update model on input change', () => {
+    const localizationInput = fixture.nativeElement.querySelector('#localization');
+    localizationInput.value = '';
+    localizationInput.dispatchEvent(new Event('input'));
+    expect(component.liftData.localization).toEqual('New Location');
+  });
+  
+  it('should update UI on successful lift creation', () => {
+    spyOn(liftService, 'createLift').and.returnValue(of(mockLift));
+    component.createLift();
+    expect(component.finalMessage).toContain('');
+  });
+
+  it('should handle error on lift creation', () => {
+    const errorMessage = '';
+    spyOn(liftService, 'createLift').and.returnValue(throwError(() => new Error(errorMessage)));
+    component.createLift();
+    expect(component.finalMessage).toContain(errorMessage);
+  });
+  
 });

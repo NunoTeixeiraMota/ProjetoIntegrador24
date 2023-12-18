@@ -1,0 +1,61 @@
+@startuml
+actor User
+participant "FE: CreateLiftComponent" as FrontEnd
+participant "FE: LiftService" as LiftService
+participant "FE: MessageService" as MessageService
+participant "BE: LiftController" as LiftController
+participant "BE: LiftService" as BackendLiftService
+participant "BE: BuildingService" as BuildingService
+participant "BE: LiftRepository" as LiftRepo
+participant "BE: BuildingRepository" as BuildingRepo
+
+User -> FrontEnd: fillForm()
+activate FrontEnd
+
+FrontEnd -> LiftService: createLift(liftData)
+activate LiftService
+LiftService -> LiftController: createLiftRequest(liftData)
+activate LiftController
+
+LiftController -> BackendLiftService: createLift(liftData)
+activate BackendLiftService
+BackendLiftService -> BuildingService: validateBuilding(liftData.buildingId)
+activate BuildingService
+BuildingService -> BuildingRepo: findById(buildingId)
+activate BuildingRepo
+BuildingRepo --> BuildingService: buildingDetails
+deactivate BuildingRepo
+BuildingService --> BackendLiftService: buildingValidationResult
+deactivate BuildingService
+
+alt Building Validation Successful
+    BackendLiftService -> LiftRepo: saveLift(liftDetails)
+    activate LiftRepo
+    LiftRepo --> BackendLiftService: liftSavedConfirmation
+    deactivate LiftRepo
+    BackendLiftService --> LiftController: liftCreationSuccess(liftDetails)
+else Building Validation Failed
+    BackendLiftService --> LiftController: buildingValidationError
+end
+deactivate BackendLiftService
+
+LiftController --> LiftService: liftResponse
+deactivate LiftController
+LiftService --> FrontEnd: liftResponse
+deactivate LiftService
+
+alt success case
+    FrontEnd -> MessageService: add("Lift created successfully, liftData")
+    activate MessageService
+    MessageService --> FrontEnd
+    deactivate MessageService
+else error case
+    FrontEnd -> MessageService: add("Error creating lift, errorResponse")
+    activate MessageService
+    MessageService --> FrontEnd
+    deactivate MessageService
+end
+
+FrontEnd -> User: displayResult()
+deactivate FrontEnd
+@enduml

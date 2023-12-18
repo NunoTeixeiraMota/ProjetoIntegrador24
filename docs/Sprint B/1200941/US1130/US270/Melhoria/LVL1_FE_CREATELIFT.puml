@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant "FrontEnd: CreateLiftComponent" as FrontEnd
+participant "BackEnd: LiftSystem" as BackEnd
+
+User -> FrontEnd: Request Lift Creation
+activate FrontEnd
+FrontEnd -> BackEnd: Create Lift(liftData)
+activate BackEnd
+BackEnd --> FrontEnd: Response (Success/Failure)
+deactivate BackEnd
+FrontEnd --> User: Display Result
+deactivate FrontEnd
+@enduml

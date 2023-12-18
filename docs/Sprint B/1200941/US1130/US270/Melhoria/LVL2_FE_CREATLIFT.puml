@@ -1,0 +1,38 @@
+@startuml
+actor User
+participant "FE: CreateLiftComponent" as FrontEnd
+participant "FE: LiftService" as LiftService
+participant "FE: MessageService" as MessageService
+participant "BE: LiftController" as LiftController
+participant "BE: LiftService" as BackendLiftService
+participant "BE: BuildingService" as BuildingService
+
+User -> FrontEnd: fillForm()
+activate FrontEnd
+
+FrontEnd -> LiftService: createLift(liftData)
+activate LiftService
+LiftService -> LiftController: sendCreateRequest(liftData)
+activate LiftController
+
+LiftController -> BackendLiftService: processLiftCreation(liftData)
+activate BackendLiftService
+BackendLiftService -> BuildingService: validateBuilding(liftData.buildingId)
+activate BuildingService
+BuildingService --> BackendLiftService: ValidationResponse
+deactivate BuildingService
+BackendLiftService --> LiftController: CreationResponse
+deactivate BackendLiftService
+LiftController --> LiftService: Response
+deactivate LiftController
+LiftService --> FrontEnd: Response
+deactivate LiftService
+
+FrontEnd -> MessageService: displayMessage(Response)
+activate MessageService
+MessageService --> FrontEnd
+deactivate MessageService
+
+FrontEnd -> User: ShowResult()
+deactivate FrontEnd
+@enduml
