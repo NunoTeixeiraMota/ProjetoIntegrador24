@@ -18,7 +18,7 @@ describe('ChangeRobotStateComponent', () => {
   
 
   beforeEach(async () => {
-    robotServiceSpy = jasmine.createSpyObj('RobotService', ['changerobotState']);
+    robotServiceSpy = jasmine.createSpyObj('RobotService', ['getActiveRobots', 'changerobotState']);
     messageServiceSpy = jasmine.createSpyObj('MessageService', ['add']);
 
     await TestBed.configureTestingModule({
