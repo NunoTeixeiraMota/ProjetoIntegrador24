@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="347px" preserveAspectRatio="none" style="width:284px;height:347px;" version="1.1" viewBox="0 0 284 347" width="284px" zoomAndPan="magnify"><defs><filter height="300%" id="fz86vla5900q9" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[0df2137fe28bacbd4ba0a5d9026fb502]
+cluster Front-End Angular Application--><rect fill="#FFFFFF" filter="url(#fz86vla5900q9)" height="220" style="stroke: #000000; stroke-width: 1.5;" width="251" x="22" y="24"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="235" x="30" y="38.9951">Front-End Angular Application</text><!--MD5=[3ef5e0aac8691d72fc1682d46da1c1bc]
+class FrontEndComponent--><rect fill="#FFFFE0" filter="url(#fz86vla5900q9)" height="60.8047" id="FrontEndComponent" style="stroke: #000000; stroke-width: 1.5;" width="161" x="66.5" y="59"/><ellipse cx="81.5" cy="75" fill="#ADD1B2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M84.4688,80.6406 Q83.8906,80.9375 83.25,81.0781 Q82.6094,81.2344 81.9063,81.2344 Q79.4063,81.2344 78.0781,79.5938 Q76.7656,77.9375 76.7656,74.8125 Q76.7656,71.6875 78.0781,70.0313 Q79.4063,68.375 81.9063,68.375 Q82.6094,68.375 83.25,68.5313 Q83.9063,68.6875 84.4688,68.9844 L84.4688,71.7031 Q83.8438,71.125 83.25,70.8594 Q82.6563,70.5781 82.0313,70.5781 Q80.6875,70.5781 80,71.6563 Q79.3125,72.7188 79.3125,74.8125 Q79.3125,76.9063 80,77.9844 Q80.6875,79.0469 82.0313,79.0469 Q82.6563,79.0469 83.25,78.7813 Q83.8438,78.5 84.4688,77.9219 L84.4688,80.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="129" x="95.5" y="79.1543">FrontEndComponent</text><line style="stroke: #000000; stroke-width: 1.5;" x1="67.5" x2="226.5" y1="91" y2="91"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="65" x="72.5" y="105.2104">-All UI Logic</text><line style="stroke: #000000; stroke-width: 1.5;" x1="67.5" x2="226.5" y1="111.8047" y2="111.8047"/><!--MD5=[f371212c04b6b37c72a93fafe133a805]
+class AppService--><rect fill="#FFFFE0" filter="url(#fz86vla5900q9)" height="48" id="AppService" style="stroke: #000000; stroke-width: 1.5;" width="101" x="96.5" y="180"/><ellipse cx="111.5" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M114.4688,201.6406 Q113.8906,201.9375 113.25,202.0781 Q112.6094,202.2344 111.9063,202.2344 Q109.4063,202.2344 108.0781,200.5938 Q106.7656,198.9375 106.7656,195.8125 Q106.7656,192.6875 108.0781,191.0313 Q109.4063,189.375 111.9063,189.375 Q112.6094,189.375 113.25,189.5313 Q113.9063,189.6875 114.4688,189.9844 L114.4688,192.7031 Q113.8438,192.125 113.25,191.8594 Q112.6563,191.5781 112.0313,191.5781 Q110.6875,191.5781 110,192.6563 Q109.3125,193.7188 109.3125,195.8125 Q109.3125,197.9063 110,198.9844 Q110.6875,200.0469 112.0313,200.0469 Q112.6563,200.0469 113.25,199.7813 Q113.8438,199.5 114.4688,198.9219 L114.4688,201.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="69" x="125.5" y="200.1543">AppService</text><line style="stroke: #000000; stroke-width: 1.5;" x1="97.5" x2="196.5" y1="212" y2="212"/><line style="stroke: #000000; stroke-width: 1.5;" x1="97.5" x2="196.5" y1="220" y2="220"/><!--MD5=[19ffc815b7972f6e117e15ae1cac7b2c]
+class ServerAPI--><rect fill="#FFFFE0" filter="url(#fz86vla5900q9)" height="48" id="ServerAPI" style="stroke: #000000; stroke-width: 1.5;" width="91" x="101.5" y="288"/><ellipse cx="116.5" cy="304" fill="#ADD1B2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M119.4688,309.6406 Q118.8906,309.9375 118.25,310.0781 Q117.6094,310.2344 116.9063,310.2344 Q114.4063,310.2344 113.0781,308.5938 Q111.7656,306.9375 111.7656,303.8125 Q111.7656,300.6875 113.0781,299.0313 Q114.4063,297.375 116.9063,297.375 Q117.6094,297.375 118.25,297.5313 Q118.9063,297.6875 119.4688,297.9844 L119.4688,300.7031 Q118.8438,300.125 118.25,299.8594 Q117.6563,299.5781 117.0313,299.5781 Q115.6875,299.5781 115,300.6563 Q114.3125,301.7188 114.3125,303.8125 Q114.3125,305.9063 115,306.9844 Q115.6875,308.0469 117.0313,308.0469 Q117.6563,308.0469 118.25,307.7813 Q118.8438,307.5 119.4688,306.9219 L119.4688,309.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59" x="130.5" y="308.1543">ServerAPI</text><line style="stroke: #000000; stroke-width: 1.5;" x1="102.5" x2="191.5" y1="320" y2="320"/><line style="stroke: #000000; stroke-width: 1.5;" x1="102.5" x2="191.5" y1="328" y2="328"/><!--MD5=[403ebc54605690993a00e41e99efa531]
+link FrontEndComponent to AppService--><path d="M147,120.06 C147,138.68 147,162.38 147,179.67 " fill="none" id="FrontEndComponent-AppService" style="stroke: #0000FF; stroke-width: 1.0;"/><!--MD5=[361d9e78ab968b3cc5ad7d0835944b3d]
+link AppService to ServerAPI--><path d="M147,228 C147,245.66 147,269.94 147,287.68 " fill="none" id="AppService-ServerAPI" style="stroke: #0000FF; stroke-width: 1.0;"/><!--MD5=[33d8bfbc305ef3170b8e741800db26e6]
+@startuml
+
+
+skinparam packageStyle rect
+skinparam class {
+BackgroundColor LightYellow
+ArrowColor Blue
+BorderColor Black
+}
+skinparam classAttributeIconSize 0
+
+package "Front-End Angular Application" {
+class FrontEndComponent {
+- All UI Logic
+}
+
+class AppService {
+}
+
+FrontEndComponent - - AppService
+}
+
+class ServerAPI {
+}
+
+AppService - - ServerAPI
+
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 10:22:07 UTC 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 11.0.21+9
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
