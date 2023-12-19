@@ -84,7 +84,7 @@ deactivate IG
 
 F -> IF: Send response with status 200 and the floorsDTO
 IF -> route: Forward response
-
+deactivate IF
 route -> FEsrvc: Forward response
 FEsrvc -> comp: Display result (list of floorDTOs)
 comp -> sys: Update view to show floors
