@@ -1,0 +1,64 @@
+@startuml
+
+' Define the Angular component and service style
+skinparam packageStyle rect
+skinparam class {
+  BackgroundColor orchid
+  ArrowColor SeaGreen
+  BorderColor Black
+}
+skinparam classAttributeIconSize 0
+
+' Define the front-end package
+package "Front-End Angular Application" {
+
+  ' Define a nested package for components
+  package "Components" {
+    ' Define components
+    class AppComponent {
+      - HTML
+      - CSS
+      - TypeScript
+    }
+
+    class FeatureComponent {
+      - HTML
+      - CSS
+      - TypeScript
+    }
+  }
+
+  ' Define services outside the components package but inside the front-end package
+  class UIService {
+  }
+
+  class HttpClient {
+  }
+
+  class FeatureService {
+  }
+
+  ' Define the model inside the front-end package
+  class GenericModel {
+    + field1
+    + field2
+    + field3
+  }
+
+  ' Connections within the front-end
+  AppComponent -- UIService 
+  FeatureComponent -- FeatureService 
+  FeatureComponent -- HttpClient 
+  UIService -- HttpClient 
+  FeatureComponent .. GenericModel 
+  FeatureService .. GenericModel 
+}
+
+' Define the API outside the front-end package
+class ServerAPI {
+}
+
+' Connection from the front-end to the back-end
+HttpClient -- ServerAPI
+
+@enduml

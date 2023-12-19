@@ -1,0 +1,29 @@
+@startuml
+
+' High-Level Overview Level 1 Diagram
+
+skinparam packageStyle rect
+skinparam class {
+BackgroundColor LightYellow
+ArrowColor Blue
+BorderColor Black
+}
+skinparam classAttributeIconSize 0
+
+package "Front-End Angular Application" {
+class FrontEndComponent {
+- All UI Logic
+}
+
+class AppService {
+}
+
+FrontEndComponent -- AppService
+}
+
+class ServerAPI {
+}
+
+AppService -- ServerAPI
+
+@enduml

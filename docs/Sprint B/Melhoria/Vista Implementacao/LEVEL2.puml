@@ -1,0 +1,42 @@
+@startuml
+
+' Simplified Level 2 Diagram
+
+skinparam packageStyle rect
+skinparam class {
+BackgroundColor PaleGreen
+ArrowColor SteelBlue
+BorderColor Black
+}
+skinparam classAttributeIconSize 0
+
+package "Front-End Angular Application" {
+package "Main Component" {
+class MainComponent {
+- HTML/CSS/TypeScript
+}
+}
+
+class MainService {
+}
+
+class HttpClient {
+}
+
+class GenericModel {
++ field1
++ field2
+}
+
+MainComponent -- MainService
+MainService -- HttpClient
+MainComponent .. GenericModel
+MainService .. GenericModel
+}
+
+class ServerAPI {
+}
+
+HttpClient -- ServerAPI
+
+@enduml
