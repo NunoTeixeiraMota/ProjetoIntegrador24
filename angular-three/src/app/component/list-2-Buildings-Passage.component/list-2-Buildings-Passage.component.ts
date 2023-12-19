@@ -3,7 +3,7 @@ import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
 import Floor from 'src/app/model/floor';
 import { FloorService } from 'src/app/service/Floor/floor.service';
-
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-list-passage-2-buildings',
   templateUrl: './list-2-Buildings-Passage.component.html',
@@ -39,38 +39,37 @@ export class ListPassageBetween2BuildingsComponent implements OnInit {
     );
   }
 
-  ListPassageBetween2Buildings() {  
+  ListPassageBetween2Buildings() {
+    console.log(this.selectedBuildingID1);
+    console.log(this.selectedBuildingID2);
     if (this.selectedBuildingID1 && this.selectedBuildingID2) {
-      const building1 = this.buildings.find(building => building._id === this.selectedBuildingID1);
-      const building2 = this.buildings.find(building => building._id === this.selectedBuildingID2);
-  
-      if (building1 && building2) {
-        this.floorService.ListFloorsFromBuildingComponent(this.selectedBuildingID1)
-          .subscribe(
-            (floorsBuilding1: Floor[]) => {
-              this.FloorsFromBuilding1 = floorsBuilding1;
-                this.FloorsFromBuilding1.forEach(floor1 => {
-                const passageInfo = this.checkPassage(floor1, this.FloorsFromBuilding2);
-                if (passageInfo) {
-                  console.log(`Passage found from ${building1.name}, floor ${floor1.name} to ${building2.name}, floor ${passageInfo.floor.name}`);
-                }
-              });
-            },
-            error => {
-              console.error('Error fetching floors from building 1', error);
-            }
-          );
-  
-        this.floorService.ListFloorsFromBuildingComponent(this.selectedBuildingID2)
-          .subscribe(
-            (floorsBuilding2: Floor[]) => {
-              this.FloorsFromBuilding2 = floorsBuilding2;
-            },
-            error => {
-              console.error('Error fetching floors from building 2', error);
-            }
-          );
-      }
+      forkJoin({
+        floorsBuilding1: this.floorService.ListFloorsFromBuildingComponent(this.selectedBuildingID1),
+        floorsBuilding2: this.floorService.ListFloorsFromBuildingComponent(this.selectedBuildingID2)
+      }).subscribe({
+        next: ({ floorsBuilding1, floorsBuilding2 }: { floorsBuilding1: Floor[], floorsBuilding2: Floor[] }) => {
+          console.log(floorsBuilding1);
+          console.log(floorsBuilding2);
+          this.FloorsFromBuilding1 = floorsBuilding1;
+          this.FloorsFromBuilding2 = floorsBuilding2;
+
+          const building1 = this.buildings.find(building => building._id === this.selectedBuildingID1);
+          const building2 = this.buildings.find(building => building._id === this.selectedBuildingID2);
+
+          if (building1 && building2) {
+            this.FloorsFromBuilding1.forEach(floor1 => {
+              const passageInfo = this.checkPassage(floor1, this.FloorsFromBuilding2);
+              console.log(passageInfo);
+              if (passageInfo) {
+                console.log(`Passage found from ${building1.name}, floor ${floor1.name} to ${building2.name}, floor ${passageInfo.floor.name}`);
+              }
+            });
+          }
+        },
+        error: error => {
+          console.error('Error fetching floors', error);  
+        }
+      });
     }
   }
   
@@ -79,7 +78,6 @@ export class ListPassageBetween2BuildingsComponent implements OnInit {
       if (floor.passages.some(passage => passage._id === floorToCheck._id)) {
         return { floor: floorToCheck, hasPassage: true };
       }
-    }
-    return null;
+    }    return null;
   }
 }

@@ -8,14 +8,14 @@
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Main content background */
 .main-content {
   background-image: url('../../../assets/image.jpg');
   background-size: cover; /* Adjust as needed */
-  /* Other background properties like position, repeat, etc. can be added here */
-  /* Define the height to cover the remaining space */
   height: calc(100vh - 40px); /* Adjust the height as needed */
-  /* 40px accounts for the padding of the aside element */
 }
+
 /* Styles for form rows */
 .form-row {
   margin-bottom: 15px;
@@ -56,31 +56,15 @@
 /* Form buttons container */
 .form-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center horizontally */
   align-items: center;
+  flex-direction: column; /* Stack buttons vertically */
 }
 
 /* Back button styles */
-.buttonBack {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #42545C;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.buttonBack:hover {
-  background-color: #344955;
-}
-
-.buttonBack:active {
-  background-color: #000;
-}
-
-/* Edit button styles */
+.buttonBack,
 form button[type="submit"] {
+  margin-bottom: 15px; /* Add some space between buttons */
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -90,10 +74,12 @@ form button[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
+.buttonBack:hover,
 form button[type="submit"]:hover {
   background-color: #344955;
 }
 
+.buttonBack:active,
 form button[type="submit"]:active {
   background-color: #000;
 }
