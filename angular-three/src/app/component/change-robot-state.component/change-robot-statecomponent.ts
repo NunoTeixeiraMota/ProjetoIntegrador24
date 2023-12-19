@@ -11,7 +11,7 @@ import { MessageService } from 'src/app/service/message/message.service';
 })
 export class ChangeRobotStateComponent {
   @Output() finalMessage: string = '';
-   id = 0;
+   id: string= "0";
    activeRobots: Robot[] = []; 
 
   constructor(

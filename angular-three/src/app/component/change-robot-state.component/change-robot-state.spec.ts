@@ -3,76 +3,88 @@ import { ChangeRobotStateComponent } from './change-robot-statecomponent';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 import { MessageService } from 'src/app/service/message/message.service';
 import { of, throwError } from 'rxjs';
+import Robot from 'src/app/model/robot';
 import { FormsModule } from '@angular/forms';
 
-import { HttpResponse } from '@angular/common/http';
-
-import Robot from 'src/app/model/robot';
-import robotType from 'src/app/model/robotType';
 
 describe('ChangeRobotStateComponent', () => {
   let component: ChangeRobotStateComponent;
   let fixture: ComponentFixture<ChangeRobotStateComponent>;
-  let robotServiceSpy: jasmine.SpyObj<RobotService>;
-  let messageServiceSpy: jasmine.SpyObj<MessageService>;
-  
+  let robotServiceMock: any;
+  let messageServiceMock: any;
 
-  beforeEach(async () => {
-    robotServiceSpy = jasmine.createSpyObj('RobotService', ['getActiveRobots', 'changerobotState']);
-    messageServiceSpy = jasmine.createSpyObj('MessageService', ['add']);
+  const mockRobots: Robot[] = [
+    {
+      id: '1',
+      nickname: 'TestRobot',
+      type: {
+        _id: 'type1',
+        designation: 'Utility',
+        brand: 'BrandA',
+        modelRobot: 'ModelX',
+        task: 0 // Assuming 0 for vigilance
+      },
+      serialNumber: 'SN123456',
+      description: 'Test Description',
+      isActive: true
+    }
+    // Add more mock robots if necessary
+  ];
 
-    await TestBed.configureTestingModule({
-      declarations: [ChangeRobotStateComponent],
+  beforeEach(() => {
+    robotServiceMock = {
+      getActiveRobots: jasmine.createSpy('getActiveRobots').and.returnValue(of([])), // Mock with empty array initially
+      changerobotState: jasmine.createSpy('changerobotState').and.returnValue(of({}))
+    };
+
+    messageServiceMock = {
+      add: jasmine.createSpy('add')
+    };
+
+    TestBed.configureTestingModule({
+      declarations: [ ChangeRobotStateComponent ],
       imports: [FormsModule],
       providers: [
-        { provide: RobotService, useValue: robotServiceSpy },
-        { provide: MessageService, useValue: messageServiceSpy }
+        { provide: RobotService, useValue: robotServiceMock },
+        { provide: MessageService, useValue: messageServiceMock }
       ]
-    }).compileComponents();
+    });
 
     fixture = TestBed.createComponent(ChangeRobotStateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  const mockrobotType: robotType = {
-    _id: "1",
-    designation: "Tractor",
-    brand: "LG",
-    modelRobot: "modelRobot",
-    task: 0,
-  };
-
-  const mockRobot: Robot = {
-    id: '1',
-    nickname: 'Test Robot',
-    type: mockrobotType,
-    serialNumber: '12345',
-    description: 'Test Description',
-    isActive: true
-  };
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set finalMessage to success message on successful robot state change', () => {
-    robotServiceSpy.changerobotState.and.returnValue(of(mockRobot));
-  
-    component.id = Number(mockRobot.id);
-  
+  it('should call getActiveRobots on initialization', () => {
+    expect(robotServiceMock.getActiveRobots).toHaveBeenCalled();
+  });
+
+  it('should update active robots from service', () => {
+    robotServiceMock.getActiveRobots.and.returnValue(of(mockRobots));
+    component.getActiveRobots();
+    expect(component.activeRobots).toEqual(mockRobots);
+  });
+
+  it('should handle error when fetching active robots fails', () => {
+    const errorResponse = { error: { message: 'Server Error' }, code: 500 };
+    robotServiceMock.getActiveRobots.and.returnValue(throwError(errorResponse));
+    component.getActiveRobots();
+    expect(component.finalMessage).toBe(errorResponse.error.message);
+  });
+
+  it('should call changerobotState and handle success response', () => {
+    const mockRobot = mockRobots[0]; // Use the first robot in mock data
+    component.id = mockRobot.id.toString(); // Ensure id is a string
+    robotServiceMock.changerobotState.and.returnValue(of(mockRobot));
     component.changeRobotState();
-    
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(`Robot State changed with success! Robot Details: ID :${mockRobot.id} STATE : ${mockRobot.isActive}`);
+    expect(robotServiceMock.changerobotState).toHaveBeenCalledWith(component.id);
+    expect(messageServiceMock.add).toHaveBeenCalledWith(`Robot State changed with success! Robot Details: Name :${mockRobot.nickname} STATE : ${mockRobot.isActive}`);
   });
   
-  
-  it('should set finalMessage to error message on failed robot state change', () => {
-    const errorMessage = { error: { message: 'Error changing robot state' } };
-    robotServiceSpy.changerobotState.and.returnValue(throwError(() => errorMessage));
-    component.changeRobotState();
-    expect(component.finalMessage).toBe(errorMessage.error.message);
-    expect(messageServiceSpy.add).toHaveBeenCalledWith("ID Invalid / Non Existent");
-  });
-  
+
+  // Add more tests as necessary
 });

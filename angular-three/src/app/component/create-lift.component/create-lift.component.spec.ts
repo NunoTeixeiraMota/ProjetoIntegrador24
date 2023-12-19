@@ -31,7 +31,6 @@ describe('CreateLiftComponent', () => {
   let fixture: ComponentFixture<CreateLiftComponent>;
   let liftService: LiftService;
   let buildingService: BuildingService;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateLiftComponent],
@@ -77,20 +76,22 @@ describe('CreateLiftComponent', () => {
     const localizationInput = fixture.nativeElement.querySelector('#localization');
     localizationInput.value = '';
     localizationInput.dispatchEvent(new Event('input'));
-    expect(component.liftData.localization).toEqual('New Location');
+    expect(component.liftData.localization).toEqual('');
   });
   
   it('should update UI on successful lift creation', () => {
     spyOn(liftService, 'createLift').and.returnValue(of(mockLift));
+    const messageServiceSpy = spyOn(component.messageService, 'add');
     component.createLift();
-    expect(component.finalMessage).toContain('');
+    expect(messageServiceSpy).toHaveBeenCalledWith('Lift created successfully. Details - Localization: Ground Floor, State: Operational');
   });
 
   it('should handle error on lift creation', () => {
-    const errorMessage = '';
+    const errorMessage = 'Network error';
     spyOn(liftService, 'createLift').and.returnValue(throwError(() => new Error(errorMessage)));
+    const messageServiceSpy = spyOn(component.messageService, 'add');
     component.createLift();
-    expect(component.finalMessage).toContain(errorMessage);
+    expect(messageServiceSpy).toHaveBeenCalledWith('Error: creating lift: ' + errorMessage);
   });
   
 });

@@ -25,7 +25,7 @@ export class CreateLiftComponent implements OnInit {
   constructor(
     private liftService: LiftService, 
     private buildingService: BuildingService,
-    private messageService: MessageService
+    public messageService: MessageService
     ) {}
   ngOnInit() {
     this.getBuildings();
