@@ -14,12 +14,13 @@ export class MessagesComponent implements OnInit {
   }
 
   getMessageStyle(message: string) {
-    if (message.includes('error')) {
+    if (message.includes('error') || message.includes('Error')) {
       return { 'color': 'red' };
-    } else if (message.includes('success')) {
+    } else if (message.includes('success') || message.includes('Success')) {
       return { 'color': 'green' };
     } else {
       return {};
     }
   }
+  
 }

@@ -1,0 +1,114 @@
+@startuml
+actor Admin
+participant "FE: ViewComponent" as View
+participant "FE: RobotComponent" as RobotComponent
+participant "FE: MessageService" as MessageService
+participant "FE: RobotService" as RobotService
+participant "FE: RoutingService" as RoutingService
+participant "BE: RobotController" as RobotController
+participant "BE: RobotService" as BackendRobotService
+participant "BE: RobotRepository" as RobotRepo
+
+Admin -> View: wantsToChangeRobotState()
+activate View
+
+View -> RobotComponent: getActiveRobots()
+activate RobotComponent
+
+RobotComponent -> RobotService: GET(activeRobots)
+activate RobotService
+
+RobotService -> RoutingService: GET(routeActiveRobots)
+activate RoutingService
+
+RoutingService -> RobotController: getActiveRobots()
+activate RobotController
+
+RobotController -> BackendRobotService: fetchActiveRobots()
+activate BackendRobotService
+
+BackendRobotService -> RobotRepo: findAll()
+activate RobotRepo
+
+RobotRepo --> BackendRobotService: activeRobotsList
+deactivate RobotRepo
+
+BackendRobotService --> RobotController: activeRobotsList
+deactivate BackendRobotService
+
+RobotController --> RoutingService: activeRobotsList
+deactivate RobotController
+
+RoutingService --> RobotService: activeRobotsList
+deactivate RoutingService
+
+RobotService --> RobotComponent: activeRobotsList
+deactivate RobotService
+
+alt if activeRobotsList is empty
+    RobotComponent -> MessageService: displayNoActiveRobotsMessage()
+    activate MessageService
+    MessageService --> RobotComponent
+    deactivate MessageService
+else if activeRobotsList is not empty
+    RobotComponent -> View: displayActiveRobots(activeRobotsList)
+    View --> RobotComponent
+end
+
+deactivate RobotComponent
+
+RobotComponent -> RobotService: changeState(robotID)
+activate RobotComponent
+activate RobotService
+
+RobotService -> RoutingService: PUT(routeChangeState{robotID})
+activate RoutingService
+
+RoutingService -> RobotController: changeState(robotID)
+activate RobotController
+
+RobotController -> BackendRobotService: changeRobotState(robotID)
+activate BackendRobotService
+
+BackendRobotService -> RobotRepo: findById(robotID)
+activate RobotRepo
+
+RobotRepo --> BackendRobotService: robotDetails
+deactivate RobotRepo
+
+BackendRobotService -> RobotRepo: updateState(robot)
+activate RobotRepo
+
+RobotRepo --> BackendRobotService: stateChanged
+deactivate RobotRepo
+
+BackendRobotService --> RobotController: stateChangedResult
+deactivate BackendRobotService
+
+RobotController --> RoutingService: HTTP: 200/400 (Success/Error)
+deactivate RobotController
+
+RoutingService --> RobotService: HTTP: 200/400 (Success/Error)
+deactivate RoutingService
+
+RobotService --> RobotComponent: HTTP: 200/400 (Success/Error)
+deactivate RobotService
+
+alt if state change success
+    RobotComponent -> MessageService: displayStateChangeSuccessMessage()
+    activate MessageService
+    MessageService --> RobotComponent
+    deactivate MessageService
+else if state change error
+    RobotComponent -> MessageService: displayStateChangeErrorMessage()
+    activate MessageService
+    MessageService --> RobotComponent
+    deactivate MessageService
+end
+
+RobotComponent -> View: showMessage()
+deactivate RobotComponent
+
+View -> Admin: displayResult()
+deactivate View
+@enduml

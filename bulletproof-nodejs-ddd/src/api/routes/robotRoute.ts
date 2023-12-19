@@ -48,4 +48,11 @@ export default (app: Router) => {
       value: Joi.object().optional(),
     }),
   }),(req, res, next) => ctrl.listAllRobotTypes(req, res, next));
+
+  route.get(
+    '/activeRobots',
+    celebrate({body: Joi.object({
+      value: Joi.object().optional(),
+    }),
+  }),(req, res, next) => ctrl.listActiveRobots(req, res, next));
 };

@@ -47,11 +47,12 @@ export class ListFloorsFromBuildingComponent implements OnInit {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
         console.log('Fetched Buildings:', buildings);
+        this.messageService.add('Buildings fetched with success!');
         this.buildings = buildings;
       },
       (error: any) => {
         if(error.code == 404) this.messageService.add("Error: No Connection to Server")
-        this.messageService.add('Error fetching buildings');
+        this.messageService.add('Error fetching buildings . No Connection to Server');
       }
     );
   }

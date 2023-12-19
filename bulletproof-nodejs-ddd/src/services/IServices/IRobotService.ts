@@ -7,4 +7,5 @@ export default interface IRobotService {
   addRobot(robot: IRobotDTO): Promise<Result<IRobotDTO>>;
   changeRobotState(robot: IRobotDTO): Promise<Result<IRobotDTO>>;
   listAllRobotTypes(): Promise<Result<IRobotTypeDTO[]>>;
+  listActiveRobots(): Promise<Result<IRobotDTO[]>>;
 }

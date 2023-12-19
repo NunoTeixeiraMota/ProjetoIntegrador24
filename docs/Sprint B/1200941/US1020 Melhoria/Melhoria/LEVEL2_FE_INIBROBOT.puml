@@ -1,0 +1,56 @@
+@startuml
+actor Admin
+participant "FE: ViewComponent" as View
+participant "FE: RobotComponent" as RobotComponent
+participant "FE: RobotService" as RobotService
+participant "BE: RobotController" as RobotController
+participant "BE: RobotRepository" as RobotRepo
+
+Admin -> View: wantsToChangeRobotState()
+activate View
+
+View -> RobotComponent: getActiveRobots()
+activate RobotComponent
+
+RobotComponent -> RobotService: Request Active Robots
+activate RobotService
+
+RobotService -> RobotController: Fetch Active Robots
+activate RobotController
+
+RobotController -> RobotRepo: Query Robot States
+activate RobotRepo
+
+RobotRepo --> RobotController: Return Robot States
+deactivate RobotRepo
+
+RobotController --> RobotService: Active Robots Data
+deactivate RobotController
+
+RobotService --> RobotComponent: Active Robots List
+deactivate RobotService
+
+RobotComponent -> RobotService: Change Robot State
+activate RobotService
+
+RobotService -> RobotController: Update State Request
+activate RobotController
+
+RobotController -> RobotRepo: Update State
+activate RobotRepo
+
+RobotRepo --> RobotController: State Update Confirmation
+deactivate RobotRepo
+
+RobotController --> RobotService: State Change Result
+deactivate RobotController
+
+RobotService --> RobotComponent: Notify State Change
+deactivate RobotService
+
+RobotComponent -> View: Display Result
+deactivate RobotComponent
+
+View -> Admin: Finalize
+deactivate View
+@enduml

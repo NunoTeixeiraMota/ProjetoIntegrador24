@@ -28,6 +28,10 @@ export class RobotService {
     return this.http.get<robotType[]>(`${this.robotAPI_URL}/list`);
   }
 
+  getActiveRobots(): Observable<Robot[]> {
+    return this.http.get<Robot[]>(`${this.robotAPI_URL}/activeRobots`);
+  }
+
   changerobotState(rt: any) {
     const headers = { 'Content-Type': 'application/json' };
     const body = { id: rt }; // assuming rt is just the ID value

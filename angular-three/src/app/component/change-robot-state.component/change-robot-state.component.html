@@ -7,16 +7,25 @@
   <div class="table-section">
     <table>
       <tr>
-        <th><label for="id">Robot Identifier:</label></th>
-        <td><input type="text" id="id" [(ngModel)]="id" name="id"></td>
+        <th><label for="robotSelect">Select Robot:</label></th>
+        <td>
+          <select id="robotSelect" [(ngModel)]="id" name="robotSelect">
+            <!-- Display this option if there are no active robots -->
+            <option *ngIf="activeRobots.length === 0" disabled>No Active Robots Found</option>
+
+            <!-- Display active robots if available -->
+            <option *ngFor="let robot of activeRobots" [value]="robot.id">
+              {{ robot.nickname }}
+            </option>
+          </select>
+        </td>
       </tr>
     </table>
     <div class="button-section">
-      <button (click)="changeRobotState()">Change</button>
+      <button (click)="changeRobotState()" [disabled]="activeRobots.length === 0">Change</button>
       <button routerLink="/main-menu">Back</button>
     </div>
   </div>
 </div>
-
 
 <p>{{ finalMessage }}</p>

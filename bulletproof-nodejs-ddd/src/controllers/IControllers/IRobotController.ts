@@ -5,4 +5,5 @@ export default interface IRobotController {
   addRobot(req: Request, res: Response, next: NextFunction): Promise<void>;
   changeRobotState(req: Request, res: Response, next: NextFunction): Promise<void>;
   listAllRobotTypes(req: Request, res: Response, next: NextFunction): Promise<void>;
+  listActiveRobots(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

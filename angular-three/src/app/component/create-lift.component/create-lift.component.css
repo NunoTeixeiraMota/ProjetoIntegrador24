@@ -70,3 +70,55 @@ span{
 .form-row button:active {
   background-color: #000;
 }
+
+/* Align the label for the entire row */
+.form-row > label {
+  display: block; /* Make the label a block to occupy full width */
+  margin-bottom: 10px; /* Add some space below the label */
+}
+
+/* Container for the radio buttons and their labels */
+.radio-container {
+  display: flex; /* Use flexbox for horizontal alignment */
+  align-items: center; /* Center items vertically */
+}
+
+/* Style each radio button and its label */
+.radio-option {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  margin-right: 20px; /* Space between radio options */
+}
+
+/* Hide the browser's default radio button style */
+.radio-option input[type="radio"] {
+  appearance: none; /* Remove default appearance */
+  -webkit-appearance: none; /* For Safari */
+  margin: 0; /* Reset margin */
+  font-size: 1em; /* Size of the custom radio button */
+  width: 1em; /* Width of the custom radio button */
+  height: 1em; /* Height of the custom radio button */
+  border: 1px solid #ccc; /* Border for the custom radio button */
+  border-radius: 50%; /* Make it round */
+  background: white; /* Background color of the custom radio button */
+  position: relative; /* Position relative for pseudo-element positioning */
+}
+
+/* Style when the radio button is checked */
+.radio-option input[type="radio"]:checked::before {
+  content: ''; /* Add content for the pseudo-element */
+  position: absolute; /* Position absolutely within the radio button */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the pseudo-element */
+  width: 0.5em; /* Width of the inner circle */
+  height: 0.5em; /* Height of the inner circle */
+  border-radius: 50%; /* Make it round */
+  background: #42545C; /* Inner circle color when checked */
+}
+
+/* Style the label next to the radio button */
+.radio-option label {
+  margin-left: 5px; /* Spacing between radio button and label */
+  cursor: pointer; /* Change cursor to pointer to indicate clickable area */
+}

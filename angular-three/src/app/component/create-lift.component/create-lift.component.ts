@@ -34,9 +34,8 @@ export class CreateLiftComponent implements OnInit {
   createLift() {
     this.liftService.createLift(this.liftData).subscribe(
       (response : any) => {
-        // Assuming 'response' contains the data of the created lift
         const liftResponse = response as Lift;  // Type assertion
-        const liftInfo = `Lift created successfully. Details - Localization: ${liftResponse.localization}, State: ${liftResponse.state}, Building: ${this.liftData.building}`;
+        const liftInfo = `Lift created successfully. Details - Localization: ${liftResponse.localization}, State: ${liftResponse.state}`;
         this.messageService.add(liftInfo);
 
       },

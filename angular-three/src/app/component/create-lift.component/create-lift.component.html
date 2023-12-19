@@ -10,9 +10,21 @@
     </div>
   
     <div class="form-row">
-      <label for="state">State<span>*</span>:</label>
-      <input type="text" id="state" [(ngModel)]="liftData.state" name="state" required>
+      <label>State<span>*</span>:</label>
+      <div class="radio-container">
+        <div class="radio-option">
+          <input type="radio" id="stateActive" value="Active" name="state" [(ngModel)]="liftData.state" required>
+          <label for="stateActive">Active</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="stateMaintenance" value="Maintenance" name="state" [(ngModel)]="liftData.state" required>
+          <label for="stateMaintenance">Maintenance</label>
+        </div>
+      </div>
     </div>
+    
+    
+    
   
     <div class="form-row">
       <label for="building">Building<span>*</span>:</label>
