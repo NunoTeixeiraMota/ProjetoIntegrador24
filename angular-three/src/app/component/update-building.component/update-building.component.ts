@@ -41,11 +41,9 @@ export class UpdateBuildingComponent implements OnInit {
   }
 
   updateBuilding() {
-    // Clear previous messages
     this.errorMessage = null;
     this.successMessage = null;
 
-    // Validation checks
     if (!this.buildingData.name.trim()) {
       this.errorMessage = 'Name cannot be empty.';
       return;
@@ -61,7 +59,6 @@ export class UpdateBuildingComponent implements OnInit {
       return;
     }
 
-    // If all validations pass, proceed with the update
     this.buildingData.id = this.selectedBuildingId;
     this.buildingService.updateBuilding(this.buildingData).subscribe(
       response => {

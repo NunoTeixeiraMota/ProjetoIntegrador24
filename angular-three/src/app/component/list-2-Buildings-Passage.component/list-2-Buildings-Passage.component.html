@@ -7,24 +7,32 @@
     <div class="table-section">
       <table>
         <tr>
-          <th><label>Building1:</label></th>
+          <th><label>Edifício1:</label></th>
           <td>
             <select [(ngModel)]="selectedBuildingID1">
-              <option *ngFor="let Building1 of buildings" [ngValue]="selectedBuildingID1">{{ Building1.name }}</option>
+              <option *ngFor="let Building1 of buildings" [ngValue]="Building1._id">{{ Building1.name }}</option>
             </select>
           </td>
         </tr>
         <tr>
-          <th><label>Building2:</label></th>
+          <th><label>Edifício2:</label></th>
           <td>
             <select [(ngModel)]="selectedBuildingID2">
-              <option *ngFor="let Building2 of buildings" [ngValue]="selectedBuildingID2">{{ Building2.name }}</option>
+              <option *ngFor="let Building2 of buildings" [ngValue]="Building2._id">{{ Building2.name }}</option>
             </select>
           </td>
         </tr>
       </table>
-      <button (click)="ListPassageBetween2Buildings()">List</button>
+      <button (click)="ListPassageBetween2Buildings()">Listar</button>
     </div>
   </div>  
   
 </section>
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>
