@@ -4,6 +4,7 @@ import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
 import { MessageService } from 'src/app/service/message/message.service';
 import Lift from 'src/app/model/lift';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -25,10 +26,13 @@ export class CreateLiftComponent implements OnInit {
   constructor(
     private liftService: LiftService, 
     private buildingService: BuildingService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private titleService: Title,
     ) {}
   ngOnInit() {
     this.getBuildings();
+    this.titleService.setTitle('RobDroneGo: Create Lift');
+
   }
 
   createLift() {

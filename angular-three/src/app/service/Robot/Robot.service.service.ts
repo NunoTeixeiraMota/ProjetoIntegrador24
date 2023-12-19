@@ -4,14 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import robotType from 'src/app/model/robotType';
 import { Observable } from 'rxjs';
 import Robot from 'src/app/model/robot';
+import { API_CONFIG } from 'config';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RobotService {
-  private robotAPI_URL = 'http://localhost:4000/api/robot';
-
+  private apiBaseUrl = API_CONFIG.apiBaseUrl;
+  private robotAPI_URL = this.apiBaseUrl + '/robot';
+  
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   createRobot(rt: any) {

@@ -2,6 +2,7 @@ import { Component, Output,NgModule } from '@angular/core';
 import Robot from 'src/app/model/robot';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
 import { MessageService } from 'src/app/service/message/message.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -16,8 +17,10 @@ export class ChangeRobotStateComponent {
 
   constructor(
     private robotService: RobotService,
-    private messageService: MessageService
-  ) {     this.getActiveRobots(); // Call this method on component initialization
+    private messageService: MessageService,
+    private titleService: Title,
+  ) {     this.getActiveRobots();
+    this.titleService.setTitle('RobDroneGo: Inhibit Robot');
 }
 
   getActiveRobots() {
