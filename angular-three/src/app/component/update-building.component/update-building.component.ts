@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-update-building',
@@ -23,10 +24,12 @@ export class UpdateBuildingComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private buildingService: BuildingService) {}
+  constructor(private buildingService: BuildingService,
+    private titleService: Title) {}
 
   ngOnInit() {
     this.getBuildings();
+    this.titleService.setTitle('RobDroneGo: Update Building');
   }
 
   getBuildings(): void {

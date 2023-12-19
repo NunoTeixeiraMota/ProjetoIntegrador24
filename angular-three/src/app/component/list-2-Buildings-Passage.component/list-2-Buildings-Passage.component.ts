@@ -4,6 +4,7 @@ import Building from 'src/app/model/building';
 import Floor from 'src/app/model/floor';
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { forkJoin } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-list-passage-2-buildings',
   templateUrl: './list-2-Buildings-Passage.component.html',
@@ -20,11 +21,12 @@ export class ListPassageBetween2BuildingsComponent implements OnInit {
   constructor(
     private buildingService: BuildingService,
     private floorService: FloorService,
+    private titleService: Title
     ) {}
   
   ngOnInit(): void {
     this.getBuildings();
-      
+    this.titleService.setTitle('RobDroneGo: List Passages');
   }
 
   getBuildings(): void {

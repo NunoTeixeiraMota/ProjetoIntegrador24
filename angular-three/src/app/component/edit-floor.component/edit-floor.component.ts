@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/service/message/message.service';
 import floor from 'src/app/model/floor';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-floor',
@@ -36,12 +37,14 @@ export class EditFloorComponent implements OnInit {
     private location: Location,
     private buildingService: BuildingService,
     private floorService: FloorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
+    this.titleService.setTitle('RobDroneGo: Edit Floor');
     this.getFloors();
     setInterval(() => {
       this.getFloorsWithoutSelected();
@@ -100,7 +103,6 @@ export class EditFloorComponent implements OnInit {
           //success
           this.messageService.add("Floor Updated with success!");
           this.finalMessage = "Floor Updated with success!";
-          this.location.back();
         },
         
         (error: any) => {

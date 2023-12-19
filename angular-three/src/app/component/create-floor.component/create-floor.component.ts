@@ -3,6 +3,7 @@ import { FloorService } from '../../service/Floor/floor.service';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
 import {MessageService} from '../../service/message/message.service'
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-floor',
@@ -31,10 +32,12 @@ export class CreateFloorComponent implements OnInit {
   constructor(
     private floorService: FloorService, 
     private buildingService: BuildingService,
-    private messageService : MessageService) {}
-
+    private messageService : MessageService,
+    private titleService: Title) {}
+      
   ngOnInit() {
     this.getBuildings();
+    this.titleService.setTitle('RobDroneGo: Create Floor');
   }
 
   createFloor() {

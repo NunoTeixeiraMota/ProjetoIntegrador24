@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { FloorService } from '../../service/Floor/floor.service'
 import { MessageService } from 'src/app/service/message/message.service';
 import floor from 'src/app/model/floor';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-patch-passages',
@@ -23,12 +24,14 @@ export class PatchPassagesComponent implements OnInit {
   constructor(
     private location: Location,
     private floorService: FloorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
+    this.titleService.setTitle('RobDroneGo: Update Floor Passages');
     this.getFloors();
     setInterval(() => {
       this.getFloorsWithoutSelected();
@@ -67,7 +70,6 @@ export class PatchPassagesComponent implements OnInit {
           //success
           this.messageService.add("Floor passages created/updated with success!");
           this.finalMessage = "Floor passages created/updated with success!";
-          this.location.back();
         },
         
         (error: any) => {

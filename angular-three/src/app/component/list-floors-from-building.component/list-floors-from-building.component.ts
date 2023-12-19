@@ -4,6 +4,7 @@ import Floor from 'src/app/model/floor';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
 import { MessageService } from 'src/app/service/message/message.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-floors-from-building',
@@ -18,11 +19,13 @@ export class ListFloorsFromBuildingComponent implements OnInit {
   constructor(
     private floorService: FloorService,
     private buildingService: BuildingService,
-    public messageService: MessageService 
+    public messageService: MessageService,
+    private titleService: Title
     ) {}
 
   ngOnInit() {
     this.getBuildings();
+    this.titleService.setTitle('RobDroneGo: List Floors by Building');
   }
 
   listFloorsFromBuilding() {

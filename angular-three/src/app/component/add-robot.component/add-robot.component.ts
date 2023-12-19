@@ -58,7 +58,6 @@ export class AddRobotComponent implements OnInit {
           //success
           this.messageService.add("Sucess: Robot added with success!");
           this.finalMessage = "Robot added with success!";
-          this.location.back();
         },
         
         (error: any) => {

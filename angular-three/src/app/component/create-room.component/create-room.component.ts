@@ -5,6 +5,7 @@ import { RoomService } from 'src/app/service/Room/Room.service';
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { RoomCategory } from 'src/app/model/room';
 import floor from 'src/app/model/floor';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-room-create',
@@ -28,13 +29,15 @@ export class CreateRoomComponent implements OnInit {
     private location: Location,
     private RoomService: RoomService,
     private FloorService: FloorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
     this.getFloors();
+    this.titleService.setTitle('RobDroneGo: Create Room');
   }
 
   getFloors(): void {
@@ -60,7 +63,6 @@ export class CreateRoomComponent implements OnInit {
           //success
           this.messageService.add("Success room creation!");
           this.finalMessage = "Success room creation!";
-          this.location.back();
         },
         
         (error: any) => {

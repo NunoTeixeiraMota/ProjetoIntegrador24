@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from '../../model/building';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-buildings',
@@ -14,10 +15,12 @@ export class ListBuildingsMinMaxComponent implements OnInit {
   minFloor: number = 1; 
   maxFloor: number = 5; 
 
-  constructor(private buildingService: BuildingService) {}
+  constructor(private buildingService: BuildingService,
+    private titleService: Title) {}
 
   ngOnInit() {
-    this.loadBuildings(); 
+    this.loadBuildings();
+    this.titleService.setTitle('RobDroneGo: List Buildings (Nº Floors)');
   }
 
   loadBuildings() {
