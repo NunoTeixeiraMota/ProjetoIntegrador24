@@ -47,6 +47,7 @@ export class CreateRoomComponent implements OnInit {
         this.floors = floors;
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching floors', error);
       }
     );
@@ -72,6 +73,7 @@ export class CreateRoomComponent implements OnInit {
         }
       );
     }else{
+      this.messageService.add("Error: Selected floor does not exist");
       console.error('Selected floor does not exist.');
     }
   }

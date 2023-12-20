@@ -8,31 +8,31 @@
 <div class="edit-building">
   <div class="edit-form">
       <div class="form-row">
-          <label for="selectedBuildingId">Select Building:</label>
+          <label for="selectedBuildingId">Select Building:<span>*</span></label>
           <select [(ngModel)]="selectedBuildingId" id="selectedBuildingId"(change)="displayPreviousInfo()">
               <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
           </select>
       </div>
       <div class="form-row">
-          <label for="name">Building Name:</label>
+          <label for="name">Building Name:<span>*</span></label>
           <input type="text" [(ngModel)]="buildingData.name" name="name" id="name" placeholder="Building Name" required>
       </div>
       <div class="form-row">
-          <label for="localizationoncampus">Localization on Campus:</label>
+          <label for="localizationoncampus">Localization on Campus:<span>*</span></label>
           <input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required readonly>
       </div>
       <div class="form-row">
-        <label for="floors">Number of Floors:</label>
+        <label for="floors">Number of Floors:<span>*</span></label>
         <input type="number" [(ngModel)]="buildingData.floors" name="floors" id="floors" placeholder="Number of Floors" required min="0">
     </div>
     <div class="form-row">
-        <label for="lifts">Number of Lifts:</label>
+        <label for="lifts">Number of Lifts:<span>*</span></label>
         <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required min="0">
     </div>    
-      <label for="length">Length:</label>
+      <label for="length">Length:<span>*</span></label>
       <input type="text" [(ngModel)]="buildingData.maxCel[0]" name="length" id="length" placeholder="Length" required readonly>
   
-      <label for="width">Width:</label>
+      <label for="width">Width:<span>*</span></label>
       <input type="text" [(ngModel)]="buildingData.maxCel[1]" name="width" id="width" placeholder="Width" required readonly>
       <div class="button-row">
           <button (click)="updateBuilding()">Update</button>

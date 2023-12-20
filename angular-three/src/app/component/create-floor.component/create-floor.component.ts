@@ -50,17 +50,13 @@ export class CreateFloorComponent implements OnInit {
       return;
     }
 
-    if (!this.floorData.hall.trim()) {
-      this.errorMessage = 'Must insert the floor hall.';
-      return;
-    }
-
     if (this.floorData.room < 0) {
       this.errorMessage = 'Floor must have at least 1 room.';
       return;
     }
-    
 
+    this.floorData.hall = "1";
+    this.floorData.room = 1;
 
     this.floorService.createFloor(this.floorData).subscribe(
       response => {
@@ -84,7 +80,7 @@ export class CreateFloorComponent implements OnInit {
         this.buildings = buildings;
       },
       (error: any) => {
-        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching buildings', error);
       }
     );

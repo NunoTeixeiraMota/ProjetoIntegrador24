@@ -44,6 +44,7 @@ export class PatchPassagesComponent implements OnInit {
         this.floors = floors;
       },
       (error: any) => {
+        this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching floors', error);
       }
     );
@@ -79,6 +80,7 @@ export class PatchPassagesComponent implements OnInit {
         }
       );
     }else{
+      this.messageService.add("Error: Please select a floor");
       console.error('Please select a floor and a building.');
     }
   }

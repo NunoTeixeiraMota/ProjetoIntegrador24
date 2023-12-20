@@ -5,30 +5,20 @@
 <section class="main-content">
 <form (ngSubmit)="createFloor()" *ngIf="buildings.length > 0" class="prettier-form responsive-form">
   <div class="form-row">
-      <label for="name">Floor Name:</label>
+      <label for="name">Floor Name:<span>*</span></label>
       <input type="text" id="name" [(ngModel)]="floorData.name" name="name" required>
   </div>
 
   <div class="form-row">
-      <label for="building">Building:</label>
+      <label for="building">Building:<span>*</span></label>
       <select id="building" [(ngModel)]="floorData.building" name="building" required>
           <option *ngFor="let building of buildings" [ngValue]="building._id">{{ building.name }}</option>
       </select>
   </div>
 
   <div class="form-row">
-      <label for="description">Description:</label>
+      <label for="description">Description:<span>*</span></label>
       <textarea id="description" [(ngModel)]="floorData.description" name="description" required></textarea>
-  </div>
-
-  <div class="form-row">
-      <label for="hall">Hall:</label>
-      <input type="text" id="hall" [(ngModel)]="floorData.hall" name="hall" required>
-  </div>
-
-  <div class="form-row">
-      <label for="room">Room:</label>
-      <input type="number" id="room" [(ngModel)]="floorData.room" name="room" required min=0>
   </div>
 
   <div class="form-row">
@@ -38,7 +28,7 @@
   </div>
 
   <div class="form-row">
-      <label for="hasElevator">Has Elevator:</label>
+      <label for="hasElevator">Has Elevator:<span>*</span></label>
       <input type="checkbox" id="hasElevator" [(ngModel)]="floorData.hasElevator" name="hasElevator">
   </div>
 
