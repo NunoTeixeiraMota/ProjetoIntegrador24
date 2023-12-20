@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { MessageService } from 'src/app/service/message/message.service';
 import { RobotService } from 'src/app/service/Robot/Robot.service.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-robot-type-create',
@@ -20,8 +21,9 @@ export class CreateRobotTypeComponent implements OnInit {
   constructor(
     private location: Location,
     private robotService: RobotService,
-    private messageService: MessageService
-  ) { }
+    private messageService: MessageService,
+    private titleService: Title,
+  ) { this.titleService.setTitle('RobDroneGo: Create Robot Type');}
 
   @Output() finalMessage: string = '';
 

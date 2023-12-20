@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service';
 import Building from 'src/app/model/building';
 import { MessageService } from 'src/app/service/message/message.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-buildings',
@@ -13,11 +14,13 @@ export class ListBuildingsComponent implements OnInit {
   loading: boolean = true;
 
   constructor(private buildingService: BuildingService,
-    public messageService: MessageService 
+    public messageService: MessageService,
+    private titleService: Title
     ) {}
 
   ngOnInit() {
     this.loadBuildings();
+    this.titleService.setTitle('RobDroneGo: List Buildings');
   }
 
   loadBuildings() {
