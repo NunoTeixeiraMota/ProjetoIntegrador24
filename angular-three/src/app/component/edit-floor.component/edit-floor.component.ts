@@ -45,6 +45,7 @@ export class EditFloorComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('RobDroneGo: Edit Floor');
+    this.getBuilding();
     this.getFloors();
     setInterval(() => {
       this.getFloorsWithoutSelected();
