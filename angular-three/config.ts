@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-    apiBaseUrl: 'http://localhost:4000/api'
+  apiBaseUrl: 'http://vs447.dei.isep.ipp.pt:4000/api'
   };
   
   
