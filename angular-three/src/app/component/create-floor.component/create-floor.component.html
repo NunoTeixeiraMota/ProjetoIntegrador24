@@ -2,8 +2,8 @@
   <link rel="stylesheet" href="create-floor.component.css">
 </head>
 
-
-<form (ngSubmit)="createFloor()" *ngIf="buildings.length > 0" class="prettier-form">
+<section class="main-content">
+<form (ngSubmit)="createFloor()" *ngIf="buildings.length > 0" class="prettier-form responsive-form">
   <div class="form-row">
       <label for="name">Floor Name:</label>
       <input type="text" id="name" [(ngModel)]="floorData.name" name="name" required>
@@ -28,7 +28,7 @@
 
   <div class="form-row">
       <label for="room">Room:</label>
-      <input type="number" id="room" [(ngModel)]="floorData.room" name="room" required>
+      <input type="number" id="room" [(ngModel)]="floorData.room" name="room" required min=0>
   </div>
 
   <div class="form-row">

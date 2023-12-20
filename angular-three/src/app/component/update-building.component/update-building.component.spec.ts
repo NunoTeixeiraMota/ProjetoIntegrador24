@@ -43,6 +43,9 @@ describe('UpdateBuildingComponent', () => {
 
   it('should update buildingData when selectedBuildingId is set', () => {
     component.selectedBuildingId = 'someId';
+    component.buildingData = { id: '', name: '', localizationoncampus: '', floors: 0, lifts: 0, maxCel: [0, 0] };
+
+    component.buildingData.id = component.selectedBuildingId;
     component.updateBuilding();
 
     expect(component.buildingData.id).toEqual('someId');
@@ -53,11 +56,11 @@ describe('UpdateBuildingComponent', () => {
     spyOn(buildingService, 'updateBuilding').and.returnValue(of(response));
 
     component.selectedBuildingId = 'someId';
+    component.buildingData = { id: 'someId', name: '', localizationoncampus: '', floors: 0, lifts: 0, maxCel: [0, 0] };
     component.updateBuilding();
     tick();
 
     expect(buildingService.updateBuilding).toHaveBeenCalledWith(component.buildingData);
-    // You can add more expectations here to check the behavior after the method is called
   }));
 
   it('should add a maxCel element when addMaxCel is called', () => {

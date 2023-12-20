@@ -1,6 +1,9 @@
 <head>
   <link rel="stylesheet" href="update-building.component.css">
+  
 </head>
+
+<section class="main-content">
 
 <div class="edit-building">
   <div class="edit-form">
@@ -19,13 +22,13 @@
           <input type="text" [(ngModel)]="buildingData.localizationoncampus" name="localizationoncampus" id="localizationoncampus" placeholder="Localization on Campus" required readonly>
       </div>
       <div class="form-row">
-          <label for="floors">Number of Floors:</label>
-          <input type="number" [(ngModel)]="buildingData.floors" name="floors" id="floors" placeholder="Number of Floors" required>
-      </div>
-      <div class="form-row">
-          <label for="lifts">Number of Lifts:</label>
-          <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required>
-      </div>
+        <label for="floors">Number of Floors:</label>
+        <input type="number" [(ngModel)]="buildingData.floors" name="floors" id="floors" placeholder="Number of Floors" required min="0">
+    </div>
+    <div class="form-row">
+        <label for="lifts">Number of Lifts:</label>
+        <input type="number" [(ngModel)]="buildingData.lifts" name="lifts" id="lifts" placeholder="Number of Lifts" required min="0">
+    </div>    
       <label for="length">Length:</label>
       <input type="text" [(ngModel)]="buildingData.maxCel[0]" name="length" id="length" placeholder="Length" required readonly>
   
@@ -47,4 +50,4 @@
     {{ successMessage }}
   </div>
   
-  
+  </section>
