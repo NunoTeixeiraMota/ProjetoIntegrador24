@@ -44,6 +44,7 @@ export class CreateLiftComponent implements OnInit {
 
       },
       error => {
+        
         this.messageService.add('Error: creating lift: ' + error.message);
       }
     );

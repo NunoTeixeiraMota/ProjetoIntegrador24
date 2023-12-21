@@ -42,6 +42,7 @@ export class ChangeRobotStateComponent {
     this.robotService.changerobotState(this.id).subscribe(
       (data: any) => { 
         const robotresponse = data as Robot;  // Type assertion
+        this.messageService.clear();
         this.messageService.add(`Robot State changed with success! Robot Details: Name :${robotresponse.nickname} STATE : ${robotresponse.isActive}`);
         this.getActiveRobots();
       },

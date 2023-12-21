@@ -1,0 +1,64 @@
+@startuml
+
+!define RECTANGLE class
+
+package "Front-End Application" {
+    RECTANGLE UserInterface {
+        +login(username, password)
+        +register(firstName, lastName, email, password)
+        +sendRequestWithJWT()
+        +receiveData()
+    }
+}
+
+package "ASP NET Core C# Authentication Service" {
+    RECTANGLE LoginController {
+        +login(username, password): JWT
+    }
+    RECTANGLE RegisterController {
+        +register(firstName, lastName, email, password): boolean
+    }
+    RECTANGLE UserService {
+        +validateCredentials(username, password): boolean
+        +createUser(firstName, lastName, email, password): boolean
+        +isValidEmail(email): boolean
+        +isStrongPassword(password): boolean
+    }
+    RECTANGLE JWTService {
+        +createToken(user): JWT
+        +validateToken(token): boolean
+        +retrieveSigningKey(): Key
+    }
+}
+
+package "Nodejs Backend Service" {
+    RECTANGLE JWTMiddleware {
+        +validateJWT(token): boolean
+    }
+    RECTANGLE ResourceController {
+        +handleRequest()
+        +accessProtectedResources()
+    }
+}
+
+database "Database" {
+    folder "User Credentials" {
+    }
+    folder "Other Data" {
+    }
+}
+
+UserInterface --> LoginController : requests login
+UserInterface --> RegisterController : requests registration
+RegisterController --> UserService : validate & create new user
+UserService --> Database : store new user data
+LoginController --> UserService : validate user
+UserService --> Database : query user data
+LoginController --> JWTService : create JWT
+JWTService --> Database : retrieve signing key/user claims
+UserInterface --> JWTMiddleware : sends requests with JWT
+JWTMiddleware --> ResourceController : on valid JWT
+JWTMiddleware ..> JWTService : validate JWT
+ResourceController ..> Database : access data
+
+@enduml
