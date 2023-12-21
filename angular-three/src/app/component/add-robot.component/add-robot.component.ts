@@ -43,6 +43,7 @@ export class AddRobotComponent implements OnInit {
         this.rt = rt1;
       },
       (error: any) => {
+        this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching floors', error);
       }
     );
@@ -58,7 +59,6 @@ export class AddRobotComponent implements OnInit {
           //success
           this.messageService.add("Sucess: Robot added with success!");
           this.finalMessage = "Robot added with success!";
-          this.location.back();
         },
         
         (error: any) => {

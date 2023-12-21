@@ -8,6 +8,16 @@
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+.main-content {
+  background-image: url('../../../assets/image.jpg');
+  background-size: cover; 
+  height: calc(100vh - 40px); 
+}
+
+span{
+  color: red;
+  margin-left: 3px;
+}
 
 /* Edit form styles */
 .edit-form {

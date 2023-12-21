@@ -5,6 +5,7 @@ import { RoomService } from 'src/app/service/Room/Room.service';
 import { FloorService } from 'src/app/service/Floor/floor.service';
 import { RoomCategory } from 'src/app/model/room';
 import floor from 'src/app/model/floor';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-room-create',
@@ -28,13 +29,15 @@ export class CreateRoomComponent implements OnInit {
     private location: Location,
     private RoomService: RoomService,
     private FloorService: FloorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
     this.getFloors();
+    this.titleService.setTitle('RobDroneGo: Create Room');
   }
 
   getFloors(): void {
@@ -44,6 +47,7 @@ export class CreateRoomComponent implements OnInit {
         this.floors = floors;
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching floors', error);
       }
     );
@@ -60,7 +64,6 @@ export class CreateRoomComponent implements OnInit {
           //success
           this.messageService.add("Success room creation!");
           this.finalMessage = "Success room creation!";
-          this.location.back();
         },
         
         (error: any) => {
@@ -70,6 +73,7 @@ export class CreateRoomComponent implements OnInit {
         }
       );
     }else{
+      this.messageService.add("Error: Selected floor does not exist");
       console.error('Selected floor does not exist.');
     }
   }

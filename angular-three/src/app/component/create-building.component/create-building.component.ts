@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BuildingService } from '../../service/Building/building.service'
 import {MessageService} from '../../service/message/message.service'
 import Building from 'src/app/model/building';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-building',
@@ -18,7 +19,11 @@ export class CreateBuildingComponent {
   };
 
   constructor(private buildingService: BuildingService,
-    private messageservice : MessageService) {}
+    private messageservice : MessageService,
+    private titleService: Title) {
+    this.titleService.setTitle('RobDroneGo: Create Building');
+  }
+
 
   createBuilding() {
     

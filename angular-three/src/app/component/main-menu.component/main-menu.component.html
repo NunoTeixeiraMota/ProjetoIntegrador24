@@ -19,7 +19,7 @@
             <h2>Floor</h2>
             <nav>
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-floor">Create Floor</a>
-                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/update-floor">Edit Floor</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/edit-floor">Edit Floor</a>
                 <a routerLink="/list-floors-from-building"> List floors in building</a>
                 <a routerLink="/patch-floor-map"> Update floor map</a>
                 <a routerLink="/patch-passages">Create/Update passages</a>
@@ -40,7 +40,7 @@
         <section>
             <h2>Robot</h2>
             <nav>
-                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-robot">Create Robot Type</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-robot-type">Create Robot Type</a>
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/add-robot">Add Robot</a>
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/change-robot-state">Inhibit Robot</a>
             </nav>

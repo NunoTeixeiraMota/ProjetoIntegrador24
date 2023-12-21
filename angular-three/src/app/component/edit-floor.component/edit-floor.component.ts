@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/service/message/message.service';
 import floor from 'src/app/model/floor';
 import { BuildingService } from 'src/app/service/Building/building.service';
 import Building from 'src/app/model/building';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-floor',
@@ -27,21 +28,24 @@ export class EditFloorComponent implements OnInit {
 
   selectedFloorId: string = '';
   selectedBuildingId: string = '';
+  selectedPassageId: string = '';
   floors: floor[] = [];
   floorsWS: floor[] = [];
   buildings: Building[] = [];
-  floorMapFile: boolean = false;
   
   constructor(
     private location: Location,
     private buildingService: BuildingService,
     private floorService: FloorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private titleService: Title
   ) { }
 
   @Output() finalMessage: string = '';
 
   ngOnInit(): void {
+    this.titleService.setTitle('RobDroneGo: Edit Floor');
+    this.getBuilding();
     this.getFloors();
     setInterval(() => {
       this.getFloorsWithoutSelected();
@@ -54,6 +58,7 @@ export class EditFloorComponent implements OnInit {
         this.floors = floors;
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
         console.error('Error fetching floors', error);
       }
     );
@@ -65,22 +70,20 @@ export class EditFloorComponent implements OnInit {
         this.floorsWS = floors.filter(floor => floor._id !== this.selectedFloorId);
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
         console.error('Error fetching floors', error);
       }
     );
   }
 
-  handleUploadSuccess(filename: string) {
-    this.floor.floorMap = filename;
-    this.floorMapFile = true;
-  }
-
   getBuilding(): void {
     this.buildingService.getBuildings().subscribe(
       (buildings: Building[]) => {
+        console.log(buildings);
         this.buildings = buildings;
       },
       (error: any) => {
+        if(error.code == 404) this.messageService.add("Error: No Connection to Server")
         console.error('Error fetching buildings', error);
       }
     );
@@ -90,9 +93,8 @@ export class EditFloorComponent implements OnInit {
     if(this.selectedFloorId && this.selectedBuildingId){
       this.floor.id = this.selectedFloorId;
       this.floor.building = this.selectedBuildingId;
-      if(!this.floorMapFile){
-        this.floor.floorMap = "1";
-      }
+      this.floor.floorMap = "1";
+      this.floor.hall = "1";
       let errorOrSuccess: any = this.floorService.editFloor(this.floor);
 
       errorOrSuccess.subscribe(
@@ -100,7 +102,6 @@ export class EditFloorComponent implements OnInit {
           //success
           this.messageService.add("Floor Updated with success!");
           this.finalMessage = "Floor Updated with success!";
-          this.location.back();
         },
         
         (error: any) => {

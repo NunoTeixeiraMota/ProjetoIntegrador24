@@ -8,12 +8,25 @@ form {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+span{
+  color: red;
+  margin-left: 3px;
+}
+
 label {
   display: block;
   margin-bottom: 6px;
   color: #333;
 }
-
+.main-content {
+  background-image: url('../../../assets/image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll;
+  background-color: transparent;
+  height: 100vh; /* altura total da viewport */
+  width: 100vw; /* largura total da viewport */
+}
 input[type="text"],
 input[type="number"] {
   width: 100%;
@@ -41,6 +54,7 @@ button:hover {
 button:active {
   background-color: #000;
 }
+
 /* Error message styles */
 .error-message {
   color: #ff0000; /* Red color for error messages */
@@ -50,6 +64,7 @@ button:active {
 .success-message {
   color: #00ff00; /* Green color for success messages */
 }
+
 /* Error message styles */
 .error-message {
   color: #721c24; /* Dark red text color */
@@ -68,4 +83,19 @@ button:active {
   margin-top: 10px;
   border: 1px solid #c3e6cb; /* Border color */
   border-radius: 4px;
+}
+
+/* Styles for screens larger than 600px */
+@media only screen and (min-width: 600px) {
+  form {
+    width: 50%;
+    margin: auto;
+  }
+}
+
+/* Styles for screens larger than 900px */
+@media only screen and (min-width: 900px) {
+  form {
+    width: 30%;
+  }
 }

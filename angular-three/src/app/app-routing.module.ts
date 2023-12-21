@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'main-menu', component: MainMenuComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
   { path: 'create-lift', component: CreateLiftComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
   { path: 'list-buildings', component: ListBuildingsComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] }},
-  { path: 'create-robot', component: CreateRobotTypeComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
+  { path: 'create-robot-type', component: CreateRobotTypeComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
   { path: 'single-file-upload', component: SingleFileUploadComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
   { path: 'edit-floor', component: EditFloorComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},
   { path: 'add-robot', component: AddRobotComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},

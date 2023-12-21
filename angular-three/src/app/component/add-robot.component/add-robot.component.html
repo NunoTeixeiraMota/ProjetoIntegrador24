@@ -7,11 +7,11 @@
         <div class="table-section">
             <table>
                 <tr>
-                    <th><label>Nickname:</label></th>
+                    <th><label>Nickname:<span>*</span></label></th>
                     <td><input [(ngModel)]="robot.nickname" placeholder="Robot Nickname" required></td>
                 </tr>
                 <tr>
-                    <th><label>Robot Type:</label></th>
+                    <th><label>Robot Type:<span>*</span></label></th>
                     <td>
                         <select [(ngModel)]="selectedTypeId">
                             <option *ngFor="let type of rt" [ngValue]="type._id">{{ type.designation }}</option>
@@ -19,15 +19,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><label>Serial Number:</label></th>
+                    <th><label>Serial Number:<span>*</span></label></th>
                     <td><input [(ngModel)]="robot.serialNumber" placeholder="Robot Serial Number" required></td>
                 </tr>
                 <tr>
-                    <th><label>Description:</label></th>
+                    <th><label>Description:<span>*</span></label></th>
                     <td><input [(ngModel)]="robot.description" placeholder="Robot Description" required></td>
                 </tr>
                 <tr>
-                    <th><label>Is Active:</label></th>
+                    <th><label>Is Active:<span>*</span></label></th>
                     <td><input type="checkbox" [(ngModel)]="robot.isActive"></td>
                 </tr>
             </table>
