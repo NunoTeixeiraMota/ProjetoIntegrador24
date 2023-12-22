@@ -3,23 +3,35 @@
 !define RECTANGLE class
 
 package "Front-End Application" {
+    RECTANGLE ComponentA {
+        +specificRequestA()
+    }
+    RECTANGLE ComponentB {
+        +specificRequestB()
+    }
+    RECTANGLE ComponentC {
+        +specificRequestC()
+    }
+    RECTANGLE RoleBasedRouter {
+        +checkAccess(component, userRole): boolean // Determines access to components
+    }
+    RECTANGLE HTTPInterceptor {
+        +interceptRequest(): append JWT
+    }
     RECTANGLE UserInterface {
         +login(username, password)
         +register(firstName, lastName, email, password)
-        +sendRequestWithJWT()
         +receiveData()
     }
 }
 
 package "ASP NET Core C# Authentication Service" {
-    RECTANGLE LoginController {
-        +login(username, password): JWT
-    }
-    RECTANGLE RegisterController {
+    RECTANGLE UserController {
+        +login(email, password): JWT
         +register(firstName, lastName, email, password): boolean
     }
     RECTANGLE UserService {
-        +validateCredentials(username, password): boolean
+        +validateCredentials(email, password): boolean
         +createUser(firstName, lastName, email, password): boolean
         +isValidEmail(email): boolean
         +isStrongPassword(password): boolean
@@ -27,13 +39,12 @@ package "ASP NET Core C# Authentication Service" {
     RECTANGLE JWTService {
         +createToken(user): JWT
         +validateToken(token): boolean
-        +retrieveSigningKey(): Key
     }
 }
 
 package "Nodejs Backend Service" {
     RECTANGLE JWTMiddleware {
-        +validateJWT(token): boolean
+        +validateJWT(token): userRole
     }
     RECTANGLE ResourceController {
         +handleRequest()
@@ -47,18 +58,21 @@ database "Database" {
     folder "Other Data" {
     }
 }
-
-UserInterface --> LoginController : requests login
-UserInterface --> RegisterController : requests registration
-RegisterController --> UserService : validate & create new user
-UserService --> Database : store new user data
-LoginController --> UserService : validate user
-UserService --> Database : query user data
-LoginController --> JWTService : create JWT
+UserInterface --> RoleBasedRouter
+RoleBasedRouter --> ComponentA
+RoleBasedRouter --> ComponentB
+RoleBasedRouter --> ComponentC
+ComponentA --> HTTPInterceptor : intercepts all requests
+ComponentB --> HTTPInterceptor : intercepts all requests
+ComponentC --> HTTPInterceptor : intercepts all requests
+UserInterface --> UserController : requests login/register
+UserController --> UserService : validate & create new user
+UserService --> Database : store/retrieve user data
+UserController --> JWTService : create JWT
 JWTService --> Database : retrieve signing key/user claims
-UserInterface --> JWTMiddleware : sends requests with JWT
+HTTPInterceptor --> JWTMiddleware : sends requests with JWT
 JWTMiddleware --> ResourceController : on valid JWT
-JWTMiddleware ..> JWTService : validate JWT
+JWTMiddleware ..> JWTService : share JWT secret key
 ResourceController ..> Database : access data
 
 @enduml
