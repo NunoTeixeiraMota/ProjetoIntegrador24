@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import ILiftController from '../../controllers/IControllers/ILiftController';
 import config from '../../../config';
+import {checkRole} from '../middlewares/isTokenRoleValid'; // adjust the path accordingly
 
 const route = Router();
 
@@ -18,7 +19,7 @@ export default (app: Router) => {
         state: Joi.string().required(),
         building: Joi.string().required()
       }),
-    }),
+    }),checkRole(['ROLE_MANAGER']),
     (req, res, next) => ctrl.createLift(req, res, next)
   );
 }

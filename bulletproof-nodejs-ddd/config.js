@@ -24,7 +24,7 @@ export default {
   /**
    * Your secret sauce
    */
-  jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
+  jwtSecret: process.env.JWT_SECRET || "v3ryC0mpl3x&L0ngS3cr3tKeyTh@t1sH@rdToGu3ss",
 
   /**
    * Used by winston logger
@@ -69,14 +69,6 @@ export default {
   },
 
   repos: {
-    role: {
-      name: "RoleRepo",
-      path: "../repos/roleRepo"
-    },
-    user: {
-      name: "UserRepo",
-      path: "../repos/userRepo"
-    },
     buildings: {
       name: "BuildingsRepo",
       path: "../repos/buildingsRepo"
@@ -105,10 +97,6 @@ export default {
   },
 
   services: {
-    role: {
-      name: "RoleService",
-      path: "../services/roleService"
-    },
     buildings: {
       name: "buildingsService",
       path: "../services/buildingsService"

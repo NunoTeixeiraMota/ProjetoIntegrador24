@@ -3,7 +3,7 @@ import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import IRoomController from '../../controllers/IControllers/IRoomController';
 import config from '../../../config';
-
+import {checkRole} from '../middlewares/isTokenRoleValid';
 const route = Router();
 
 export default (app: Router) => {
@@ -15,11 +15,14 @@ export default (app: Router) => {
     '/createRoom',
     celebrate({
       body: Joi.object({
-          floor: Joi.string().required(),
-          name: Joi.string().required(),
-          category: Joi.string().required(),
-          description: Joi.string().required(),
-          dimension: Joi.array().items(Joi.number().required()).required(),
+        floor: Joi.string().required(),
+        name: Joi.string().required(),
+        category: Joi.string().required(),
+        description: Joi.string().required(),
+        dimension: Joi.array().items(Joi.number().required()).length(2), // assuming dimensions are 2D [length, width]
       }),
-  }),(req,res,next) => ctrl.createRoom(req,res,next));
+    }),
+    checkRole(['ROLE_ADMIN']),
+    (req, res, next) => ctrl.createRoom(req, res, next)
+  );
 };

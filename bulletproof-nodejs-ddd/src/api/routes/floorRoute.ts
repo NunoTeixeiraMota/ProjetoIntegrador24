@@ -5,6 +5,8 @@ import IFloorController from '../../controllers/IControllers/IFloorController';
 import config from '../../../config';
 import multer from 'multer';
 import path from 'path';
+import {checkRole} from '../middlewares/isTokenRoleValid'; // adjust the path accordingly
+
 const storage = multer.diskStorage({
   destination: 'flormaps/', // Your destination folder
   filename: function (req, file, cb) {
@@ -48,7 +50,7 @@ export default (app: Router) => {
                 hasElevator: Joi.boolean().required(),
                 passages: Joi.array().items(Joi.string())
             }),
-        }), (req, res, next) => ctrl.createFloor(req, res, next));
+        }),checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.createFloor(req, res, next));
 
   route.put(
     '/updateFloor',
@@ -64,7 +66,7 @@ export default (app: Router) => {
             hasElevator: Joi.boolean().required(),
             passages: Joi.array().items(Joi.string())
         }),
-    }), (req, res, next) => ctrl.updateFloor(req, res, next));
+    }),checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.updateFloor(req, res, next));
 
   route.patch(
     '/patchFloorMap',
@@ -73,7 +75,7 @@ export default (app: Router) => {
             id: Joi.string().required(),
             floorMap: Joi.string().required(),
         }),
-    }), (req, res, next) => ctrl.patchFloorMap(req, res, next));
+    }),checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.patchFloorMap(req, res, next));
 
 
     route.patch(
@@ -83,11 +85,11 @@ export default (app: Router) => {
               id: Joi.string().required(),
               passages: Joi.array().items(Joi.string().required()).required()
           }),
-      }), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
+      }),checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
       
       route.patch(
         '/uploadmap',
-        upload.single('file'),
+        upload.single('file'),checkRole(['ROLE_MANAGER']),
         (req, res, next) => {
           if (!req.file) {
             return res.status(400).send('No file uploaded.');
@@ -100,7 +102,7 @@ export default (app: Router) => {
           celebrate({body: Joi.object({
             buildingId : Joi.string().required(),
             }),
-          }),
+          }),checkRole(['ROLE_USER']),
           (req, res, next) => ctrl.listAllFloorsInBuilding(req, res, next));
 
         route.get(
@@ -108,5 +110,5 @@ export default (app: Router) => {
             celebrate({body: Joi.object({
               value: Joi.object().optional(),
             }),
-          }),(req, res, next) => ctrl.listAllFloors(req, res, next));
+          }),checkRole(['ROLE_USER']),(req, res, next) => ctrl.listAllFloors(req, res, next));
 }
