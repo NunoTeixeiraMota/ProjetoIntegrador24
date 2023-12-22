@@ -43,10 +43,9 @@ export class LoginComponent implements OnInit {
 
     try {
       const userLogged = await this.authService.sign_in({ email, password });
-      if (userLogged?.token) {
-        this.authService.login(userLogged.token, userLogged.userDTO.role);
-        console.log(userLogged.token);
-        console.log(userLogged.userDTO.role);
+      if (userLogged.isAuthenticated) {
+        this.authService.login(userLogged.accessToken, userLogged.roles,userLogged.expirationDate);
+        console.log("redirecting to main menu")
         this.router.navigate(['/main-menu']);
       }
     } catch (error) {

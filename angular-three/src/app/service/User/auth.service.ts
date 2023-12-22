@@ -18,6 +18,7 @@ export class AuthService {
   constructor(private  http:HttpClient) {
     const local=localStorage.getItem("token");
     if(local){
+      try{
       const {token,expiration}=JSON.parse(local);
       const now=new Date();
       if(now.getTime()>expiration){
@@ -29,8 +30,8 @@ export class AuthService {
         this.isLogged=new BehaviorSubject<boolean>(true);
         this.isAuthenticated$=this.isLogged.asObservable();
       }
-    }
-  };
+    }catch(error){ console.log(error); }
+  };}
 
   getToken(): string | null {
     const local=localStorage.getItem("token");
@@ -44,10 +45,11 @@ export class AuthService {
 
   }
 
-  login(token: any,role:string){
-    const expiration=new Date().getTime() + (60*60*1000);
+  login(token: string,roles:string,expirationDate:string){
+    const expiration = new Date(expirationDate); 
+    console.log(token)
     localStorage.setItem('token', JSON.stringify({token:token,expiration:expiration}));
-    localStorage.setItem("role",role);
+    localStorage.setItem("role",roles);
     this.isLogged.next(true);
   }
 
@@ -56,20 +58,23 @@ export class AuthService {
     localStorage.removeItem("role");
     this.isLogged.next(false);
   }
-
-  async sign_in(user: User): Promise<any | undefined> {
+  async sign_in(user: User): Promise<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
       })
     };
-    return await this.http.post<any>(
-      `${API_CONFIG.apiBaseUrl}/auth/signin`, 
-      user,
-      httpOptions
-    ).toPromise();
+  
+    const url = `${API_CONFIG.apiBaseUrlAuth}/User/Login`;
+    try {
+      return await this.http.post<any>(url, user, httpOptions).toPromise();
+    } catch (error) {
+      // Handle or throw error
+      console.error(error);
+      throw error;
+    }
   }
+  
 
   hasRole(role:string):boolean{
     if(localStorage.getItem("role")===role){

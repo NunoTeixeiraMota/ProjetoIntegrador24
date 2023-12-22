@@ -1,10 +1,9 @@
 export interface User {
     token?(token: any): unknown;
     id?:string;
-    firstName?: string;
-    lastName?: string;
+    name?: string;
     email?: string;
     password?: string;
-    role?: string;
+    role?: string;    
   }
   

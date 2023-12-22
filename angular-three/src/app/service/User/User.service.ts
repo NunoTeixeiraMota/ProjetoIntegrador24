@@ -9,11 +9,11 @@ import { MessageService } from '../message/message.service';
   providedIn: 'root'
 })
 export class UserService {
-  private apiBaseUrl = API_CONFIG.apiBaseUrl; 
+  private apiBaseUrl = API_CONFIG.apiBaseUrlAuth; 
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
-  getById(id: string): Observable<User> {
+/*   getById(id: string): Observable<User> {
     return this.http.get<User>(`${this.apiBaseUrl}/user/${id}`);
   }
 
@@ -26,12 +26,12 @@ export class UserService {
 
   getUsersWithRole(role: String): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiBaseUrl}/auth/user/roles/${role}`);
-  }
+  } */
 
   signUp(user: User): Observable<User> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    return this.http.post<User>(`${this.apiBaseUrl}/auth/signup`, user, httpOptions);
+    return this.http.post<User>(`${this.apiBaseUrl}/User/register`, user, httpOptions);
   }
 }

@@ -17,6 +17,7 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserRole = this.authService.getCurrentUserRole();
+    console.log(this.currentUserRole);
     this.clearMessages();
     this.titleService.setTitle('RobDroneGo');
   }

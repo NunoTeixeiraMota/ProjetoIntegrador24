@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 import { AppComponent } from './component/appComponent/app.component';
 import { MessagesComponent } from './component/messages.component/messages.component';
@@ -59,7 +61,9 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
   ],
   providers: [
-    Title
+    Title,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

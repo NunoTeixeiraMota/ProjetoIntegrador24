@@ -27,23 +27,19 @@ export class RegisterComponent implements OnInit {
   
     const formData = new FormData(form);
 
-    this.user.firstName = formData.get('firstName') as string;
-    this.user.lastName = formData.get('lastName') as string;
+    var firstName = formData.get('firstName') as string;
+    var lastName = formData.get('lastName') as string;
+    this.user.name = firstName + lastName;
     this.user.email = formData.get('email') as string;
     this.user.password = formData.get('password') as string;
     console.log(this.user);
     this.userService.signUp(this.user).subscribe(
       result => {
-        // Handle successful registration
         console.log("User registered successfully", result);
-        // You might want to navigate the user to a different page or show a success message
       },
       error => {
-        // Handle registration error
-
         console.error("Couldn't register the user. Reason:", error);
         this.messageservice.add("Error: " + error.error);
-        // You might want to show an error message to the user
       }
     );
   }
