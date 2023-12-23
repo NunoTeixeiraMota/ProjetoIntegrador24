@@ -1,7 +1,9 @@
 name: Deploy to VPS
+
 on:
   push:
     branches: [ main ]
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -10,12 +12,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Node.js setup and build steps
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '18' 
 
-    - name: Install dependencies
+    - name: Install dependencies (Node.js)
       run: npm install
       working-directory: ./bulletproof-nodejs-ddd
       
@@ -23,21 +26,51 @@ jobs:
       run: npm install mocha
       working-directory: ./bulletproof-nodejs-ddd
 
-    - name: Run tests
+    - name: Run tests (Node.js)
       run: npm test
       working-directory: ./bulletproof-nodejs-ddd
 
-    - name: Build
+    - name: Build (Node.js)
       run: npm run build 
       working-directory: ./bulletproof-nodejs-ddd
 
-    - name: Deploy to VPS
+    # ASP.NET Core setup and build steps
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0' # Specify your .NET Core version here
+
+    - name: Install dependencies (ASP.NET Core)
+      run: dotnet restore "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj"
+
+    - name: Build (ASP.NET Core)
+      run: dotnet build "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" --configuration Release
+
+    - name: Run tests (ASP.NET Core)
+      run: dotnet test "./AspNET CORE WEBAPI/RobDroneAndGOAuth.Tests/RobDroneAndGOAuth.Tests.csproj" # Update the path if needed
+
+    - name: Publish (ASP.NET Core)
+      run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o published
+
+    # Deployment steps for Node.js and ASP.NET Core
+    - name: Deploy Node.js to VPS
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         ARGS: "-avzr --delete"
-        SOURCE: "bulletproof-nodejs-ddd/"
+        SOURCE: "bulletproof-nodejs-ddd/build"
         REMOTE_HOST: ${{ secrets.HOST }}
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
         TARGET: "/root/bulletproof-nodejs-ddd"
+
+    - name: Deploy ASP.NET Core to VPS
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        ARGS: "-avzr --delete"
+        SOURCE: "AspNET CORE WEBAPI/RobDroneAndGOAuth/published/"
+        REMOTE_HOST: ${{ secrets.HOST }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        REMOTE_PORT: ${{ secrets.PORT }}
+        TARGET: "/root/RobDroneAndGOAuth"
