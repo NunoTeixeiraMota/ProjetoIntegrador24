@@ -42,12 +42,12 @@ jobs:
 
     - name: Install dependencies (ASP.NET Core)
       run: dotnet restore "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj"
-
+      
+    - name: Run tests (ASP.NET Core)
+      run: dotnet test "./AspNET CORE WEBAPI/RobDroneAndGOAuth/" 
+      
     - name: Build (ASP.NET Core)
       run: dotnet build "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" --configuration Release
-
-    - name: Run tests (ASP.NET Core)
-      run: dotnet test
 
     - name: Publish (ASP.NET Core)
       run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o published
