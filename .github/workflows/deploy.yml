@@ -38,7 +38,7 @@ jobs:
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0' # Specify your .NET Core version here
+        dotnet-version: '8.0' # Specify your .NET Core version here
 
     - name: Install dependencies (ASP.NET Core)
       run: dotnet restore "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj"
@@ -47,7 +47,7 @@ jobs:
       run: dotnet build "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" --configuration Release
 
     - name: Run tests (ASP.NET Core)
-      run: dotnet test "./AspNET CORE WEBAPI/RobDroneAndGOAuth.Tests/RobDroneAndGOAuth.Tests.csproj" # Update the path if needed
+      run: dotnet test
 
     - name: Publish (ASP.NET Core)
       run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o published
