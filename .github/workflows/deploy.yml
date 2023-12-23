@@ -64,6 +64,12 @@ jobs:
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
         TARGET: "/root/bulletproof-nodejs-ddd"
+      with:
+        script: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs
+          sudo apt-get install -y npm
+
 
     # Deployment steps for ASP.NET Core
     - name: Deploy ASP.NET Core to VPS
@@ -76,3 +82,12 @@ jobs:
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
         TARGET: "/root/RobDroneAndGOAuth"
+      with:
+        script: |
+          wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y dotnet-sdk-8.0
+
