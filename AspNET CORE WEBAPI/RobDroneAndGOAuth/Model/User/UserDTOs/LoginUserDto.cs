@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RobDroneAndGOAuth.Model.User
+namespace RobDroneAndGOAuth.Model.User.UserDTOs
 {
     public class LoginUserDto
     {

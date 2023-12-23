@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RobDroneAndGOAuth.Model.User
+namespace RobDroneAndGOAuth.Model.Token.TokenDTO
 {
     public class TokenDto
     {

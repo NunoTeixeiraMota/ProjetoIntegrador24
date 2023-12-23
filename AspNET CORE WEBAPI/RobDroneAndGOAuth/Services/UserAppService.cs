@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RobDroneAndGOAuth.Controllers;
+using RobDroneAndGOAuth.Model.ApplicationRole;
+using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
+using RobDroneAndGOAuth.Model.User.UserDTOs;
+using RobDroneAndGOAuth.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -68,7 +72,8 @@ namespace RobDroneAndGOAuth.Services
 
                     // Add the user to the default role
                     await _userManager.AddToRoleAsync(appUser, defaultRole);
-
+                    // Lockout new users in order to admin to accept them
+                    await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now.AddYears(100)));
                     return appUser;
                 }
                 else

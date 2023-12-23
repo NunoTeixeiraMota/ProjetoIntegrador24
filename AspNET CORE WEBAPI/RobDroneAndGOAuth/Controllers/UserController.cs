@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
+using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
-using RobDroneAndGOAuth.Services;
+using RobDroneAndGOAuth.Model.User.UserDTOs;
+using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Controllers
 {
@@ -14,10 +16,6 @@ namespace RobDroneAndGOAuth.Controllers
         private ILogger<UserController> _logger;
         private IUserAppService _userAppService;
 
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         public UserController(ILogger<UserController> logger,
             IUserAppService userAppService)

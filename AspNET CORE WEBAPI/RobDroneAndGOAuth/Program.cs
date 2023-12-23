@@ -11,6 +11,8 @@ using RobDroneAndGOAuth.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using RobDroneAndGOAuth.Services.IServices;
+using RobDroneAndGOAuth.Model.ApplicationRole;
 
 var builder = WebApplication.CreateBuilder(args);
 

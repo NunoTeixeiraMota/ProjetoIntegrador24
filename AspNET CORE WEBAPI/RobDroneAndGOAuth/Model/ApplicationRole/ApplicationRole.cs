@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 
-namespace RobDroneAndGOAuth.Model.User
+namespace RobDroneAndGOAuth.Model.ApplicationRole
 {
     public class ApplicationRole : MongoIdentityRole<ObjectId>
     {
