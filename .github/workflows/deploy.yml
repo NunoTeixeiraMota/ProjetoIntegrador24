@@ -50,8 +50,8 @@ jobs:
       run: dotnet build "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" --configuration Release
 
     - name: Publish (ASP.NET Core)
-      run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o published
-
+      run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o "./AspNET CORE WEBAPI/RobDroneAndGOAuth/published"
+    
     # Deployment steps for Node.js and ASP.NET Core
     - name: Deploy Node.js to VPS
       uses: easingthemes/ssh-deploy@v2.1.5
