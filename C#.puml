@@ -13,7 +13,7 @@ package "Front-End Application" {
         +specificRequestC()
     }
     RECTANGLE RoleBasedRouter {
-        +checkAccess(component, userRole): boolean // Determines access to components
+        +checkAccess(component, userRole): boolean 
     }
     RECTANGLE HTTPInterceptor {
         +interceptRequest(): append JWT
@@ -21,30 +21,33 @@ package "Front-End Application" {
     RECTANGLE UserInterface {
         +login(username, password)
         +register(firstName, lastName, email, password)
+        +deleteAccount(userID, token): boolean 
         +receiveData()
     }
 }
 
 package "ASP NET Core C# Authentication Service" {
+    RECTANGLE AuthenticationBuilder {
+        +configureJWTAuthentication() 
+    }
     RECTANGLE UserController {
-        +login(email, password): JWT
-        +register(firstName, lastName, email, password): boolean
+        +Login(LoginUserDTO):Task<TokenDto>
+        +Register(CreateUserDto): Task<RegisteredDTO>
+        +DeleteAcc(AccountDeletionDto): Task<IdentityResult>
     }
     RECTANGLE UserService {
-        +validateCredentials(email, password): boolean
-        +createUser(firstName, lastName, email, password): boolean
-        +isValidEmail(email): boolean
-        +isStrongPassword(password): boolean
+        +Login(LoginUserDto): Task<TokenDto>
+        +Register(CreateUserDto): Task<RegisteredDTO>
+        +DeleteAccount(AccountDeletionDto): Task<IdentityResult>
     }
     RECTANGLE JWTService {
-        +createToken(user): JWT
-        +validateToken(token): boolean
+        +createToken(ApplicationUser): Task<TokenDto>
     }
 }
 
 package "Nodejs Backend Service" {
     RECTANGLE JWTMiddleware {
-        +validateJWT(token): userRole
+        +validateJWT(token)
     }
     RECTANGLE ResourceController {
         +handleRequest()
@@ -58,6 +61,7 @@ database "Database" {
     folder "Other Data" {
     }
 }
+
 UserInterface --> RoleBasedRouter
 RoleBasedRouter --> ComponentA
 RoleBasedRouter --> ComponentB
@@ -65,14 +69,13 @@ RoleBasedRouter --> ComponentC
 ComponentA --> HTTPInterceptor : intercepts all requests
 ComponentB --> HTTPInterceptor : intercepts all requests
 ComponentC --> HTTPInterceptor : intercepts all requests
-UserInterface --> UserController : requests login/register
-UserController --> UserService : validate & create new user
-UserService --> Database : store/retrieve user data
+UserInterface --> UserController : requests login/register/delete
+UserController --> UserService : validate & manage users
+UserService --> Database : store/retrieve/delete user data
 UserController --> JWTService : create JWT
-JWTService --> Database : retrieve signing key/user claims
+AuthenticationBuilder ..> Database : retrieve signing key
 HTTPInterceptor --> JWTMiddleware : sends requests with JWT
 JWTMiddleware --> ResourceController : on valid JWT
-JWTMiddleware ..> JWTService : share JWT secret key
 ResourceController ..> Database : access data
 
 @enduml

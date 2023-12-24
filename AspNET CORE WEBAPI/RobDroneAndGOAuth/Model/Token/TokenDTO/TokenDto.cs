@@ -9,6 +9,18 @@ namespace RobDroneAndGOAuth.Model.Token.TokenDTO
         public string AccessToken { get; set; }
         public IEnumerable<string> Roles { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public string Error { get; set; }
+
+        public TokenDto()
+        {
+            
+        }
+
+        public TokenDto(string error)
+        {
+            IsAuthenticated = false;
+            Error = error;
+        }
 
         public TokenDto(bool isAuthenticated, string accessToken = null, IEnumerable<string> roles = null, DateTime expirationDate = default)
         {
@@ -17,6 +29,8 @@ namespace RobDroneAndGOAuth.Model.Token.TokenDTO
             Roles = roles ?? new List<string>();
             ExpirationDate = expirationDate;
         }
+
+
         public TokenDto(string accessToken, DateTime expirationDate)
         {
             IsAuthenticated = true; // Assuming token presence implies authentication

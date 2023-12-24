@@ -48,6 +48,9 @@ export class LoginComponent implements OnInit {
         console.log("redirecting to main menu")
         this.router.navigate(['/main-menu']);
       }
+      else {
+        this.messageservice.add("Error: " + userLogged.error);
+      }
     } catch (error) {
       console.error('Login failed:', error);
       

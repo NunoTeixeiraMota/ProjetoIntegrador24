@@ -52,6 +52,8 @@ namespace RobDroneAndGOAuth.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return new TokenDto(tokenHandler.WriteToken(token), expirationDate);
         }
+
+
     }
 
 

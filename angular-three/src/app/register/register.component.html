@@ -5,16 +5,19 @@
         <form>
             <h1>Register</h1>
             <div class="form-field">
-                <input name="firstName" type="text" placeholder="First Name" required>
+                <input name="firstName" type="text" placeholder="First Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed" required>
             </div>
             <div class="form-field">
-                <input name="lastName" type="text" placeholder="Last Name" required>
+                <input name="lastName" type="text" placeholder="Last Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed" required>
             </div>
             <div class="form-field">
                 <input name="email" type="email" placeholder="Email" required>
             </div>
             <div class="form-field">
                 <input name="password" type="password" placeholder="Password" required>
+            </div>
+            <div class="form-field">
+                <input name="phonenumber" type="tel" placeholder="Phone Number" pattern="[0-9]{9}" title="Phone number should be 9 digits" required>
             </div>
             <h3>Privacy Policy</h3>
             <div class="button-container">

@@ -38,13 +38,18 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddMongoDbStores<ApplicationUser, ApplicationRole, ObjectId>
-    (
-        connectionString,
-        databaseName
-    )
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+ ";
+})
+.AddMongoDbStores<ApplicationUser, ApplicationRole, ObjectId>
+(
+    connectionString,
+    databaseName
+)
+.AddDefaultTokenProviders();
+
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);

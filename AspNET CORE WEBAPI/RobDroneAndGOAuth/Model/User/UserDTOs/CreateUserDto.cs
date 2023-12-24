@@ -13,5 +13,9 @@ namespace RobDroneAndGOAuth.Model.User.UserDTOs
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Phone number must be numeric")]
+        public string phonenumber { get; set; }
     }
 }

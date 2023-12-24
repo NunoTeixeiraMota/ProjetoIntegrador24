@@ -31,9 +31,22 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ApplicationUser> Register(CreateUserDto createUser)
+        public async Task<RegisteredDTO> Register(CreateUserDto createUser)
         {
             return await _userAppService.Register(createUser);
         }
-    }
+
+        [Authorize]
+        [HttpPost("DeleteAcc")]
+        public async Task<IdentityResult> DeleteAcc(AccountDeletionDto user)
+        {
+            return await _userAppService.DeleteAccount(user);
+        }
+
+        [Authorize]
+        [HttpPost("Teste")]
+        public async Task Teste()
+        {
+        }
+    } 
 }
