@@ -53,31 +53,6 @@ jobs:
     - name: Publish (ASP.NET Core)
       run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o "./AspNET CORE WEBAPI/RobDroneAndGOAuth/published"
       
-    - name: Setup Node.js and .NET Core on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          sudo apt-get update
-          sudo apt-get install -y nodejs npm
-          wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-          sudo dpkg -i packages-microsoft-prod.deb
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https
-          sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-8.0
-
-    - name: Prepare Deployment Directory
-      run: |
-        mkdir -p deploy
-        cp -R bulletproof-nodejs-ddd/build/* deploy/
-        cp -R bulletproof-nodejs-ddd/node_modules deploy/
-      working-directory: ./
-
-    # Deployment steps for Node.js
 # Deployment steps for Node.js
     - name: Deploy Node.js to VPS
       uses: easingthemes/ssh-deploy@v2.1.5
@@ -88,7 +63,7 @@ jobs:
         REMOTE_HOST: ${{ secrets.HOST }}
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
-        TARGET: "/root/bulletproof-nodejs-ddd/build"
+        TARGET: "/root/bulletproof-nodejs-ddd"
 
     # Deployment steps for ASP.NET Core
     - name: Deploy ASP.NET Core to VPS
@@ -101,14 +76,3 @@ jobs:
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
         TARGET: "/root/RobDroneAndGOAuth"
-
-    - name: Install dependencies on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /root/bulletproof-nodejs-ddd
-          npm install
