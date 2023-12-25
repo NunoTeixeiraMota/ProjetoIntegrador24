@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18' 
+        node-version: '18'
 
     - name: Install dependencies (Node.js)
       run: npm install
@@ -32,28 +32,42 @@ jobs:
       working-directory: ./bulletproof-nodejs-ddd
 
     - name: Build (Node.js)
-      run: npm run build 
+      run: npm run build
       working-directory: ./bulletproof-nodejs-ddd
 
     # ASP.NET Core setup and build steps
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '8.0' # Specify your .NET Core version here
+        dotnet-version: '8.0'
 
     - name: Install dependencies (ASP.NET Core)
       run: dotnet restore "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj"
       
     - name: Run tests (ASP.NET Core)
-      run: dotnet test "./AspNET CORE WEBAPI/RobDroneAndGOAuth/" 
+      run: dotnet test "./AspNET CORE WEBAPI/RobDroneAndGOAuth/"
       
     - name: Build (ASP.NET Core)
       run: dotnet build "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" --configuration Release
 
     - name: Publish (ASP.NET Core)
       run: dotnet publish "./AspNET CORE WEBAPI/RobDroneAndGOAuth/RobDroneAndGOAuth.csproj" -c Release -o "./AspNET CORE WEBAPI/RobDroneAndGOAuth/published"
-      
-# Deployment steps for Node.js
+
+    # Angular setup and build steps
+    - name: Set up Node.js for Angular
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies (Angular)
+      run: npm install
+      working-directory: ./angular-three
+
+    - name: Build (Angular)
+      run: npm run build
+      working-directory: ./angular-three
+
+    # Deployment steps for Node.js
     - name: Deploy Node.js to VPS
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
@@ -71,8 +85,20 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         ARGS: "-avzr --delete"
-        SOURCE: "AspNET CORE WEBAPI/RobDroneAndGOAuth/"
+        SOURCE: "AspNET CORE WEBAPI/RobDroneAndGOAuth/published"
         REMOTE_HOST: ${{ secrets.HOST }}
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.PORT }}
         TARGET: "/root/RobDroneAndGOAuth"
+
+    # Deployment steps for Angular
+    - name: Deploy Angular to VPS
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        ARGS: "-avzr --delete"
+        SOURCE: "angular-three/" # Adjust if your build directory differs
+        REMOTE_HOST: ${{ secrets.HOST }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        REMOTE_PORT: ${{ secrets.PORT }}
+        TARGET: "/var/www/angular-three" # Specify your Angular deployment path
