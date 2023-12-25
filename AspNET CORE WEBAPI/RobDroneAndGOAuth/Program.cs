@@ -91,7 +91,6 @@ if (app.Environment.IsDevelopment())
 }
 // UseCors must be called before UseAuthentication and UseAuthorization
 app.UseCors("AllowAngularDevOrigin");
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
