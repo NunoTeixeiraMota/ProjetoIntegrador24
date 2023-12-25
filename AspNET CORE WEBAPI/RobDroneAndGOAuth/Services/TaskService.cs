@@ -14,7 +14,7 @@ using System.Text;
 namespace RobDroneAndGOAuth.Services
 {
     public class TaskService : ITaskService
-    {
+    {/*
         public TaskService()
         {
 
@@ -36,6 +36,6 @@ namespace RobDroneAndGOAuth.Services
             } catch (BusinessRuleValidationException ex){
                 throw new BadHttpRequestException(ex.Message);
             }
-        }
+        }*/
     }
 }

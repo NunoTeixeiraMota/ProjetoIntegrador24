@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNET CORE WEBAPI", "AspNET CORE WEBAPI", "{B5352566-8BDD-4F21-9C8B-BA78BA9B99F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobDroneAndGOAuth", "AspNET CORE WEBAPI\RobDroneAndGOAuth\RobDroneAndGOAuth.csproj", "{F32A2D36-CF4C-4D36-95E0-A641715C1EBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F32A2D36-CF4C-4D36-95E0-A641715C1EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32A2D36-CF4C-4D36-95E0-A641715C1EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32A2D36-CF4C-4D36-95E0-A641715C1EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32A2D36-CF4C-4D36-95E0-A641715C1EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F32A2D36-CF4C-4D36-95E0-A641715C1EBA} = {B5352566-8BDD-4F21-9C8B-BA78BA9B99F1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {163C431F-7AB2-4BF3-B5D3-A84F3C6E39B5}
+	EndGlobalSection
+EndGlobal

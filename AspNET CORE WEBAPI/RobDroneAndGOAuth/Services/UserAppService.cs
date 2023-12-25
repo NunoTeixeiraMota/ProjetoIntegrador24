@@ -71,18 +71,13 @@ namespace RobDroneAndGOAuth.Services
             IdentityResult result = await _userManager.CreateAsync(appUser, user.Password);
             if (result.Succeeded)
             {
-                // Assuming the default role is "ROLE_USER"
                 string defaultRole = "ROLE_USER";
-                // Check if the role exists
                 if (!await _rolemanager.RoleExistsAsync(defaultRole))
                 {
-                    // Create the role if it doesn't exist
                     await _rolemanager.CreateAsync(new ApplicationRole(defaultRole));
                 }
 
-                // Add the user to the default role
                 await _userManager.AddToRoleAsync(appUser, defaultRole);
-                // Lockout new users in order to admin to accept them
                 await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now.AddYears(100)));
                 return new RegisteredDTO { User = appUser, Error = null };
             }
@@ -104,6 +99,29 @@ namespace RobDroneAndGOAuth.Services
                 return await _userManager.DeleteAsync(appUser);
         }
 
+        public async Task<CreateUserDto> editUser(CreateUserDto user)
+        {
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
+            if (appUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+            }
 
+            if(appUser.Name != user.Name){
+                appUser.Name = user.Name;
+            }
+            if(appUser.Email != user.Email){
+                appUser.Email = user.Email;
+            }
+            if(appUser.Password != user.Password){
+                appUser.Password = user.Password;
+            }
+            if(appUser.phonenumber != user.phonenumber){
+                appUser.phonenumber = user.phonenumber;
+            }
+
+            IdentityResult result = await _userManager.UpdateAsync(appUser);
+            return result;
+        }
     }
 }
