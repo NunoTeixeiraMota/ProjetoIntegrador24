@@ -115,23 +115,6 @@
         <div id="views-panel">
             <table class="views">
                 <tr>
-                    <div>
-                        <label for="floors-dropdown">Select Floor:</label>
-                        <select id="floors-dropdown">
-                            <option value="A1">Floor A1</option>
-                            <option value="A2">Floor A2</option>
-                            <option value="B1">Floor B1</option>
-                            <option value="B2">Floor B2</option>
-                            <option value="B3">Floor B3</option>
-                            <option value="C1">Floor C1</option>
-                            <option value="c2">Floor C2</option>
-                            <option value="C3">Floor C3</option>
-                            <option value="C4">Floor C4</option>
-                            <option value="D1">Floor D1</option>
-                            <option value="D2">Floor D2</option>
-                            <option value="D3">Floor D3</option>
-                        </select>
-                    </div>
                     <td>
                         <label>View:</label>
                         <select id="view">
@@ -171,6 +154,16 @@
                     </td>
                     <td>
                         <input type="button" id="reset-all" value="Reset all views">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Building:</label>
+                        <select id="buildings-dropdown"></select>
+                    </td>
+                    <td>
+                        <label>Floor:</label>
+                        <select id="floors-dropdown"></select>
                     </td>
                 </tr>
             </table>
@@ -355,6 +348,7 @@
                 { view: "top", multipleViewsViewport: new THREE.Vector4(1.0, 0.0, 0.45, 0.5), initialOrientation: new Orientation(0.0, -90.0), initialDistance: 4.0, distanceMin: 1.0, distanceMax: 16.0 }, // Top view camera parameters
                 { view: "mini-map", multipleViewsViewport: new THREE.Vector4(0.99, 0.02, 0.3, 0.3), initialOrientation: new Orientation(180.0, -90.0), initialZoom: 0.64 } // Mini-msp view camera parameters
             );
+            listFloorsDropDown("65636e5e2c089793089c5c0f");
         }
 
         function initializeCustom(mazeData) {
@@ -388,28 +382,70 @@
         initialize();
         animate();
 
-        document.getElementById("floors-dropdown").addEventListener("change", function () {
-            const selectedValue = this.value;
+        const buildingsDropdown = document.getElementById("buildings-dropdown");
+        listBuildings().then((buildings) => {
+            for (const building of buildings) {
+                const option = document.createElement("option");
+                option.value = building.name;
+                option.textContent = building.name;
+                buildingsDropdown.appendChild(option);
+            }
+        });
 
-            listFloors().then((floors) => {
-                for (const floor of floors) {
-                    if (floor.name === selectedValue) {
-                        const mazeData = {
-                            url: `./mazes/${floor.floorMap}`,
-                            credits: "Maze designed by Cecília Fernandes and Nikita.",
-                            scale: new THREE.Vector3(1.0, 1.0, 1.0)
-                        }
-                        ngOnDestroy();
-                        initializeCustom(mazeData);
-                        animate();
-                        break;
+        buildingsDropdown.addEventListener("change", function () {
+            const selectedValue = this.value;
+            listBuildings().then((buildings) => {
+                for (const building of buildings) {
+                    if (building.name === selectedValue) {
+                        listFloorsDropDown(building._id);
                     }
                 }
             });
         });
-        
+
+
+        function listFloorsDropDown(idB) {
+            const floorsDropdown = document.getElementById("floors-dropdown");
+            floorsDropdown.innerHTML = '';
+            listFloors().then((floors) => {
+                for (const floor of floors) {
+                    if (floor.building == idB) {
+                        const option = document.createElement("option");
+                        option.value = floor.name;
+                        option.textContent = floor.name;
+                        floorsDropdown.appendChild(option);
+                    }
+                }
+            });
+
+            floorsDropdown.addEventListener("change", function () {
+                const selectedValue = this.value;
+                listFloors().then((floors) => {
+                    for (const floor of floors) {
+                        if (floor.name === selectedValue) {
+                            const mazeData = {
+                                url: `./mazes/${floor.floorMap}`,
+                                credits: "Maze designed by Cecília Fernandes and Nikita.",
+                                scale: new THREE.Vector3(1.0, 1.0, 1.0)
+                            }
+                            ngOnDestroy();
+                            initializeCustom(mazeData);
+                            animate();
+                            break;
+                        }
+                    }
+                });
+            });
+        }
+
         function listFloors() {
             return fetch("http://localhost:4000/api/floor/list")
+                .then((response) => response.json())
+                .then((json) => json);
+        }
+
+        function listBuildings() {
+            return fetch("http://localhost:4000/api/building/list")
                 .then((response) => response.json())
                 .then((json) => json);
         }

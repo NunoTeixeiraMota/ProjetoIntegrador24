@@ -50,5 +50,5 @@ export default (app: Router) => {
       '/list',
       celebrate({body: Joi.object({
         value: Joi.object().required(),
-      }),}),checkRole(['ROLE_USER']),(req, res, next) => ctrl.findAll(req, res, next));    
+      }),}),(req, res, next) => ctrl.findAll(req, res, next));
 }
