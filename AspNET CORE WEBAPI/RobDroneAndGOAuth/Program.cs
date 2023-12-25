@@ -32,7 +32,7 @@ var databaseName = mongoDbConfig["Database"];
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevOrigin",
-        builder => builder.WithOrigins("http://localhost:4200") // Replace with your Angular app's origin
+        builder => builder.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
