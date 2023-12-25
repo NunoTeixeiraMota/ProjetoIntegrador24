@@ -16,6 +16,16 @@ using RobDroneAndGOAuth.Model.ApplicationRole;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel (the web server) to listen on all interfaces
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    // Set up the HTTP and HTTPS endpoints
+    serverOptions.ListenAnyIP(5054); // Listen for HTTP on port 5054 on all network interfaces
+    serverOptions.ListenAnyIP(7145, listenOptions => // Listen for HTTPS on port 7145
+    {
+        listenOptions.UseHttps(); // Make sure you have a valid certificate for production use
+    });
+});
 // Add services to the container.
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
