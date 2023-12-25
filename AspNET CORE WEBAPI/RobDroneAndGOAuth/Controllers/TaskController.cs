@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web.Resource;
-using RobDroneAndGOAuth.Model.Token.TokenDTO;
+﻿using Microsoft.AspNetCore.Mvc;
+using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Controllers
@@ -13,9 +10,9 @@ namespace RobDroneAndGOAuth.Controllers
     {
         private ITaskService _taskService;
 
-        public UserController(ITaskService taskService)
+        public TaskController(ITaskService taskService)
         {
-            _taskService = ITaskService;
+            _taskService = taskService;
         }
 
         [HttpPost("TaskVigilance")]

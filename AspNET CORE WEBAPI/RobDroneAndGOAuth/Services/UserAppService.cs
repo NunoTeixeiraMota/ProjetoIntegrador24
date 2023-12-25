@@ -1,16 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using RobDroneAndGOAuth.Controllers;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
 using RobDroneAndGOAuth.Model.User.UserDTOs;
 using RobDroneAndGOAuth.Services.IServices;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
 namespace RobDroneAndGOAuth.Services
 {
     public class UserAppService : IUserAppService
@@ -57,15 +50,13 @@ namespace RobDroneAndGOAuth.Services
             {
                 return new TokenDto($"User with email {user.Email} not found!");
             }
-
-            return new TokenDto(false);
         }
 
         public async Task<RegisteredDTO> Register(CreateUserDto user)
         {
             ApplicationUser appUser = new ApplicationUser
             {
-                UserName = (user.Name + user.phonenumber),
+                UserName = user.Name + user.phonenumber,
                 Email = user.Email
             };
             IdentityResult result = await _userManager.CreateAsync(appUser, user.Password);
@@ -99,6 +90,7 @@ namespace RobDroneAndGOAuth.Services
                 return await _userManager.DeleteAsync(appUser);
         }
 
+/*
         public async Task<CreateUserDto> editUser(CreateUserDto user)
         {
             ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
@@ -122,6 +114,6 @@ namespace RobDroneAndGOAuth.Services
 
             IdentityResult result = await _userManager.UpdateAsync(appUser);
             return result;
-        }
+        }*/
     }
 }

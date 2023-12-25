@@ -11,7 +11,7 @@ namespace RobDroneAndGOAuth.Model.Task
         public string NameDelivery { get; set; }
 
         [Required]
-        public number CodeDelivery { get; set; }
+        public int CodeDelivery { get; set; }
 
         [Required]
         public string Floor { get; set; }

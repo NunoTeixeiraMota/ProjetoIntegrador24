@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using RobDroneAndGOAuth.Model.Token.TokenDTO;
-using RobDroneAndGOAuth.Model.User;
-using RobDroneAndGOAuth.Model.User.UserDTOs;
+﻿using RobDroneAndGOAuth.Model.Task;
 
 namespace RobDroneAndGOAuth.Services.IServices
 {
     public interface ITaskService
     {
+        Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto);
+        Task<TaskPickDeliveryDto> createPickDeliveryTask(TaskPickDeliveryDto dto);
     }
 }
