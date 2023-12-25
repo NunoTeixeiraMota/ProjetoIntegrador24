@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using RobDroneAndGOAuth.Controllers;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
-using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

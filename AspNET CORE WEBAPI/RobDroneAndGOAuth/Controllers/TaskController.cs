@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
-using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Controllers
