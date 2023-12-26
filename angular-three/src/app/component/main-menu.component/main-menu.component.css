@@ -1,5 +1,18 @@
 /* Styles for the menu container */
-
+.top-bar {
+    position: fixed;
+    top: 2;
+    right: 16px;
+    padding: 10px 20px;
+    background-color: #20cc59a9;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.user-profile-link {
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
 aside {
     position: fixed;
     top: 0;

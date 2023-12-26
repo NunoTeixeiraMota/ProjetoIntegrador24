@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import  {User} from '../../model/user';
 import { API_CONFIG } from 'config';
+import {jwtDecode} from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +14,12 @@ export class AuthService {
 
   private isLogged=new BehaviorSubject<boolean>(false);
   isAuthenticated$= this.isLogged.asObservable();  
+  private apiBaseUrl = API_CONFIG.apiBaseUrlAuth; 
 
   token: any|unknown;
 
-  constructor(private  http:HttpClient) {
+  constructor(private  http:HttpClient,  private router: Router
+    ) {
     const local=localStorage.getItem("token");
     if(local){
       try{
@@ -33,10 +37,10 @@ export class AuthService {
     }catch(error){ console.log(error); }
   };}
 
-  getToken(): string | null {
+  getToken(): string {
     const local=localStorage.getItem("token");
     if(!local){
-      return null;
+      return "";
     }
 
     const {token,expiration}=JSON.parse(local);
@@ -57,6 +61,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem("role");
     this.isLogged.next(false);
+    this.router.navigate(['/login']);
   }
   async sign_in(user: User): Promise<any> {
     const httpOptions = {
@@ -69,13 +74,11 @@ export class AuthService {
     try {
       return await this.http.post<any>(url, user, httpOptions).toPromise();
     } catch (error) {
-      // Handle or throw error
       console.error(error);
       throw error;
     }
   }
   
-
   hasRole(role:string):boolean{
     if(localStorage.getItem("role")===role){
       return true;
@@ -85,4 +88,45 @@ export class AuthService {
   getCurrentUserRole(): string | null {
     return localStorage.getItem("role");
   }
+
+  signUp(user: User): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+    return this.http.post<User>(`${this.apiBaseUrl}/User/register`, user, httpOptions);
+  }
+
+  deleteUser(user: User): Observable<any> { // Changed return type to any as DELETE might not return User
+    const url = `${this.apiBaseUrl}/User/DeleteAcc?email=${(user.email)}`;
+    return this.http.delete<any>(url);
+  }
+  
+
+  decodeToken(): any {
+    const token = this.getToken();
+    if (token) {
+      try {
+        return jwtDecode(token);
+      } catch (Error) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  getUserFromToken(): User {
+    const decodedToken = this.decodeToken();
+    if (decodedToken) {
+      // Use a regular expression to replace characters that are not letters or spaces
+      const nameWithLettersAndSpaces = decodedToken.unique_name.replace(/[^a-zA-Z ]/g, '');
+  
+      return {
+        name: nameWithLettersAndSpaces, 
+        email: decodedToken.email
+      };
+    }
+    return {};
+  }
+  
+  
 }

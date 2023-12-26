@@ -37,10 +37,10 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [Authorize]
-        [HttpPost("DeleteAcc")]
+        [HttpDelete("DeleteAcc")]
         public async Task<IdentityResult> DeleteAcc(AccountDeletionDto user)
         {
-            return await _userAppService.DeleteAccount(user);
+            return await _userAppService.DeleteAccount(user.Email);
         }
 
         [Authorize]

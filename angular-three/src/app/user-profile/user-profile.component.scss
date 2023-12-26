@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    min-height: auto;
+    background-image: url('../../assets/image.jpg');
+    background-size: cover; 
+    height: calc(100vh - 40px); 
+    
+}
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-width: 300px;
+    background-color: #f9f9f9;
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .user-details {
+        text-align: left;
+        width: 100%;
+        margin-bottom: 20px;
+
+        p {
+            margin: 5px 0;
+            strong {
+                color: #555;
+            }
+        }
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .delete-button {
+            background-color: #ff4d4d;
+            color: white;
+
+            &:hover {
+                background-color: #ff3333;
+            }
+        }
+
+        .button-back {
+            background-color: #007bff;
+            color: white;
+
+            &:hover {
+                background-color: #0069d9;
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@ type UserError = {
 };
 
 export interface User {
-  token?(token: any): unknown;
+  token?: string;
   id?: string;
   name?: string;
   email?: string;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../service/User/User.service';
+import { AuthService } from '../service/User/auth.service';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
 import { MessageService } from '../service/message/message.service';
@@ -12,7 +12,7 @@ import { MessageService } from '../service/message/message.service';
 export class RegisterComponent implements OnInit {
   user: User = {};
 
-  constructor(private userService: UserService, private messageservice: MessageService, private router: Router ) {};
+  constructor(private authService: AuthService, private messageservice: MessageService, private router: Router ) {};
 
   ngOnInit() {
   }
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.user.password = formData.get('password') as string;
     this.user.phonenumber = formData.get('phonenumber') as string;
     console.log(this.user);
-    this.userService.signUp(this.user).subscribe(
+    this.authService.signUp(this.user).subscribe(
       result => {
         if (result && result.error && result.error.length > 0) {
           result.error.forEach(err => {

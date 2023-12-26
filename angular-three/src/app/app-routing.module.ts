@@ -22,10 +22,11 @@ import { AuthGuard } from './auth-guard';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
- 
   {path : 'privacy-policy', component: PrivacyPolicyComponent},
+  {path : 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER','ROLE_MANAGER'] },},
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
   { path: 'create-building', component: CreateBuildingComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] } },
   { path: 'create-floor', component: CreateFloorComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN'] }},

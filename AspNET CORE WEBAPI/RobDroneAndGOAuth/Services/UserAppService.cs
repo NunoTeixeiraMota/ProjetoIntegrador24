@@ -92,9 +92,9 @@ namespace RobDroneAndGOAuth.Services
             }
         }
 
-        public async Task<IdentityResult> DeleteAccount(AccountDeletionDto user)
+        public async Task<IdentityResult> DeleteAccount(string Email)
         {
-            ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(Email);
             if (appUser == null)
             {
                 // User not found

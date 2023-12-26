@@ -27,6 +27,7 @@ import { ListPassageBetween2BuildingsComponent } from './component/list-2-Buildi
 import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max.component/list-buildings-min-max.component';
 import { Title } from '@angular/platform-browser';
 import { LoginComponent } from './login/login.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { LoginComponent } from './login/login.component';
     ListPassageBetween2BuildingsComponent,
     ListBuildingsMinMaxComponent,
     LoginComponent,
+    UserProfileComponent,
     // ... any other components
   ],
   imports: [

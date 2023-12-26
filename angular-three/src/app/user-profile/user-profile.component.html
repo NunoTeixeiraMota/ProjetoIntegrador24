@@ -1,0 +1,11 @@
+<div class="user-profile">
+  <h2>Account Details</h2>
+  <div class="user-details">
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
+  <div class="buttons">
+    <button class="delete-button" (click)="onDeleteAccount()">Delete Account</button>
+    <button class="button-back" (click)="goBack()">Back</button>
+  </div>
+</div>
