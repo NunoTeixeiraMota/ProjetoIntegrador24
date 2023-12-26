@@ -49,6 +49,12 @@
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/change-robot-state">Inhibit Robot</a>
             </nav>
         </section>
+        <section>
+            <h2>Tasks</h2>
+            <nav>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-task-vigilance">Create Vigilance Task</a>
+            </nav>
+        </section>
     </aside>
 </section>
 </body>

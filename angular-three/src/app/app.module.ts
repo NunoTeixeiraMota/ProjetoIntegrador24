@@ -29,6 +29,7 @@ import { Title } from '@angular/platform-browser';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditComponent } from './edit/edit.component';
+import { CreateVigilanceTaskComponent } from './component/create-task-vigilance.component/create-task-vigilance.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { EditComponent } from './edit/edit.component';
     LoginComponent,
     UserProfileComponent,
     EditComponent,
+    CreateVigilanceTaskComponent,
     // ... any other components
   ],
   imports: [

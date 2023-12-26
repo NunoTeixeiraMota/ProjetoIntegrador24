@@ -5,7 +5,7 @@ using RobDroneAndGOAuth.Services.IServices;
 namespace RobDroneAndGOAuth.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Task")]
     public class TaskController : ControllerBase
     {
         private ITaskService _taskService;
@@ -15,13 +15,13 @@ namespace RobDroneAndGOAuth.Controllers
             _taskService = taskService;
         }
 
-        [HttpPost("TaskVigilance")]
+        [HttpPost("Vigilance")]
         public async Task<TaskVigilanceDto> taskVigilance(TaskVigilanceDto dto)
         {
             return await _taskService.createVigilanceTask(dto);
         }
 
-        [HttpPost("TaskPickDelivery")]
+        [HttpPost("PickDelivery")]
         public async Task<TaskPickDeliveryDto> taskPickDelivery(TaskPickDeliveryDto dto)
         {
             return await _taskService.createPickDeliveryTask(dto);
