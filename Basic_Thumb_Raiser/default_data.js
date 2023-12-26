@@ -15,8 +15,8 @@ export const playerData = {
     url: "./models/gltf/RobotExpressive/RobotExpressive.glb",
     credits: "Model and related code snippets created by <a href='https://www.patreon.com/quaternius' target='_blank' rel='noopener'>Tomás Laulhé</a>. CC0 1.0. Modified by <a href='https://donmccurdy.com/' target='_blank' rel='noopener'>Don McCurdy</a>.",
     eyeHeight: 0.8, // fraction of character height
-    scale: new THREE.Vector3(0.1, 0.1, 0.1),
-    walkingSpeed: 0.75,
+    scale: new THREE.Vector3(0.35, 0.4, 0.4),
+    walkingSpeed: 2,
     initialDirection: 0.0, // Expressed in degrees
     turningSpeed: 75.0, // Expressed in degrees / second
     runningFactor: 2.0, // Affects walking speed and turning speed
@@ -44,12 +44,12 @@ export const cameraData = {
     initialOrientation: new Orientation(135.0, -45.0), // Horizontal and vertical orientation and associated limits (expressed in degrees)
     orientationMin: new Orientation(-180.0, -90.0),
     orientationMax: new Orientation(180.0, 0.0),
-    initialDistance: 8.0, // Distance to the target and associated limits
-    distanceMin: 4.0,
-    distanceMax: 16.0,
-    initialZoom: 1.0, // Zoom factor and associated limits
-    zoomMin: 0.5,
-    zoomMax: 2.0,
+    initialDistance: 16.0, // Distance to the target and associated limits
+    distanceMin: 8.0,
+    distanceMax: 32.0,
+    initialZoom: 0.5, // Zoom factor and associated limits
+    zoomMin: 0,
+    zoomMax: 1,
     initialFov: 45.0, // Field-of-view (expressed in degrees)
     near: 0.01, // Front clipping plane
     far: 100.0 // Back clipping plane

@@ -1,16 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using RobDroneAndGOAuth.Controllers;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
 using RobDroneAndGOAuth.Model.User.UserDTOs;
 using RobDroneAndGOAuth.Services.IServices;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
 namespace RobDroneAndGOAuth.Services
 {
     public class UserAppService : IUserAppService
@@ -57,32 +50,25 @@ namespace RobDroneAndGOAuth.Services
             {
                 return new TokenDto($"User with email {user.Email} not found!");
             }
-
-            return new TokenDto(false);
         }
 
         public async Task<RegisteredDTO> Register(CreateUserDto user)
         {
             ApplicationUser appUser = new ApplicationUser
             {
-                UserName = (user.Name + user.phonenumber),
+                UserName = user.Name + user.phonenumber,
                 Email = user.Email
             };
             IdentityResult result = await _userManager.CreateAsync(appUser, user.Password);
             if (result.Succeeded)
             {
-                // Assuming the default role is "ROLE_USER"
                 string defaultRole = "ROLE_USER";
-                // Check if the role exists
                 if (!await _rolemanager.RoleExistsAsync(defaultRole))
                 {
-                    // Create the role if it doesn't exist
                     await _rolemanager.CreateAsync(new ApplicationRole(defaultRole));
                 }
 
-                // Add the user to the default role
                 await _userManager.AddToRoleAsync(appUser, defaultRole);
-                // Lockout new users in order to admin to accept them
                 await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now.AddYears(100)));
                 return new RegisteredDTO { User = appUser, Error = null };
             }
@@ -104,6 +90,30 @@ namespace RobDroneAndGOAuth.Services
                 return await _userManager.DeleteAsync(appUser);
         }
 
+/*
+        public async Task<CreateUserDto> editUser(CreateUserDto user)
+        {
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
+            if (appUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+            }
 
+            if(appUser.Name != user.Name){
+                appUser.Name = user.Name;
+            }
+            if(appUser.Email != user.Email){
+                appUser.Email = user.Email;
+            }
+            if(appUser.Password != user.Password){
+                appUser.Password = user.Password;
+            }
+            if(appUser.phonenumber != user.phonenumber){
+                appUser.phonenumber = user.phonenumber;
+            }
+
+            IdentityResult result = await _userManager.UpdateAsync(appUser);
+            return result;
+        }*/
     }
 }
