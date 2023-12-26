@@ -3,7 +3,7 @@ import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import IBuildingsController from '../../controllers/IControllers/IBuildingsController';
 import config from '../../../config';
-import {checkRole} from '../middlewares/isTokenRoleValid'; // adjust the path accordingly
+import { checkRole } from '../middlewares/isTokenRoleValid'; // adjust the path accordingly
 
 const route = Router();
 
@@ -21,8 +21,8 @@ export default (app: Router) => {
         lifts: Joi.number().required(),
         maxCel: Joi.array().items(Joi.number().required()).required(),
       }),
-    }),checkRole(['ROLE_MANAGER']),(req, res, next) => ctrl.createBuilding(req, res, next));
-  
+    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.createBuilding(req, res, next));
+
   route.get(
     '/MinMaxFloors',
     celebrate({
@@ -30,25 +30,27 @@ export default (app: Router) => {
         minFloors: Joi.number().required(),
         maxFloors: Joi.number().required(),
       }),
-    }),checkRole(['ROLE_USER']),
+    }), checkRole(['ROLE_USER']),
     (req, res, next) => ctrl.listBuildingsByFloors(req, res, next));
 
   route.put(
     '/update',
     celebrate({
-        body: Joi.object({
-          id: Joi.string().required(),
-          name: Joi.string().required(),
-          localizationoncampus: Joi.string().required(),
-          floors: Joi.number().required(),
-          lifts: Joi.number().required(),
-          maxCel: Joi.array().items(Joi.number().required()).required(),
+      body: Joi.object({
+        id: Joi.string().required(),
+        name: Joi.string().required(),
+        localizationoncampus: Joi.string().required(),
+        floors: Joi.number().required(),
+        lifts: Joi.number().required(),
+        maxCel: Joi.array().items(Joi.number().required()).required(),
       }),
-    }),checkRole(['ROLE_MANAGER']),(req,res,next)=> ctrl.updateBuilding(req,res,next));
-  
-    route.get(
-      '/list',
-      celebrate({body: Joi.object({
+    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.updateBuilding(req, res, next));
+
+  route.get(
+    '/list',
+    celebrate({
+      body: Joi.object({
         value: Joi.object().required(),
-      }),}),(req, res, next) => ctrl.findAll(req, res, next));
+      }),
+    }), checkRole(['ROLE_USER']), (req, res, next) => ctrl.findAll(req, res, next));
 }
