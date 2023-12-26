@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel;
+using IdentityMongo.Settings;
+using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
@@ -116,6 +119,12 @@ namespace RobDroneAndGOAuth.Services
 
             IdentityResult result = await _userManager.UpdateAsync(appUser);
             return result;
+        }
+
+        public async Task<bool> UserExists(string email)
+        {
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(email);
+            return appUser != null;
         }
     }
 }

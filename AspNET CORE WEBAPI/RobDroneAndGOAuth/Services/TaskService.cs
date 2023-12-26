@@ -1,26 +1,54 @@
-﻿using RobDroneAndGOAuth.Model.Task;
-using RobDroneAndGOAuth.Services.IServices;
-using System.Runtime.Serialization;
+﻿using IdentityMongo.Settings;
 using MongoDB.Driver;
+using RobDroneAndGOAuth.Model.Task;
+using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Services
 {
     public class TaskService : ITaskService
     {
-        public TaskService()
-        {
+        IUserAppService userSrvc;
+        private readonly IMongoDatabase _database;
 
+        public TaskService(MongoDbConfig mongoDbConfig, string databaseName)
+        {
+            var client = new MongoClient(mongoDbConfig.ConnectionString);
+            _database = client.GetDatabase(databaseName);
         }
 
         public async Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto)
         {
-            return null;
+            await CreateCollectionIfNotExists("VigilanceTasks");
+
+            if (userSrvc.UserExists(dto.userEmail).Result)
+            {
+                var tasksCollection = _database.GetCollection<TaskVigilanceDto>("VigilanceTasks");
+                tasksCollection.InsertOne(dto);
+            }
+            return dto;
         }
 
         public async Task<TaskPickDeliveryDto> createPickDeliveryTask(TaskPickDeliveryDto dto)
         {
-            return null;
+            await CreateCollectionIfNotExists("PickDeliveryTasks");
+
+            if (userSrvc.UserExists(dto.userEmail).Result)
+            {
+                var tasksCollection = _database.GetCollection<TaskPickDeliveryDto>("PickDeliveryTasks");
+                tasksCollection.InsertOne(dto);
+            }
+            return dto;
         }
+
+        private async Task CreateCollectionIfNotExists(string collectionName)
+        {
+            var collections = await _database.ListCollectionNames().ToListAsync();
+            if (!collections.Contains(collectionName))
+            {
+                await _database.CreateCollectionAsync(collectionName);
+            }
+        }
+
         /*
         public async Task<IEnumerable<TaskDto>> SearchTasks(string state, string deviceType, string userId)
         {

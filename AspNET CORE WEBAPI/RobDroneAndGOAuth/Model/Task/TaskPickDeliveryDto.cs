@@ -5,6 +5,8 @@ namespace RobDroneAndGOAuth.Model.Task
     public class TaskPickDeliveryDto
     {
         [Required]
+        public string userEmail { get; set; }
+        [Required]
         public string NamePickup { get; set; }
         
         [Required]
