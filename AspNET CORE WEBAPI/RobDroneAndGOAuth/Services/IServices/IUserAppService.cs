@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
-using RobDroneAndGOAuth.Model.User;
 using RobDroneAndGOAuth.Model.User.UserDTOs;
 
 namespace RobDroneAndGOAuth.Services.IServices
@@ -12,7 +10,7 @@ namespace RobDroneAndGOAuth.Services.IServices
         Task<RegisteredDTO> Register(CreateUserDto user);
 
         Task<IdentityResult> DeleteAccount(string user);
-        Task<IdentityResult> editUser(CreateUserDto user);
+        //Task<IdentityResult> editUser(CreateUserDto user);
 
         Task<bool> UserExists(string email);
     }

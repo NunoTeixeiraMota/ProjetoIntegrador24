@@ -11,6 +11,20 @@ body {
   height: 100vh; 
 }
 
+.button-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
 .horizontal-stepper {
     display: flex;
     justify-content: center;
@@ -25,11 +39,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
 }
-.button-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
 h1{
     font-family: 'Roboto', sans-serif;
     color: #333;
@@ -57,33 +66,6 @@ form {
     border-radius: 4px;
 }
 
-/* Button Styles */
-/* Button styling */
-.btn-primary {
-    background: linear-gradient(100deg, #0BFF35, #00E576, #007bff, #0033b3, #0056b3);
-    border: none;
-    color: white;
-    padding: 15px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    width: calc(100% - 20px); /* Adjust the 20px if necessary to match the inputs */
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Smooth transitions for multiple properties */
-  }
-  
-  .btn-primary:hover {
-    background: linear-gradient(200deg, #24fc48, #3de493, #55a1f3, #6c91f0, #b9d0e9);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Increased shadow for a "lifted" effect */
-    transform: translateY(-2px); /* Slight upward movement on hover for a "button press" feel */
-  }
-  
-  .btn-primary:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-
 /* Checkbox Styles */
 .checkbox {
     margin: 10px 0;
@@ -96,28 +78,3 @@ form {
 .checkbox label {
     font-size: 14px;
 }
-
-/* Privacy Policy Button */
-.button {
-    background-color: #3de493; /* A modern, neutral color */
-    color: white; /* Contrast text color */
-    border: none;
-    padding: 12px 20px; /* Slightly larger padding for a more prominent look */
-    margin-top: 10px;
-    border-radius: 6px; /* Slightly increased border-radius for a softer look */
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Smooth transitions for multiple properties */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    font-weight: 500; /* Medium font weight for better readability */
-    font-size: 16px; /* Slightly larger font size */
-    letter-spacing: 0.5px; /* Increased letter spacing for a more open look */
-    display: inline-block; /* Ensuring the button respects padding and margin */
-    text-transform: uppercase; /* Uppercase for a more definitive look */
-}
-
-.button:hover {
-    background-color: #787878; /* A lighter shade on hover for contrast */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Increased shadow for a "lifted" effect */
-    transform: translateY(-2px); /* Slight upward movement on hover for a "button press" feel */
-}
-

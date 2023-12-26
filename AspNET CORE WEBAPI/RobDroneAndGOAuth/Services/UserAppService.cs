@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using IdentityMongo.Settings;
-using Microsoft.AspNetCore.Identity;
-using MongoDB.Driver;
+﻿using Microsoft.AspNetCore.Identity;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
@@ -92,9 +89,10 @@ namespace RobDroneAndGOAuth.Services
                 return await _userManager.DeleteAsync(appUser);
         }
 
-        public async Task<IdentityResult> editUser(CreateUserDto user)
+/*
+        public async Task<IdentityResult> editUser(EditUserDto user)
         {
-            ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
+            var appUser = await _userManager.FindByEmailAsync(user.Email);
             if (appUser == null)
             {
                 return IdentityResult.Failed(new IdentityError { Description = "User not found." });
@@ -119,7 +117,7 @@ namespace RobDroneAndGOAuth.Services
 
             IdentityResult result = await _userManager.UpdateAsync(appUser);
             return result;
-        }
+        }*/
 
         public async Task<bool> UserExists(string email)
         {

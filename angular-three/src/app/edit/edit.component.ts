@@ -3,6 +3,7 @@ import { UserService } from '../service/User/User.service';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
 import { MessageService } from '../service/message/message.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,7 +13,7 @@ import { MessageService } from '../service/message/message.service';
 export class EditComponent implements OnInit {
   user: User = {};
 
-  constructor(private userService: UserService, private messageservice: MessageService, private router: Router ) {};
+  constructor(private userService: UserService, private messageservice: MessageService, private router: Router, private location: Location) {};
 
   ngOnInit() {
   }
@@ -43,7 +44,7 @@ export class EditComponent implements OnInit {
         } else {
           this.messageservice.add("User edited successfully")
           setTimeout(() => {
-            this.router.navigate(['/main-menu']);
+            this.router.navigate(['/user-profile']);
           }, 3000);
         }
       },
@@ -53,12 +54,7 @@ export class EditComponent implements OnInit {
       }
     );
   }
-
-  openPrivacyPolicyPopup() {
-    const url = 'privacy-policy';
-    const windowName = 'Privacy Policy';
-    const windowFeatures = 'width=600,height=400,resizable=yes,scrollbars=yes,status=yes';
-  
-    window.open(url, windowName, windowFeatures);
+  goBack(): void {
+    this.location.back();
   }
 }
