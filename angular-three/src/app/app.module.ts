@@ -28,6 +28,7 @@ import { ListBuildingsMinMaxComponent } from './component/list-buildings-min-max
 import { Title } from '@angular/platform-browser';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditComponent } from './edit/edit.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ListBuildingsMinMaxComponent,
     LoginComponent,
     UserProfileComponent,
+    EditComponent,
     // ... any other components
   ],
   imports: [

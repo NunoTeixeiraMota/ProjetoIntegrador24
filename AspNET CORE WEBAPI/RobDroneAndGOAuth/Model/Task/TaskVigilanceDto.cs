@@ -5,6 +5,9 @@ namespace RobDroneAndGOAuth.Model.Task
     public class TaskVigilanceDto
     {
         [Required]
+        public string userEmail { get; set; }
+        
+        [Required]
         public string Floor { get; set; }
 
         [Required]

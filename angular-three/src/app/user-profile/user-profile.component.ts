@@ -38,6 +38,7 @@ export class UserProfileComponent implements OnInit {
       );
     }
   }
+
   goBack(): void {
     this.location.back();
   }

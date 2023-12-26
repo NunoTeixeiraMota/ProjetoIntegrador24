@@ -5,6 +5,7 @@
       <p><strong>Email:</strong> {{ user.email }}</p>
   </div>
   <div class="buttons">
+    <button class="button-back" routerLink="/edit">Edit Account</button>
     <button class="delete-button" (click)="onDeleteAccount()">Delete Account</button>
     <button class="button-back" (click)="goBack()">Back</button>
   </div>
