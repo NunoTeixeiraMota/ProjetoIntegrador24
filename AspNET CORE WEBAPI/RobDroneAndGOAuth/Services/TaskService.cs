@@ -21,6 +21,7 @@ namespace RobDroneAndGOAuth.Services
         {
             return null;
         }
+        /*
         public async Task<IEnumerable<TaskDto>> SearchTasks(string state, string deviceType, string userId)
         {
             var filter = Builders<Task>.Filter.Empty;
@@ -48,6 +49,6 @@ namespace RobDroneAndGOAuth.Services
             }).ToListAsync();
 
             return tasks;
-        }
+        }*/
     }
 }

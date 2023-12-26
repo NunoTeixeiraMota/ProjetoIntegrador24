@@ -6,6 +6,6 @@ namespace RobDroneAndGOAuth.Services.IServices
     {
         Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto);
         Task<TaskPickDeliveryDto> createPickDeliveryTask(TaskPickDeliveryDto dto);
-        Task<IEnumerable<TaskDto>> SearchTasks(string state, string deviceType, string userId);
+        //Task<IEnumerable<TaskDto>> SearchTasks(string state, string deviceType, string userId);
     }
 }

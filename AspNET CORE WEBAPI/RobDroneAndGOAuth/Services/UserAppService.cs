@@ -83,15 +83,13 @@ namespace RobDroneAndGOAuth.Services
             ApplicationUser? appUser = await _userManager.FindByEmailAsync(Email);
             if (appUser == null)
             {
-                // User not found
                 return IdentityResult.Failed(new IdentityError { Description = "User not found." });
             }
             else
                 return await _userManager.DeleteAsync(appUser);
         }
 
-/*
-        public async Task<CreateUserDto> editUser(CreateUserDto user)
+        public async Task<IdentityResult> editUser(CreateUserDto user)
         {
             ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.Email);
             if (appUser == null)
@@ -99,21 +97,25 @@ namespace RobDroneAndGOAuth.Services
                 return IdentityResult.Failed(new IdentityError { Description = "User not found." });
             }
 
-            if(appUser.Name != user.Name){
+            if (appUser.Name != user.Name)
+            {
                 appUser.Name = user.Name;
             }
-            if(appUser.Email != user.Email){
+            if (appUser.Email != user.Email)
+            {
                 appUser.Email = user.Email;
             }
-            if(appUser.Password != user.Password){
+            if (appUser.Password != user.Password)
+            {
                 appUser.Password = user.Password;
             }
-            if(appUser.phonenumber != user.phonenumber){
+            if (appUser.phonenumber != user.phonenumber)
+            {
                 appUser.phonenumber = user.phonenumber;
             }
 
             IdentityResult result = await _userManager.UpdateAsync(appUser);
             return result;
-        }*/
+        }
     }
 }

@@ -26,7 +26,8 @@ namespace RobDroneAndGOAuth.Controllers
         {
             return await _taskService.createPickDeliveryTask(dto);
         }
-            [HttpGet("Search")]
+        /*
+        [HttpGet("Search")]
         public async Task<IActionResult> SearchTasks([FromQuery] string state, [FromQuery] string deviceType, [FromQuery] string userId)
         {
             var tasks = await _taskService.SearchTasks(state, deviceType, userId);
@@ -37,7 +38,6 @@ namespace RobDroneAndGOAuth.Controllers
             }
 
             return Ok(tasks);
-        }
-    
-    } 
+        }*/
+    }
 }
