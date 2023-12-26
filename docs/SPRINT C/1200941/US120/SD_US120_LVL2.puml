@@ -1,0 +1,44 @@
+@startuml
+actor User
+participant "Angular\nAccount Details Component" as Frontend
+participant "AuthService" as AuthService <<Frontend>>
+participant "HTTP Client" as HttpClient <<Frontend>>
+
+participant "UserController" as Controller <<Backend>>
+participant "UserAppService" as UserAppService <<Backend>>
+database "MongoDB" as Database <<Database>>
+
+User -> Frontend: Clicks delete account
+activate Frontend
+
+Frontend -> AuthService: Validate user session
+activate AuthService
+AuthService --> Frontend: Session valid
+deactivate AuthService
+
+Frontend -> HttpClient: Send account deletion request
+activate HttpClient
+HttpClient -> Controller: Request deletion
+deactivate HttpClient
+
+activate Controller
+Controller -> UserAppService: Check user existence
+activate UserAppService
+UserAppService -> Database: Query User by Email
+activate Database
+Database --> UserAppService: User details
+deactivate Database
+UserAppService --> Controller: User exists
+deactivate UserAppService
+
+Controller -> Database: Delete User
+activate Database
+Database --> Controller: Deletion success
+deactivate Database
+
+Controller --> Frontend: Confirm deletion
+deactivate Controller
+
+Frontend --> User: Display success message
+deactivate Frontend
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+actor User
+participant "Frontend" as Frontend
+participant "Backend" as Backend
+participant "Database" as Database
+
+User -> Frontend: Request delete account
+activate Frontend
+
+Frontend -> Backend: Forward delete request
+activate Backend
+
+Backend -> Database: Delete User account
+activate Database
+Database --> Backend: Confirmation
+deactivate Database
+
+Backend --> Frontend: Response
+deactivate Backend
+
+Frontend --> User: Notify outcome
+deactivate Frontend
+@enduml

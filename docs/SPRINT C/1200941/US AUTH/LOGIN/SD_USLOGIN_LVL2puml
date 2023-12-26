@@ -1,0 +1,33 @@
+@startuml
+actor User
+participant "Angular\nLogin Component" as Frontend <<Frontend>>
+participant "AuthService" as AuthService <<Frontend>>
+participant "ASP.NET Core\nController" as Controller <<Backend>>
+participant "UserAppService" as UserAppService <<Backend>>
+database "MongoDB" as Database <<Database>>
+
+User -> Frontend: Inputs credentials
+activate Frontend
+Frontend -> Frontend: Validate Syntax (HTML5)
+alt Validation Successful
+    Frontend -> AuthService: sign_in(credentials)
+    activate AuthService
+    AuthService -> Controller: Login Request
+    activate Controller
+    Controller -> UserAppService: Process Login
+    activate UserAppService
+    UserAppService -> Database: Query User
+    activate Database
+    Database -> UserAppService: User Data
+    deactivate Database
+    UserAppService -> Controller: Login Result
+    deactivate UserAppService
+    Controller -> AuthService: Response
+    deactivate Controller
+    AuthService -> Frontend: Login Response
+    deactivate AuthService
+else Validation Failed
+    Frontend -> Frontend: Display Syntax Error
+end
+deactivate Frontend
+@enduml

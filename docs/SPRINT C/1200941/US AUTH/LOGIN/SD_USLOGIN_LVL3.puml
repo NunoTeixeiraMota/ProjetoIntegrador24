@@ -1,0 +1,88 @@
+@startuml
+actor User
+
+participant "Angular\nLogin Component" as Frontend <<Frontend>>
+participant "AuthService" as AuthService <<Frontend>>
+participant "HTTP Client" as HttpClient <<Frontend>>
+
+participant "Usercontroller" as Controller <<Backend>>
+participant "IUserAppService" as IUserAppService <<Backend>>
+participant "UserAppService" as UserAppService <<Backend>>
+participant "SignInManager<ApplicationUser>" as SignInManager <<Backend>>
+participant "UserManager<ApplicationUser>" as UserManager <<Backend>>
+participant "ITokenService" as ITokenService <<Backend>>
+participant "TokenService" as TokenService <<Backend>>
+database "MongoDB" as MongoDB <<Database>>
+
+User -> Frontend: Inputs credentials
+activate Frontend
+Frontend -> Frontend: Validate Syntax (HTML5)
+
+alt Validation Successful
+    Frontend -> AuthService: sign_in(credentials)
+    activate AuthService
+
+    AuthService -> HttpClient: POST /Login
+    activate HttpClient
+    HttpClient -> Controller: Login(LoginUserDto)
+    activate Controller
+
+Controller -> IUserAppService: Login(user)
+activate IUserAppService
+IUserAppService -> UserAppService: Login(user)
+activate UserAppService
+
+UserAppService -> UserManager: FindByEmailAsync(user.Email)
+activate UserManager
+UserManager -> MongoDB: Query User by Email
+activate MongoDB
+MongoDB --> UserManager: ApplicationUser / null
+deactivate MongoDB
+UserManager --> UserAppService: ApplicationUser / null
+
+alt appUser != null
+    UserAppService -> SignInManager: PasswordSignInAsync(appUser, user.Password)
+    activate SignInManager
+    SignInManager --> UserAppService: SignInResult
+
+    alt result.Succeeded
+        UserAppService -> UserManager: GetRolesAsync(appUser)
+        UserManager --> UserAppService: roles[]
+        deactivate UserManager
+        UserAppService -> ITokenService: GenerateJwtToken(appUser)
+        activate ITokenService
+        ITokenService -> TokenService: GenerateJwtToken(appUser)
+        activate TokenService
+        TokenService --> ITokenService: TokenDto
+        deactivate TokenService
+        ITokenService --> UserAppService: TokenDto
+        deactivate ITokenService
+    else failure
+        UserAppService --> IUserAppService: TokenDto(Incorrect password)
+    end
+    deactivate SignInManager
+else user not found
+    UserAppService --> IUserAppService: TokenDto(User not found)
+end
+
+deactivate UserAppService
+IUserAppService --> Controller: TokenDto
+deactivate IUserAppService
+Controller --> HttpClient: TokenDto
+deactivate Controller
+HttpClient --> AuthService: userLogged
+deactivate HttpClient
+
+alt isAuthenticated
+    AuthService -> Frontend: login(token, roles, expirationDate)
+    Frontend -> Frontend: Navigate to '/main-menu'
+else not authenticated
+    Frontend -> Frontend: Display error message
+end
+
+deactivate AuthService
+else Validation Failed
+    Frontend -> Frontend: Display Syntax Error
+end
+deactivate Frontend
+@enduml

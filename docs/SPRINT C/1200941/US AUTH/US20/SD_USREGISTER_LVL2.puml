@@ -1,0 +1,43 @@
+@startuml
+actor User
+
+participant "Frontend\n(Register Component)" as Frontend
+participant "Backend\n(Registration Controller)" as Controller
+participant "User Validation Service" as ValidationService
+participant "User Management Service" as UserManager
+database "User Database" as Database
+
+User -> Frontend: "Enter registration details"
+activate Frontend
+
+Frontend -> Controller: "Request User Registration"
+activate Controller
+
+Controller -> ValidationService: "Validate User Data"
+activate ValidationService
+ValidationService --> Controller: "Validation Result"
+deactivate ValidationService
+
+alt Validation Successful
+    Controller -> UserManager: "Create User"
+    activate UserManager
+    UserManager -> Database: "Store User Data"
+    activate Database
+    Database --> UserManager: "Success Confirmation"
+    deactivate Database
+    UserManager --> Controller: "User Creation Successful"
+    deactivate UserManager
+
+    Controller --> Frontend: "Registration Successful"
+else Validation Failed or User Creation Failed
+    Controller --> Frontend: "Registration Failed (Errors)"
+end
+deactivate Controller
+
+alt Registration Successful
+    Frontend -> User: "Display Success Message"
+else Registration Failed
+    Frontend -> User: "Display Error Message"
+end
+deactivate Frontend
+@enduml

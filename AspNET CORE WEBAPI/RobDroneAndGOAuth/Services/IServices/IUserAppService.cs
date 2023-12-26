@@ -11,7 +11,7 @@ namespace RobDroneAndGOAuth.Services.IServices
         Task<TokenDto> Login(LoginUserDto user);
         Task<RegisteredDTO> Register(CreateUserDto user);
 
-        Task<IdentityResult> DeleteAccount(AccountDeletionDto user);
+        Task<IdentityResult> DeleteAccount(string email);
         //Task<CreateUserDto> editUser(CreateUserDto user);
     }
 }

@@ -1,0 +1,23 @@
+@startuml
+actor User
+participant "Angular\nLogin Component" as Frontend <<Frontend>>
+participant "ASP.NET Core\nBackend" as Backend <<Backend>>
+database "Database" as Database <<Database>>
+
+User -> Frontend: Inputs credentials
+activate Frontend
+Frontend -> Frontend: Validate Syntax (HTML5)
+alt Validation Successful
+    Frontend -> Backend: Login Request
+    activate Backend
+    Backend -> Database: Check Credentials
+    activate Database
+    Database -> Backend: Credentials Validity
+    deactivate Database
+    Backend -> Frontend: Login Response
+    deactivate Backend
+else Validation Failed
+    Frontend -> Frontend: Display Syntax Error
+end
+deactivate Frontend
+@enduml

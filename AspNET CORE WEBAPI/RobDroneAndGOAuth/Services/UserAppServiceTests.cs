@@ -191,5 +191,42 @@ namespace RobDroneAndGOAuth.Tests
             Assert.NotNull(result.User);
             Assert.Null(result.Error);
         }
+        
+        [Fact]
+        public async Task DeleteAccount_UserExists_DeletesUser()
+        {
+            // Arrange
+            var userEmail = "test@example.com";
+            var appUser = new ApplicationUser { Email = userEmail, UserName = "TestUser" };
+            var identityResult = IdentityResult.Success;
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync(appUser);
+            _mockUserManager.Setup(x => x.DeleteAsync(appUser)).ReturnsAsync(identityResult);
+
+            // Act
+            var result = await _userAppService.DeleteAccount(userEmail);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Succeeded);
+        }
+
+        [Fact]
+        public async Task DeleteAccount_UserDoesNotExist_ReturnsFailedResult()
+        {
+            // Arrange
+            var userEmail = "nonexistent@example.com";
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync((ApplicationUser)null);
+
+            // Act
+            var result = await _userAppService.DeleteAccount(userEmail);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.False(result.Succeeded);
+            Assert.Single(result.Errors);
+            Assert.Equal("User not found.", result.Errors.First().Description);
+        }
     }
 }

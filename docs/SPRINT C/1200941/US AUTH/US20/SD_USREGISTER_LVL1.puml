@@ -1,0 +1,32 @@
+@startuml
+actor User
+
+participant "Frontend\n(Register Component)" as Frontend
+participant "Backend\n(User Service)" as Backend
+database "Database" as Database
+
+User -> Frontend: "Enter registration details"
+activate Frontend
+
+Frontend -> Backend: "Register user"
+activate Backend
+
+alt Successful Validation
+    Backend -> Database: "Store User Data"
+    activate Database
+    Database --> Backend: "Success Confirmation"
+    deactivate Database
+
+    Backend --> Frontend: "Registration Successful"
+else Validation Failed
+    Backend --> Frontend: "Registration Failed"
+end
+deactivate Backend
+
+alt Registration Successful
+    Frontend -> User: "Show Success Message"
+else Registration Failed
+    Frontend -> User: "Show Error Message"
+end
+deactivate Frontend
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+actor User
+
+participant "Angular\nRegisterComponent" as Frontend <<Frontend>>
+participant "AuthService" as AuthService <<Frontend>>
+participant "HTTPClient" as HttpClient <<Frontend>>
+
+participant "UserController" as Controller <<Backend>>
+participant "IUserAppService" as IUserAppService <<Backend>>
+participant "UserAppService" as UserAppService <<Backend>>
+participant "UserManager<ApplicationUser>" as UserManager <<Backend>>
+database "MongoDB" as MongoDB <<Database>>
+
+User -> Frontend: "Enter registration details"
+activate Frontend
+
+Frontend -> Frontend: "Validate input (HTML5)"
+alt Validation Successful
+    Frontend -> AuthService: "registerUser(user)"
+    activate AuthService
+
+    AuthService -> HttpClient: "POST /Register"
+    activate HttpClient
+    HttpClient -> Controller: "Register(CreateUserDto)"
+    activate Controller
+
+    Controller -> IUserAppService: "Register(user)"
+    activate IUserAppService
+
+    IUserAppService -> UserAppService: "Register(user)"
+    activate UserAppService
+
+    UserAppService -> UserManager: "CreateAsync(appUser, user.Password)"
+    activate UserManager
+    UserManager -> MongoDB: "Insert User"
+    activate MongoDB
+    MongoDB --> UserManager: "Confirmation message"
+    deactivate MongoDB
+    UserManager --> UserAppService: "User Creation Result"
+    deactivate UserManager
+
+    alt CreateAsync returns Succeeded
+        UserAppService -> UserManager: "AddToRoleAsync(appUser, defaultRole)"
+        activate UserManager
+        UserManager --> UserAppService: "Role Assignment Result"
+        deactivate UserManager
+        
+        UserAppService -> UserManager: "SetLockoutEndDateAsync(appUser)"
+        activate UserManager
+        UserManager --> UserAppService: "Lockout Setting Result"
+        deactivate UserManager
+
+        UserAppService --> IUserAppService: "RegisteredDTO(appUser, null)"
+        deactivate UserAppService
+        IUserAppService --> Controller: "RegisteredDTO"
+        deactivate IUserAppService
+        Controller --> HttpClient: "RegisteredDTO"
+        deactivate Controller
+        HttpClient --> AuthService: "userRegistered"
+        deactivate HttpClient
+
+        AuthService -> Frontend: "Notify user registration success"
+        Frontend -> Frontend: "Navigate to login page"
+    else CreateAsync returns Failed
+        UserAppService --> IUserAppService: "RegisteredDTO(null, Errors)"
+        deactivate UserAppService
+        IUserAppService --> Controller: "RegisteredDTO"
+        deactivate IUserAppService
+        Controller --> HttpClient: "RegisteredDTO"
+        deactivate Controller
+        HttpClient --> AuthService: "userRegistrationFailed"
+        deactivate HttpClient
+
+        AuthService -> Frontend: "Display error message"
+    end
+
+    deactivate AuthService
+else Validation Failed
+    Frontend -> Frontend: "Display form validation errors"
+end
+deactivate Frontend
+@enduml
