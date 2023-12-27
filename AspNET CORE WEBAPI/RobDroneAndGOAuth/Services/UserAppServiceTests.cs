@@ -50,7 +50,7 @@ namespace RobDroneAndGOAuth.Tests
         {
             // Arrange
             var loginUserDto = new LoginUserDto { Email = "test@example.com", Password = "password123" };
-            var appUser = new ApplicationUser { Email = "test@example.com", UserName = "TestUser"};
+            var appUser = new ApplicationUser { Email = "test@example.com", UserName = "TestUser" };
             var tokenDto = new TokenDto(true, "AccessToken123", new List<string> { "ROLE_USER" }, DateTime.Now.AddDays(1));
 
             _mockUserManager.Setup(x => x.FindByEmailAsync(loginUserDto.Email)).ReturnsAsync(appUser);
@@ -191,7 +191,7 @@ namespace RobDroneAndGOAuth.Tests
             Assert.NotNull(result.User);
             Assert.Null(result.Error);
         }
-        
+
         [Fact]
         public async Task DeleteAccount_UserExists_DeletesUser()
         {
@@ -228,5 +228,38 @@ namespace RobDroneAndGOAuth.Tests
             Assert.Single(result.Errors);
             Assert.Equal("User not found.", result.Errors.First().Description);
         }
+
+        [Fact]
+        public async Task EditUser_ValidData_ReturnsSuccess()
+        {
+            // Arrange
+            var editUserDto = new EditUserDto
+            {
+                CurrentEmail = "test@example.com",
+                Email = "newemail@example.com",
+                CurrentPassword = "currentPassword123",
+                Password = "newPassword456",
+                Name = "NewUserName",
+                phonenumber = "9876543210"
+            };
+
+            var appUser = new ApplicationUser { Email = "test@example.com", UserName = "TestUser" };
+            var identityResult = IdentityResult.Success;
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(editUserDto.CurrentEmail)).ReturnsAsync(appUser);
+            _mockUserManager.Setup(x => x.SetEmailAsync(appUser, editUserDto.Email)).ReturnsAsync(IdentityResult.Success);
+            _mockUserManager.Setup(x => x.ChangePasswordAsync(appUser, editUserDto.CurrentPassword, editUserDto.Password)).ReturnsAsync(IdentityResult.Success);
+            _mockUserManager.Setup(x => x.SetPhoneNumberAsync(appUser, editUserDto.phonenumber)).ReturnsAsync(IdentityResult.Success);
+            _mockUserManager.Setup(x => x.SetUserNameAsync(appUser, editUserDto.Name)).ReturnsAsync(IdentityResult.Success);
+            _mockUserManager.Setup(x => x.UpdateAsync(appUser)).ReturnsAsync(identityResult);
+
+            // Act
+            var result = await _userAppService.editUser(editUserDto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Succeeded);
+        }
+
     }
 }
