@@ -24,6 +24,8 @@ import { RegisterComponent } from './register/register.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditComponent } from './edit/edit.component';
+import { CreateVigilanceTaskComponent } from './component/create-task-vigilance.component/create-task-vigilance.component';
+import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-delivery.component/create-task-pick-delivery.component';
 
 const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
@@ -48,7 +50,10 @@ const routes: Routes = [
   { path: 'list-buildings-min-max', component: ListBuildingsMinMaxComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'edit', component: EditComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
+  { path: 'edit', component: EditComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] } },
+  { path: 'create-task-vigilance', component: CreateVigilanceTaskComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] } },
+  { path: 'create-task-pick-delivery', component: CreateTaskPickDeliveryComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER'] } },
+
 ];
 
 @NgModule({

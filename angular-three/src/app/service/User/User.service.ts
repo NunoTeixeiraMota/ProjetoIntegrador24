@@ -35,10 +35,10 @@ export class UserService {
     return this.http.post<User>(`${this.apiBaseUrl}/User/register`, user, httpOptions);
   }
 
-  edit(user: User): Observable<User> {
+  edit(user: any): Observable<User> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    return this.http.post<User>(`${this.apiBaseUrl}/User/edit`, user, httpOptions);
+    return this.http.post<any>(`${this.apiBaseUrl}/User/edit`, user, httpOptions);
   }
 }

@@ -54,7 +54,7 @@ describe('CreateRoomComponent', () => {
   }
 
   const mockRoom: Room = {
-    id: "1",
+    _id: "1",
     floor: mockFloor,
     name: "a",
     category: RoomCategory.Anfiteatro,

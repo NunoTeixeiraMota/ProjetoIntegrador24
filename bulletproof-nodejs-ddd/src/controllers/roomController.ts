@@ -24,4 +24,14 @@ export default class roomController implements IRoomController {
         next(error);
         }
     }
+
+    public async findAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+          const roomNames = await this.roomServiceInstance.findAll();
+          res.json(roomNames);
+        } catch (e) {
+          res.status(500).json({ error: 'Internal Server Error' });
+          next(e);
+        }
+      }
 }

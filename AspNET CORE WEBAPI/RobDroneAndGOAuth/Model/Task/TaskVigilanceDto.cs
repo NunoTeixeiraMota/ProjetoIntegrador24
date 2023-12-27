@@ -15,6 +15,6 @@ namespace RobDroneAndGOAuth.Model.Task
 
         [Required]
         [RegularExpression(@"^\d+$", ErrorMessage = "Phone number must be numeric")]
-        public string phonenumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

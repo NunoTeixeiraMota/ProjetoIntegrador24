@@ -38,4 +38,13 @@ export default class roomService implements IRoomService {
       throw e;
     }
   }
+
+  public async findAll(): Promise<Room[]> {
+    try {
+      const rooms = await this.roomRepo.findAll();
+      return rooms;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

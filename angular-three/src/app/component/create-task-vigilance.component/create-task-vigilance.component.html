@@ -1,0 +1,32 @@
+<head>
+  <link rel="stylesheet">
+</head>
+
+<section class="main-content">
+    <div class="container">
+        <div class="table-section">
+            <table>
+                <tr>
+                    <th><label>Floor:<span>*</span></label></th>
+                    <td>
+                        <select [(ngModel)]="selectedFloorId">
+                            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>Description:<span>*</span></label></th>
+                    <td><input [(ngModel)]="task.description" placeholder="Task Description" required></td>
+                </tr>
+                <tr>
+                    <th><label>Phone Number:<span>*</span></label></th>
+                    <td><input [(ngModel)]="task.phoneNumber" placeholder="Task Phone Number" required></td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-section">
+            <button class="buttonBack" (click)="goBack()">Back</button>
+            <button (click)="createTask()">Create Task</button>
+        </div>
+      </div>
+</section>

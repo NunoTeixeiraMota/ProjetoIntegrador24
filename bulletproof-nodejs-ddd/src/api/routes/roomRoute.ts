@@ -25,4 +25,12 @@ export default (app: Router) => {
     checkRole(['ROLE_ADMIN','ROLE_MANAGER']),
     (req, res, next) => ctrl.createRoom(req, res, next)
   );
+
+  route.get(
+    '/list',
+    celebrate({
+      body: Joi.object({
+        value: Joi.object().required(),
+      }),
+    }), checkRole(['ROLE_USER']), (req, res, next) => ctrl.findAll(req, res, next));
 };

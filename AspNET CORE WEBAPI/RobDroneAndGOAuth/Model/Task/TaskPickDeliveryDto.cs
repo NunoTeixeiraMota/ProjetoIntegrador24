@@ -19,6 +19,9 @@ namespace RobDroneAndGOAuth.Model.Task
         public string Floor { get; set; }
 
         [Required]
+        public string[] Room { get; set; }
+
+        [Required]
         public string Description { get; set; }
     }
 }

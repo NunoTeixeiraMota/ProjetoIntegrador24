@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel;
+using IdentityMongo.Settings;
+using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
 using RobDroneAndGOAuth.Model.User;
@@ -89,35 +92,30 @@ namespace RobDroneAndGOAuth.Services
                 return await _userManager.DeleteAsync(appUser);
         }
 
-/*
         public async Task<IdentityResult> editUser(EditUserDto user)
         {
-            var appUser = await _userManager.FindByEmailAsync(user.Email);
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(user.CurrentEmail);
             if (appUser == null)
             {
                 return IdentityResult.Failed(new IdentityError { Description = "User not found." });
             }
 
-            if (appUser.Name != user.Name)
-            {
-                appUser.Name = user.Name;
-            }
-            if (appUser.Email != user.Email)
-            {
-                appUser.Email = user.Email;
-            }
-            if (appUser.Password != user.Password)
-            {
-                appUser.Password = user.Password;
-            }
-            if (appUser.phonenumber != user.phonenumber)
-            {
-                appUser.phonenumber = user.phonenumber;
-            }
+            try{
+                if(user.Email != ""){
+                    await _userManager.SetEmailAsync(appUser, user.Email);
+                }
 
-            IdentityResult result = await _userManager.UpdateAsync(appUser);
-            return result;
-        }*/
+                if(user.Password != ""){
+                    await _userManager.ChangePasswordAsync(appUser,user.CurrentPassword, user.Password);
+                }          
+                await _userManager.SetPhoneNumberAsync(appUser, user.phonenumber);
+                await _userManager.SetUserNameAsync(appUser, user.Name);
+                return await _userManager.UpdateAsync(appUser);
+
+            }catch(Exception){
+                return IdentityResult.Failed(new IdentityError { Description = "Please introduce valid data." });
+            }
+        }
 
         public async Task<bool> UserExists(string email)
         {
