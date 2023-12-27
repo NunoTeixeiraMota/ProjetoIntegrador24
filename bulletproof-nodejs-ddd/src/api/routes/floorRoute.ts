@@ -50,7 +50,7 @@ export default (app: Router) => {
         hasElevator: Joi.boolean().required(),
         passages: Joi.array().items(Joi.string())
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.createFloor(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_USER','ROLE_MANAGER']), (req, res, next) => ctrl.createFloor(req, res, next));
 
   route.put(
     '/updateFloor',
@@ -66,7 +66,7 @@ export default (app: Router) => {
         hasElevator: Joi.boolean().required(),
         passages: Joi.array().items(Joi.string())
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.updateFloor(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.updateFloor(req, res, next));
 
   route.patch(
     '/patchFloorMap',
@@ -75,7 +75,7 @@ export default (app: Router) => {
         id: Joi.string().required(),
         floorMap: Joi.string().required(),
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.patchFloorMap(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.patchFloorMap(req, res, next));
 
 
   route.patch(
@@ -85,11 +85,11 @@ export default (app: Router) => {
         id: Joi.string().required(),
         passages: Joi.array().items(Joi.string().required()).required()
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.patchPassageBuilding(req, res, next));
 
   route.patch(
     '/uploadmap',
-    upload.single('file'), checkRole(['ROLE_MANAGER']),
+    upload.single('file'), checkRole(['ROLE_ADMIN','ROLE_MANAGER']),
     (req, res, next) => {
       if (!req.file) {
         return res.status(400).send('No file uploaded.');
@@ -103,7 +103,7 @@ export default (app: Router) => {
       body: Joi.object({
         buildingId: Joi.string().required(),
       }),
-    }), checkRole(['ROLE_USER']),
+    }), checkRole(['ROLE_USER','ROLE_ADMIN','ROLE_MANAGER']),
     (req, res, next) => ctrl.listAllFloorsInBuilding(req, res, next));
 
   route.get(
@@ -112,5 +112,5 @@ export default (app: Router) => {
       body: Joi.object({
         value: Joi.object().optional(),
       }),
-    }), checkRole(['ROLE_USER']), (req, res, next) => ctrl.listAllFloors(req, res, next));
+    }), checkRole(['ROLE_USER','ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.listAllFloors(req, res, next));
 }

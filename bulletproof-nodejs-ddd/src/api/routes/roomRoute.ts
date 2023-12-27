@@ -22,7 +22,7 @@ export default (app: Router) => {
         dimension: Joi.array().items(Joi.number().required()).length(2), // assuming dimensions are 2D [length, width]
       }),
     }),
-    checkRole(['ROLE_ADMIN']),
+    checkRole(['ROLE_ADMIN','ROLE_MANAGER']),
     (req, res, next) => ctrl.createRoom(req, res, next)
   );
 };

@@ -19,7 +19,7 @@ export default (app: Router) => {
         state: Joi.string().required(),
         building: Joi.string().required()
       }),
-    }),checkRole(['ROLE_MANAGER']),
+    }),checkRole(['ROLE_ADMIN','ROLE_MANAGER']),
     (req, res, next) => ctrl.createLift(req, res, next)
   );
 }

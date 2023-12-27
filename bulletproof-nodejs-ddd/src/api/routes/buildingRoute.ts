@@ -21,7 +21,7 @@ export default (app: Router) => {
         lifts: Joi.number().required(),
         maxCel: Joi.array().items(Joi.number().required()).required(),
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.createBuilding(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.createBuilding(req, res, next));
 
   route.get(
     '/MinMaxFloors',
@@ -30,7 +30,7 @@ export default (app: Router) => {
         minFloors: Joi.number().required(),
         maxFloors: Joi.number().required(),
       }),
-    }), checkRole(['ROLE_USER']),
+    }), checkRole(['ROLE_ADMIN','ROLE_USER','ROLE_MANAGER']),
     (req, res, next) => ctrl.listBuildingsByFloors(req, res, next));
 
   route.put(
@@ -44,7 +44,7 @@ export default (app: Router) => {
         lifts: Joi.number().required(),
         maxCel: Joi.array().items(Joi.number().required()).required(),
       }),
-    }), checkRole(['ROLE_MANAGER']), (req, res, next) => ctrl.updateBuilding(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.updateBuilding(req, res, next));
 
   route.get(
     '/list',
@@ -52,5 +52,5 @@ export default (app: Router) => {
       body: Joi.object({
         value: Joi.object().required(),
       }),
-    }), checkRole(['ROLE_USER']), (req, res, next) => ctrl.findAll(req, res, next));
+    }), checkRole(['ROLE_ADMIN','ROLE_USER','ROLE_MANAGER']), (req, res, next) => ctrl.findAll(req, res, next));
 }

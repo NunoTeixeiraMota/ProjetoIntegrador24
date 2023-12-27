@@ -23,7 +23,7 @@ export default (app: Router) => {
           description: Joi.string().required(),
           isActive: Joi.boolean()
         }),
-      }),checkRole(['ROLE_MANAGER']), (req,res,next) => ctrl.addRobot(req,res,next));
+      }),checkRole(['ROLE_ADMIN','ROLE_MANAGER']), (req,res,next) => ctrl.addRobot(req,res,next));
 
   route.post(
     '/createRobot',
@@ -34,7 +34,7 @@ export default (app: Router) => {
             modelRobot: Joi.string().required(),
             task: Joi.number().required()
           }),
-        }),checkRole(['ROLE_MANAGER']),(req,res,next) => ctrl.createRobotType(req,res,next));
+        }),checkRole(['ROLE_ADMIN','ROLE_MANAGER']),(req,res,next) => ctrl.createRobotType(req,res,next));
   // /changeRobotState
   route.patch(
     '/changeRobotState',
@@ -42,19 +42,19 @@ export default (app: Router) => {
           body: Joi.object({
             id: Joi.string().required(),
           }),
-        }),checkRole(['ROLE_MANAGER']),(req,res,next) => ctrl.changeRobotState(req,res,next));
+        }),checkRole(['ROLE_ADMIN','ROLE_MANAGER']),(req,res,next) => ctrl.changeRobotState(req,res,next));
   
   route.get(
     '/list',
     celebrate({body: Joi.object({
       value: Joi.object().optional(),
     }),
-  }),checkRole(['ROLE_USER']),(req, res, next) => ctrl.listAllRobotTypes(req, res, next));
+  }),checkRole(['ROLE_USER','ROLE_ADMIN','ROLE_MANAGER']),(req, res, next) => ctrl.listAllRobotTypes(req, res, next));
 
   route.get(
     '/activeRobots',
     celebrate({body: Joi.object({
       value: Joi.object().optional(),
     }),
-  }),checkRole(['ROLE_USER']),(req, res, next) => ctrl.listActiveRobots(req, res, next));
+  }),checkRole(['ROLE_USER','ROLE_ADMIN','ROLE_MANAGER']),(req, res, next) => ctrl.listActiveRobots(req, res, next));
 };

@@ -18,6 +18,7 @@ export const checkRole = (requiredRoles) => (req, res, next) => {
     const roles = decoded.role || [];
     console.log(roles);
     const hasRequiredRole = requiredRoles.some(role => roles.includes(role));
+    console.log(hasRequiredRole)
     if (!hasRequiredRole) {
       return res.status(403).json({ message: 'Insufficient permissions' });
     }
