@@ -73,13 +73,13 @@ describe('CreateVigilanceTaskComponent', () => {
     });
   });
 
-  it('should call createRoom and return room data', () => {
+  it('should call createTaskVigilance and return task data', () => {
     spyOn(taskService, 'vigilance').and.returnValue(of(mockTask));
     taskService.vigilance(component.task);
     expect(taskService.vigilance).toHaveBeenCalledWith(component.task);
   });
 
-  it('should handle error on createRoom', () => {
+  it('should handle error on createTaskVigilance', () => {
     spyOn(taskService, 'vigilance').and.returnValue(throwError(() => new Error('Error')));
     component.createTask();
   });

@@ -79,13 +79,13 @@ describe('CreateTaskPickDeliveryComponent', () => {
     });
   });
 
-  it('should call createRoom and return room data', () => {
+  it('should call createTaskPickDelivery and return task data', () => {
     spyOn(taskService, 'pickDelivery').and.returnValue(of(mockTask));
     taskService.pickDelivery(component.task);
     expect(taskService.pickDelivery).toHaveBeenCalledWith(component.task);
   });
 
-  it('should handle error on createRoom', () => {
+  it('should handle error on createTaskPickDelivery', () => {
     spyOn(taskService, 'pickDelivery').and.returnValue(throwError(() => new Error('Error')));
     component.createTask();
   });
