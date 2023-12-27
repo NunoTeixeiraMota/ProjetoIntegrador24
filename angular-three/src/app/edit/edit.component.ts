@@ -4,6 +4,7 @@ import { User } from '../model/user';
 import { Router } from '@angular/router';
 import { MessageService } from '../service/message/message.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../service/User/auth.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -13,9 +14,20 @@ import { Location } from '@angular/common';
 export class EditComponent implements OnInit {
   user: User = {};
 
-  constructor(private userService: UserService, private messageservice: MessageService, private router: Router, private location: Location) {};
+  editUser = {
+    Name: "",
+    CurrentEmail: "",
+    Email: "",
+    CurrentPassword: "",
+    Password: "",
+    PhoneNumber: "",
+  };
 
-  ngOnInit() {
+  constructor(private authService: AuthService, private userService: UserService, private messageservice: MessageService, private router: Router, private location: Location) { };
+
+  ngOnInit(): void {
+    this.user.token = this.authService.getToken();
+    this.user = this.authService.getUserFromToken();
   }
 
   edit(event: Event) {
@@ -26,16 +38,15 @@ export class EditComponent implements OnInit {
       form.reportValidity();
       return;
     }
-  
-    const formData = new FormData(form);
 
-    var firstName = formData.get('firstName') as string;
-    var lastName = formData.get('lastName') as string;
-    this.user.name = firstName + lastName;
-    this.user.email = formData.get('email') as string;
-    this.user.password = formData.get('password') as string;
-    this.user.phonenumber = formData.get('phonenumber') as string;
-    this.userService.edit(this.user).subscribe(
+    const formData = new FormData(form);
+    this.editUser.Name = formData.get('firstName') as string + formData.get('lastName') as string;
+    this.editUser.CurrentEmail = this.user!.email!;
+    this.editUser.Email = formData.get('email') as string;
+    this.editUser.CurrentPassword = formData.get('currentPassword') as string;
+    this.editUser.Password = formData.get('password') as string;
+    this.editUser.PhoneNumber = formData.get('phonenumber') as string;
+    this.userService.edit(this.editUser).subscribe(
       result => {
         if (result && result.error && result.error.length > 0) {
           result.error.forEach(err => {
@@ -44,7 +55,7 @@ export class EditComponent implements OnInit {
         } else {
           this.messageservice.add("User edited successfully")
           setTimeout(() => {
-            this.router.navigate(['/user-profile']);
+            this.location.back();
           }, 3000);
         }
       },

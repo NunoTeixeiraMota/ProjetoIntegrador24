@@ -43,11 +43,10 @@ namespace RobDroneAndGOAuth.Controllers
             return await _userAppService.DeleteAccount(user.Email);
         }
 
-/*
         [HttpPost("EditUser")]
-        public async Task<IdentityResult> EditUser(CreateUserDto user)
+        public async Task<IdentityResult> EditUser(EditUserDto user)
         {
             return await _userAppService.editUser(user);
-        }*/
+        }
     } 
 }

@@ -19,7 +19,6 @@ namespace RobDroneAndGOAuth.Services
         public async Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto)
         {
             await CreateCollectionIfNotExists("VigilanceTasks");
-
             if (userSrvc.UserExists(dto.userEmail).Result)
             {
                 var tasksCollection = _database.GetCollection<TaskVigilanceDto>("VigilanceTasks");
