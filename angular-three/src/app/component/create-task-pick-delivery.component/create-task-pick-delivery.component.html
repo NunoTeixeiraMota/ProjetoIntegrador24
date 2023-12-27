@@ -1,0 +1,55 @@
+<head>
+    <link rel="stylesheet">
+</head>
+
+<section class="main-content">
+    <div class="container">
+        <div class="table-section">
+            <table>
+                <tr>
+                    <th><label>Name PickUp:<span>*</span></label></th>
+                    <td><input [(ngModel)]="task.namePickup" placeholder="Name PickUp" required></td>
+                </tr>
+                <tr>
+                    <th><label>Name Delivery:<span>*</span></label></th>
+                    <td><input [(ngModel)]="task.nameDelivery" placeholder="Name Delivery" required></td>
+                </tr>
+                <tr>
+                    <th><label>Code for Delivery:<span>*</span></label></th>
+                    <td><input type="number" [(ngModel)]="task.codeDelivery" min="1000"></td>
+                </tr>
+                <tr>
+                    <th><label>Floor:<span>*</span></label></th>
+                    <td>
+                        <select [(ngModel)]="selectedFloorId">
+                            <option *ngFor="let floor of floors" [ngValue]="floor._id">{{ floor.name }}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>Description:<span>*</span></label></th>
+                    <td><input [(ngModel)]="task.description" placeholder="Task Description" required></td>
+                </tr>
+                <tr *ngFor="let room of rooms; let i = index">
+                    <th><label for="room{{i}}">Room {{i + 1}}:</label></th>
+                    <td>
+                        <select [(ngModel)]="rooms[i]._id" id="room{{i}}">
+                            <option *ngFor="let roomOption of rooms" [ngValue]="roomOption._id">{{ roomOption.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" (click)="addRoom()">Add Room</button>
+                    </td>
+                    <td>
+                        <button type="button" (click)="removeRoom(i)">Remove Room</button>
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
+        <div class="button-section">
+            <button class="buttonBack" (click)="goBack()">Back</button>
+            <button (click)="createTask()">Create Task</button>
+        </div>
+    </div>
+</section>

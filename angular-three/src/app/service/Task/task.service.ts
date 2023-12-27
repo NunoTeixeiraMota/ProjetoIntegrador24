@@ -5,6 +5,7 @@ import { User } from '../../model/user';
 import { API_CONFIG } from 'config';
 import { MessageService } from '../message/message.service';
 import taskVigilance from 'src/app/model/taskVigilance';
+import taskPickDelivery from 'src/app/model/taskPickDelivery';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,13 @@ export class TaskService {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    return this.http.post<any>(`${this.apiBaseUrl}/Task/vigilance`, task, httpOptions);
+    return this.http.post<any>(`${this.apiBaseUrl}/Task/Vigilance`, task, httpOptions);
+  }
+
+  pickDelivery(task: taskPickDelivery): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+    return this.http.post<any>(`${this.apiBaseUrl}/Task/PickDelivery`, task, httpOptions);
   }
 }

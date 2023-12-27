@@ -10,16 +10,17 @@ namespace RobDroneAndGOAuth.Services
         IUserAppService userSrvc;
         private readonly IMongoDatabase _database;
 
-        public TaskService(MongoDbConfig mongoDbConfig, string databaseName)
+        public TaskService(MongoDbConfig mongoDbConfig, string databaseName, IUserAppService userSrvc)
         {
             var client = new MongoClient(mongoDbConfig.ConnectionString);
             _database = client.GetDatabase(databaseName);
+            this.userSrvc = userSrvc;
         }
 
         public async Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto)
         {
             await CreateCollectionIfNotExists("VigilanceTasks");
-            if (userSrvc.UserExists(dto.userEmail).Result)
+            if (await userSrvc.UserExists(dto.userEmail))
             {
                 var tasksCollection = _database.GetCollection<TaskVigilanceDto>("VigilanceTasks");
                 tasksCollection.InsertOne(dto);
@@ -31,7 +32,7 @@ namespace RobDroneAndGOAuth.Services
         {
             await CreateCollectionIfNotExists("PickDeliveryTasks");
 
-            if (userSrvc.UserExists(dto.userEmail).Result)
+            if (await userSrvc.UserExists(dto.userEmail))
             {
                 var tasksCollection = _database.GetCollection<TaskPickDeliveryDto>("PickDeliveryTasks");
                 tasksCollection.InsertOne(dto);

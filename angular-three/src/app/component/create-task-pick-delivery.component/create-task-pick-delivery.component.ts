@@ -5,30 +5,37 @@ import { FloorService } from 'src/app/service/Floor/floor.service';
 import { TaskService } from 'src/app/service/Task/task.service';
 import floor from 'src/app/model/floor';
 import { Title } from '@angular/platform-browser';
-import taskVigilance from 'src/app/model/taskVigilance';
-import { User } from 'src/app/model/user';
+import taskPickDelivery from 'src/app/model/taskPickDelivery';
 import { AuthService } from 'src/app/service/User/auth.service';
+import { User } from 'src/app/model/user';
+import { RoomService } from 'src/app/service/Room/Room.service';
+import Room from 'src/app/model/room';
 
 @Component({
-  selector: 'app-create-task-vigilance',
-  templateUrl: './create-task-vigilance.component.html',
-  styleUrls: ['./create-task-vigilance.component.css']
+  selector: 'app-create-task-pick-delivery',
+  templateUrl: './create-task-pick-delivery.component.html',
+  styleUrls: ['./create-task-pick-delivery.component.css']
 })
-export class CreateVigilanceTaskComponent implements OnInit {
+export class CreateTaskPickDeliveryComponent implements OnInit {
   user: User = {};
   floors: floor[] = [];
+  rooms: Room[] = [];
   selectedFloorId: string = '';
 
-  task : taskVigilance = {
+  task: taskPickDelivery = {
     userEmail: "",
+    namePickup: "",
+    nameDelivery: "",
+    codeDelivery: 1000,
     floor: "",
-    description:"",
-    phoneNumber: ""
+    room: [""],
+    description: ""
   };
 
   constructor(private authService: AuthService,
     private location: Location,
     private FloorService: FloorService,
+    private RoomService: RoomService,
     private TaskService: TaskService,
     private messageService: MessageService,
     private titleService: Title
@@ -40,27 +47,41 @@ export class CreateVigilanceTaskComponent implements OnInit {
     this.user.token = this.authService.getToken();
     this.user = this.authService.getUserFromToken();
     this.getFloors();
-    this.titleService.setTitle('RobDroneGo: Create Vigilance Task');
+    setInterval(() => {
+      this.getRooms();
+    }, 1000);
+    this.titleService.setTitle('RobDroneGo: Create PickUp & Delivery Task');
   }
 
   getFloors(): void {
     this.FloorService.listFloors().subscribe(
       (floors: floor[]) => {
-        console.log('Fetched Floors:', floors);
         this.floors = floors;
       },
       (error: any) => {
-        if(error.code == 404) this.messageService.add("Error: No Connection to Server");
+        if (error.code == 404) this.messageService.add("Error: No Connection to Server");
         console.error('Error fetching floors', error);
       }
     );
   }
 
+  getRooms(): void {
+    this.RoomService.listRooms().subscribe(
+      (room: Room[]) => {
+        this.rooms = room.filter(room => room.floor._id == this.selectedFloorId);
+      },
+      (error: any) => {
+        if (error.code == 404) this.messageService.add("Error: No Connection to Server");
+        console.error('Error fetching rooms', error);
+      }
+    );
+  }
+
   createTask() {
-    if(this.selectedFloorId){
+    if (this.selectedFloorId) {
       this.task.userEmail = this.user!.email!;
       this.task.floor = this.selectedFloorId;
-      let errorOrSuccess: any = this.TaskService.vigilance(this.task);
+      let errorOrSuccess: any = this.TaskService.pickDelivery(this.task);
 
       errorOrSuccess.subscribe(
         (data: any) => {
@@ -68,17 +89,25 @@ export class CreateVigilanceTaskComponent implements OnInit {
           this.messageService.add("Success task creation!");
           this.finalMessage = "Success task creation!";
         },
-        
+
         (error: any) => {
           //error
           this.messageService.add(error.error.message);
           this.finalMessage = error.error.message;
         }
       );
-    }else{
+    } else {
       this.messageService.add("Error: Selected floor does not exist");
       console.error('Selected floor does not exist.');
     }
+  }
+
+  addRoom() {
+    this.task.room.push("");
+  }
+
+  removeRoom(index: number) {
+    this.task.room.splice(index, 1);
   }
 
   goBack(): void {

@@ -72,5 +72,14 @@ export default class RoomRepo implements IRoomRepo {
         } catch (err) {
             throw err;
         }
-    } 
+    }
+
+    async findAll(): Promise<Room[]> {
+        try {
+          const room = await this.roomSchema.find() as Room[];
+          return room;
+        } catch (error) {
+          throw error;
+        }
+      }
 }
