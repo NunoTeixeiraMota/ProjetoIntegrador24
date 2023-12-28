@@ -3,7 +3,7 @@ using Moq;
 using RobDroneAndGOAuth.Services;
 using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
-using RobDroneAndGOAuth.Repository;
+using RobDroneAndGOAuth.Repositories.IRepositories;
 
 namespace RobDroneAndGOAuth.Tests
 {

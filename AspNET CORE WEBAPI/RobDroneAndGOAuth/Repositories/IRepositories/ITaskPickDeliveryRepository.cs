@@ -1,7 +1,7 @@
 using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
 
-namespace RobDroneAndGOAuth.Repository
+namespace RobDroneAndGOAuth.Repositories.IRepositories
 {
     public interface ITaskPickDeliveryRepository
     {

@@ -107,9 +107,13 @@ namespace RobDroneAndGOAuth.Services
 
                 if(user.Password != ""){
                     await _userManager.ChangePasswordAsync(appUser,user.CurrentPassword, user.Password);
-                }          
-                await _userManager.SetPhoneNumberAsync(appUser, user.phonenumber);
-                await _userManager.SetUserNameAsync(appUser, user.Name);
+                }
+                if(user.phonenumber != ""){
+                    await _userManager.SetPhoneNumberAsync(appUser, user.phonenumber);
+                }
+                if(user.Name != ""){
+                    await _userManager.SetUserNameAsync(appUser, user.Name);
+                }
                 return await _userManager.UpdateAsync(appUser);
 
             }catch(Exception){

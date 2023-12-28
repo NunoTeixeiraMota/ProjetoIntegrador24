@@ -1,8 +1,9 @@
 using MongoDB.Driver;
 using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
+using RobDroneAndGOAuth.Repositories.IRepositories;
 
-namespace RobDroneAndGOAuth.Repository
+namespace RobDroneAndGOAuth.Repositories
 {
     public class TaskPickDeliveryRepository : ITaskPickDeliveryRepository
     {

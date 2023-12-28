@@ -5,10 +5,10 @@ using RobDroneAndGOAuth.Services.IServices;
 namespace RobDroneAndGOAuth.Controllers
 {
     [ApiController]
-    [Route("Task")]
+    [Route("[controller]")]
     public class TaskController : ControllerBase
     {
-        private ITaskService _taskService;
+        private readonly ITaskService _taskService;
 
         public TaskController(ITaskService taskService)
         {

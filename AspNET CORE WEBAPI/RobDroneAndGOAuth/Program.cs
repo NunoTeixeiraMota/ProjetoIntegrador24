@@ -1,18 +1,15 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
 using RobDroneAndGOAuth.Model.User;
-using System.Drawing.Text;
-using AspNetCore.Identity.MongoDbCore;
-using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using Microsoft.AspNetCore.Identity;
 using RobDroneAndGOAuth.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using RobDroneAndGOAuth.Services.IServices;
 using RobDroneAndGOAuth.Model.ApplicationRole;
+using RobDroneAndGOAuth.Repositories.IRepositories;
+using RobDroneAndGOAuth.Repositories;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,9 +74,18 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
+builder.Services.AddScoped<IMongoDatabase>(provider =>
+{
+    var client = provider.GetRequiredService<IMongoClient>();
+    return client.GetDatabase(databaseName);
+});
 
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserAppService, UserAppService>();
+builder.Services.AddScoped<ITaskPickDeliveryRepository, TaskPickDeliveryRepository>();
+builder.Services.AddScoped<ITaskVigilanceRepository, TaskVigilanceRepository>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();
 
@@ -97,5 +103,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
