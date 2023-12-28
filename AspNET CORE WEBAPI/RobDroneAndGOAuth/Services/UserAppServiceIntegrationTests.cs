@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-public class UserAppServiceIntegrationTests
+public class UserAppServiceIntegrationTests: IAsyncLifetime
 {
     private readonly IMongoClient _mongoClient;
     private readonly IMongoDatabase _testDatabase;
@@ -25,6 +25,7 @@ public class UserAppServiceIntegrationTests
 
     public UserAppServiceIntegrationTests()
     {
+
         // Create configuration
         var configuration = CreateConfiguration();
 
@@ -62,6 +63,11 @@ public class UserAppServiceIntegrationTests
 
         return configurationBuilder.Build();
     }
+    public Task InitializeAsync()
+    {
+        // Initialization code if needed, otherwise just return Task.CompletedTask
+        return Task.CompletedTask;
+    }
 
     private void ConfigureServices(IServiceCollection services, string connectionString, IConfiguration configuration)
     {
@@ -89,6 +95,11 @@ public class UserAppServiceIntegrationTests
     }
 
     public async Task DisposeAsync()
+    {
+        await ClearCollectionsAsync();
+
+    }
+    private async Task ClearCollectionsAsync()
     {
         var userCollection = _testDatabase.GetCollection<ApplicationUser>("applicationUsers");
         var roleCollection = _testDatabase.GetCollection<ApplicationRole>("applicationRoles");
