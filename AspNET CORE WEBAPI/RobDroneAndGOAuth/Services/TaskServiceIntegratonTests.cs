@@ -45,7 +45,7 @@ public class TaskServiceIntegrationTests
         services.AddScoped<IMongoDatabase>(provider =>
         {
             var client = provider.GetRequiredService<IMongoClient>();
-            return client.GetDatabase("test");
+            return client.GetDatabase("IntegrationTesting");
         });
 
         services.AddScoped<ITaskPickDeliveryRepository, TaskPickDeliveryRepository>();

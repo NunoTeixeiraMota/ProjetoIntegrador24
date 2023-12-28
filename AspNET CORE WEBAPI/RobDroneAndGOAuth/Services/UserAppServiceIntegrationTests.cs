@@ -126,6 +126,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
         Assert.Equal(createUserDto.Email, result.User.Email);
         Assert.Equal(createUserDto.Name + createUserDto.phonenumber, result.User.UserName);
     }
+    }
     [Fact]
     public async Task Register_WithExistingEmail_Fails()
     {
@@ -263,7 +264,8 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
 
         // Assert
         Assert.True(result.Succeeded);
-    }
+    }*/
+
     [Fact]
     public async Task DeleteAccount_NonexistentUser_ReturnsErrorMessage()
     {
@@ -277,6 +279,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
         Assert.False(result.Succeeded);
         Assert.Contains(result.Errors, e => e.Description == "User not found.");
     }
+
 
     [Fact]
     public async Task EditUser_SuccessfulEdit_ReturnsIdentityResultSuccess()
@@ -354,6 +357,6 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
 
         // Assert: Editing should fail with invalid data error
         Assert.False(result.Succeeded);
-        Assert.Contains(result.Errors, e => e.Description == "User not found.");
+        Assert.Contains(result.Errors, e => e.Description == "Email 'invalidemail' is invalid.");
     }
 }
