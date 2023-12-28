@@ -33,6 +33,22 @@ namespace RobDroneAndGOAuth.Repositories
         {
             return await _collection.Find(t => t._id == id).FirstOrDefaultAsync();
         }
+        public async Task<TaskPickDelivery> GetTaskByUserAsync(string userEmail)
+        {
+            return await _collection.Find(t => t.userEmail == userEmail).FirstOrDefaultAsync();
+        }
+        public async Task<TaskPickDelivery> GetApprovedTasks(TaskStatus status)
+        {
+            return await _collection.Find(t => t.status == TaskStatus.Aproved).FirstOrDefaultAsync();
+        }
+        public async Task<TaskPickDelivery> GetDeniedTasks(TaskStatus status)
+        {
+            return await _collection.Find(t => t.status == TaskStatus.Denied).FirstOrDefaultAsync();
+        }
+        public async Task<TaskPickDelivery> GetUnapprovedTasks(TaskStatus status)
+        {
+            return await _collection.Find(t => t.status == TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
+        }
 
         public async Task<List<TaskPickDelivery>> GetAllTasksAsync()
         {
@@ -53,5 +69,20 @@ namespace RobDroneAndGOAuth.Repositories
                 Description = task.Description
             };
         }
+        public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
+        {
+            var tasks = await _taskPickDeliveryRepository.GetAllTasksAsync();
+            return tasks.Select(task => new TaskPickDeliveryDto
+            {
+                userEmail = task.UserEmail,
+                NamePickup = task.NamePickup,
+                NameDelivery = task.NameDelivery,
+                CodeDelivery = task.CodeDelivery,
+                Floor = task.Floor,
+                Room = task.Room,
+                Description = task.Description
+            }).ToList();
+        }
     }
+}
 }

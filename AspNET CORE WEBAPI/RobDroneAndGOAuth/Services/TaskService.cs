@@ -18,21 +18,133 @@ namespace RobDroneAndGOAuth.Services
 
         public async Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto)
         {
-            try{
+            try
+            {
                 return await _taskPickDeliveryRepository.InsertTaskAsync(new TaskPickDelivery(dto.userEmail, dto.NamePickup, dto.NameDelivery, dto.CodeDelivery, dto.Floor, dto.Room, dto.Description));
-            }catch(Exception){
+            }
+            catch (Exception)
+            {
                 return null;
             }
         }
 
         public async Task<TaskVigilanceDto> CreateVigilanceTask(TaskVigilanceDto dto)
         {
-            try{
+            try
+            {
                 return await _taskVigilanceRepository.InsertTaskAsync(new TaskVigilance(dto.userEmail, dto.Floor, dto.Description, dto.PhoneNumber));
-            }catch(Exception){
+            }
+            catch (Exception)
+            {
                 return null;
             }
-            
+
         }
+
+        public async Task<bool> ApproveTaskPickDelivery(Guid taskId)
+        {
+            try
+            {
+                var existingTask = await _taskPickDeliveryRepository.GetTaskByIdAsync(taskId);
+
+                if (existingTask == null)
+                {
+                    return false;
+                }
+
+                existingTask.ApproveTask();
+
+                await _taskPickDeliveryRepository.UpdateTaskAsync(existingTask);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DenyTaskPickDelivery(Guid taskId)
+        {
+            try
+            {
+                var existingTask = await _taskPickDeliveryRepository.GetTaskByIdAsync(taskId);
+
+                if (existingTask == null)
+                {
+                    return false;
+                }
+
+                existingTask.DenyTask();
+
+                await _taskPickDeliveryRepository.UpdateTaskAsync(existingTask);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> ApproveTaskVigilance(Guid taskId)
+        {
+            try
+            {
+                var existingTask = await _taskVigilanceRepository.GetTaskByIdAsync(taskId);
+
+                if (existingTask == null)
+                {
+                    return false;
+                }
+
+                existingTask.ApproveTask();
+
+                await _taskVigilanceRepository.UpdateTaskAsync(existingTask);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DenyTaskVigilance(Guid taskId)
+        {
+            try
+            {
+                var existingTask = await _taskVigilanceRepository.GetTaskByIdAsync(taskId);
+
+                if (existingTask == null)
+                {
+                    return false;
+                }
+
+                existingTask.DenyTask();
+
+                await _taskVigilanceRepository.UpdateTaskAsync(existingTask);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<List<TaskVigilanceDto>> GetAllVigilanceTasks()
+        {
+            var tasks = await _taskVigilanceRepository.GetAllTasksAsync();
+            return tasks.Select(task => new TaskVigilanceDto
+            {
+                userEmail = task.UserEmail,
+                Floor = task.Floor,
+                Description = task.Description,
+                PhoneNumber = task.PhoneNumber
+            }).ToList();
+        }
+
+
+
     }
 }
