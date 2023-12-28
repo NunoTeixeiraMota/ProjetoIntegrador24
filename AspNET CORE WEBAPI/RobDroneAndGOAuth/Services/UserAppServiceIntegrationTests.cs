@@ -105,7 +105,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
         await userCollection.DeleteManyAsync(emptyUserFilter);
         await roleCollection.DeleteManyAsync(emptyRoleFilter);
     }
-    /*
+    
     [Fact]
     public async Task RegisterIntegrationTest_Successful_CreatesNewUser()
     {
@@ -126,8 +126,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
         Assert.NotNull(result.User);
         Assert.Equal(createUserDto.Email, result.User.Email);
         Assert.Equal(createUserDto.Name + createUserDto.phonenumber, result.User.UserName);
-    }*/
-
+    }
     [Fact]
     public async Task Register_WithExistingEmail_Fails()
     {
@@ -247,7 +246,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
         Assert.Contains("not found", result.Error);
     }
 
-    /*
+    
     [Fact]
     public async Task DeleteAccount_ExistingUser_DeletesSuccessfully()
     {
@@ -266,7 +265,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
 
         // Assert
         Assert.True(result.Succeeded);
-    }*/
+    }
 
     [Fact]
     public async Task DeleteAccount_NonexistentUser_ReturnsErrorMessage()
@@ -281,7 +280,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
         Assert.False(result.Succeeded);
         Assert.Contains(result.Errors, e => e.Description == "User not found.");
     }
-/*
+
     [Fact]
     public async Task EditUser_SuccessfulEdit_ReturnsIdentityResultSuccess()
     {
@@ -309,7 +308,7 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
 
         // Assert: Editing should succeed
         Assert.True(result.Succeeded);
-    }*/
+    }
 
     [Fact]
     public async Task EditUser_UserNotFound_ReturnsErrorMessage()
@@ -360,6 +359,6 @@ public class UserAppServiceIntegrationTests: IAsyncLifetime
 
         // Assert: Editing should fail with invalid data error
         Assert.False(result.Succeeded);
-        Assert.Contains(result.Errors, e => e.Description == "User not found.");
+        Assert.Contains(result.Errors, e => e.Description == "Email 'invalidemail' is invalid.");
     }
 }
