@@ -64,8 +64,8 @@ export default class Maze {
                      * 
                      * description.map[][] | North passage | West passage
                      * --------------------+---------------+-------------
-                     *          8          |     No        |    Yes
-                     *          9          |    Yes        |     No
+                     *       8,9,10        |     No        |    Yes     IN ARRAY PASSAGES +1 next passage
+                     *      11,12,13       |    Yes        |     No
                      */
                     //wall
                     if (description.map[j][i] == 2 || description.map[j][i] == 3) {
@@ -109,12 +109,12 @@ export default class Maze {
                     }
 
                     //passage
-                    if (description.map[j][i] == 9) {
+                    if (description.map[j][i] == 11 || description.map[j][i] == 12 || description.map[j][i] == 13) {
                         wallObject = this.passage.object.clone();
                         wallObject.position.set(i - description.size.width / 2.0 + 0.5, 0.5, j - description.size.height / 2.0);
                         this.object.add(wallObject);
                     }
-                    if (description.map[j][i] == 8) {
+                    if (description.map[j][i] == 8 || description.map[j][i] == 9 || description.map[j][i] == 10) {
                         wallObject = this.passage.object.clone();
                         wallObject.rotateY(Math.PI / 2.0);
                         wallObject.position.set(i - description.size.width / 2.0, 0.5, j - description.size.height / 2.0 + 0.5);
