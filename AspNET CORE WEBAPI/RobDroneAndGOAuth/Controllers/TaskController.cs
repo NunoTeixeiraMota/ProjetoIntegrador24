@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RobDroneAndGOAuth.Model.Task;
+using RobDroneAndGOAuth.Model.Task.TaskDtos;
 using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Controllers
@@ -18,13 +18,13 @@ namespace RobDroneAndGOAuth.Controllers
         [HttpPost("Vigilance")]
         public async Task<TaskVigilanceDto> taskVigilance(TaskVigilanceDto dto)
         {
-            return await _taskService.createVigilanceTask(dto);
+            return await _taskService.CreateVigilanceTask(dto);
         }
 
         [HttpPost("PickDelivery")]
         public async Task<TaskPickDeliveryDto> taskPickDelivery(TaskPickDeliveryDto dto)
         {
-            return await _taskService.createPickDeliveryTask(dto);
+            return await _taskService.TaskCreatePickDeliveryTask(dto);
         }
 
     }

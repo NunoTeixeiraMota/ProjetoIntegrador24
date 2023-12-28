@@ -1,58 +1,47 @@
-using System.ComponentModel.DataAnnotations;
+using RobDroneAndGOAuth.Model.Task.TaskDtos;
 
 namespace RobDroneAndGOAuth.Model.Task
 {
-
-
-    public class Task
+    public class TaskVigilance
     {
-        public string userEmail { get; set; }
-        public TaskStatus status { get; set; }
+        public Guid _id { get; set; }
+        public string UserEmail { get; set; }
+        public TaskStatus Status { get; set; }
         public string Floor { get; set; }
         public string Description { get; set; }
         public string PhoneNumber {get;set;}
 
-
-
-
-        public Task(string userEmail,TaskStatus status,string Floor,string Description,string PhoneNumber)
+        public TaskVigilance(string userEmail, string floor, string description, string phoneNumber)
         {
-            userEmail = userEmail;
-            status = TaskStatus.WaitingForAprove;
-            Floor = Floor;
-            Description = Description;
-            PhoneNumber = PhoneNumber;
-
+            this._id = Guid.NewGuid();
+            this.UserEmail = userEmail;
+            this.Status = TaskStatus.WaitingForAprove;
+            this.Floor = floor;
+            this.Description = description;
+            this.PhoneNumber = phoneNumber;
         }
 
         public void AproveTask()
         {
-            if (status == TaskStatus.WaitingForAprove)
+            if (Status == TaskStatus.WaitingForAprove)
             {
-                status = TaskStatus.Aproved;
+                Status = TaskStatus.Aproved;
             }
-
         }
 
         public void DenyTask()
         {
-            if (status == TaskStatus.WaitingForAprove)
+            if (Status == TaskStatus.WaitingForAprove)
             {
-                status = TaskStatus.Denied;
+                Status = TaskStatus.Denied;
             }
-
         }
-
-        public void
 
         public enum TaskStatus
         {
             WaitingForAprove,
             Aproved,
             Denied
-
         }
-
-
     }
 }

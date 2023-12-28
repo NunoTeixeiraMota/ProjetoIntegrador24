@@ -1,64 +1,54 @@
-using System.ComponentModel.DataAnnotations;
+using RobDroneAndGOAuth.Model.Task.TaskDtos;
 
 namespace RobDroneAndGOAuth.Model.Task
 {
-
-
-    public class Task
+    public class TaskPickDelivery
     {
-        public string userEmail { get; set; }
-        public string namePickup { get; set; }
-        public string nameDelivery { get; set; }
-        public TaskStatus status { get; set; }
+        public Guid _id { get; set; }
+        public string UserEmail { get; set; }
+        public string NamePickup { get; set; }
+        public string NameDelivery { get; set; }
+        public TaskStatus Status { get; set; }
         public int CodeDelivery { get; set; }
         public string Floor { get; set; }
         public string[] Room { get; set; }
         public string Description { get; set; }
 
-
-
-
-        public Task(string userEmail, string NamePickup, string NameDelivery, TaskStatus status, int CodeDelivery, string Floor, string[] Room, string Description)
+        public TaskPickDelivery(string userEmail, string namePickup, string nameDelivery, int codeDelivery, string floor, string[] room, string description)
         {
-            userEmail = userEmail;
-            NamePickup = namePickup;
-            NameDelivery = nameDelivery;
-            status = TaskStatus.WaitingForAprove;
-            CodeDelivery = codeDelivery;
-            Floor = Floor;
-            Room = Room;
-            Description = Description;
+            this._id = Guid.NewGuid();
+            this.UserEmail = userEmail;
+            this.NamePickup = namePickup;
+            this.NameDelivery = nameDelivery;
+            this.Status = TaskStatus.WaitingForAprove;
+            this.CodeDelivery = codeDelivery;
+            this.Floor = floor;
+            this.Room = room;
+            this.Description = description;
 
         }
-
         public void AproveTask()
         {
-            if (status == TaskStatus.WaitingForAprove)
+            if (Status == TaskStatus.WaitingForAprove)
             {
-                status = TaskStatus.Aproved;
+                Status = TaskStatus.Aproved;
             }
 
         }
 
         public void DenyTask()
         {
-            if (status == TaskStatus.WaitingForAprove)
+            if (Status == TaskStatus.WaitingForAprove)
             {
-                status = TaskStatus.Denied;
+                Status = TaskStatus.Denied;
             }
 
         }
-
-        public void
-
         public enum TaskStatus
         {
             WaitingForAprove,
             Aproved,
             Denied
-
         }
-
-
     }
 }

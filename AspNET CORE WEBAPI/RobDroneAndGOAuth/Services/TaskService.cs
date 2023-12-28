@@ -1,54 +1,38 @@
-﻿using IdentityMongo.Settings;
-using MongoDB.Driver;
-using RobDroneAndGOAuth.Model.Task;
+﻿using RobDroneAndGOAuth.Model.Task;
+using RobDroneAndGOAuth.Model.Task.TaskDtos;
+using RobDroneAndGOAuth.Repository;
 using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Services
 {
     public class TaskService : ITaskService
     {
-        IUserAppService userSrvc;
-        private readonly IMongoDatabase _database;
+        private readonly ITaskPickDeliveryRepository _taskPickDeliveryRepository;
+        private readonly ITaskVigilanceRepository _taskVigilanceRepository;
 
-        public TaskService(MongoDbConfig mongoDbConfig, string databaseName, IUserAppService userSrvc)
+        public TaskService(ITaskPickDeliveryRepository taskPickDeliveryRepository, ITaskVigilanceRepository taskVigilanceRepository)
         {
-            var client = new MongoClient(mongoDbConfig.ConnectionString);
-            _database = client.GetDatabase(databaseName);
-            this.userSrvc = userSrvc;
+            _taskPickDeliveryRepository = taskPickDeliveryRepository;
+            _taskVigilanceRepository = taskVigilanceRepository;
         }
 
-        public async Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto)
+        public async Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto)
         {
-            await CreateCollectionIfNotExists("VigilanceTasks");
-            if (await userSrvc.UserExists(dto.userEmail))
-            {
-                var tasksCollection = _database.GetCollection<TaskVigilanceDto>("VigilanceTasks");
-                tasksCollection.InsertOne(dto);
-            }
-            return dto;
-        }
-
-        public async Task<TaskPickDeliveryDto> createPickDeliveryTask(TaskPickDeliveryDto dto)
-        {
-            await CreateCollectionIfNotExists("PickDeliveryTasks");
-
-            if (await userSrvc.UserExists(dto.userEmail))
-            {
-                var tasksCollection = _database.GetCollection<TaskPickDeliveryDto>("PickDeliveryTasks");
-                tasksCollection.InsertOne(dto);
-            }
-            return dto;
-        }
-
-        private async Task CreateCollectionIfNotExists(string collectionName)
-        {
-            var collections = await _database.ListCollectionNames().ToListAsync();
-            if (!collections.Contains(collectionName))
-            {
-                await _database.CreateCollectionAsync(collectionName);
+            try{
+                return await _taskPickDeliveryRepository.InsertTaskAsync(new TaskPickDelivery(dto.userEmail, dto.NamePickup, dto.NameDelivery, dto.CodeDelivery, dto.Floor, dto.Room, dto.Description));
+            }catch(Exception){
+                return null;
             }
         }
-    
 
+        public async Task<TaskVigilanceDto> CreateVigilanceTask(TaskVigilanceDto dto)
+        {
+            try{
+                return await _taskVigilanceRepository.InsertTaskAsync(new TaskVigilance(dto.userEmail, dto.Floor, dto.Description, dto.PhoneNumber));
+            }catch(Exception){
+                return null;
+            }
+            
+        }
     }
 }
