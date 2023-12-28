@@ -5,22 +5,22 @@
         <form>
             <h1>Edit Account</h1>
             <div class="form-field">
-                <input name="firstName" type="text" placeholder="First Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed" required>
+                <input name="firstName" type="text" placeholder="First Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed">
             </div>
             <div class="form-field">
-                <input name="lastName" type="text" placeholder="Last Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed" required>
+                <input name="lastName" type="text" placeholder="Last Name" pattern="[A-Za-z]+" title="Only alphabetic characters are allowed">
             </div>
             <div class="form-field">
-                <input name="email" type="email" placeholder="Email" required>
+                <input name="email" type="text" placeholder="Email">
             </div>
             <div class="form-field">
-                <input name="password" type="currentPassword" placeholder="Password" required>
+                <input name="currentPassword" type="password" placeholder="Current Password" required>
             </div>
             <div class="form-field">
-                <input name="password" type="password" placeholder="Password" required>
+                <input name="password" type="password" placeholder="Password">
             </div>
             <div class="form-field">
-                <input name="phonenumber" type="tel" placeholder="Phone Number" pattern="[0-9]{9}" title="Phone number should be 9 digits" required>
+                <input name="phonenumber" type="text" placeholder="Phone Number" pattern="[0-9]{9}" title="Phone number should be 9 digits">
             </div>
             <div class="button-container">
             <button class="button-back" (click)="edit($event)">Edit Account</button>

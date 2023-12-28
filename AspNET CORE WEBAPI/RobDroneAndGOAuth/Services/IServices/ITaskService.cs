@@ -1,11 +1,10 @@
-﻿using RobDroneAndGOAuth.Model.Task;
+﻿using RobDroneAndGOAuth.Model.Task.TaskDtos;
 
 namespace RobDroneAndGOAuth.Services.IServices
 {
     public interface ITaskService
     {
-        Task<TaskVigilanceDto> createVigilanceTask(TaskVigilanceDto dto);
-        Task<TaskPickDeliveryDto> createPickDeliveryTask(TaskPickDeliveryDto dto);
-        //Task<IEnumerable<TaskDto>> SearchTasks(string state, string deviceType, string userId);
+        Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto);
+        Task<TaskVigilanceDto> CreateVigilanceTask(TaskVigilanceDto dto);
     }
 }

@@ -43,28 +43,25 @@ export class EditComponent implements OnInit {
     this.editUser.Name = formData.get('firstName') as string + formData.get('lastName') as string;
     this.editUser.CurrentEmail = this.user!.email!;
     this.editUser.Email = formData.get('email') as string;
+    if(this.editUser.Email == ""){
+      this.editUser.Email = this.editUser.CurrentEmail;
+    }
     this.editUser.CurrentPassword = formData.get('currentPassword') as string;
     this.editUser.Password = formData.get('password') as string;
     this.editUser.PhoneNumber = formData.get('phonenumber') as string;
+    console.log(this.editUser);
     this.userService.edit(this.editUser).subscribe(
-      result => {
-        if (result && result.error && result.error.length > 0) {
-          result.error.forEach(err => {
-            this.messageservice.add(err.description);
-          });
-        } else {
-          this.messageservice.add("User edited successfully")
-          setTimeout(() => {
-            this.location.back();
-          }, 3000);
-        }
+      response => {
+        console.log('Success:', response);
+        this.messageservice.add("User edited successfully");
       },
       error => {
-        console.error("Couldn't edit the user. Reason:", error);
-        this.messageservice.add("Error: " + error.error);
+        console.error('Error:', error);
+        this.messageservice.add("Error editing the user");
       }
     );
   }
+
   goBack(): void {
     this.location.back();
   }

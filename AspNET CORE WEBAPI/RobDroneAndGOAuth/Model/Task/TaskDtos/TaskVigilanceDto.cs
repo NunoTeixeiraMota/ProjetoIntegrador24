@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RobDroneAndGOAuth.Model.Task
+namespace RobDroneAndGOAuth.Model.Task.TaskDtos
 {
     public class TaskVigilanceDto
     {

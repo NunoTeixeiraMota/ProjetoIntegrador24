@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RobDroneAndGOAuth.Model.Task;
+using RobDroneAndGOAuth.Model.Task.TaskDtos;
 using RobDroneAndGOAuth.Services.IServices;
 
 namespace RobDroneAndGOAuth.Controllers
 {
     [ApiController]
-    [Route("Task")]
+    [Route("[controller]")]
     public class TaskController : ControllerBase
     {
-        private ITaskService _taskService;
+        private readonly ITaskService _taskService;
 
         public TaskController(ITaskService taskService)
         {
@@ -18,26 +18,14 @@ namespace RobDroneAndGOAuth.Controllers
         [HttpPost("Vigilance")]
         public async Task<TaskVigilanceDto> taskVigilance(TaskVigilanceDto dto)
         {
-            return await _taskService.createVigilanceTask(dto);
+            return await _taskService.CreateVigilanceTask(dto);
         }
 
         [HttpPost("PickDelivery")]
         public async Task<TaskPickDeliveryDto> taskPickDelivery(TaskPickDeliveryDto dto)
         {
-            return await _taskService.createPickDeliveryTask(dto);
+            return await _taskService.TaskCreatePickDeliveryTask(dto);
         }
-        /*
-        [HttpGet("Search")]
-        public async Task<IActionResult> SearchTasks([FromQuery] string state, [FromQuery] string deviceType, [FromQuery] string userId)
-        {
-            var tasks = await _taskService.SearchTasks(state, deviceType, userId);
 
-            if (tasks == null || !tasks.Any())
-            {
-                return NotFound("No matching tasks found.");
-            }
-
-            return Ok(tasks);
-        }*/
     }
 }
