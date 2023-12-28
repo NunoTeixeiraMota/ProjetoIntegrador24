@@ -53,5 +53,20 @@ namespace RobDroneAndGOAuth.Repositories
                 Description = task.Description
             };
         }
+        public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
+        {
+            var tasks = await _taskPickDeliveryRepository.GetAllTasksAsync();
+            return tasks.Select(task => new TaskPickDeliveryDto
+            {
+                userEmail = task.UserEmail,
+                NamePickup = task.NamePickup,
+                NameDelivery = task.NameDelivery,
+                CodeDelivery = task.CodeDelivery,
+                Floor = task.Floor,
+                Room = task.Room,
+                Description = task.Description
+            }).ToList();
+        }
     }
+}
 }
