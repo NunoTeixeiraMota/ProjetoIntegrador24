@@ -126,7 +126,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
         Assert.Equal(createUserDto.Email, result.User.Email);
         Assert.Equal(createUserDto.Name + createUserDto.phonenumber, result.User.UserName);
     }
-    }
+    
     [Fact]
     public async Task Register_WithExistingEmail_Fails()
     {
@@ -264,8 +264,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
 
         // Assert
         Assert.True(result.Succeeded);
-    }*/
-
+    }
     [Fact]
     public async Task DeleteAccount_NonexistentUser_ReturnsErrorMessage()
     {
