@@ -341,7 +341,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
             phonenumber = "1234567890"
         };
         var registeredResult = await _userAppService.Register(registeredUser);
-
+            
         // Act: Try to edit with invalid data
         var editUserDto = new EditUserDto
         {
