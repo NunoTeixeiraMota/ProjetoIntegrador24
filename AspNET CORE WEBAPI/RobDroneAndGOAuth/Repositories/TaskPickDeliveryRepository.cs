@@ -35,19 +35,19 @@ namespace RobDroneAndGOAuth.Repositories
         }
         public async Task<TaskPickDelivery> GetTaskByUserAsync(string userEmail)
         {
-            return await _collection.Find(t => t.userEmail == userEmail).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.UserEmail == userEmail).FirstOrDefaultAsync();
         }
-        public async Task<TaskPickDelivery> GetApprovedTasks(TaskStatus status)
+        public async Task<TaskPickDelivery> GetApprovedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.Aproved).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskPickDelivery.TaskStatus.Aproved).FirstOrDefaultAsync();
         }
-        public async Task<TaskPickDelivery> GetDeniedTasks(TaskStatus status)
+        public async Task<TaskPickDelivery> GetDeniedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.Denied).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskPickDelivery.TaskStatus.Denied).FirstOrDefaultAsync();
         }
-        public async Task<TaskPickDelivery> GetUnapprovedTasks(TaskStatus status)
+        public async Task<TaskPickDelivery> GetUnapprovedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskPickDelivery.TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
         }
 
         public async Task<List<TaskPickDelivery>> GetAllTasksAsync()
@@ -69,20 +69,5 @@ namespace RobDroneAndGOAuth.Repositories
                 Description = task.Description
             };
         }
-        public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
-        {
-            var tasks = await _taskPickDeliveryRepository.GetAllTasksAsync();
-            return tasks.Select(task => new TaskPickDeliveryDto
-            {
-                userEmail = task.UserEmail,
-                NamePickup = task.NamePickup,
-                NameDelivery = task.NameDelivery,
-                CodeDelivery = task.CodeDelivery,
-                Floor = task.Floor,
-                Room = task.Room,
-                Description = task.Description
-            }).ToList();
-        }
     }
-}
 }

@@ -52,10 +52,8 @@ namespace RobDroneAndGOAuth.Services
                     return false;
                 }
 
-                existingTask.ApproveTask();
-
+                existingTask.AproveTask();
                 await _taskPickDeliveryRepository.UpdateTaskAsync(existingTask);
-
                 return true;
             }
             catch (Exception)
@@ -76,9 +74,7 @@ namespace RobDroneAndGOAuth.Services
                 }
 
                 existingTask.DenyTask();
-
                 await _taskPickDeliveryRepository.UpdateTaskAsync(existingTask);
-
                 return true;
             }
             catch (Exception)
@@ -91,16 +87,13 @@ namespace RobDroneAndGOAuth.Services
             try
             {
                 var existingTask = await _taskVigilanceRepository.GetTaskByIdAsync(taskId);
-
                 if (existingTask == null)
                 {
                     return false;
                 }
 
-                existingTask.ApproveTask();
-
+                existingTask.AproveTask();
                 await _taskVigilanceRepository.UpdateTaskAsync(existingTask);
-
                 return true;
             }
             catch (Exception)
@@ -114,16 +107,13 @@ namespace RobDroneAndGOAuth.Services
             try
             {
                 var existingTask = await _taskVigilanceRepository.GetTaskByIdAsync(taskId);
-
                 if (existingTask == null)
                 {
                     return false;
                 }
 
                 existingTask.DenyTask();
-
                 await _taskVigilanceRepository.UpdateTaskAsync(existingTask);
-
                 return true;
             }
             catch (Exception)
@@ -144,7 +134,19 @@ namespace RobDroneAndGOAuth.Services
             }).ToList();
         }
 
-
-
+        public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
+        {
+            var tasks = await _taskPickDeliveryRepository.GetAllTasksAsync();
+            return tasks.Select(task => new TaskPickDeliveryDto
+            {
+                userEmail = task.UserEmail,
+                NamePickup = task.NamePickup,
+                NameDelivery = task.NameDelivery,
+                CodeDelivery = task.CodeDelivery,
+                Floor = task.Floor,
+                Room = task.Room,
+                Description = task.Description
+            }).ToList();
+        }
     }
 }

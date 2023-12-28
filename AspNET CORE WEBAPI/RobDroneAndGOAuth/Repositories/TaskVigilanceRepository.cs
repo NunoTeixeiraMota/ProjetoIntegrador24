@@ -32,19 +32,19 @@ namespace RobDroneAndGOAuth.Repositories
         }
                 public async Task<TaskVigilance> GetTaskByUserAsync(string userEmail)
         {
-            return await _collection.Find(t => t.userEmail == userEmail).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.UserEmail == userEmail).FirstOrDefaultAsync();
         }
-        public async Task<TaskVigilance> GetApprovedTasks(TaskStatus status)
+        public async Task<TaskVigilance> GetApprovedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.Aproved).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.Aproved).FirstOrDefaultAsync();
         }
-        public async Task<TaskVigilance> GetDeniedTasks(TaskStatus status)
+        public async Task<TaskVigilance> GetDeniedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.Denied).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.Denied).FirstOrDefaultAsync();
         }
-        public async Task<TaskVigilance> GetUnapprovedTasks(TaskStatus status)
+        public async Task<TaskVigilance> GetUnapprovedTasks()
         {
-            return await _collection.Find(t => t.status == TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
         }
 
         public async Task<List<TaskVigilance>> GetAllTasksAsync()
