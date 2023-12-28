@@ -30,21 +30,21 @@
                     <th><label>Description:<span>*</span></label></th>
                     <td><input [(ngModel)]="task.description" placeholder="Task Description" required></td>
                 </tr>
-                <tr *ngFor="let room of rooms; let i = index">
-                    <th><label for="room{{i}}">Room {{i + 1}}:</label></th>
+                <tr *ngFor="let room of task.room; let i = index">
+                    <th><label for="rooms{{i}}">Room {{i + 1}}:</label></th>
                     <td>
-                        <select [(ngModel)]="rooms[i]._id" id="room{{i}}">
-                            <option *ngFor="let roomOption of rooms" [ngValue]="roomOption._id">{{ roomOption.name }}</option>
+                        <select [(ngModel)]="task.room[i]" id="room{{i}}">
+                            <option *ngFor="let roomOption of rooms" [ngValue]="roomOption._id">{{ roomOption.name }}
+                            </option>
                         </select>
                     </td>
                     <td>
-                        <button type="button" (click)="addRoom()">Add Room</button>
+                        <button type="button" *ngIf="i === task.room.length - 1" (click)="addRoom()">Add Room</button>
                     </td>
                     <td>
-                        <button type="button" (click)="removeRoom(i)">Remove Room</button>
+                        <button type="button" *ngIf="task.room.length > 1" (click)="removeRoom(i)">Remove Room</button>
                     </td>
                 </tr>
-                
             </table>
         </div>
         <div class="button-section">

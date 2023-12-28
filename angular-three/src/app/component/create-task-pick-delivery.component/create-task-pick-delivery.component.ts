@@ -21,6 +21,7 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   floors: floor[] = [];
   rooms: Room[] = [];
   selectedFloorId: string = '';
+  selectedRoomId: string = '';
 
   task: taskPickDelivery = {
     userEmail: "",
@@ -47,9 +48,7 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
     this.user.token = this.authService.getToken();
     this.user = this.authService.getUserFromToken();
     this.getFloors();
-    setInterval(() => {
-      this.getRooms();
-    }, 1000);
+    this.getRooms();
     this.titleService.setTitle('RobDroneGo: Create PickUp & Delivery Task');
   }
 
@@ -68,7 +67,7 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   getRooms(): void {
     this.RoomService.listRooms().subscribe(
       (room: Room[]) => {
-        this.rooms = room.filter(room => room.floor._id == this.selectedFloorId);
+        this.rooms = room;
       },
       (error: any) => {
         if (error.code == 404) this.messageService.add("Error: No Connection to Server");
@@ -107,7 +106,9 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   }
 
   removeRoom(index: number) {
-    this.task.room.splice(index, 1);
+    if (this.task.room.length > 1) {
+      this.task.room.splice(index, 1);
+    }
   }
 
   goBack(): void {
