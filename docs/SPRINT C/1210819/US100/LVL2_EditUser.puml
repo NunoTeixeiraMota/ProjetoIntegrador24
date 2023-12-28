@@ -1,0 +1,28 @@
+@startuml
+autonumber
+'hide footbox
+actor "User" as admin
+
+participant "<<Frontend>>\n(Edit Component)" as f
+participant "<<Backend>>\n(User Controller)" as c
+
+activate admin
+
+admin -> f: edit user
+activate f
+
+f --> admin: request necessary data()
+admin -> f : insert all the data
+activate c
+f -> c: POST edit{editUserDto}
+
+alt successful case
+    c --> f: success message
+    f --> admin: show success message
+else
+    c --> f: failure message
+    f --> admin: show failure message
+end
+deactivate c
+deactivate f
+@enduml

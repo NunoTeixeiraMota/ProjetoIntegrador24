@@ -1,0 +1,69 @@
+@startuml
+actor User
+
+participant "Angular\nEditComponent" as Frontend <<Frontend>>
+participant "UserService" as UserSrvc <<Frontend>>
+participant "UserController" as Controller <<Backend>>
+participant "IUserAppService" as IUserAppService <<Backend>>
+participant "UserAppService" as UserAppService <<Backend>>
+participant "UserManager<ApplicationUser>" as UserManager <<Backend>>
+database "MongoDB" as MongoDB <<Database>>
+
+activate User
+User -> Frontend: Edit User
+activate Frontend
+Frontend -> User: Asks for data
+User -> Frontend: Introduces data to edit user
+Frontend -> Frontend: "Validate input (HTML5)"
+alt Validation Successful
+    Frontend -> UserSrvc: edit(user)
+    activate UserSrvc
+    UserSrvc -> Controller: POST /edit(editUserDto)
+    activate Controller
+
+    Controller -> IUserAppService: editUser(user)
+    activate IUserAppService
+
+    IUserAppService -> UserAppService: editUser(user)
+    activate UserAppService
+
+    UserAppService -> UserManager: FindByEmailAsync(user.currentEmail)
+    activate UserManager
+    UserManager -> MongoDB: FindByEmailAsync(user.currentEmail)
+    activate MongoDB
+    MongoDB --> UserManager: AppUser/null
+    deactivate MongoDB
+    UserManager --> UserAppService: AppUser/null
+    alt user is found
+      UserAppService -> UserManager: SetEmailAsync(AppUser, user.email)
+      UserAppService -> UserManager: ChangePasswordAsync(AppUser, user.currentPassword, user.password)
+      UserAppService -> UserManager: SetPhoneNumberAsync(AppUser, user.phoneNumber)
+      UserAppService -> UserManager: SetUserNameAsync(AppUser, user.name)
+      UserAppService -> UserManager: UpdateAsync(user)
+      UserManager -> MongoDB: UpdateAsync(user)
+      activate MongoDB
+      MongoDB --> UserManager: Success
+      deactivate MongoDB
+      UserManager --> UserAppService: Success
+      deactivate UserManager
+      UserAppService --> IUserAppService: Success
+      IUserAppService --> Controller: Success
+      Controller --> UserSrvc: Success
+      UserSrvc --> Frontend: User edited with success
+      Frontend --> User: User edited with success
+    else
+      UserAppService --> IUserAppService: Failure: User not found
+      IUserAppService --> Controller: Failure: User not found
+      Controller --> UserSrvc: Failure: User not found
+      UserSrvc --> Frontend: User was not found
+      Frontend --> User: User was not found
+    end
+    deactivate UserAppService
+    deactivate IUserAppService
+    deactivate UserController
+    deactivate UserSrvc
+else Validation Failed
+    Frontend -> User: Validation Error
+end
+deactivate Frontend
+@enduml
