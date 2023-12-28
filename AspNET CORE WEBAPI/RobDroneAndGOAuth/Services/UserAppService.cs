@@ -120,11 +120,5 @@ namespace RobDroneAndGOAuth.Services
                 return IdentityResult.Failed(new IdentityError { Description = "Please introduce valid data." });
             }
         }
-
-        public async Task<bool> UserExists(string email)
-        {
-            ApplicationUser? appUser = await _userManager.FindByEmailAsync(email);
-            return appUser != null;
-        }
     }
 }

@@ -11,7 +11,5 @@ namespace RobDroneAndGOAuth.Services.IServices
 
         Task<IdentityResult> DeleteAccount(string user);
         Task<IdentityResult> editUser(EditUserDto user);
-
-        Task<bool> UserExists(string email);
     }
 }
