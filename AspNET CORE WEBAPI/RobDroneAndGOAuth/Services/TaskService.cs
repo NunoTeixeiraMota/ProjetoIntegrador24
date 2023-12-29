@@ -133,6 +133,14 @@ namespace RobDroneAndGOAuth.Services
                 PhoneNumber = task.PhoneNumber
             }).ToList();
         }
+        public async Task<TaskVigilanceDto> GetVigilanceTaskById(Guid _taskId)
+        {
+            return await _taskVigilanceRepository.GetTaskByIdAsync(_taskId);
+        }
+         public async Task<TaskPickDeliveryDto> GetPickDeliveryTaskById(Guid _taskId)
+        {
+            return await _taskPickDeliveryRepository.GetTaskByIdAsync(_taskId);
+        }
 
         public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
         {

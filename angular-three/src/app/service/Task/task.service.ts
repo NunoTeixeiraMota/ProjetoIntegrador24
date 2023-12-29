@@ -41,4 +41,20 @@ export class TaskService {
   getNonAprovedTasks(): Observable<any> {
     return this.http.get<any>(`${this.apiBaseUrl}/Task/GetAllNonAproved`);
   }
+  approvePickDeliveryTask(taskId: string) {
+    return this.http.patch(`${this.apiBaseUrl}PickDelivery/Approve/${taskId}`, null);
+  }
+
+  denyPickDeliveryTask(taskId: string) {
+    return this.http.patch(`${this.apiBaseUrl}PickDelivery/Deny/${taskId}`, null);
+  }
+
+  approveVigilanceTask(taskId: string) {
+    return this.http.patch(`${this.apiBaseUrl}Vigilance/Approve/${taskId}`, null);
+  }
+
+  denyVigilanceTask(taskId: string) {
+    return this.http.patch(`${this.apiBaseUrl}Vigilance/Deny/${taskId}`, null);
+  }
+
 }

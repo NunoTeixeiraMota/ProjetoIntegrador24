@@ -1,0 +1,81 @@
+/* Task Item Container */
+.task-item {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Task Title */
+  .task-item h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Task Description and Details */
+  .task-item p {
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* Dropdown Label */
+  .task-item label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Dropdown Select */
+  .task-item select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+  }
+  
+  /* Dropdown Select - Focus State */
+  .task-item select:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Align Dropdown and Button */
+  .dropdown-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  /* Button Row */
+.button-row {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center;
+    margin-top: 15px;
+  }
+  
+  /* Button styles */
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #42545C;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #344955;
+  }
+  
+  button:active {
+    background-color: #000;
+  }
+  
+  
