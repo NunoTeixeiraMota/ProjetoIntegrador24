@@ -16,7 +16,7 @@ mkdir -p $BACKUP_PATH
 
 # Executa o backup
 echo "Iniciando o backup do banco de dados $DB_NAME"
-mongodump --host $MONGO_HOST --port $MONGO_PORT --username $MONGO_USER --password $MONGO_PASSWORD --db $MONGO_DB --out $BACKUP_PATH/$BACKUP_NAME
+mongodump --uri"mongodb://mongoadmin:105711abb1e672194c53cbe4@vsgate-s1.dei.isep.ipp.pt:11147/?authMechanism=DEFAULT" --out $BACKUP_PATH/$BACKUP_NAME
 
 # Compacta
 echo "Compactando o backup"
