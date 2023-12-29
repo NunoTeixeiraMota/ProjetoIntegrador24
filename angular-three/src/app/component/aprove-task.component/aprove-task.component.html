@@ -1,0 +1,22 @@
+<div *ngIf="isLoading">
+    Loading tasks...
+  </div>
+  <div *ngIf="!isLoading">
+    <h2>Unapproved Tasks</h2>
+    <div *ngFor="let task of unapprovedTasks">
+      <div class="task-item">
+        <h3>{{ task.NamePickup || task.NameVigilance }} Task</h3>
+        <p>Description: {{ task.Description }}</p>  
+        <label for="action-select-{{task._id}}">Choose an action:</label>
+        <select id="action-select-{{task._id}}" (change)="updateTaskStatus(task, $event.target.value)">
+          <option value="" disabled selected>Select Action</option>
+          <option value="approve">Approve</option>
+          <option value="deny">Deny</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="button-row">
+    <button routerLink="/main-menu">Back</button>
+  </div>
+  
