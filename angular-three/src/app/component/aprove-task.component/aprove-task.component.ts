@@ -7,14 +7,14 @@ import { MessageService } from 'src/app/service/message/message.service';
 @Component({
   selector: 'app-aprove-task',
   templateUrl: './aprove-task.component.html',
-  styleUrls: ['./aprove-task.component.scss']
+  styleUrls: ['./aprove-task.component.css']
 })
 export class AproveTaskComponent implements OnInit {
   vigilanceTasks: taskVigilance[] = [];
   pickDeliveryTasks: taskPickDelivery[] = [];
   isLoading = false;
 
-  constructor(private taskService: TaskService, private messageService: MessageService) {}
+  constructor(private taskService: TaskService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -31,16 +31,18 @@ export class AproveTaskComponent implements OnInit {
     );
   }
 
-  updateTaskStatus(task: any, action: string) {
+  updateTaskStatus(task: any, event: Event) {
+    const selectElement = (event.target as HTMLSelectElement);
+    const action = selectElement.value;
     const isPickDelivery = task.hasOwnProperty('CodeDelivery');
-  
+
     if (isPickDelivery) {
       if (action === 'approve') {
         this.taskService.approvePickDeliveryTask(task._id).subscribe();
       } else if (action === 'deny') {
         this.taskService.denyPickDeliveryTask(task._id).subscribe();
       }
-    } else {
+    } else { // Assuming it's TaskVigilance if it's not TaskPickDelivery
       if (action === 'approve') {
         this.taskService.approveVigilanceTask(task._id).subscribe();
       } else if (action === 'deny') {
@@ -48,6 +50,6 @@ export class AproveTaskComponent implements OnInit {
       }
     }
   }
-  
+
 
 }
