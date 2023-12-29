@@ -52,5 +52,5 @@ export default (app: Router) => {
       body: Joi.object({
         value: Joi.object().required(),
       }),
-    }), checkRole(['ROLE_ADMIN','ROLE_USER','ROLE_MANAGER']), (req, res, next) => ctrl.findAll(req, res, next));
+    }), (req, res, next) => ctrl.findAll(req, res, next));
 }

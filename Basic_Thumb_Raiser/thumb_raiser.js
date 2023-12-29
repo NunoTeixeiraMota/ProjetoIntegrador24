@@ -682,70 +682,64 @@ export default class ThumbRaiser {
 
             // Update the player
             if (!this.animations.actionInProgress) {
-                // Check if the player found the exit
-                if (this.maze.foundExit(this.player.position)) {
-                    this.finalSequence();
+                let coveredDistance = this.player.walkingSpeed * deltaT;
+                let directionIncrement = this.player.turningSpeed * deltaT;
+                if (this.player.keyStates.run) {
+                    coveredDistance *= this.player.runningFactor;
+                    directionIncrement *= this.player.runningFactor;
                 }
-                else {
-                    let coveredDistance = this.player.walkingSpeed * deltaT;
-                    let directionIncrement = this.player.turningSpeed * deltaT;
-                    if (this.player.keyStates.run) {
-                        coveredDistance *= this.player.runningFactor;
-                        directionIncrement *= this.player.runningFactor;
-                    }
-                    if (this.player.keyStates.left) {
-                        this.player.direction += directionIncrement;
-                    }
-                    else if (this.player.keyStates.right) {
-                        this.player.direction -= directionIncrement;
-                    }
-                    const direction = THREE.MathUtils.degToRad(this.player.direction);
-                    if (this.player.keyStates.backward) {
-                        const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
-                        this.maze.checkDoorCollisions(newPosition, this.player.radius);
-                        if (this.collision(newPosition)) {
-                            this.animations.fadeToAction("Death", 0.2);
-                        }
-                        else {
-                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                            this.player.position = newPosition;
-                        }
-                    }
-                    else if (this.player.keyStates.forward) {
-                        const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
-                        this.maze.checkDoorCollisions(newPosition, this.player.radius);
-                        if (this.collision(newPosition)) {
-                            this.animations.fadeToAction("Death", 0.2);
-                        }
-                        else {
-                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                            this.player.position = newPosition;
-                        }
-                    }
-                    else if (this.player.keyStates.jump) {
-                        this.animations.fadeToAction("Jump", 0.2);
-                    }
-                    else if (this.player.keyStates.yes) {
-                        this.animations.fadeToAction("Yes", 0.2);
-                    }
-                    else if (this.player.keyStates.no) {
-                        this.animations.fadeToAction("No", 0.2);
-                    }
-                    else if (this.player.keyStates.wave) {
-                        this.animations.fadeToAction("Wave", 0.2);
-                    }
-                    else if (this.player.keyStates.punch) {
-                        this.animations.fadeToAction("Punch", 0.2);
-                    }
-                    else if (this.player.keyStates.thumbsUp) {
-                        this.animations.fadeToAction("ThumbsUp", 0.2);
+                if (this.player.keyStates.left) {
+                    this.player.direction += directionIncrement;
+                }
+                else if (this.player.keyStates.right) {
+                    this.player.direction -= directionIncrement;
+                }
+                const direction = THREE.MathUtils.degToRad(this.player.direction);
+                if (this.player.keyStates.backward) {
+                    const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
+                    this.maze.checkDoorCollisions(newPosition, this.player.radius);
+                    if (this.collision(newPosition)) {
+                        this.animations.fadeToAction("Death", 0.2);
                     }
                     else {
-                        this.animations.fadeToAction("Idle", this.animations.activeName != "Death" ? 0.2 : 0.6);
+                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                        this.player.position = newPosition;
                     }
-                    this.player.object.position.set(this.player.position.x, this.player.position.y, this.player.position.z);
-                    this.player.object.rotation.y = direction - this.player.initialDirection;
                 }
+                else if (this.player.keyStates.forward) {
+                    const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
+                    this.maze.checkDoorCollisions(newPosition, this.player.radius);
+                    if (this.collision(newPosition)) {
+                        this.animations.fadeToAction("Death", 0.2);
+                    }
+                    else {
+                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                        this.player.position = newPosition;
+                    }
+                }
+                else if (this.player.keyStates.jump) {
+                    this.animations.fadeToAction("Jump", 0.2);
+                }
+                else if (this.player.keyStates.yes) {
+                    this.animations.fadeToAction("Yes", 0.2);
+                }
+                else if (this.player.keyStates.no) {
+                    this.animations.fadeToAction("No", 0.2);
+                }
+                else if (this.player.keyStates.wave) {
+                    this.animations.fadeToAction("Wave", 0.2);
+                }
+                else if (this.player.keyStates.punch) {
+                    this.animations.fadeToAction("Punch", 0.2);
+                }
+                else if (this.player.keyStates.thumbsUp) {
+                    this.animations.fadeToAction("ThumbsUp", 0.2);
+                }
+                else {
+                    this.animations.fadeToAction("Idle", this.animations.activeName != "Death" ? 0.2 : 0.6);
+                }
+                this.player.object.position.set(this.player.position.x, this.player.position.y, this.player.position.z);
+                this.player.object.rotation.y = direction - this.player.initialDirection;
             }
 
             // Update first-person, third-person and top view cameras parameters (player direction and target)
