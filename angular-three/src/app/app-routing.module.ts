@@ -27,6 +27,7 @@ import { EditComponent } from './edit/edit.component';
 import { CreateVigilanceTaskComponent } from './component/create-task-vigilance.component/create-task-vigilance.component';
 import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-delivery.component/create-task-pick-delivery.component';
 import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-algorithms.component';
+import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.component';
 
 const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'create-task-vigilance', component: CreateVigilanceTaskComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
   { path: 'create-task-pick-delivery', component: CreateTaskPickDeliveryComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
   { path: 'list-task-algorithms', component: ListTasksByAlgoritm, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
+  { path: 'non-aproved-list', component: NonAprovedListComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER','ROLE_MANAGER'] } },
 
 ];
 
