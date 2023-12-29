@@ -1,0 +1,20 @@
+<head>
+    <link rel="stylesheet" href="task-algorithms.component.css">
+  </head>
+  <section class="main-content">
+  
+  <div class="container"> 
+    <div class="button-section">
+        <button (click)="listLessTime()">Less time first</button>
+      </div>
+      <div class="button-section">
+        <button (click)="listGeneticAlgorithm()">Genetic algorithm</button>
+      </div>
+    <div *ngIf="count == 0" class="no-floors">
+        <p>No tasks found.</p>
+    </div>
+    <div class="button-section">
+      <button routerLink="/main-menu">Back</button>
+    </div>
+  </div>
+  

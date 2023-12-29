@@ -31,6 +31,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditComponent } from './edit/edit.component';
 import { CreateVigilanceTaskComponent } from './component/create-task-vigilance.component/create-task-vigilance.component';
 import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-delivery.component/create-task-pick-delivery.component';
+import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-algorithms.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-de
     EditComponent,
     CreateVigilanceTaskComponent,
     CreateTaskPickDeliveryComponent,
+    ListTasksByAlgoritm,
     // ... any other components
   ],
   imports: [

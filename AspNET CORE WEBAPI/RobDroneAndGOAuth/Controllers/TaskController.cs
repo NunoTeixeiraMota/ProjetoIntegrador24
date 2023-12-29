@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
 using RobDroneAndGOAuth.Services.IServices;
+using Xunit.Sdk;
 
 namespace RobDroneAndGOAuth.Controllers
 {
@@ -101,6 +103,16 @@ namespace RobDroneAndGOAuth.Controllers
             return Ok(result);
         }
 
+        [HttpGet("LessTime")]
+        public async Task<AnyType> lessTimeTasks()
+        {
+            throw new NotImplementedException("Method is not implemented.");
+        }
 
+        [HttpGet("Genetic")]
+        public async Task<AnyType> geneticTasks()
+        {
+            throw new NotImplementedException("Method is not implemented.");
+        }
     }
 }
