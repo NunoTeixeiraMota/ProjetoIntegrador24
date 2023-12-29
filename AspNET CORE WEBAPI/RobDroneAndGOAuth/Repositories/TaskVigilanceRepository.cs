@@ -47,5 +47,13 @@ namespace RobDroneAndGOAuth.Repositories
                 PhoneNumber = task.PhoneNumber
             };
         }
+
+        public async Task<List<TaskVigilance>> GetAllNonApproved()
+        {
+            var filter = Builders<TaskVigilance>.Filter.Eq(tv => tv.Status, TaskVigilance.TaskStatus.WaitingForAprove);
+            var list = await _collection.Find(filter).ToListAsync();
+            return list ;
+        }
+
     }
 }

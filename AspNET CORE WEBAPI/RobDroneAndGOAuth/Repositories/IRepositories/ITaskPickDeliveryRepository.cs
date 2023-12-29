@@ -9,5 +9,7 @@ namespace RobDroneAndGOAuth.Repositories.IRepositories
         Task<TaskPickDelivery> GetTaskByIdAsync(Guid id);
         Task<List<TaskPickDelivery>> GetAllTasksAsync();
         Task<TaskPickDeliveryDto> UpdateTaskAsync(TaskPickDelivery task);
+
+        Task<List<TaskPickDelivery>> GetAllNonApproved();
     }
 }

@@ -34,5 +34,32 @@ namespace RobDroneAndGOAuth.Services
             }
             
         }
+        public async Task<(List<TaskVigilanceDto>, List<TaskPickDeliveryDto>)> GetTasksNonAprovedAsync()
+        {
+            var vigilanceTasksEntities = await _taskVigilanceRepository.GetAllNonApproved();
+            var pickDeliveryTasksEntities = await _taskPickDeliveryRepository.GetAllNonApproved();
+
+            var vigilanceTasks = vigilanceTasksEntities.Select(v => new TaskVigilanceDto
+            {
+                userEmail = v.UserEmail,
+                Floor = v.Floor,
+                Description = v.Description,
+                PhoneNumber = v.PhoneNumber
+            }).ToList();
+
+            var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => new TaskPickDeliveryDto
+            {
+                userEmail = p.UserEmail,
+                NamePickup = p.NamePickup,
+                NameDelivery = p.NameDelivery,
+                CodeDelivery = p.CodeDelivery,
+                Floor = p.Floor,
+                Room = p.Room,
+                Description = p.Description
+            }).ToList();
+
+            return (vigilanceTasks, pickDeliveryTasks);
+        }
+
     }
 }

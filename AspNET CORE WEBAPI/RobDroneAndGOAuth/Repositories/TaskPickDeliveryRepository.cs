@@ -53,5 +53,11 @@ namespace RobDroneAndGOAuth.Repositories
                 Description = task.Description
             };
         }
+
+        public async Task<List<TaskPickDelivery>> GetAllNonApproved()
+        {
+            var filter = Builders<TaskPickDelivery>.Filter.Eq(tv => tv.Status, TaskPickDelivery.TaskStatus.WaitingForAprove);
+            return await _collection.Find(filter).ToListAsync();
+        }
     }
 }
