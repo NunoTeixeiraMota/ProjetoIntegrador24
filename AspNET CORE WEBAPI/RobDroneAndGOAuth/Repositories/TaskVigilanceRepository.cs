@@ -30,6 +30,22 @@ namespace RobDroneAndGOAuth.Repositories
         {
             return await _collection.Find(t => t._id == id).FirstOrDefaultAsync();
         }
+                public async Task<TaskVigilance> GetTaskByUserAsync(string userEmail)
+        {
+            return await _collection.Find(t => t.UserEmail == userEmail).FirstOrDefaultAsync();
+        }
+        public async Task<TaskVigilance> GetApprovedTasks()
+        {
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.Aproved).FirstOrDefaultAsync();
+        }
+        public async Task<TaskVigilance> GetDeniedTasks()
+        {
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.Denied).FirstOrDefaultAsync();
+        }
+        public async Task<TaskVigilance> GetUnapprovedTasks()
+        {
+            return await _collection.Find(t => t.Status == TaskVigilance.TaskStatus.WaitingForAprove).FirstOrDefaultAsync();
+        }
 
         public async Task<List<TaskVigilance>> GetAllTasksAsync()
         {

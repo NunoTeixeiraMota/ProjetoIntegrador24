@@ -1,0 +1,61 @@
+@startuml
+actor User
+
+participant "Angular\nCreateTaskComponent" as Frontend <<Frontend>>
+participant "TaskService" as FTaskSrvc <<Frontend>>
+participant "TaskController" as Controller <<Backend>>
+participant "ITaskService" as ITaskSrvc <<Backend>>
+participant "TaskService" as taskSrvc <<Backend>>
+participant "TaskRepository" as repo <<Backend>>
+database "MongoDB" as MongoDB <<Database>>
+
+activate User
+User -> Frontend: Create task
+activate Frontend
+Frontend -> User: Asks for data
+User -> Frontend: Introduces data
+Frontend -> Frontend: "Validate input (HTML5)"
+alt Validation Successful
+    Frontend -> FTaskSrvc: createTask(task)
+    activate FTaskSrvc
+    FTaskSrvc -> Controller: POST /tasl(task)
+    activate Controller
+
+    Controller -> ITaskSrvc: createTask(taskDto)
+    activate ITaskSrvc
+
+    ITaskSrvc -> taskSrvc: createTask(taskDto)
+    activate taskSrvc
+    taskSrvc -> repo: createTask(taskDto)
+    activate repo
+    repo -> MongoDB: InsertTaskAsync(task)
+    activate MongoDB
+
+    alt task is added with success
+      MongoDB --> repo: taskDto
+      repo --> taskSrvc: taskDto
+      taskSrvc --> ITaskSrvc: taskDto
+      ITaskSrvc --> Controller: taskDto
+      Controller --> FTaskSrvc: taskDto
+      FTaskSrvc --> Frontend: taskDto
+      Frontend --> User: "Success task creation!"
+    else
+      MongoDB --> repo: null
+      deactivate MongoDB
+      repo --> taskSrvc: null
+      deactivate repo
+      taskSrvc --> ITaskSrvc: null
+      deactivate taskSrvc
+      ITaskSrvc --> Controller: null
+      deactivate ITaskSrvc
+      Controller --> FTaskSrvc: null
+      deactivate Controller
+      FTaskSrvc --> Frontend: null
+      deactivate FTaskSrvc
+      Frontend --> User: Error message
+    end
+else Validation Failed
+    Frontend -> User: Validation Error
+end
+deactivate Frontend
+@enduml

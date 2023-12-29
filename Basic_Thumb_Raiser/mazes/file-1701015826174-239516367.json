@@ -29,5 +29,7 @@
   ],
   "initialPosition": [5, 3],
   "initialDirection": 0.0,
-  "exitLocation": [-0.5, 6]
+  "floor": "D1",
+  "lift":["file-1701015757155-329601251.json","file-1701015757155-329601251.json"],
+  "passages":[]
 }

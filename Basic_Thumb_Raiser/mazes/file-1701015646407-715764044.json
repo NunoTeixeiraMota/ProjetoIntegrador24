@@ -29,5 +29,7 @@
   ],
   "initialPosition": [4, 3],
   "initialDirection": 0.0,
-  "exitLocation": [5, 3]
+  "floor": "C2",
+  "lift":["file-1701015463204-979820169.json","file-1701015679356-718589422.json","file-1701015706446-322119394.json"],
+  "passages":["file-1701015757155-329601251.json"]
 }
