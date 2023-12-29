@@ -112,5 +112,5 @@ export default (app: Router) => {
       body: Joi.object({
         value: Joi.object().optional(),
       }),
-    }), checkRole(['ROLE_USER','ROLE_ADMIN','ROLE_MANAGER']), (req, res, next) => ctrl.listAllFloors(req, res, next));
+    }), (req, res, next) => ctrl.listAllFloors(req, res, next));
 }
