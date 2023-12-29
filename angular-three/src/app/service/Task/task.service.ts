@@ -28,4 +28,8 @@ export class TaskService {
     };
     return this.http.post<any>(`${this.apiBaseUrl}/Task/PickDelivery`, task, httpOptions);
   }
+
+  getNonAprovedTasks(): Observable<any> {
+    return this.http.get<any>(`${this.apiBaseUrl}/Task/GetAllNonAproved`);
+  }
 }

@@ -17,7 +17,7 @@
 .main-content {
   background-image: url('../../../assets/image.jpg');
   background-size: cover; 
-  height: 100%; 
+  height: calc(100vh - 40px);
   background-attachment: scroll;
   background-color: transparent;
 }

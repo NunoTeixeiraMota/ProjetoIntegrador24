@@ -54,6 +54,7 @@
             <nav>
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-task-vigilance">Create Vigilance Task</a>
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/create-task-pick-delivery">Create PickUp & Delivery Task</a>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/non-aproved-list">View Non Aproved Tasks</a>
             </nav>
         </section>
     </aside>

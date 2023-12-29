@@ -1,0 +1,65 @@
+<section class="main-content">
+  <div class="container">
+
+    <div *ngIf="isLoading; else content">
+      <p>Loading...</p>
+    </div>
+
+    <ng-template #content>
+      <div *ngIf="vigilanceTasks.length > 0; else noTasks">
+        <h2>Vigilance Tasks</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Floor</th>
+              <th>Description</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of vigilanceTasks">
+              <td>{{ task.userEmail }}</td>
+              <td>{{ task.floor }}</td>
+              <td>{{ task.description }}</td>
+              <td>{{ task.phoneNumber }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="pickDeliveryTasks.length > 0; else noTasks">
+        <h2>Pick Delivery Tasks</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Pickup</th>
+              <th>Delivery</th>
+              <th>Code Delivery</th>
+              <th>Floor</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of pickDeliveryTasks">
+              <td>{{ task.userEmail }}</td>
+              <td>{{ task.namePickup }}</td>
+              <td>{{ task.nameDelivery }}</td>
+              <td>{{ task.codeDelivery }}</td>
+              <td>{{ task.floor }}</td>
+              <td>{{ task.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noTasks>
+        <p>No tasks available.</p>
+      </ng-template>
+    </ng-template>
+    <div class="button-row">
+      <button routerLink="/main-menu">Back</button>
+    </div>
+  </div>
+</section>
