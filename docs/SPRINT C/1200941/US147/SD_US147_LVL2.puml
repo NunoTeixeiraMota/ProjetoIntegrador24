@@ -1,0 +1,76 @@
+@startuml
+actor User
+participant "Frontend\n(Angular)" as Frontend
+participant "AuthInterceptorService" as AuthInterceptor <<Frontend>>
+participant "LocalStorage" as LocalStorage <<Frontend>>
+participant "MessageService" as MessageService <<Frontend>>
+database "MongoDB" as Database <<Database>>
+participant "JWT Authentication Middleware" as JwtAuth <<Backend>>
+participant "TaskController" as Controller <<Backend>>
+participant "TaskService" as TaskService <<Backend>>
+
+User -> Frontend: Access View Non-Approved Tasks
+note right of User: User must be logged in
+activate Frontend
+
+Frontend -> AuthInterceptor: Prepare HTTP GET request
+activate AuthInterceptor
+AuthInterceptor -> LocalStorage: Retrieve JWT Token
+activate LocalStorage
+LocalStorage --> AuthInterceptor: JWT Token
+deactivate LocalStorage
+
+AuthInterceptor -> JwtAuth: Forward request with Authorization header
+deactivate AuthInterceptor
+activate JwtAuth
+
+alt JWT Token Valid
+    JwtAuth -> Controller: Forward Validated Request
+    deactivate JwtAuth
+    activate Controller
+
+    Controller -> TaskService: GetTasksNonAprovedAsync()
+    activate TaskService
+
+    alt Backend Error
+        TaskService --> Controller: Error Response
+        deactivate TaskService
+
+        Controller --> JwtAuth: Error Response
+        deactivate Controller
+
+        JwtAuth --> Frontend: Error Response
+        deactivate JwtAuth
+
+        Frontend -> MessageService: "Server error occurred"
+        activate MessageService
+        MessageService -> Frontend: Display error message
+        deactivate MessageService
+    else No Backend Error
+        TaskService --> Controller: Non-Approved Tasks
+        deactivate TaskService
+
+        Controller --> JwtAuth: Task Data
+        deactivate Controller
+
+        JwtAuth --> Frontend: Task Data
+        deactivate JwtAuth
+
+        Frontend -> MessageService: "Tasks loaded successfully"
+        activate MessageService
+        MessageService -> Frontend: Display success message
+        deactivate MessageService
+    end
+
+else JWT Token Invalid
+    JwtAuth --> Frontend: Unauthorized Response
+    deactivate JwtAuth
+
+    Frontend -> MessageService: "Authentication error"
+    activate MessageService
+    MessageService -> Frontend: Display authentication error message
+    deactivate MessageService
+end
+
+deactivate Frontend
+@enduml

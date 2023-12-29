@@ -7,7 +7,7 @@ using RobDroneAndGOAuth.Services;
 using RobDroneAndGOAuth.Services.IServices;
 using Xunit;
 
-public class TaskServiceIntegrationTests
+public class TaskServiceIntegrationTests: IDisposable
 {
     private readonly ITaskService _taskService;
     private readonly IMongoDatabase _testDatabase;
@@ -30,6 +30,8 @@ public class TaskServiceIntegrationTests
 
         var serviceProvider = services.BuildServiceProvider();
         _taskService = serviceProvider.GetRequiredService<ITaskService>();
+        ClearCollectionsAsync().Wait(); // Clear collections at the beginning of each test
+
     }
 
     private void ConfigureServices(IServiceCollection services, string connectionString, IConfiguration configuration)
@@ -55,6 +57,7 @@ public class TaskServiceIntegrationTests
 
     private IConfiguration CreateConfiguration()
     {
+
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
     {
@@ -122,4 +125,101 @@ public class TaskServiceIntegrationTests
         Assert.Equal(createTaskDto.Floor, result.Floor);
         Assert.Equal(createTaskDto.Description, result.Description);
     }
+    [Fact]
+    public async Task GetTasksNonAprovedAsync_ReturnsNonApprovedTasks()
+    {
+        // Arrange - Create non-approved vigilance and pick delivery tasks using the service
+        var nonApprovedVigilanceTaskDto = new TaskVigilanceDto
+        {
+            userEmail = "vigilance@example.com",
+            Floor = "3",
+            Description = "Non-approved Vigilance Task",
+            PhoneNumber = "1234567890"
+        };
+
+        var nonApprovedPickDeliveryTaskDto = new TaskPickDeliveryDto
+        {
+            userEmail = "pickdelivery@example.com",
+            NamePickup = "NonApprovedPickup",
+            NameDelivery = "NonApprovedDelivery",
+            CodeDelivery = 54321,
+            Floor = "4",
+            Room = new[] { "444" },
+            Description = "Non-approved Delivery Task"
+        };
+
+        await _taskService.CreateVigilanceTask(nonApprovedVigilanceTaskDto);
+        await _taskService.TaskCreatePickDeliveryTask(nonApprovedPickDeliveryTaskDto);
+
+        // Act
+        var (vigilanceTasks, pickDeliveryTasks) = await _taskService.GetTasksNonAprovedAsync();
+
+        // Assert
+        Assert.Contains(vigilanceTasks, task => task.userEmail == nonApprovedVigilanceTaskDto.userEmail && task.Floor == nonApprovedVigilanceTaskDto.Floor && task.Description == nonApprovedVigilanceTaskDto.Description);
+        Assert.Contains(pickDeliveryTasks, task => task.userEmail == nonApprovedPickDeliveryTaskDto.userEmail && task.NamePickup == nonApprovedPickDeliveryTaskDto.NamePickup && task.NameDelivery == nonApprovedPickDeliveryTaskDto.NameDelivery && task.Description == nonApprovedPickDeliveryTaskDto.Description);
+    }
+    [Fact]
+    public async Task GetTasksNonAprovedAsync_NoNonApprovedTasks_ReturnsEmptyLists()
+    {
+        // Act
+        var (vigilanceTasks, pickDeliveryTasks) = await _taskService.GetTasksNonAprovedAsync();
+
+        // Assert
+        Assert.Empty(vigilanceTasks);
+        Assert.Empty(pickDeliveryTasks);
+    }
+    public async Task ClearCollectionsAsync()
+    {
+        var taskPDCollection = _testDatabase.GetCollection<TaskPickDelivery>("TaskPickDelivery");
+        var taskVCollection = _testDatabase.GetCollection<TaskVigilance>("TaskVigilance");
+
+        await taskPDCollection.DeleteManyAsync(Builders<TaskPickDelivery>.Filter.Empty);
+        await taskVCollection.DeleteManyAsync(Builders<TaskVigilance>.Filter.Empty);
+    }
+
+    [Fact]
+    public async Task GetTasksNonAprovedAsync_WithEdgeCases_HandlesCorrectly()
+    {
+        // Arrange
+        var edgeCaseTaskDto = new TaskVigilanceDto
+        {
+            userEmail = "edge@example.com",
+            Floor = "999", // Edge case value
+            Description = new string('x', 1000), // Long description
+            PhoneNumber = "123!@#"
+        };
+
+        await _taskService.CreateVigilanceTask(edgeCaseTaskDto);
+
+        // Act
+        var (vigilanceTasks, _) = await _taskService.GetTasksNonAprovedAsync();
+
+        // Assert
+        Assert.Contains(vigilanceTasks, task => task.userEmail == edgeCaseTaskDto.userEmail && task.Description.Length <= 1000);
+    }
+
+    [Fact]
+    public async Task GetTasksNonAprovedAsync_WithEmptyDatabase_ReturnsEmptyLists()
+    {
+        // Arrange
+        // Ensure the database is empty
+        await ClearCollectionsAsync();
+
+        // Act
+        var (vigilanceTasks, pickDeliveryTasks) = await _taskService.GetTasksNonAprovedAsync();
+
+        // Assert
+        Assert.Empty(vigilanceTasks);
+        Assert.Empty(pickDeliveryTasks);
+    }
+
+
+
+
+
+    public void Dispose()
+    {
+        ClearCollectionsAsync().Wait(); // Clear collections at the end of each test
+    }
+
 }

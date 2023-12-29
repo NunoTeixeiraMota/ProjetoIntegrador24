@@ -9,5 +9,8 @@ namespace RobDroneAndGOAuth.Repositories.IRepositories
         Task<TaskVigilance> GetTaskByIdAsync(Guid id);
         Task<List<TaskVigilance>> GetAllTasksAsync();
         Task<TaskVigilanceDto> UpdateTaskAsync(TaskVigilance task);
+        Task<List<TaskVigilance>> GetAllNonApproved();
+
+
     }
 }

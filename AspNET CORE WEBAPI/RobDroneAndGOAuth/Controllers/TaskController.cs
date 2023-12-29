@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
 using RobDroneAndGOAuth.Services.IServices;
 
@@ -85,6 +86,21 @@ namespace RobDroneAndGOAuth.Controllers
                 return NotFound("Task not found or could not be denied");
             }
         }
+        [Authorize]
+        [HttpGet("GetAllNonAproved")]
+        public async Task<ActionResult> GetTasksNonAprovedAsync()
+        {
+            var (vigilanceTasks, pickDeliveryTasks) = await _taskService.GetTasksNonAprovedAsync();
+
+            var result = new
+            {
+                VigilanceTasks = vigilanceTasks,
+                PickDeliveryTasks = pickDeliveryTasks
+            };
+
+            return Ok(result);
+        }
+
 
     }
 }

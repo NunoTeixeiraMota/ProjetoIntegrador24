@@ -12,5 +12,7 @@ namespace RobDroneAndGOAuth.Services.IServices
         Task<bool> DenyTaskVigilance(Guid taskId);
         Task<List<TaskVigilanceDto>> GetAllVigilanceTasks();
         Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks();
+        Task<(List<TaskVigilanceDto>, List<TaskPickDeliveryDto>)> GetTasksNonAprovedAsync();
+
     }
 }

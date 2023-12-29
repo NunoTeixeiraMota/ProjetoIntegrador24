@@ -1,0 +1,121 @@
+@startuml
+actor User
+
+participant "Angular\nView Non-Approved Tasks Component" as Frontend <<Frontend>>
+participant "HTTP Client" as HttpClient <<Frontend>>
+participant "AuthInterceptorService" as AuthInterceptor <<Frontend>>
+participant "LocalStorage" as LocalStorage <<Frontend>>
+participant "MessageService" as MessageService <<Frontend>>
+
+participant "JWT Authentication Middleware" as JwtAuth <<Backend>>
+participant "TaskController" as Controller <<Backend>>
+participant "ITaskService" as ITaskService <<Backend>>
+participant "TaskService" as TaskService <<Backend>>
+participant "TaskVigilanceRepository\nInterface" as VigilanceRepoInterface <<Backend>>
+participant "TaskVigilanceRepository" as VigilanceRepo <<Backend>>
+participant "TaskPickDeliveryRepository\nInterface" as PickDeliveryRepoInterface <<Backend>>
+participant "TaskPickDeliveryRepository" as PickDeliveryRepo <<Backend>>
+database "MongoDB" as Database <<Database>>
+
+User -> Frontend: Access View Non-Approved Tasks
+note right of User: User must be logged in
+activate Frontend
+
+Frontend -> HttpClient: Request GetAllNonAproved()
+activate HttpClient
+
+HttpClient -> AuthInterceptor: Prepare HTTP GET request to /GetAllNonAproved
+activate AuthInterceptor
+AuthInterceptor -> LocalStorage: Retrieve JWT Token
+activate LocalStorage
+LocalStorage --> AuthInterceptor: JWT Token
+deactivate LocalStorage
+
+AuthInterceptor -> JwtAuth: Forward request with Authorization header
+deactivate AuthInterceptor
+activate JwtAuth
+
+alt JWT Token is Valid
+    JwtAuth -> Controller: Forward Validated Request
+    deactivate JwtAuth
+    activate Controller
+
+    alt No Backend Exception
+        Controller -> ITaskService: GetTasksNonAprovedAsync()
+        activate ITaskService
+
+        ITaskService -> TaskService: GetTasksNonAprovedAsync()
+        activate TaskService
+
+        TaskService -> VigilanceRepoInterface: GetAllNonApproved()
+        activate VigilanceRepoInterface
+        VigilanceRepoInterface -> VigilanceRepo: GetAllNonApproved()
+        activate VigilanceRepo
+
+        VigilanceRepo -> Database: Query Non-Approved Vigilance Tasks
+        activate Database
+        Database --> VigilanceRepo: List<TaskVigilance>
+        deactivate Database
+        VigilanceRepo --> VigilanceRepoInterface: List<TaskVigilance>
+        deactivate VigilanceRepo
+        VigilanceRepoInterface --> TaskService: List<TaskVigilance>
+        deactivate VigilanceRepoInterface
+
+        TaskService -> PickDeliveryRepoInterface: GetAllNonApproved()
+        activate PickDeliveryRepoInterface
+        PickDeliveryRepoInterface -> PickDeliveryRepo: GetAllNonApproved()
+        activate PickDeliveryRepo
+
+        PickDeliveryRepo -> Database: Query Non-Approved PickDelivery Tasks
+        activate Database
+        Database --> PickDeliveryRepo: List<TaskPickDelivery>
+        deactivate Database
+        PickDeliveryRepo --> PickDeliveryRepoInterface: List<TaskPickDelivery>
+        deactivate PickDeliveryRepo
+        PickDeliveryRepoInterface --> TaskService: List<TaskPickDelivery>
+        deactivate PickDeliveryRepoInterface
+
+        TaskService --> ITaskService: (List<TaskVigilanceDto>, List<TaskPickDeliveryDto>)
+        deactivate TaskService
+
+        ITaskService --> Controller: Return result (vigilanceTasks, pickDeliveryTasks)
+        deactivate ITaskService
+
+        Controller --> HttpClient: HTTP Response with Data
+        deactivate Controller
+
+        HttpClient --> Frontend: Display Non-Approved Tasks
+        deactivate HttpClient
+
+        Frontend -> MessageService: "Tasks loaded successfully"
+        activate MessageService
+        MessageService -> Frontend: Display success message
+        deactivate MessageService
+    else Backend Exception
+        Controller --> HttpClient: HTTP Error Response (Exception)
+        deactivate Controller
+
+        HttpClient --> Frontend: Display Backend Error
+        deactivate HttpClient
+
+        Frontend -> MessageService: "Server error occurred"
+        activate MessageService
+        MessageService -> Frontend: Display error message
+        deactivate MessageService
+    end
+
+else JWT Token is Invalid
+    JwtAuth --> HttpClient: HTTP Unauthorized Response
+    deactivate JwtAuth
+
+    HttpClient --> Frontend: Display Authentication Error
+    deactivate HttpClient
+
+    Frontend -> MessageService: "Authentication error"
+    activate MessageService
+    MessageService -> Frontend: Display error message
+    deactivate MessageService
+end
+
+deactivate Frontend
+@enduml
