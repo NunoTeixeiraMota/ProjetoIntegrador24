@@ -134,12 +134,35 @@ namespace RobDroneAndGOAuth.Services
             }).ToList();
         }
         public async Task<TaskVigilanceDto> GetVigilanceTaskById(Guid _taskId)
+
         {
-            return await _taskVigilanceRepository.GetTaskByIdAsync(_taskId);
+            var v = await _taskVigilanceRepository.GetTaskByIdAsync(_taskId);
+
+            var task = new TaskVigilanceDto
+            {
+                userEmail = v.UserEmail,
+                Floor = v.Floor,
+                Description = v.Description,
+                PhoneNumber = v.PhoneNumber
+            };
+
+            return task;
         }
          public async Task<TaskPickDeliveryDto> GetPickDeliveryTaskById(Guid _taskId)
         {
-            return await _taskPickDeliveryRepository.GetTaskByIdAsync(_taskId);
+            var task = await _taskPickDeliveryRepository.GetTaskByIdAsync(_taskId);
+            var taskdto = new TaskPickDeliveryDto
+            {
+                userEmail = task.UserEmail,
+                NamePickup = task.NamePickup,
+                NameDelivery = task.NameDelivery,
+                CodeDelivery = task.CodeDelivery,
+                Floor = task.Floor,
+                Room = task.Room,
+                Description = task.Description
+            };
+
+            return taskdto;
         }
 
         public async Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks()
