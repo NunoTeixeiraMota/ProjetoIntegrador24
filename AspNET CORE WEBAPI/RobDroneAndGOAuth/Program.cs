@@ -14,11 +14,11 @@ using MongoDB.Driver;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Kestrel (the web server) to listen on all interfaces
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    // Set up the HTTP and HTTPS endpoints
-    serverOptions.ListenAnyIP(5054); // Listen for HTTP on port 5054 on all network interfaces
-});
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    // Set up the HTTP and HTTPS endpoints
+//    serverOptions.ListenAnyIP(5054); // Listen for HTTP on port 5054 on all network interfaces
+//});
 // Add services to the container.
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
@@ -39,7 +39,6 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
-
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
@@ -95,8 +94,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 // UseCors must be called before UseAuthentication and UseAuthorization
 app.UseCors("AllowAngularDevOrigin");
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
