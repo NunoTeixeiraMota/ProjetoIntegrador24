@@ -13,6 +13,7 @@ namespace RobDroneAndGOAuth.Services.IServices
         Task<List<TaskVigilanceDto>> GetAllVigilanceTasks();
         Task<List<TaskPickDeliveryDto>> GetAllPickDeliveryTasks();
         Task<(List<TaskVigilanceDto>, List<TaskPickDeliveryDto>)> GetTasksNonAprovedAsync();
+        Task<(List<TaskVigilanceDto>,List<TaskPickDeliveryDto>)> Search(string searchTerm);
 
     }
 }
