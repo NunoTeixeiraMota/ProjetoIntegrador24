@@ -30,13 +30,13 @@ namespace RobDroneAndGOAuth.Controllers
             return await _taskService.TaskCreatePickDeliveryTask(dto);
         }
         [HttpPatch("PickDelivery/Approve/{taskId}")]
-        public async Task<IActionResult> ApprovePickDeliveryTask(Guid taskId)
+        public async Task<IActionResult> ApprovePickDeliveryTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.ApproveTaskPickDelivery(taskId);
 
             if (result)
             {
-                return Ok("Task approved successfully");
+                return Ok(result);
             }
             else
             {
@@ -45,13 +45,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("PickDelivery/Deny/{taskId}")]
-        public async Task<IActionResult> DenyPickDeliveryTask(Guid taskId)
+        public async Task<IActionResult> DenyPickDeliveryTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.DenyTaskPickDelivery(taskId);
 
             if (result)
             {
-                return Ok("Task denied successfully");
+                return Ok(result);
             }
             else
             {
@@ -60,13 +60,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("Vigilance/Approve/{taskId}")]
-        public async Task<IActionResult> ApproveVigilanceTask(Guid taskId)
+        public async Task<IActionResult> ApproveVigilanceTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.ApproveTaskVigilance(taskId);
 
             if (result)
             {
-                return Ok("Task approved successfully");
+                return Ok(result);
             }
             else
             {
@@ -75,13 +75,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("Vigilance/Deny/{taskId}")]
-        public async Task<IActionResult> DenyVigilanceTask(Guid taskId)
+        public async Task<IActionResult> DenyVigilanceTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.DenyTaskVigilance(taskId);
 
             if (result)
             {
-                return Ok("Task denied successfully");
+                return Ok(result);
             }
             else
             {

@@ -1,18 +1,84 @@
-<div *ngIf="isLoading">
-  Loading tasks...
-</div>
-<div *ngIf="!isLoading">
-  <h2>Unapproved Tasks</h2>
-  <div *ngFor="let task of unapprovedTasks">
-    <div class="task-item">
-      <h3>{{ task.NamePickup || task.NameVigilance }} Task</h3>
-      <p>Description: {{ task.Description }}</p>
-      <label for="action-select-{{task._id}}">Choose an action:</label>
-      <select id="action-select-{{task._id}}" (change)="updateTaskStatus(task, $event)">
-        <option value="" disabled selected>Select Action</option>
-        <option value="approve">Approve</option>
-        <option value="deny">Deny</option>
-      </select>
+<section class="main-content">
+  <div class="container">
+    <div *ngIf="isLoading; else content">
+      <p>Loading...</p>
+    </div>
+
+    <ng-template #content>
+      <div *ngIf="vigilanceTasks.length > 0; else noTasks">
+        <h2>Vigilance Tasks</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Floor</th>
+              <th>Description</th>
+              <th>Phone Number</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of vigilanceTasks">
+              <td>{{ task.userEmail }}</td>
+              <td>{{ task.floor }}</td>
+              <td>{{ task.description }}</td>
+              <td>{{ task.phoneNumber }}</td>
+              <td>
+                <select
+                  [(ngModel)]="task.status"
+                  (change)="changeStatusVigilance(task._id, task.status)"
+                >
+                  <option value="approve">Approve</option>
+                  <option value="deny">Deny</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="pickDeliveryTasks.length > 0; else noTasks">
+        <h2>Pick Delivery Tasks</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Pickup</th>
+              <th>Delivery</th>
+              <th>Code Delivery</th>
+              <th>Floor</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of pickDeliveryTasks">
+              <td>{{ task.userEmail }}</td>
+              <td>{{ task.namePickup }}</td>
+              <td>{{ task.nameDelivery }}</td>
+              <td>{{ task.codeDelivery }}</td>
+              <td>{{ task.floor }}</td>
+              <td>{{ task.description }}</td>
+              <td>
+                <select
+                  [(ngModel)]="task.status"
+                  (change)="changeStatusPickDelivery(task._id, task.status)"
+                >
+                  <option value="approve">Approve</option>
+                  <option value="deny">Deny</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noTasks>
+        <p>No tasks available.</p>
+      </ng-template>
+    </ng-template>
+    <div class="button-row">
+      <button routerLink="/main-menu">Back</button>
     </div>
   </div>
-</div>
+</section>

@@ -29,6 +29,7 @@ import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-de
 import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-algorithms.component';
 import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.component';
 import { AproveTaskComponent } from './component/aprove-task.component/aprove-task.component';
+import { SearchTasksComponent } from './component/search-task.component/search-task.component';
 
 const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'list-task-algorithms', component: ListTasksByAlgoritm, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] } },
   { path: 'non-aproved-list', component: NonAprovedListComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER','ROLE_MANAGER'] } },
   { path: 'app-aprove-task', component:AproveTaskComponent,canActivate:[AuthGuard],data: {expectedRoles: ['ROLE_ADMIN']}},
+  { path: 'app-search-tasks', component:SearchTasksComponent,canActivate:[AuthGuard],data: {expectedRoles: ['ROLE_ADMIN']}},
 
 ];
 

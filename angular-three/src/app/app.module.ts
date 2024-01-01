@@ -33,6 +33,8 @@ import { CreateVigilanceTaskComponent } from './component/create-task-vigilance.
 import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-delivery.component/create-task-pick-delivery.component';
 import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-algorithms.component';
 import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.component';
+import { AproveTaskComponent } from './component/aprove-task.component/aprove-task.component';
+import { CommonModule } from '@angular/common'; 
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.com
     CreateVigilanceTaskComponent,
     CreateTaskPickDeliveryComponent,
     ListTasksByAlgoritm,
-    NonAprovedListComponent
+    NonAprovedListComponent,
+    AproveTaskComponent
+    
     // ... any other components
   ],
   imports: [
@@ -71,6 +75,8 @@ import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.com
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
   ],
   providers: [
     Title,
