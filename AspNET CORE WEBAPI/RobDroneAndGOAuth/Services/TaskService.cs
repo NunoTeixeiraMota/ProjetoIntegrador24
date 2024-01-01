@@ -186,24 +186,63 @@ namespace RobDroneAndGOAuth.Services
 
             var vigilanceTasks = vigilanceTasksEntities.Select(v => new TaskVigilanceDto
             {
+                _id = v._id,
                 userEmail = v.UserEmail,
                 Floor = v.Floor,
                 Description = v.Description,
-                PhoneNumber = v.PhoneNumber
+                PhoneNumber = v.PhoneNumber,
+                Status = v.Status
             }).ToList();
 
             var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => new TaskPickDeliveryDto
             {
+                _id = p._id,
                 userEmail = p.UserEmail,
                 NamePickup = p.NamePickup,
                 NameDelivery = p.NameDelivery,
                 CodeDelivery = p.CodeDelivery,
                 Floor = p.Floor,
                 Room = p.Room,
-                Description = p.Description
+                Description = p.Description,
+                Status = p.Status
+                
             }).ToList();
 
             return (vigilanceTasks, pickDeliveryTasks);
+        }
+
+        public async Task<(List<TaskVigilanceDto>,List<TaskPickDeliveryDto>)> Search (string searchTerm)
+        {
+            var vigilanceTasksEntities = await _taskVigilanceRepository.Search(searchTerm);
+            var pickDeliveryTasksEntities = await _taskPickDeliveryRepository.Search(searchTerm);
+
+            var vigilanceTasks = vigilanceTasksEntities.Select(v => new TaskVigilanceDto
+            {
+                _id = v._id,
+                userEmail = v.UserEmail,
+                Floor = v.Floor,
+                Description = v.Description,
+                PhoneNumber = v.PhoneNumber,
+                Status = v.Status
+            }).ToList();
+            vigilanceTasks = vigilanceTasks.FindAll(v => v.userEmail.Contains(searchTerm)&& v.Status.ToString().Contains(searchTerm));
+
+            var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => new TaskPickDeliveryDto
+            {
+                 _id = p._id,
+                userEmail = p.UserEmail,
+                NamePickup = p.NamePickup,
+                NameDelivery = p.NameDelivery,
+                CodeDelivery = p.CodeDelivery,
+                Floor = p.Floor,
+                Room = p.Room,
+                Description =  p.Description,
+                Status = p.Status
+
+            }).ToList();
+            pickDeliveryTasks = pickDeliveryTasks.FindAll(p => p.userEmail.Contains(searchTerm)&& p.Status.ToString().Contains(searchTerm));
+
+            return(vigilanceTasks,pickDeliveryTasks);
         }
 
     }
