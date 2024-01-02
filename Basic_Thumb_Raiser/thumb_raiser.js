@@ -702,6 +702,7 @@ export default class ThumbRaiser {
                 const direction = THREE.MathUtils.degToRad(this.player.direction);
                 if (this.player.keyStates.backward) {
                     const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
+                    this.maze.changeRoomName(newPosition);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
 
                     const floors = this.maze.checkLiftCollision(newPosition, this.player.radius);
@@ -754,6 +755,7 @@ export default class ThumbRaiser {
                 }
                 else if (this.player.keyStates.forward) {
                     const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
+                    this.maze.changeRoomName(newPosition);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
 
                     const floors = this.maze.checkLiftCollision(newPosition, this.player.radius);
