@@ -1,7 +1,9 @@
 using MongoDB.Driver;
+using MongoDB.Bson;
 using RobDroneAndGOAuth.Model.Task;
 using RobDroneAndGOAuth.Model.Task.TaskDtos;
 using RobDroneAndGOAuth.Repositories.IRepositories;
+using System.Text.RegularExpressions;
 
 namespace RobDroneAndGOAuth.Repositories
 {
@@ -69,6 +71,11 @@ namespace RobDroneAndGOAuth.Repositories
             var filter = Builders<TaskVigilance>.Filter.Eq(tv => tv.Status, TaskVigilance.TaskStatus.WaitingForAprove);
             var list = await _collection.Find(filter).ToListAsync();
             return list ;
+        }
+
+         public async Task<List<TaskVigilance>> Search(string searchTerm)
+        {
+            return await _collection.Find(_ => true).ToListAsync();
         }
 
     }

@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/service/User/auth.service';
 import { User } from 'src/app/model/user';
 import { RoomService } from 'src/app/service/Room/Room.service';
 import Room from 'src/app/model/room';
+import { TaskStatus } from 'src/app/model/taskStatus.enum';
 
 @Component({
   selector: 'app-create-task-pick-delivery',
@@ -24,13 +25,15 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   selectedRoomId: string = '';
 
   task: taskPickDelivery = {
+    _id:'',
     userEmail: "",
     namePickup: "",
     nameDelivery: "",
     codeDelivery: 1000,
     floor: "",
     room: [""],
-    description: ""
+    description: "",
+    status: TaskStatus.WaitingForAprove,
   };
 
   constructor(private authService: AuthService,

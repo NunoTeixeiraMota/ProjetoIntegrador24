@@ -29,20 +29,13 @@ namespace RobDroneAndGOAuth.Model.Task
         }
         public void AproveTask()
         {
-            if (Status == TaskStatus.WaitingForAprove)
-            {
                 Status = TaskStatus.Aproved;
-            }
-
+        
         }
 
         public void DenyTask()
         {
-            if (Status == TaskStatus.WaitingForAprove)
-            {
                 Status = TaskStatus.Denied;
-            }
-
         }
         public enum TaskStatus
         {

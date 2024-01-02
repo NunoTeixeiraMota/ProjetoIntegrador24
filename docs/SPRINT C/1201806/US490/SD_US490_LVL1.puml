@@ -1,0 +1,22 @@
+@startuml
+actor User
+participant "Angular" as Frontend <<Frontend>>
+participant "C# ASP.NET Core" as Backend <<Backend>>
+
+User -> Frontend: Access Search Task
+note right of User: User must be logged in
+
+Frontend -> Backend: Request Search Task
+note right of Frontend: Includes JWT Token
+
+alt JWT Token Valid and No Backend Error
+    Backend -> Frontend: Response with the tasks
+    Frontend -> User: Display tasks
+else JWT Token Invalid
+    Backend -> Frontend: Unauthorized Response
+    Frontend -> User: Display Authentication Error
+else Backend Error
+    Backend -> Frontend: Error Response
+    Frontend -> User: Display System Error
+end
+@enduml

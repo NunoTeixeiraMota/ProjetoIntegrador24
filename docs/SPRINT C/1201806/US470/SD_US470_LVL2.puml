@@ -1,0 +1,68 @@
+@startuml
+actor "Task Manager" as user
+participant "ApproveTasksHTML" as ui
+participant "ApproveTasksComponent" as component
+participant "TaskService" as servicefe <<FrontEnd>>
+participant "TasksController" as controller
+participant "TaskService" as service <<BackEnd>>
+
+
+database "MongoDB" as db
+
+user -> ui: Request to Approve tasks
+activate ui
+ui -> component: Receive the HTTP Request
+activate component
+component -> servicefe: getNonAprovedTasks()
+activate servicefe
+servicefe -> controller: HTTP GET GetAllNonAproved
+activate controller
+controller -> service: GetTasksNonAprovedAsync()
+activate service
+service -> db: GetTasksNonAprovedAsync()
+db --> service: List of non approved Tasks
+service --> controller: List of non approved Tasks
+deactivate service
+controller --> servicefe: HTTP OK with List of non approved Tasks
+deactivate controller
+servicefe -> component: Console.log Tasks
+deactivate servicefe
+component -> ui: Tasks
+deactivate component
+ui --> user: Display List of non approved Tasks
+user --> ui: Change a task Status
+
+ui -> component:Change Task Status
+activate component
+
+component -> servicefe: HTTP PATCH Approve/Deny task
+activate servicefe
+
+servicefe -> controller: Approve/Deny task
+activate controller
+
+controller -> service: Approve/Deny task
+activate service
+
+service -> db: Change the task status 
+activate db
+
+db -> service: Success Message
+deactivate db
+
+service -> controller: Success Message
+deactivate service
+
+controller -> servicefe: Success Message
+deactivate controller
+
+servicefe -> component: Success Message
+deactivate servicefe
+
+component -> ui: Success Message
+deactivate component
+
+ui -> user: display Success Message
+deactivate ui
+
+@enduml

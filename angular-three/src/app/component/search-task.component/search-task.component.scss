@@ -1,0 +1,136 @@
+/* Main content with responsive background image */
+.main-content {
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../../../assets/image.jpg');
+    background-size: cover; 
+    height: calc(100vh - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Container with max-width for large screens and adjusted padding for mobile */
+  .container {
+    background-color: #a3a3a3de;
+    max-width: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  }
+  
+  /* Typography enhancements */
+  body {
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    h1, h2 {
+      font-size: 1.5em;
+    }
+  }
+  
+  /* Table styles with cleaner look */
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .table th, .table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  .table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .table tbody tr:nth-child(odd) {
+    background-color: #fafafa;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Button styles with transitions and focus states */
+  .button-row {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 15px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #42545C;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #344955;
+    transform: translateY(-2px);
+  }
+  /* Style for the search input */
+.search-input {
+    padding: 10px; /* Add some padding for spacing */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Add rounded corners */
+    width: 100%; /* Make it take up the full width of its container */
+    font-size: 16px; /* Adjust the font size */
+  }
+  
+  /* Style for the search icon */
+  .search-icon {
+    position: absolute; /* Position it relative to the input */
+    top: 12px; /* Adjust the vertical position */
+    right: 12px; /* Adjust the horizontal position */
+    color: #999; /* Adjust the icon color */
+    pointer-events: none; /* Make sure the icon doesn't interfere with clicking the input */
+  }
+  
+  button:active {
+    background-color: #000;
+  }
+  
+  button:focus {
+    outline: 3px solid #428bca;
+  }
+  
+  /* Additional responsive and semantic considerations */
+  @media (max-width: 768px) {
+    .no-tasks, .button-row, .table, button {
+      padding: 10px;
+    }
+  }
+  
+  article, section {
+    padding: 15px;
+    margin-bottom: 20px;
+  }

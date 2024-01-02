@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import taskVigilance from 'src/app/model/taskVigilance';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/service/User/auth.service';
+import { TaskStatus } from 'src/app/model/taskStatus.enum';
 
 @Component({
   selector: 'app-create-task-vigilance',
@@ -20,10 +21,12 @@ export class CreateVigilanceTaskComponent implements OnInit {
   selectedFloorId: string = '';
 
   task : taskVigilance = {
+    _id:'',
     userEmail: "",
     floor: "",
-    description:"",
-    phoneNumber: ""
+    description: "",
+    phoneNumber: "",
+    status: TaskStatus.WaitingForAprove,
   };
 
   constructor(private authService: AuthService,

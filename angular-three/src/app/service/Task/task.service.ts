@@ -41,20 +41,44 @@ export class TaskService {
   getNonAprovedTasks(): Observable<any> {
     return this.http.get<any>(`${this.apiBaseUrl}/Task/GetAllNonAproved`);
   }
-  approvePickDeliveryTask(taskId: string) {
-    return this.http.patch(`${this.apiBaseUrl}PickDelivery/Approve/${taskId}`, null);
+  approvePickDeliveryTask(taskId: string): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.patch<any>(
+      `${this.apiBaseUrl}/Task/PickDelivery/Approve/${taskId}`, 
+      null, 
+      { headers }
+    );
   }
 
-  denyPickDeliveryTask(taskId: string) {
-    return this.http.patch(`${this.apiBaseUrl}PickDelivery/Deny/${taskId}`, null);
+  denyPickDeliveryTask(taskId: string): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' }; 
+    return this.http.patch<any>(
+      `${this.apiBaseUrl}/Task/PickDelivery/Deny/${taskId}`, 
+      null, 
+      { headers } 
+    );
   }
 
-  approveVigilanceTask(taskId: string) {
-    return this.http.patch(`${this.apiBaseUrl}Vigilance/Approve/${taskId}`, null);
+  approveVigilanceTask(taskId: string): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' }; 
+    return this.http.patch<any>(
+      `${this.apiBaseUrl}/Task/Vigilance/Approve/${taskId}`, 
+      null, 
+      { headers } 
+    );
   }
 
-  denyVigilanceTask(taskId: string) {
-    return this.http.patch(`${this.apiBaseUrl}Vigilance/Deny/${taskId}`, null);
+  denyVigilanceTask(taskId: string): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' }; 
+    return this.http.patch<any>(
+      `${this.apiBaseUrl}/Task/Vigilance/Deny/${taskId}`, 
+      null, 
+      { headers } 
+    );
   }
+  searchTasks(searchTerm: string): Observable<any> {
+    return this.http.get<any>(`${this.apiBaseUrl}/Task/Search/${searchTerm}`);
+}
+  
 
 }

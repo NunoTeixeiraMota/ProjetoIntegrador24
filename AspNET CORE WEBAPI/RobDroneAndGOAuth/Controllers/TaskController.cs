@@ -30,13 +30,13 @@ namespace RobDroneAndGOAuth.Controllers
             return await _taskService.TaskCreatePickDeliveryTask(dto);
         }
         [HttpPatch("PickDelivery/Approve/{taskId}")]
-        public async Task<IActionResult> ApprovePickDeliveryTask(Guid taskId)
+        public async Task<IActionResult> ApprovePickDeliveryTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.ApproveTaskPickDelivery(taskId);
 
             if (result)
             {
-                return Ok("Task approved successfully");
+                return Ok(result);
             }
             else
             {
@@ -45,13 +45,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("PickDelivery/Deny/{taskId}")]
-        public async Task<IActionResult> DenyPickDeliveryTask(Guid taskId)
+        public async Task<IActionResult> DenyPickDeliveryTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.DenyTaskPickDelivery(taskId);
 
             if (result)
             {
-                return Ok("Task denied successfully");
+                return Ok(result);
             }
             else
             {
@@ -60,13 +60,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("Vigilance/Approve/{taskId}")]
-        public async Task<IActionResult> ApproveVigilanceTask(Guid taskId)
+        public async Task<IActionResult> ApproveVigilanceTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.ApproveTaskVigilance(taskId);
 
             if (result)
             {
-                return Ok("Task approved successfully");
+                return Ok(result);
             }
             else
             {
@@ -75,13 +75,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPatch("Vigilance/Deny/{taskId}")]
-        public async Task<IActionResult> DenyVigilanceTask(Guid taskId)
+        public async Task<IActionResult> DenyVigilanceTask([FromRoute] Guid taskId)
         {
             var result = await _taskService.DenyTaskVigilance(taskId);
 
             if (result)
             {
-                return Ok("Task denied successfully");
+                return Ok(result);
             }
             else
             {
@@ -101,6 +101,26 @@ namespace RobDroneAndGOAuth.Controllers
             };
 
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("Search/{searchTerm?}")]
+        public async Task<IActionResult> SearchAsync ([FromRoute] string? searchTerm)
+        {
+            try
+            {
+                if(searchTerm== null) searchTerm = string.Empty;
+                var(vigilanceTasks,pickDeliveryTasks) = await _taskService.Search(searchTerm);
+
+                var result = new 
+                {
+                    VigilanceTasks = vigilanceTasks,
+                    PickDeliveryTasks = pickDeliveryTasks
+                };
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {return StatusCode(500, "An error occured while searching for tasks.");}
         }
 
         [HttpGet("LessTime")]
