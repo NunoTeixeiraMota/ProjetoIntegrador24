@@ -38,4 +38,10 @@ export class UserService {
   edit(user: any) {
     return this.http.post<any>(`${this.apiBaseUrl}/User/Edit`, user);
   }
+  approve(email:string){
+    return this.http.patch<any>(`${this.apiBaseUrl}/User/Approve`,email);
+  }
+  denny(email:string){
+    return this.http.patch<any>(`${this.apiBaseUrl}/User/Denny`,email);
+  }
 }

@@ -1,0 +1,45 @@
+<section class="main-content">
+    <div class="container">
+      <div *ngIf="isLoading; else content">
+        <p>Loading...</p>
+      </div>
+  
+      <ng-template #content>
+        <div *ngIf="users.length > 0; else noTasks">
+          <h2>Users</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>User Email</th>
+                <th>User Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{ user.userEmail? }}</td>
+                <td>{{ user.name?}}</td>
+                <td>
+                  <select
+                    [(ngModel)]="status"
+                    (change)="approveUser(userEmail: string,status: string)"
+                  >
+                    <option value="approve">Approve</option>
+                    <option value="deny">Deny</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+  
+        <ng-template #noTasks>
+          <p>No users available.</p>
+        </ng-template>
+      </ng-template>
+      <div class="button-row">
+        <button routerLink="/main-menu">Back</button>
+      </div>
+    </div>
+  </section>
+  

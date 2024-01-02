@@ -48,5 +48,18 @@ namespace RobDroneAndGOAuth.Controllers
         {
             return await _userAppService.editUser(user);
         }
-    } 
+        [Authorize]
+        [HttpPatch("Approve")]
+        public async Task<IdentityResult> ApproveUser(string UserEmail)
+        {
+            return await _userAppService.ApproveUser(UserEmail);
+        }
+        [Authorize]
+        [HttpPatch("Denny")]
+        public async Task<IdentityResult> DenyUser(string UserEmail)
+        {
+            return await _userAppService.DenyUser(UserEmail);
+        }
+
+    }
 }

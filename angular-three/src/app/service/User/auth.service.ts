@@ -127,6 +127,12 @@ export class AuthService {
     }
     return {};
   }
+  ListUsers(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+    return this.http.get<any>(`${this.apiBaseUrl}/List`, httpOptions);
+  }
   
   
 }

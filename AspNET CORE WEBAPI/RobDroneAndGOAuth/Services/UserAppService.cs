@@ -55,6 +55,8 @@ namespace RobDroneAndGOAuth.Services
             }
         }
 
+      
+
         public async Task<RegisteredDTO> Register(CreateUserDto user)
         {
             ApplicationUser appUser = new ApplicationUser
@@ -100,24 +102,57 @@ namespace RobDroneAndGOAuth.Services
                 return IdentityResult.Failed(new IdentityError { Description = "User not found." });
             }
 
-            try{
-                if(user.Email != ""){
+            try
+            {
+                if (user.Email != "")
+                {
                     await _userManager.SetEmailAsync(appUser, user.Email);
                 }
 
-                if(user.Password != ""){
-                    await _userManager.ChangePasswordAsync(appUser,user.CurrentPassword, user.Password);
+                if (user.Password != "")
+                {
+                    await _userManager.ChangePasswordAsync(appUser, user.CurrentPassword, user.Password);
                 }
-                if(user.phonenumber != ""){
+                if (user.phonenumber != "")
+                {
                     await _userManager.SetPhoneNumberAsync(appUser, user.phonenumber);
                 }
-                if(user.Name != ""){
+                if (user.Name != "")
+                {
                     await _userManager.SetUserNameAsync(appUser, user.Name);
                 }
                 return await _userManager.UpdateAsync(appUser);
 
-            }catch(Exception){
+            }
+            catch (Exception)
+            {
                 return IdentityResult.Failed(new IdentityError { Description = "Please introduce valid data." });
+            }
+        }
+        public async Task<IdentityResult> ApproveUser(string Email)
+        {
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(Email);
+            if (appUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+            }
+            else
+            {
+                return await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now));
+
+            }
+        }
+        public async Task<IdentityResult> DenyUser(string Email)
+        {
+            ApplicationUser? appUser = await _userManager.FindByEmailAsync(Email);
+            if (appUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+            }
+            else
+            {
+                return await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now.AddYears(99999)));
+
             }
         }
     }
