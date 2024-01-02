@@ -1,0 +1,19 @@
+**Review Sprint C**
+
+*   **O Que Correu Bem:**
+    
+    1.  **Melhoria no Planeamento:** Um dos grandes sucessos deste Sprint foi a melhoria significativa no planeamento. A implementação de recursos do GitHub Projects para a gestão de tarefas e acompanhamento do progresso foi uma adição valiosa. Esta ferramenta permitiu uma visão mais clara das etapas do projeto, facilitando a atribuição e o acompanhamento das tarefas. A equipa conseguiu utilizar estes recursos de forma eficaz para melhorar a organização e a eficiência do trabalho.
+        
+    2.  **Evolução na Estrutura Documental:** Outro avanço notável foi a melhoria na estruturação e organização da documentação do projeto. A criação de templates padronizados para a documentação e a implementação de uma política de atualizações regulares garantiram que toda a informação relevante fosse facilmente acessível e estivesse atualizada. Esta mudança contribuiu para uma maior transparência e eficácia na comunicação interna e externa.
+    3.  **Automatização de Tarefas e Integração de Ferramentas:** Uma das realizações notáveis deste Sprint foi a implementação eficaz de scripts para automatizar diversas tarefas repetitivas, o que trouxe uma melhoria significativa na eficiência do trabalho. A utilização de scripts para gerar automaticamente ficheiros SVG a partir da documentação em PlantUML foi particularmente benéfica. Esta automatização não só poupou tempo valioso da equipa, mas também garantiu uma maior consistência e precisão nos outputs gráficos. Além disso, a criação de Issues automatizadas através de scripts proporcionou uma gestão de tarefas mais ágil e organizada. Esta automação facilitou o processo de identificação e acompanhamento de problemas, permitindo que a equipa se concentrasse mais no desenvolvimento e menos na gestão administrativa. Outro ponto forte foi a integração melhorada com a Azure para um processo de CI/CD (Continuous Integration/Continuous Deployment) mais eficiente. Esta integração permitiu uma automatização e um controlo mais efetivos dos ciclos de lançamento e testes, garantindo que as novas funcionalidades e correções fossem integradas e implementadas de forma mais rápida e confiável. A combinação destas melhorias tecnológicas contribuiu significativamente para o aumento da produtividade da equipa e para a qualidade geral do projeto durante o Sprint C
+
+        
+*   **Áreas a Melhorar:**
+    
+    1.  **Falha na Cadeira de ALGAV:** Apesar dos avanços em várias áreas, o Sprint C enfrentou um desafio significativo na cadeira de ALGAV. Houve dificuldades na implementação de certos algoritmos complexos, o que impactou o desenvolvimento de algumas funcionalidades críticas do projeto. Esta falha destacou a necessidade de reforçar as competências técnicas da equipa nesta área específica.
+ 
+    2.  **Sobrecarga de Trabalho:** A equipa sentiu uma sobrecarga de trabalho significativa durante este Sprint. Mesmo com um número menor de tarefas em comparação com grupos maiores, a distribuição de tarefas por integrante acabou sendo mais elevada devido ao tamanho reduzido da nossa equipa. Esta situação levou a um aumento de pressão e stress entre os membros. Para futuros Sprints, será crucial reavaliar a alocação de tarefas e considerar a possibilidade de aumentar o número de integrantes na equipa ou reduzir a carga de trabalho para garantir um equilíbrio mais sustentável.
+      
+*   **Conclusão:**
+    
+    O Sprint C foi um período de aprendizagem e crescimento significativo para a equipa. As melhorias no planeamento e na estrutura documental são testemunhos do esforço contínuo da equipa em aprimorar seus processos e práticas de trabalho. No entanto, a falha na cadeira de ALGAV serve como um exemplo importante de que há sempre espaço para desenvolvimento e aperfeiçoamento, especialmente em áreas técnicas complexas. 

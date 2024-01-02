@@ -22,17 +22,6 @@ segue_pisos(PisoAct,PisoDest,[EdAct,EdSeg|LOutrosEd],[elevator(PisoAct,PisoAct1)
     segue_pisos(PisoSeg,PisoDest,[EdSeg|LOutrosEd],LOutrasLig).
 
 
-
-
-% d escolher o caminho que envolve menos utilizacoes de elevadores e em
-% caso de iguadade menos utilizacao de corredores, menos trocos 20%
-%
-% ?- melhor_caminho_pisos(j2,g4,LLigMelhor).
-% LLigMelhor = [cor(j2, i2), cor(i2, h2), cor(h2, g2), elev(g2, g4)].
-%
-%
-
-
 melhor_caminho_pisos(PisoOr,PisoDest,LLigMelhor):-
     findall(LLig,floors_path(PisoOr,PisoDest,_,LLig),LLLig),
     menos_elevadores(LLLig,LLigMelhor,_,_).
@@ -127,11 +116,6 @@ cria_grafo_lin(Col,Lin,P,Map):-Col1 is Col-1,cria_grafo_lin(Col1,Lin,P,Map).
 
 
 
-
-%genetic
-%usar dfs
-%tempo de movimento entre a posição de fim da tarefa 1 e a do inicio da tarefa 2
-%assumindo elevador = 30, bc = 5, tile = 1, diagonal = raiz(2)
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
@@ -139,7 +123,6 @@ cria_grafo_lin(Col,Lin,P,Map):-Col1 is Col-1,cria_grafo_lin(Col1,Lin,P,Map).
 :-dynamic time_stop/1.
 :-dynamic min_value/1.
 
-%temp_desloc(id tarefa 1,id tarefa 2,tempo)
 temp_desloc(t1,t2,5).
 temp_desloc(t2,t1,6).
 temp_desloc(t1,t3,8).
@@ -171,7 +154,6 @@ temp_desloc(t6,t3,9).
 temp_desloc(t6,t4,13).
 temp_desloc(t6,t5,1).
 
-%inicial_desloc(id tarefa,tempo de deslocacao)
 inicial_desloc(t1,5).
 inicial_desloc(t2,7).
 inicial_desloc(t3,1).
@@ -179,7 +161,6 @@ inicial_desloc(t4,18).
 inicial_desloc(t5,1).
 inicial_desloc(t6,3).
 
-%final_desloc(id tarefa,tempo de deslocacao)
 final_desloc(t1,7).
 final_desloc(t2,9).
 final_desloc(t3,12).
@@ -188,7 +169,6 @@ final_desloc(t5,5).
 final_desloc(t6,6).
 
 
-%tarefas
 tarefa(t1).
 tarefa(t2).
 tarefa(t3).
@@ -196,12 +176,10 @@ tarefa(t4).
 tarefa(t5).
 tarefa(t6).
 
-%tarefasN(Ntarefas)
 tarefasN(6).
 
 
 
-%parametros
 inicializa:-
 	write('Numero de novas Geracoes: '),read(NG),
 	(retract(geracoes(_));true), asserta(geracoes(NG)),
@@ -248,7 +226,7 @@ gera_populacao(TamPop,ListaTarefas,NumT,L):-
 gera_individuo([G],1,[G]):-!.
 
 gera_individuo(ListaTarefas,NumT,[G|Resto]):-
-	NumTemp is NumT + 1, % To use with random
+	NumTemp is NumT + 1, 
 	random(1,NumTemp,N),
 	retira(N,ListaTarefas,G,NovaLista),
 	NumT1 is NumT-1,
@@ -302,7 +280,6 @@ gera_geracao(G,G,[X*VX|_]):-!,
 	asserta(genetic_best_cost(VX)),
 	asserta(genetic_best_path(X)).
 
-%check se o tempo de execucao ja terminou
 gera_geracao(N,_,[X*VX|_]):-
 	get_time(Now),
 	time_stop(Time),
@@ -312,7 +289,6 @@ gera_geracao(N,_,[X*VX|_]):-
 	asserta(genetic_best_cost(VX)),
 	asserta(genetic_best_path(X)).
 
-%check se o melhor caminho tem valor inferior ou igual ao definido
 gera_geracao(N,_,[X*VX|_]):-
 	min_value(V),
 	VX=<V,!,
@@ -324,38 +300,27 @@ gera_geracao(N,_,[X*VX|_]):-
 gera_geracao(N,G,[X,Y|Pop]):-
 	write('Geracao '), write(N), write(':'), nl, write([X,Y|Pop]), nl,
 
-	%mix antes de cruzar
 	random_permutation([X,Y|Pop],Pop1),
 	cruzamento(Pop1,NPop1),
 	mutacao(NPop1,NPop),
 	avalia_populacao(NPop,NPopAv),
 
-	%juntar old e new gen, sem repetidos, usando append + remove_duplicates pq union nao da
 	append([X,Y|Pop],NPopAv,NPopAv1),
 	remove_duplicates(NPopAv1,NPopAvNoDupes),
-	%ordenar
 	ordena_populacao(NPopAvNoDupes,NPopOrd),
 
-	%tirar top, n = 25% de pop size inical
 	populacao(TamPop),
 	NBest is TamPop//4,
 	tam_pop_fraction(NBest,NBest1),
-	%separar os NBest1 elementos de NPopOrd para a lista Best, restantes para a left
 	list_transfer(NBest1,NPopBest,NPopLeft,NPopOrd),
 
-	%gerar peso random, peso = aval * val random entre 0 e 1
 	add_weights(NPopLeft,NPopWeighted),
-	%ordenar por peso
 	ordena_populacao(NPopWeighted,NPopWeightedOrd),
-	%tirar peso
 	remove_weights(NPopWeightedOrd,NPopOrd1),
 
-	%tirar top, n = 75% de pop size inicial
 	NTam is TamPop-NBest1,
-	%separar os NTam elementos de NPopOrd1 para a lista Best1, restantes para a left1
 	list_transfer(NTam,NPopBest1,_,NPopOrd1),
 
-	%juntar tudo
 	append(NPopBest,NPopBest1,NPopFinal),
 	ordena_populacao(NPopFinal,NPopFinal1),
 	N1 is N+1,
@@ -525,7 +490,6 @@ mutacao23(G1,P,[G|Ind],G2,[G|NInd]):-
 	mutacao23(G1,P1,Ind,G2,NInd).
 
 
-%%sequencia de execução de tarefas e escolha da mais rapida
 
 ver_tempo([T],Tempo):- final_desloc(T,C),Tempo is C.
 ver_tempo([T1,T2|R],Tempo):-
