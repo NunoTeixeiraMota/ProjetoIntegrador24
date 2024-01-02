@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../model/user'; 
 import { API_CONFIG } from 'config';
@@ -38,10 +38,13 @@ export class UserService {
   edit(user: any) {
     return this.http.post<any>(`${this.apiBaseUrl}/User/Edit`, user);
   }
-  approve(email:string){
-    return this.http.patch<any>(`${this.apiBaseUrl}/User/Approve`,email);
-  }
+  approve(email: string) {
+    const params = new HttpParams().set('UserEmail', email);
+    return this.http.patch<any>(`${this.apiBaseUrl}/User/Approve`, null, { params });
+}
+
   denny(email:string){
-    return this.http.patch<any>(`${this.apiBaseUrl}/User/Denny`,email);
+    const params = new HttpParams().set('UserEmail', email);
+    return this.http.patch<any>(`${this.apiBaseUrl}/User/Deny`, null, { params });
   }
 }
