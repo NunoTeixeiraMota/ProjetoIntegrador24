@@ -30,7 +30,7 @@ import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-
 import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.component';
 import { AproveTaskComponent } from './component/aprove-task.component/aprove-task.component';
 import { SearchTasksComponent } from './component/search-task.component/search-task.component';
-
+import { ApproveUserComponent } from './component/approve-user.component/approve-user/approve-user.component';
 const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER'] }, },
@@ -61,6 +61,7 @@ const routes: Routes = [
   { path: 'non-aproved-list', component: NonAprovedListComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ADMIN', 'ROLE_USER','ROLE_MANAGER'] } },
   { path: 'app-aprove-task', component:AproveTaskComponent,canActivate:[AuthGuard],data: {expectedRoles: ['ROLE_ADMIN']}},
   { path: 'app-search-tasks', component:SearchTasksComponent,canActivate:[AuthGuard],data: {expectedRoles: ['ROLE_ADMIN']}},
+  {path: 'approve-users',component:ApproveUserComponent,canActivate:[AuthGuard], data: {expectedRoles: ['ROLE_ADMIN']}}
 
 ];
 

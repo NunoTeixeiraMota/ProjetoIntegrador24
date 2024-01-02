@@ -131,7 +131,7 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    return this.http.get<any>(`${this.apiBaseUrl}/list-non-aproved-user`, httpOptions);
+    return this.http.get<any>(`${this.apiBaseUrl}/User/ListNonAprovved`, httpOptions);
   }
   
   

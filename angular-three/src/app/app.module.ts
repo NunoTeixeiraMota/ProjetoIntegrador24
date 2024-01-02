@@ -36,6 +36,7 @@ import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.com
 import { AproveTaskComponent } from './component/aprove-task.component/aprove-task.component';
 import { SearchTasksComponent } from './component/search-task.component/search-task.component';
 import { CommonModule } from '@angular/common'; 
+import { ApproveUserComponent } from './component/approve-user.component/approve-user/approve-user.component';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import { CommonModule } from '@angular/common';
     NonAprovedListComponent,
     AproveTaskComponent,
     SearchTasksComponent,
-    
+    ApproveUserComponent
     // ... any other components
   ],
   imports: [
