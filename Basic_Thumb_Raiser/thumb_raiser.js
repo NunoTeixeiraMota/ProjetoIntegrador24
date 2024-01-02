@@ -256,7 +256,7 @@ export default class ThumbRaiser {
         this.buildHelpPanel();
 
         // Set the active view camera (fixed view)
-        this.setActiveViewCamera(this.fixedViewCamera);
+        this.setActiveViewCamera(this.thirdPersonViewCamera);
 
         // Arrange viewports by view mode
         this.arrangeViewports(this.multipleViewsCheckBox.checked);
@@ -703,6 +703,43 @@ export default class ThumbRaiser {
                 if (this.player.keyStates.backward) {
                     const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
+
+                    const floors = this.maze.checkLiftCollision(newPosition, this.player.radius);
+                    const liftsDropdown = document.getElementById("lifts-dropdown");
+                    if (floors.length > 0) {
+                        liftsDropdown.innerHTML = "";
+                        const defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.textContent = "Select Floor";
+                        liftsDropdown.appendChild(defaultOption);
+
+                        for (const floor of floors) {
+                            const floorInfo = floor.split("*");
+                            const floorName = floorInfo[0];
+                            const fileName = floorInfo[1];
+
+                            const option = document.createElement("option");
+                            option.value = fileName;
+                            option.textContent = floorName;
+                            liftsDropdown.appendChild(option);
+                        }
+
+                        liftsDropdown.addEventListener("change", function () {
+                            const selectedValue = this.value;
+                        
+                            for (const floor of floors) {
+                                const floorInfo = floor.split("*");
+                                const fileName = floorInfo[1];
+                                if (fileName === selectedValue) {
+                                    restartGame(fileName);
+                                    break;
+                                }
+                            }
+                        });                 
+                    }else{
+                        liftsDropdown.innerHTML = "";
+                    }
+
                     const collisionPassage = this.collisionPassage(newPosition);
                     if (collisionPassage != "") {
                         restartGame(collisionPassage);
@@ -718,6 +755,43 @@ export default class ThumbRaiser {
                 else if (this.player.keyStates.forward) {
                     const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
+
+                    const floors = this.maze.checkLiftCollision(newPosition, this.player.radius);
+                    const liftsDropdown = document.getElementById("lifts-dropdown");
+                    if (floors.length > 0) {
+                        liftsDropdown.innerHTML = "";
+                        const defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.textContent = "Select Floor";
+                        liftsDropdown.appendChild(defaultOption);
+
+                        for (const floor of floors) {
+                            const floorInfo = floor.split("*");
+                            const floorName = floorInfo[0];
+                            const fileName = floorInfo[1];
+
+                            const option = document.createElement("option");
+                            option.value = fileName;
+                            option.textContent = floorName;
+                            liftsDropdown.appendChild(option);
+                        }
+
+                        liftsDropdown.addEventListener("change", function () {
+                            const selectedValue = this.value;
+                        
+                            for (const floor of floors) {
+                                const floorInfo = floor.split("*");
+                                const fileName = floorInfo[1];
+                                if (fileName === selectedValue) {
+                                    restartGame(fileName);
+                                    break;
+                                }
+                            }
+                        });         
+                    }else{
+                        liftsDropdown.innerHTML = "";
+                    }
+
                     const collisionPassage = this.collisionPassage(newPosition);
                     if (collisionPassage != "") {
                         restartGame(collisionPassage);
