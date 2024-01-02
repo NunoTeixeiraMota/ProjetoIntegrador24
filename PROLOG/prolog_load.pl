@@ -12,12 +12,12 @@
 :-dynamic taskRequest/6.
 :-dynamic time_desloc/3.
 :-dynamic initial_desloc/2.
-:-dynamic final_desloc/2.
+:-dynamic final_desloc/2.~
 
-
-login_url("https://robdroneandgo.azurewebsites.net/User/Login").
 email('manager@example.com').
 pass('Manager123!').
+
+login_url("https://robdroneandgo.azurewebsites.net/User/Login").
 buildings_url("http://localhost:4000/api/get_buildings").
 floors_url("http://localhost:4000/api/get_floors").
 connections_url("http://localhost:4000/api/get_buildings_connections").

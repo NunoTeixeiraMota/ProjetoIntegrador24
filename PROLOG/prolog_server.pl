@@ -12,6 +12,9 @@
 
 :- consult('prolog_load.pl').
 :- consult('prolog_algorithms.pl').
+
+
+
 startServer(Port):-
         http_server(http_dispatch, [port(Port)]),
         asserta(port(Port)).
