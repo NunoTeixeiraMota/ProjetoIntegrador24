@@ -260,6 +260,74 @@ namespace RobDroneAndGOAuth.Tests
             Assert.NotNull(result);
             Assert.True(result.Succeeded);
         }
+        [Fact]
+        public async Task ApproveUser_UserExists_ApprovesUser()
+        {
+            // Arrange
+            var userEmail = "existing@example.com";
+            var appUser = new ApplicationUser { Email = userEmail, UserName = "ExistingUser" };
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync(appUser);
+            _mockUserManager.Setup(x => x.SetLockoutEndDateAsync(appUser, It.IsAny<DateTime>()))
+                            .ReturnsAsync(IdentityResult.Success);
+            _mockUserManager.Setup(x => x.SetLockoutEnabledAsync(appUser, false))
+                            .ReturnsAsync(IdentityResult.Success);
+
+            // Act
+            var result = await _userAppService.ApproveUser(userEmail);
+
+            // Assert
+            Assert.True(result.Succeeded);
+        }
+
+        [Fact]
+        public async Task ApproveUser_UserDoesNotExist_ReturnsFailedResult()
+        {
+            // Arrange
+            var userEmail = "nonexistent@example.com";
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync((ApplicationUser)null);
+
+            // Act
+            var result = await _userAppService.ApproveUser(userEmail);
+
+            // Assert
+            Assert.False(result.Succeeded);
+            Assert.Equal("User not found.", result.Errors.First().Description);
+        }
+
+        [Fact]
+        public async Task DenyUser_UserExists_DeletesUser()
+        {
+            // Arrange
+            var userEmail = "existing@example.com";
+            var appUser = new ApplicationUser { Email = userEmail, UserName = "ExistingUser" };
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync(appUser);
+            _mockUserManager.Setup(x => x.DeleteAsync(appUser)).ReturnsAsync(IdentityResult.Success);
+
+            // Act
+            var result = await _userAppService.DenyUser(userEmail);
+
+            // Assert
+            Assert.True(result.Succeeded);
+        }
+
+        [Fact]
+        public async Task DenyUser_UserDoesNotExist_ReturnsFailedResult()
+        {
+            // Arrange
+            var userEmail = "nonexistent@example.com";
+
+            _mockUserManager.Setup(x => x.FindByEmailAsync(userEmail)).ReturnsAsync((ApplicationUser)null);
+
+            // Act
+            var result = await _userAppService.DenyUser(userEmail);
+
+            // Assert
+            Assert.False(result.Succeeded);
+            Assert.Equal("User not found.", result.Errors.First().Description);
+        }
 
     }
 }
