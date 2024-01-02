@@ -9,11 +9,13 @@ namespace RobDroneAndGOAuth.Services
     {
         private readonly ITaskPickDeliveryRepository _taskPickDeliveryRepository;
         private readonly ITaskVigilanceRepository _taskVigilanceRepository;
+        private readonly TaskMapper _taskMapper;
 
-        public TaskService(ITaskPickDeliveryRepository taskPickDeliveryRepository, ITaskVigilanceRepository taskVigilanceRepository)
+        public TaskService(ITaskPickDeliveryRepository taskPickDeliveryRepository, ITaskVigilanceRepository taskVigilanceRepository, TaskMapper taskMapper)
         {
             _taskPickDeliveryRepository = taskPickDeliveryRepository;
             _taskVigilanceRepository = taskVigilanceRepository;
+            _taskMapper = taskMapper;
         }
 
         public async Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto)
@@ -184,29 +186,8 @@ namespace RobDroneAndGOAuth.Services
             var vigilanceTasksEntities = await _taskVigilanceRepository.GetAllNonApproved();
             var pickDeliveryTasksEntities = await _taskPickDeliveryRepository.GetAllNonApproved();
 
-            var vigilanceTasks = vigilanceTasksEntities.Select(v => new TaskVigilanceDto
-            {
-                _id = v._id,
-                userEmail = v.UserEmail,
-                Floor = v.Floor,
-                Description = v.Description,
-                PhoneNumber = v.PhoneNumber,
-                Status = v.Status
-            }).ToList();
-
-            var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => new TaskPickDeliveryDto
-            {
-                _id = p._id,
-                userEmail = p.UserEmail,
-                NamePickup = p.NamePickup,
-                NameDelivery = p.NameDelivery,
-                CodeDelivery = p.CodeDelivery,
-                Floor = p.Floor,
-                Room = p.Room,
-                Description = p.Description,
-                Status = p.Status
-                
-            }).ToList();
+            var vigilanceTasks = vigilanceTasksEntities.Select(v => _taskMapper.ToDtoVigilance(v)).ToList();
+            var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => _taskMapper.ToDtoDelivery(p)).ToList();
 
             return (vigilanceTasks, pickDeliveryTasks);
         }

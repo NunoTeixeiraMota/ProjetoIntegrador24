@@ -53,6 +53,8 @@ public class TaskServiceIntegrationTests: IDisposable
         services.AddScoped<ITaskPickDeliveryRepository, TaskPickDeliveryRepository>();
         services.AddScoped<ITaskVigilanceRepository, TaskVigilanceRepository>();
         services.AddScoped<ITaskService, TaskService>();
+        services.AddScoped<TaskMapper>();
+
     }
 
     private IConfiguration CreateConfiguration()
