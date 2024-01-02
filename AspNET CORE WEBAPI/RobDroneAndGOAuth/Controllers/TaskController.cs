@@ -120,7 +120,7 @@ namespace RobDroneAndGOAuth.Controllers
                 return Ok(result);
             }
             catch (Exception ex)
-            {return StatusCode(500, "An error occured while searching for tasks.")}
+            {return StatusCode(500, "An error occured while searching for tasks.");}
         }
 
         [HttpGet("LessTime")]
