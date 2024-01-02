@@ -85,7 +85,7 @@ public class TaskServiceIntegrationTests: IDisposable
     public async Task TaskCreatePickDeliveryTask_Successful_CreatesNewTask()
     {
         // Arrange
-        var createTaskDto = new TaskPickDeliveryDto
+        var createTaskDto = new CreateTaskPickDeliveryDto
         {
             userEmail = "testuser@example.com",
             NamePickup = "Pickup",
@@ -110,7 +110,7 @@ public class TaskServiceIntegrationTests: IDisposable
     public async Task CreateVigilanceTask_Successful_CreatesNewTask()
     {
         // Arrange
-        var createTaskDto = new TaskVigilanceDto
+        var createTaskDto = new CreateTaskVigilanceDto
         {
             userEmail = "testuser@example.com",
             Floor = "2",
@@ -131,7 +131,7 @@ public class TaskServiceIntegrationTests: IDisposable
     public async Task GetTasksNonAprovedAsync_ReturnsNonApprovedTasks()
     {
         // Arrange - Create non-approved vigilance and pick delivery tasks using the service
-        var nonApprovedVigilanceTaskDto = new TaskVigilanceDto
+        var nonApprovedVigilanceTaskDto = new CreateTaskVigilanceDto
         {
             userEmail = "vigilance@example.com",
             Floor = "3",
@@ -139,7 +139,7 @@ public class TaskServiceIntegrationTests: IDisposable
             PhoneNumber = "1234567890"
         };
 
-        var nonApprovedPickDeliveryTaskDto = new TaskPickDeliveryDto
+        var nonApprovedPickDeliveryTaskDto = new CreateTaskPickDeliveryDto
         {
             userEmail = "pickdelivery@example.com",
             NamePickup = "NonApprovedPickup",
@@ -183,7 +183,7 @@ public class TaskServiceIntegrationTests: IDisposable
     public async Task GetTasksNonAprovedAsync_WithEdgeCases_HandlesCorrectly()
     {
         // Arrange
-        var edgeCaseTaskDto = new TaskVigilanceDto
+        var edgeCaseTaskDto = new CreateTaskVigilanceDto
         {
             userEmail = "edge@example.com",
             Floor = "999", // Edge case value
@@ -214,14 +214,8 @@ public class TaskServiceIntegrationTests: IDisposable
         Assert.Empty(vigilanceTasks);
         Assert.Empty(pickDeliveryTasks);
     }
-
-
-
-
-
     public void Dispose()
     {
         ClearCollectionsAsync().Wait(); // Clear collections at the end of each test
     }
-
 }

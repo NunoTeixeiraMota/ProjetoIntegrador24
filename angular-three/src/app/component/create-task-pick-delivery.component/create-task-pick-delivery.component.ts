@@ -5,12 +5,10 @@ import { FloorService } from 'src/app/service/Floor/floor.service';
 import { TaskService } from 'src/app/service/Task/task.service';
 import floor from 'src/app/model/floor';
 import { Title } from '@angular/platform-browser';
-import taskPickDelivery from 'src/app/model/taskPickDelivery';
 import { AuthService } from 'src/app/service/User/auth.service';
 import { User } from 'src/app/model/user';
 import { RoomService } from 'src/app/service/Room/Room.service';
 import Room from 'src/app/model/room';
-import { TaskStatus } from 'src/app/model/taskStatus.enum';
 
 @Component({
   selector: 'app-create-task-pick-delivery',
@@ -24,16 +22,14 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   selectedFloorId: string = '';
   selectedRoomId: string = '';
 
-  task: taskPickDelivery = {
-    _id:'',
+  task = {
     userEmail: "",
-    namePickup: "",
-    nameDelivery: "",
+    NamePickup: "",
+    NameDelivery: "",
     codeDelivery: 1000,
-    floor: "",
-    room: [""],
-    description: "",
-    status: TaskStatus.WaitingForAprove,
+    Floor: "",
+    Room: [""],
+    Description: "",
   };
 
   constructor(private authService: AuthService,
@@ -82,7 +78,7 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   createTask() {
     if (this.selectedFloorId) {
       this.task.userEmail = this.user!.email!;
-      this.task.floor = this.selectedFloorId;
+      this.task.Floor = this.selectedFloorId;
       let errorOrSuccess: any = this.TaskService.pickDelivery(this.task);
 
       errorOrSuccess.subscribe(
@@ -105,12 +101,12 @@ export class CreateTaskPickDeliveryComponent implements OnInit {
   }
 
   addRoom() {
-    this.task.room.push("");
+    this.task.Room.push("");
   }
 
   removeRoom(index: number) {
-    if (this.task.room.length > 1) {
-      this.task.room.splice(index, 1);
+    if (this.task.Room.length > 1) {
+      this.task.Room.splice(index, 1);
     }
   }
 

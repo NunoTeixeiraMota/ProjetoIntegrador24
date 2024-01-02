@@ -5,7 +5,7 @@ namespace RobDroneAndGOAuth.Repositories.IRepositories
 {
     public interface ITaskPickDeliveryRepository
     {
-        Task<TaskPickDeliveryDto> InsertTaskAsync(TaskPickDelivery task);
+        Task<CreateTaskPickDeliveryDto> InsertTaskAsync(TaskPickDelivery task);
         Task<TaskPickDelivery> GetTaskByIdAsync(Guid id);
         Task<List<TaskPickDelivery>> GetAllTasksAsync();
         Task<TaskPickDeliveryDto> UpdateTaskAsync(TaskPickDelivery task);

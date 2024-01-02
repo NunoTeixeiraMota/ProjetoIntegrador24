@@ -19,13 +19,13 @@ namespace RobDroneAndGOAuth.Controllers
         }
 
         [HttpPost("Vigilance")]
-        public async Task<TaskVigilanceDto> taskVigilance(TaskVigilanceDto dto)
+        public async Task<CreateTaskVigilanceDto> taskVigilance(CreateTaskVigilanceDto dto)
         {
             return await _taskService.CreateVigilanceTask(dto);
         }
 
         [HttpPost("PickDelivery")]
-        public async Task<TaskPickDeliveryDto> taskPickDelivery(TaskPickDeliveryDto dto)
+        public async Task<CreateTaskPickDeliveryDto> taskPickDelivery(CreateTaskPickDeliveryDto dto)
         {
             return await _taskService.TaskCreatePickDeliveryTask(dto);
         }

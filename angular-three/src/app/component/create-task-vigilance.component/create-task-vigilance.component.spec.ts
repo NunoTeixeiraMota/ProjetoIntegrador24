@@ -6,7 +6,6 @@ import Building from 'src/app/model/building';
 import Floor from 'src/app/model/floor';
 import { CreateVigilanceTaskComponent } from './create-task-vigilance.component';
 import { TaskService } from 'src/app/service/Task/task.service';
-import taskVigilance from 'src/app/model/taskVigilance';
 
 describe('CreateVigilanceTaskComponent', () => {
   let component: CreateVigilanceTaskComponent;
@@ -53,7 +52,7 @@ describe('CreateVigilanceTaskComponent', () => {
     passages: []
   }
 
-  const mockTask: taskVigilance = {
+  const mockTask = {
     userEmail: "aaaa@gmail.com",
     floor: "2",
     description:"aaaaa",

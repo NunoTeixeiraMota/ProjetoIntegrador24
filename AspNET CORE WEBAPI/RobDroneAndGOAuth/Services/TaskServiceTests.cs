@@ -27,7 +27,7 @@ namespace RobDroneAndGOAuth.Tests
         public async Task TaskCreatePickDeliveryTask_Successful_ReturnsTaskPickDeliveryDto()
         {
             // Arrange
-            var taskPickDeliveryDto = new TaskPickDeliveryDto
+            var taskPickDeliveryDto = new CreateTaskPickDeliveryDto
             {
                 userEmail = "test@example.com",
                 NamePickup = "PickupLocation",
@@ -60,7 +60,7 @@ namespace RobDroneAndGOAuth.Tests
         public async Task CreateVigilanceTask_Successful_ReturnsTaskVigilanceDto()
         {
             // Arrange
-            var taskVigilanceDto = new TaskVigilanceDto
+            var taskVigilanceDto = new CreateTaskVigilanceDto
             {
                 userEmail = "test@example.com",
                 Floor = "2",
@@ -88,21 +88,21 @@ namespace RobDroneAndGOAuth.Tests
         {
             // Arrange
             var mockVigilanceTasks = new List<TaskVigilance>
-{
-    new TaskVigilance("user1@example.com", "Floor1", "Description1", "1234567890"),
-    new TaskVigilance("user3@example.com", "Floor3", "Description3", "0987654321"),
-    new TaskVigilance("user4@example.com", "Floor4", "Description4", "1122334455"),
-    // Add as many as needed for thorough testing
-};
+            {
+                new TaskVigilance("user1@example.com", "Floor1", "Description1", "1234567890"),
+                new TaskVigilance("user3@example.com", "Floor3", "Description3", "0987654321"),
+                new TaskVigilance("user4@example.com", "Floor4", "Description4", "1122334455"),
+                // Add as many as needed for thorough testing
+            };
 
 
             var mockPickDeliveryTasks = new List<TaskPickDelivery>
-{
-    new TaskPickDelivery("user2@example.com", "PickupLocation1", "DeliveryLocation1", 1234, "Floor2", new[] { "Room1" }, "Description2"),
-    new TaskPickDelivery("user5@example.com", "PickupLocation2", "DeliveryLocation2", 5678, "Floor5", new[] { "Room2", "Room3" }, "Description5"),
-    new TaskPickDelivery("user6@example.com", "PickupLocation3", "DeliveryLocation3", 9012, "Floor6", new[] { "Room4" }, "Description6"),
-    // More instances can be added as needed
-};
+            {
+                new TaskPickDelivery("user2@example.com", "PickupLocation1", "DeliveryLocation1", 1234, "Floor2", new[] { "Room1" }, "Description2"),
+                new TaskPickDelivery("user5@example.com", "PickupLocation2", "DeliveryLocation2", 5678, "Floor5", new[] { "Room2", "Room3" }, "Description5"),
+                new TaskPickDelivery("user6@example.com", "PickupLocation3", "DeliveryLocation3", 9012, "Floor6", new[] { "Room4" }, "Description6"),
+                // More instances can be added as needed
+            };
 
 
             _mockTaskVigilanceRepository.Setup(repo => repo.GetAllNonApproved()).ReturnsAsync(mockVigilanceTasks);

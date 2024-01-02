@@ -16,10 +16,10 @@ namespace RobDroneAndGOAuth.Repositories
             _collection = database.GetCollection<TaskPickDelivery>("TaskPickDelivery");
         }
 
-        public async Task<TaskPickDeliveryDto> InsertTaskAsync(TaskPickDelivery task)
+        public async Task<CreateTaskPickDeliveryDto> InsertTaskAsync(TaskPickDelivery task)
         {
             await _collection.InsertOneAsync(task);
-            return new TaskPickDeliveryDto
+            return new CreateTaskPickDeliveryDto
             {
                 userEmail = task.UserEmail,
                 NamePickup = task.NamePickup,

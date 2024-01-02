@@ -8,11 +8,11 @@
             <table>
                 <tr>
                     <th><label>Name PickUp:<span>*</span></label></th>
-                    <td><input [(ngModel)]="task.namePickup" placeholder="Name PickUp" required></td>
+                    <td><input [(ngModel)]="task.NamePickup" placeholder="Name PickUp" required></td>
                 </tr>
                 <tr>
                     <th><label>Name Delivery:<span>*</span></label></th>
-                    <td><input [(ngModel)]="task.nameDelivery" placeholder="Name Delivery" required></td>
+                    <td><input [(ngModel)]="task.NameDelivery" placeholder="Name Delivery" required></td>
                 </tr>
                 <tr>
                     <th><label>Code for Delivery:<span>*</span></label></th>
@@ -28,23 +28,25 @@
                 </tr>
                 <tr>
                     <th><label>Description:<span>*</span></label></th>
-                    <td><input [(ngModel)]="task.description" placeholder="Task Description" required></td>
+                    <td><input [(ngModel)]="task.Description" placeholder="Task Description" required></td>
                 </tr>
-                <tr *ngFor="let room of task.room; let i = index">
-                    <th><label for="rooms{{i}}">Room {{i + 1}}:</label></th>
+                
+                <tr *ngFor="let Room of task.Room; let i = index">
+                    <th><label for="Rooms{{i}}">Room {{i + 1}}:</label></th>
                     <td>
-                        <select [(ngModel)]="task.room[i]" id="room{{i}}">
+                        <select [(ngModel)]="task.Room[i]" id="Room{{i}}">
                             <option *ngFor="let roomOption of rooms" [ngValue]="roomOption._id">{{ roomOption.name }}
                             </option>
                         </select>
                     </td>
                     <td>
-                        <button type="button" *ngIf="i === task.room.length - 1" (click)="addRoom()">Add Room</button>
+                        <button type="button" *ngIf="i === task.Room.length - 1" (click)="addRoom()">Add Room</button>
                     </td>
                     <td>
-                        <button type="button" *ngIf="task.room.length > 1" (click)="removeRoom(i)">Remove Room</button>
+                        <button type="button" *ngIf="task.Room.length > 1" (click)="removeRoom(i)">Remove Room</button>
                     </td>
                 </tr>
+
             </table>
         </div>
         <div class="button-section">

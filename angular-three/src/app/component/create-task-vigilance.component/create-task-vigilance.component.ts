@@ -5,10 +5,8 @@ import { FloorService } from 'src/app/service/Floor/floor.service';
 import { TaskService } from 'src/app/service/Task/task.service';
 import floor from 'src/app/model/floor';
 import { Title } from '@angular/platform-browser';
-import taskVigilance from 'src/app/model/taskVigilance';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/service/User/auth.service';
-import { TaskStatus } from 'src/app/model/taskStatus.enum';
 
 @Component({
   selector: 'app-create-task-vigilance',
@@ -20,13 +18,11 @@ export class CreateVigilanceTaskComponent implements OnInit {
   floors: floor[] = [];
   selectedFloorId: string = '';
 
-  task : taskVigilance = {
-    _id:'',
+  task = {
     userEmail: "",
-    floor: "",
-    description: "",
-    phoneNumber: "",
-    status: TaskStatus.WaitingForAprove,
+    Floor: "",
+    Description: "",
+    PhoneNumber: ""
   };
 
   constructor(private authService: AuthService,
@@ -62,7 +58,7 @@ export class CreateVigilanceTaskComponent implements OnInit {
   createTask() {
     if(this.selectedFloorId){
       this.task.userEmail = this.user!.email!;
-      this.task.floor = this.selectedFloorId;
+      this.task.Floor = this.selectedFloorId;
       let errorOrSuccess: any = this.TaskService.vigilance(this.task);
 
       errorOrSuccess.subscribe(

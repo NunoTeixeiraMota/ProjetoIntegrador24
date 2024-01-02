@@ -18,7 +18,7 @@ namespace RobDroneAndGOAuth.Services
             _taskMapper = taskMapper;
         }
 
-        public async Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto)
+        public async Task<CreateTaskPickDeliveryDto> TaskCreatePickDeliveryTask(CreateTaskPickDeliveryDto dto)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace RobDroneAndGOAuth.Services
             }
         }
 
-        public async Task<TaskVigilanceDto> CreateVigilanceTask(TaskVigilanceDto dto)
+        public async Task<CreateTaskVigilanceDto> CreateVigilanceTask(CreateTaskVigilanceDto dto)
         {
             try
             {

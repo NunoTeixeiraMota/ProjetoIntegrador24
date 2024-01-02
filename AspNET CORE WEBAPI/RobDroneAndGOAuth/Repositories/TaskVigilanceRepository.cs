@@ -16,10 +16,10 @@ namespace RobDroneAndGOAuth.Repositories
             _collection = database.GetCollection<TaskVigilance>("TaskVigilance");
         }
 
-        public async Task<TaskVigilanceDto> InsertTaskAsync(TaskVigilance task)
+        public async Task<CreateTaskVigilanceDto> InsertTaskAsync(TaskVigilance task)
         {
             await _collection.InsertOneAsync(task);
-            return new TaskVigilanceDto
+            return new CreateTaskVigilanceDto
             {
                 userEmail = task.UserEmail,
                 Floor = task.Floor,

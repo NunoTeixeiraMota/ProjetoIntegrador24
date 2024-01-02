@@ -6,7 +6,6 @@ import Building from 'src/app/model/building';
 import Floor from 'src/app/model/floor';
 import { TaskService } from 'src/app/service/Task/task.service';
 import { CreateTaskPickDeliveryComponent } from './create-task-pick-delivery.component';
-import taskPickDelivery from 'src/app/model/taskPickDelivery';
 
 describe('CreateTaskPickDeliveryComponent', () => {
   let component: CreateTaskPickDeliveryComponent;
@@ -53,7 +52,7 @@ describe('CreateTaskPickDeliveryComponent', () => {
     passages: []
   }
 
-  const mockTask: taskPickDelivery = {
+  const mockTask = {
     userEmail: "aaaa@gmail.com",
     namePickup: "aaaa",
     nameDelivery: "aaa",

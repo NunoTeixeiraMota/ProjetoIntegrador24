@@ -4,8 +4,8 @@ namespace RobDroneAndGOAuth.Services.IServices
 {
     public interface ITaskService
     {
-        Task<TaskPickDeliveryDto> TaskCreatePickDeliveryTask(TaskPickDeliveryDto dto);
-        Task<TaskVigilanceDto> CreateVigilanceTask(TaskVigilanceDto dto);
+        Task<CreateTaskPickDeliveryDto> TaskCreatePickDeliveryTask(CreateTaskPickDeliveryDto dto);
+        Task<CreateTaskVigilanceDto> CreateVigilanceTask(CreateTaskVigilanceDto dto);
         Task<bool> ApproveTaskPickDelivery(Guid taskId);
         Task<bool> DenyTaskPickDelivery(Guid taskId);
         Task<bool> ApproveTaskVigilance(Guid taskId);
