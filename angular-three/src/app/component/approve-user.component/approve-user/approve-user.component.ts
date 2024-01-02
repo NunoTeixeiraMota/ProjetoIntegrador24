@@ -24,7 +24,6 @@ export class ApproveUserComponent implements OnInit {
       (data) => {
         this.users = data.users;
         console.log('Users:', data);
-
       }
     )
 

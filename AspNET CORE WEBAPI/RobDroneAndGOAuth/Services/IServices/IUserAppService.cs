@@ -13,6 +13,8 @@ namespace RobDroneAndGOAuth.Services.IServices
         Task<IdentityResult> editUser(EditUserDto user);
         Task<IdentityResult> ApproveUser(string Email);
         Task<IdentityResult> DenyUser(string Email);
+        Task<List<DisplayUserDto>> ListNonApproved();
+
 
     }
 }

@@ -48,6 +48,7 @@ namespace RobDroneAndGOAuth.Controllers
         {
             return await _userAppService.editUser(user);
         }
+
         [Authorize]
         [HttpPatch("Approve")]
         public async Task<IdentityResult> ApproveUser(string UserEmail)
@@ -59,6 +60,14 @@ namespace RobDroneAndGOAuth.Controllers
         public async Task<IdentityResult> DenyUser(string UserEmail)
         {
             return await _userAppService.DenyUser(UserEmail);
+        }
+
+        [Authorize]
+        [HttpGet("ListNonAprovved")]
+        public async Task<List<DisplayUserDto>> ListNonAproved()
+        {
+            return await _userAppService.ListNonApproved();
+
         }
 
     }

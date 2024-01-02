@@ -77,6 +77,7 @@ builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<ITaskPickDeliveryRepository, TaskPickDeliveryRepository>();
 builder.Services.AddScoped<ITaskVigilanceRepository, TaskVigilanceRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<UserMapper>();
 
 var app = builder.Build();
 

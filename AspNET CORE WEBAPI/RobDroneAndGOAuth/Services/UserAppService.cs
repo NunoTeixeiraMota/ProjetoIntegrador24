@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using IdentityMongo.Settings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using RobDroneAndGOAuth.Model.ApplicationRole;
 using RobDroneAndGOAuth.Model.Token.TokenDTO;
@@ -138,7 +139,8 @@ namespace RobDroneAndGOAuth.Services
             }
             else
             {
-                return await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now));
+                _userManager.SetLockoutEndDateAsync(appUser, DateTime.Now);
+                return await _userManager.SetLockoutEnabledAsync(appUser, false);
 
             }
         }
@@ -151,9 +153,22 @@ namespace RobDroneAndGOAuth.Services
             }
             else
             {
-                return await _userManager.SetLockoutEndDateAsync(appUser, (DateTimeOffset.Now.AddYears(99999)));
-
+                return await _userManager.DeleteAsync(appUser);
             }
         }
+
+        public async Task<List<DisplayUserDto>> ListNonApproved()
+        {
+            UserMapper mapper = new UserMapper();
+
+            var users = _userManager.Users
+                .Where(u => u.LockoutEnd != null && u.LockoutEnd > DateTimeOffset.Now)
+                .ToList();
+
+            return await Task.Run(() => users.Select(user => mapper.toDisplayDTO(user)).ToList());
+        }
+
+
+
     }
 }
