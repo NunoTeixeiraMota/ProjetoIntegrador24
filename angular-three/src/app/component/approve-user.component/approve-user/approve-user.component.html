@@ -21,6 +21,7 @@
                             <td>{{ user.name ? user.name : 'N/A' }}</td>
                             <td>
                                 <select (change)="approveUser(user.email ?? '', getSelectValue($event))">
+                                    <option value=""></option>
                                     <option value="approve">Approve</option>
                                     <option value="deny">Deny</option>
                                 </select>
