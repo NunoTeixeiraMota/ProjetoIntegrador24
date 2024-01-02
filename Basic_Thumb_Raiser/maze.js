@@ -18,7 +18,7 @@ export default class Maze {
             // Store the maze's map and size
             this.map = description.map;
             this.size = description.size;
-            this.floor = description.floor;
+            this.rooms = description.rooms;
             this.lift = description.lift;
             this.passages = description.passages;
 
@@ -47,10 +47,10 @@ export default class Maze {
                     /*
                      * description.map[][] | North wall | West wall
                      * --------------------+------------+-----------
-                     *          0          |     No     |     No
-                     *          1          |     No     |    Yes
-                     *          2          |    Yes     |     No
-                     *          3          |    Yes     |    Yes
+                     *          0          |     No     |     No            20,21,22,23,24,25,26,27,28
+                     *          1          |     No     |    Yes            30,31,32,33,34,35,36,37,38
+                     *          2          |    Yes     |     No            40,41,42,43,44,45,46,47,48
+                     *          3          |    Yes     |    Yes            50,51,52,53,54,55,56,57,58
                      * 
                      * description.map[][] | North door | West door
                      * --------------------+------------+-----------
@@ -68,12 +68,12 @@ export default class Maze {
                      *      11,12,13       |    Yes        |     No
                      */
                     //wall
-                    if (description.map[j][i] == 2 || description.map[j][i] == 3) {
+                    if ([2, 3, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(description.map[j][i])) {
                         wallObject = this.wall.object.clone();
                         wallObject.position.set(i - description.size.width / 2.0 + 0.5, 0.5, j - description.size.height / 2.0);
                         this.object.add(wallObject);
                     }
-                    if (description.map[j][i] == 1 || description.map[j][i] == 3) {
+                    if ([1, 3, 30, 31, 32, 33, 34, 35, 36, 37, 38, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(description.map[j][i])) {
                         wallObject = this.wall.object.clone();
                         wallObject.rotateY(Math.PI / 2.0);
                         wallObject.position.set(i - description.size.width / 2.0, 0.5, j - description.size.height / 2.0 + 0.5);
@@ -176,9 +176,11 @@ export default class Maze {
         return [Math.floor(position.z / this.scale.z + this.size.height / 2.0), Math.floor(position.x / this.scale.x + this.size.width / 2.0)];
     }
 
+
     distanceToWestWall(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 6) {
+
+        if ([1, 3, 4, 30, 31, 32, 33, 34, 35, 36, 37, 38, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(this.map[indices[0]][indices[1]])) {
             return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
         }
         return Infinity;
@@ -187,7 +189,7 @@ export default class Maze {
     distanceToEastWall(position) {
         const indices = this.cartesianToCell(position);
         indices[1]++;
-        if (this.map[indices[0]][indices[1]] == 1 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 6) {
+        if ([1, 3, 4, 30, 31, 32, 33, 34, 35, 36, 37, 38, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(this.map[indices[0]][indices[1]])) {
             return this.cellToCartesian(indices).x - this.scale.x / 2.0 - position.x;
         }
         return Infinity;
@@ -195,7 +197,7 @@ export default class Maze {
 
     distanceToNorthWall(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 5 || this.map[indices[0]][indices[1]] == 7) {
+        if ([2, 3, 5, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(this.map[indices[0]][indices[1]])) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
         }
         return Infinity;
@@ -204,7 +206,7 @@ export default class Maze {
     distanceToSouthWall(position) {
         const indices = this.cartesianToCell(position);
         indices[0]++;
-        if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3 || this.map[indices[0]][indices[1]] == 5 || this.map[indices[0]][indices[1]] == 7) {
+        if ([2, 3, 5, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58].includes(this.map[indices[0]][indices[1]])) {
             return this.cellToCartesian(indices).z - this.scale.z / 2.0 - position.z;
         }
         return Infinity;
@@ -266,6 +268,10 @@ export default class Maze {
         return this.distanceToEastPassage(position) < playerRadius || this.distanceToWestPassage(position) < playerRadius || this.distanceToNorthPassage(position) < playerRadius || this.distanceToSouthPassage(position) < playerRadius;
     }
 
+    collisionLift(position, playerRadius) {
+        return this.distanceToEastLift(position) < playerRadius || this.distanceToWestLift(position) < playerRadius || this.distanceToNorthLift(position) < playerRadius || this.distanceToSouthLift(position) < playerRadius;
+    }
+
     distanceToWestPassage(position) {
         const indices = this.cartesianToCell(position);
         if (this.map[indices[0]][indices[1]] == 8 || this.map[indices[0]][indices[1]] == 9 || this.map[indices[0]][indices[1]] == 10) {
@@ -300,7 +306,7 @@ export default class Maze {
         return Infinity;
     }
 
-    checkPassageCollisions(playerPosition, playerRadius) {  
+    checkPassageCollisions(playerPosition, playerRadius) {
         if (this.collisionPassage(playerPosition, playerRadius)) {
             const indices = this.cartesianToCell(playerPosition);
             switch (this.map[indices[0]][indices[1]]) {
@@ -317,12 +323,82 @@ export default class Maze {
         return "";
     }
 
-    /*
     checkLiftCollision(playerPosition, playerRadius) {
-        if (this.collision(playerPosition, playerRadius) && (this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 7)){
-            return true;
-        }else{
-            return false;
+        if (this.collisionLift(playerPosition, playerRadius)) {
+            return this.lift;
+        } else {
+            return "";
         }
-    }*/
+    }
+
+    distanceToWestLift(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 6) {
+            return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToEastLift(position) {
+        const indices = this.cartesianToCell(position);
+        indices[1]++;
+        if (this.map[indices[0]][indices[1]] == 6) {
+            return this.cellToCartesian(indices).x - this.scale.x / 2.0 - position.x;
+        }
+        return Infinity;
+    }
+
+    distanceToNorthLift(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 7) {
+            return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToSouthLift(position) {
+        const indices = this.cartesianToCell(position);
+        indices[0]++;
+        if (this.map[indices[0]][indices[1]] == 7) {
+            return this.cellToCartesian(indices).z - this.scale.z / 2.0 - position.z;
+        }
+        return Infinity;
+    }
+
+    changeRoomName(position) {
+        const a = document.getElementById("roomNames");
+        const indices = this.cartesianToCell(position);
+        console.log(this.map[indices[0]][indices[1]]);
+        switch (this.map[indices[0]][indices[1]]) {
+            case 20: case 30: case 40: case 50:
+                a.textContent = this.rooms[0];
+                break;
+            case 21: case 31: case 41: case 51:
+                a.textContent = this.rooms[1];
+                break;
+            case 22: case 32: case 42: case 52:
+                a.textContent = this.rooms[2];
+                break;
+            case 23: case 33: case 43: case 53:
+                a.textContent = this.rooms[3];
+                break;
+            case 24: case 34: case 44: case 54:
+                a.textContent = this.rooms[4];
+                break;
+            case 25: case 35: case 45: case 55:
+                a.textContent = this.rooms[5];
+                break;
+            case 26: case 36: case 46: case 56:
+                a.textContent = this.rooms[6];
+                break;
+            case 27: case 37: case 47: case 57:
+                a.textContent = this.rooms[7];
+                break;
+            case 28: case 38: case 48: case 58:
+                a.textContent = this.rooms[8];
+                break;
+            default:
+                a.textContent = "Hall";
+        }
+    }
 }
