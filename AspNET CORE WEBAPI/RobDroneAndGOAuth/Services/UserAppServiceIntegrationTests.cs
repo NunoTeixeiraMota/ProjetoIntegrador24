@@ -126,7 +126,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
         Assert.Equal(createUserDto.Email, result.User.Email);
         Assert.Equal(createUserDto.Name + createUserDto.phonenumber, result.User.UserName);
     }
-    
+
     [Fact]
     public async Task Register_WithExistingEmail_Fails()
     {
@@ -341,7 +341,7 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
             phonenumber = "1234567890"
         };
         var registeredResult = await _userAppService.Register(registeredUser);
-            
+
         // Act: Try to edit with invalid data
         var editUserDto = new EditUserDto
         {
@@ -358,4 +358,73 @@ public class UserAppServiceIntegrationTests : IAsyncLifetime
         Assert.False(result.Succeeded);
         Assert.Contains(result.Errors, e => e.Description == "Email 'invalidemail' is invalid.");
     }
+
+    [Fact]
+    public async Task ApproveUser_ExistingUser_ApprovesSuccessfully()
+    {
+        // Arrange: Register a user first
+        var registeredUser = new CreateUserDto
+        {
+            Name = "Approval Test User",
+            Email = "testapprove@example.com",
+            Password = "TestApprovePassword123!",
+            phonenumber = "1234567890"
+        };
+        await _userAppService.Register(registeredUser);
+
+        // Act
+        var result = await _userAppService.ApproveUser(registeredUser.Email);
+
+        // Assert
+        Assert.True(result.Succeeded);
+    }
+
+    [Fact]
+    public async Task ApproveUser_NonexistentUser_ReturnsErrorMessage()
+    {
+        // Arrange
+        var nonExistentEmail = "nonexistentapprove@example.com";
+
+        // Act
+        var result = await _userAppService.ApproveUser(nonExistentEmail);
+
+        // Assert
+        Assert.False(result.Succeeded);
+        Assert.Contains(result.Errors, e => e.Description == "User not found.");
+    }
+
+    [Fact]
+    public async Task DenyUser_ExistingUser_DeletesSuccessfully()
+    {
+        // Arrange: Register a user first
+        var registeredUser = new CreateUserDto
+        {
+            Name = "Denial Test User",
+            Email = "testdeny@example.com",
+            Password = "TestDenyPassword123!",
+            phonenumber = "1234567890"
+        };
+        await _userAppService.Register(registeredUser);
+
+        // Act
+        var result = await _userAppService.DenyUser(registeredUser.Email);
+
+        // Assert
+        Assert.True(result.Succeeded);
+    }
+
+    [Fact]
+    public async Task DenyUser_NonexistentUser_ReturnsErrorMessage()
+    {
+        // Arrange
+        var nonExistentEmail = "nonexistentdeny@example.com";
+
+        // Act
+        var result = await _userAppService.DenyUser(nonExistentEmail);
+
+        // Assert
+        Assert.False(result.Succeeded);
+        Assert.Contains(result.Errors, e => e.Description == "User not found.");
+    }
+
 }
