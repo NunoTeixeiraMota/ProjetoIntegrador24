@@ -205,7 +205,8 @@ export default class ThumbRaiser {
         document.body.appendChild(this.statistics.dom);
 
         // Create a renderer and turn on shadows in the renderer
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        var myCanvas = document.getElementById('myCanvas');
+        this.renderer = new THREE.WebGLRenderer({ canvas: myCanvas, antialias: true });
         if (this.generalParameters.setDevicePixelRatio) {
             this.renderer.setPixelRatio(window.devicePixelRatio);
         }
@@ -650,6 +651,10 @@ export default class ThumbRaiser {
         return this.maze.distanceToWestWall(position) < this.player.radius || this.maze.distanceToEastWall(position) < this.player.radius || this.maze.distanceToNorthWall(position) < this.player.radius || this.maze.distanceToSouthWall(position) < this.player.radius;
     }
 
+    collisionPassage(position) {
+        return this.maze.checkPassageCollisions(position, this.player.radius);
+    }
+
     update() {
         if (!this.gameRunning) {
             if (this.maze.loaded && this.player.loaded) { // If all resources have been loaded
@@ -698,6 +703,10 @@ export default class ThumbRaiser {
                 if (this.player.keyStates.backward) {
                     const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
+                    const collisionPassage = this.collisionPassage(newPosition);
+                    if (collisionPassage != "") {
+                        restartGame(collisionPassage);
+                    }
                     if (this.collision(newPosition)) {
                         this.animations.fadeToAction("Death", 0.2);
                     }
@@ -709,6 +718,10 @@ export default class ThumbRaiser {
                 else if (this.player.keyStates.forward) {
                     const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
                     this.maze.checkDoorCollisions(newPosition, this.player.radius);
+                    const collisionPassage = this.collisionPassage(newPosition);
+                    if (collisionPassage != "") {
+                        restartGame(collisionPassage);
+                    }
                     if (this.collision(newPosition)) {
                         this.animations.fadeToAction("Death", 0.2);
                     }

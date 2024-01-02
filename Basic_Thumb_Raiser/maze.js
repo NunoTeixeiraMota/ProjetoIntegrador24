@@ -18,6 +18,9 @@ export default class Maze {
             // Store the maze's map and size
             this.map = description.map;
             this.size = description.size;
+            this.floor = description.floor;
+            this.lift = description.lift;
+            this.passages = description.passages;
 
             // Store the player's initial position and direction
             this.initialPosition = this.cellToCartesian(description.initialPosition);
@@ -243,23 +246,25 @@ export default class Maze {
 
     checkDoorCollisions(playerPosition, playerRadius) {
         this.doors.forEach(child => {
-            if (this.collision(playerPosition, playerRadius)) {
+            if (this.collisionDoor(playerPosition, playerRadius)) {
                 this.openDoor(child);
             }
         });
     }
 
     openDoor(child) {
-        console.log(child);
         let tween = new TWEEN.Tween(child.rotation)
         tween.to({ y: Math.PI / 2.0 }, 2000 * (1.0 - child.rotation.y / (Math.PI / 2.0)));
         tween.startFromCurrentValues();
     }
 
-    collision(position, playerRadius) {
+    collisionDoor(position, playerRadius) {
         return this.distanceToEastDoor(position) < playerRadius || this.distanceToWestDoor(position) < playerRadius || this.distanceToNorthDoor(position) < playerRadius || this.distanceToSouthDoor(position) < playerRadius;
     }
 
+    collisionPassage(position, playerRadius) {
+        return this.distanceToEastPassage(position) < playerRadius || this.distanceToWestPassage(position) < playerRadius || this.distanceToNorthPassage(position) < playerRadius || this.distanceToSouthPassage(position) < playerRadius;
+    }
 
     distanceToWestPassage(position) {
         const indices = this.cartesianToCell(position);
@@ -269,7 +274,7 @@ export default class Maze {
         return Infinity;
     }
 
-    distanceToEastWall(position) {
+    distanceToEastPassage(position) {
         const indices = this.cartesianToCell(position);
         indices[1]++;
         if (this.map[indices[0]][indices[1]] == 8 || this.map[indices[0]][indices[1]] == 9 || this.map[indices[0]][indices[1]] == 10) {
@@ -278,7 +283,7 @@ export default class Maze {
         return Infinity;
     }
 
-    distanceToNorthWall(position) {
+    distanceToNorthPassage(position) {
         const indices = this.cartesianToCell(position);
         if (this.map[indices[0]][indices[1]] == 11 || this.map[indices[0]][indices[1]] == 12 || this.map[indices[0]][indices[1]] == 13) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
@@ -286,7 +291,7 @@ export default class Maze {
         return Infinity;
     }
 
-    distanceToSouthWall(position) {
+    distanceToSouthPassage(position) {
         const indices = this.cartesianToCell(position);
         indices[0]++;
         if (this.map[indices[0]][indices[1]] == 11 || this.map[indices[0]][indices[1]] == 12 || this.map[indices[0]][indices[1]] == 13) {
@@ -295,26 +300,29 @@ export default class Maze {
         return Infinity;
     }
 
-    checkPassageCollisions(playerPosition, playerRadius) {
-        if (this.collision(playerPosition, playerRadius)) {
+    checkPassageCollisions(playerPosition, playerRadius) {  
+        if (this.collisionPassage(playerPosition, playerRadius)) {
+            const indices = this.cartesianToCell(playerPosition);
             switch (this.map[indices[0]][indices[1]]) {
                 case 8: case 11:
-                    return 0;
+                    return this.passages[0];
                 case 9: case 12:
-                    return 1;
+                    return this.passages[1];
                 case 10: case 13:
-                    return 2;
+                    return this.passages[2];
                 default:
-                    return -1;
+                    return "";
             }
         }
+        return "";
     }
 
+    /*
     checkLiftCollision(playerPosition, playerRadius) {
         if (this.collision(playerPosition, playerRadius) && (this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 7)){
             return true;
         }else{
             return false;
         }
-    }
+    }*/
 }

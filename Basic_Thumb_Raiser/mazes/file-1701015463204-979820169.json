@@ -27,9 +27,9 @@
     [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0]
   ],
-  "initialPosition": [5, 3],
+  "initialPosition": [13, 3],
   "initialDirection": 0.0,
   "floor": "C1",
-  "lift":["file-1701015646407-715764044.json","file-1701015679356-718589422.json","file-1701015706446-322119394.json"],
+  "lift":["Floor C2*file-1701015646407-715764044.json","Floor C3*file-1701015679356-718589422.json","Floor C4*file-1701015706446-322119394.json"],
   "passages":[]
 }
