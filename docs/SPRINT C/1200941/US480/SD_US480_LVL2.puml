@@ -4,7 +4,6 @@ participant "Frontend\n(Angular)" as Frontend
 participant "AuthInterceptorService" as AuthInterceptor <<Frontend>>
 participant "LocalStorage" as LocalStorage <<Frontend>>
 participant "MessageService" as MessageService <<Frontend>>
-database "MongoDB" as Database <<Database>>
 participant "JWT Authentication Middleware" as JwtAuth <<Backend>>
 participant "TaskController" as Controller <<Backend>>
 participant "TaskService" as TaskService <<Backend>>
