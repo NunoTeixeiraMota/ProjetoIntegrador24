@@ -225,7 +225,7 @@ namespace RobDroneAndGOAuth.Services
                 PhoneNumber = v.PhoneNumber,
                 Status = v.Status
             }).ToList();
-            vigilanceTasks = vigilanceTasks.FindAll(v => v.userEmail.Contains(searchTerm)&& v.Status.ToString().Contains(searchTerm));
+            vigilanceTasks = vigilanceTasks.FindAll(v => v.userEmail.Contains(searchTerm) || v.Status.ToString().Contains(searchTerm));
 
             var pickDeliveryTasks = pickDeliveryTasksEntities.Select(p => new TaskPickDeliveryDto
             {
@@ -240,7 +240,7 @@ namespace RobDroneAndGOAuth.Services
                 Status = p.Status
 
             }).ToList();
-            pickDeliveryTasks = pickDeliveryTasks.FindAll(p => p.userEmail.Contains(searchTerm)&& p.Status.ToString().Contains(searchTerm));
+            pickDeliveryTasks = pickDeliveryTasks.FindAll(p => p.userEmail.Contains(searchTerm) || p.Status.ToString().Contains(searchTerm));
 
             return(vigilanceTasks,pickDeliveryTasks);
         }

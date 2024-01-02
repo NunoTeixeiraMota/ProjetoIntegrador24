@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import taskPickDelivery from 'src/app/model/taskPickDelivery';
 import taskVigilance from 'src/app/model/taskVigilance';
@@ -7,8 +6,6 @@ import { MessageService } from 'src/app/service/message/message.service';
 
 @Component({
   selector: 'app-search-tasks',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './search-task.component.html',
   styleUrls: ['./search-task.component.scss']
 })
@@ -49,12 +46,10 @@ export class SearchTasksComponent implements OnInit{
   }
 
   private applyVigilanceFilter(): void {
-    // Assuming originalVigilanceTasks contains the unfiltered list of tasks
     this.applySearch(this.vigilanceSearch)
   }
 
   private applyPickDeliveryFilter(): void {
-    // Assuming originalPickDeliveryTasks contains the unfiltered list of tasks
     this.applySearch(this.pickDeliverySearch)
 
    
