@@ -24,4 +24,8 @@ export class MainMenuComponent implements OnInit {
   private clearMessages() {
     this.messageService.clear(); 
   }
+  
+  logout() {
+    this.authService.logout();
+  }
 }

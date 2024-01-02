@@ -15,18 +15,18 @@
 :-dynamic final_desloc/2.
 
 
-login_url("http://localhost:4001/api/auth/signin/").
-email('1201293@isep.ipp.pt').
-pass('123456ola').
-buildings_url("http://localhost:4000/api/buildings/").
-floors_url("http://localhost:4000/api/floors/").
-connections_url("http://localhost:4000/api/buildingConnections/").
-elevators_url("http://localhost:4000/api/elevators/").
-rooms_url("http://localhost:4000/api/rooms/").
-robots_url("http://localhost:4000/api/robots/").
-robottypes_url("http://localhost:4000/api/robotTypes/").
-robottypestasks_url("http://localhost:4000/api/robot-type-tasks/").
-tasks_url("http://localhost:5000/api/taskrequest/by-robot/").
+login_url("https://robdroneandgo.azurewebsites.net/User/Login").
+email('manager@example.com').
+pass('Manager123!').
+buildings_url("http://localhost:4000/api/get_buildings").
+floors_url("http://localhost:4000/api/get_floors").
+connections_url("http://localhost:4000/api/get_buildings_connections").
+elevators_url("http://localhost:4000/api/get_lifts").
+rooms_url("http://localhost:4000/api/get_rooms").
+robots_url("http://localhost:4000/api/get_robots").
+robottypes_url("http://localhost:4000/api/get_robotypes").
+robottypestasks_url("http://localhost:4000/api/get_robot_type_tasks").
+tasks_url("http://localhost:5000/api/get/tasks_by_robot").
 
 get_buildings(Res):-
         buildings_url(URL),
@@ -174,10 +174,9 @@ apaga_factos():-retractall(building(_,_,_,_)),retractall(floors(_,_)),retractall
 
 login():-
   email(Email),pass(Pass),
-  http_post([ protocol(http),
-            host(localhost),
-            port(4001),
-            path('/api/auth/signin')
+  http_post([ protocol(https),
+            host(robdroneandgo.azurewebsites.net),
+            path('User/Login')
           ],
           json(json([email=Email, password=Pass])),
           Reply,

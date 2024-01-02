@@ -10,10 +10,8 @@
 :- use_module(library(http/json)).
 
 
-:- consult('load_facs.pl').
-:- consult('algorithms.pl').
-%Server
-
+:- consult('prolog_load.pl').
+:- consult('prolog_algorithms.pl').
 startServer(Port):-
         http_server(http_dispatch, [port(Port)]),
         asserta(port(Port)).
@@ -24,7 +22,7 @@ inicializar_sistema:-
 	carrega_factos().
 
 inicializar_server:-
-    startServer(5100),!,
+    startServer(6100),!,
     login,
     inicializar_sistema,!.
 
@@ -124,12 +122,6 @@ pathBuildings(Request):-
     translate_path2(Cam,C),
     format('Content-type: application/json~n~n'),
     format('{"result": "~w"}', [C]).
-    
-    
- %   buildings_path(X,Y,Cam),
-  %  translate_path2(Cam,C),
-   % reply_json(C).
-
 
 
 
