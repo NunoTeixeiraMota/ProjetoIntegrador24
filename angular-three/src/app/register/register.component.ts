@@ -11,10 +11,12 @@ import { MessageService } from '../service/message/message.service';
 })
 export class RegisterComponent implements OnInit {
   user: User = {};
+  showPassword: boolean = false; // Add a property to track the visibility
 
   constructor(private authService: AuthService, private messageservice: MessageService, private router: Router ) {};
 
   ngOnInit() {
+    
   }
 
   register(event: Event) {
@@ -63,4 +65,13 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+    const passwordField = document.querySelector('input[name="password"]') as HTMLInputElement | null;
+    if (passwordField) {
+      passwordField.type = this.showPassword ? 'text' : 'password';
+    } else {
+      console.error('Password field not found');
+    }
+  }
 }

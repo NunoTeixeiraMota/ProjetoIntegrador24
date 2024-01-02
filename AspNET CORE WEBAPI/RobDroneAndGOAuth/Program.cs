@@ -70,6 +70,7 @@ builder.Services.AddScoped<IMongoDatabase>(provider =>
     var client = provider.GetRequiredService<IMongoClient>();
     return client.GetDatabase(databaseName);
 });
+builder.Services.AddScoped<TaskMapper>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserAppService, UserAppService>();

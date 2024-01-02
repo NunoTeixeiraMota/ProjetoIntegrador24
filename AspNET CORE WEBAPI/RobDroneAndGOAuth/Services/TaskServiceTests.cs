@@ -12,13 +12,15 @@ namespace RobDroneAndGOAuth.Tests
         private readonly Mock<ITaskPickDeliveryRepository> _mockTaskPickDeliveryRepository;
         private readonly Mock<ITaskVigilanceRepository> _mockTaskVigilanceRepository;
         private readonly TaskService _taskService;
+        private readonly Mock<TaskMapper> _mocktaskMapper;
 
         public TaskServiceTests()
         {
             _mockTaskPickDeliveryRepository = new Mock<ITaskPickDeliveryRepository>();
             _mockTaskVigilanceRepository = new Mock<ITaskVigilanceRepository>();
+            _mocktaskMapper = new Mock<TaskMapper>();
 
-            _taskService = new TaskService(_mockTaskPickDeliveryRepository.Object, _mockTaskVigilanceRepository.Object);
+            _taskService = new TaskService(_mockTaskPickDeliveryRepository.Object, _mockTaskVigilanceRepository.Object,_mocktaskMapper.Object);
         }
 
         [Fact]
