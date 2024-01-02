@@ -60,6 +60,12 @@
                 <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/app-search-tasks">Search Tasks</a>
             </nav>
         </section>
+        <section *ngIf="currentUserRole === 'ROLE_ADMIN'">
+            <h2>Admin Settings</h2>
+            <nav>
+                <a *ngIf="currentUserRole === 'ROLE_ADMIN'" routerLink="/approve-users">Aprove Users</a>
+            </nav>
+        </section>
     </aside>
 </section>
 </body>
