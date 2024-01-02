@@ -1,0 +1,36 @@
+@startuml
+actor "Task Manager" as user
+participant "ApproveTasksHTML" as ui
+participant "ApproveTasksComponent" as component
+participant "TaskService" as servicefe <<FrontEnd>>
+participant "TasksController" as controller
+participant "TaskService" as service <<BackEnd>>
+
+
+database "MongoDB" as db
+
+user -> ui: Request to Search Tasks
+activate ui
+ui -> component: Receive the HTTP Request
+activate component
+component -> servicefe: searchTasks
+activate servicefe
+servicefe -> controller: HTTP GET searchTasks(searchTerm)
+activate controller
+controller -> service: Search(searchTerm)
+activate service
+service -> db: Search(searchTerm)
+db --> service: List of matching Tasks
+service --> controller: List of matching Tasks
+deactivate service
+controller --> servicefe: HTTP OK with List of matching Tasks
+deactivate controller
+servicefe -> component: Console.log Tasks
+deactivate servicefe
+component -> ui: Tasks
+deactivate component
+ui --> user: Display List of matching Tasks
+
+deactivate ui
+
+@enduml
