@@ -445,12 +445,18 @@
             });
         }
 
+
+
         function listFloors() {
+            //http://vs447.dei.isep.ipp.pt:4000/api/floor/list
+            //http://localhost:4000/api/floor/list
             return fetch("http://localhost:4000/api/floor/list")
                 .then((response) => response.json())
                 .then((json) => json);
         }
 
+        //http://vs447.dei.isep.ipp.pt:4000/api/building/list
+        //http://localhost:4000/api/building/list
         function listBuildings() {
             return fetch("http://localhost:4000/api/building/list")
                 .then((response) => response.json())
