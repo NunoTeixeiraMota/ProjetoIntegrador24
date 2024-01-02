@@ -52,6 +52,7 @@ nav a {
     color: #666;
     transition: background-color 0.3s ease;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 nav a:hover {
