@@ -42,44 +42,42 @@ export class TaskService {
     return this.http.get<any>(`${this.apiBaseUrl}/Task/GetAllNonAproved`);
   }
   approvePickDeliveryTask(taskId: string): Observable<any> {
-    const headers = { 'Content-Type': 'application/json' }; // If needed
+    const headers = { 'Content-Type': 'application/json' };
     return this.http.patch<any>(
-      '${this.apiBaseUrl}/Task/PickDelivery/Approve/${taskId}', // If taskId is expected in URL
-      null, // Or the appropriate request body if required
+      `${this.apiBaseUrl}/Task/PickDelivery/Approve/${taskId}`, 
+      null, 
       { headers }
-      // Include if headers are not set globally
     );
   }
 
   denyPickDeliveryTask(taskId: string): Observable<any> {
-    const headers = { 'Content-Type': 'application/json' }; // If needed
+    const headers = { 'Content-Type': 'application/json' }; 
     return this.http.patch<any>(
-      '${this.apiBaseUrl}/Task/PickDelivery/Deny/${taskId}', // If taskId is expected in URL
-      null, // Or the appropriate request body if required
-      { headers } // Include if headers are not set globally
+      `${this.apiBaseUrl}/Task/PickDelivery/Deny/${taskId}`, 
+      null, 
+      { headers } 
     );
   }
 
   approveVigilanceTask(taskId: string): Observable<any> {
-    const headers = { 'Content-Type': 'application/json' }; // If needed
+    const headers = { 'Content-Type': 'application/json' }; 
     return this.http.patch<any>(
-      '${this.apiBaseUrl}/Task/Vigilance/Approve/${taskId}', // If taskId is expected in URL
-      null, // Or the appropriate request body if required
-      { headers } // Include if headers are not set globally
+      `${this.apiBaseUrl}/Task/Vigilance/Approve/${taskId}`, 
+      null, 
+      { headers } 
     );
   }
 
   denyVigilanceTask(taskId: string): Observable<any> {
-    const headers = { 'Content-Type': 'application/json' }; // If needed
+    const headers = { 'Content-Type': 'application/json' }; 
     return this.http.patch<any>(
-      '${this.apiBaseUrl}/Task/Vigilance/Deny/${taskId}', // If taskId is expected in URL
-      null, // Or the appropriate request body if required
-      { headers } // Include if headers are not set globally
+      `${this.apiBaseUrl}/Task/Vigilance/Deny/${taskId}`, 
+      null, 
+      { headers } 
     );
   }
   searchTasks(searchTerm: string): Observable<any> {
-    // Make the HTTP GET request regardless of whether searchTerm is empty
-    return this.http.get<any>('${this.apiBaseUrl}/Task/Search/${searchTerm}');
+    return this.http.get<any>(`${this.apiBaseUrl}/Task/Search/${searchTerm}`);
 }
   
 

@@ -34,6 +34,7 @@ import { CreateTaskPickDeliveryComponent } from './component/create-task-pick-de
 import { ListTasksByAlgoritm } from './component/task-algorithms.component/task-algorithms.component';
 import { NonAprovedListComponent } from './non-aproved-list/non-aproved-list.component';
 import { AproveTaskComponent } from './component/aprove-task.component/aprove-task.component';
+import { SearchTasksComponent } from './component/search-task.component/search-task.component';
 import { CommonModule } from '@angular/common'; 
 
 
@@ -65,7 +66,8 @@ import { CommonModule } from '@angular/common';
     CreateTaskPickDeliveryComponent,
     ListTasksByAlgoritm,
     NonAprovedListComponent,
-    AproveTaskComponent
+    AproveTaskComponent,
+    SearchTasksComponent,
     
     // ... any other components
   ],

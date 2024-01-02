@@ -103,6 +103,26 @@ namespace RobDroneAndGOAuth.Controllers
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpGet("Search/{searchTerm?}")]
+        public async Task<IActionResult> SearchAsync ([FromRoute] string? searchTerm)
+        {
+            try
+            {
+                if(searchTerm== null) searchTerm = string.Empty;
+                var(vigilanceTasks,pickDeliveryTasks) = await _taskService.Search(searchTerm);
+
+                var result = new 
+                {
+                    VigilanceTasks = vigilanceTasks,
+                    PickDeliveryTasks = pickDeliveryTasks
+                };
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {return StatusCode(500, "An error occured while searching for tasks.")}
+        }
+
         [HttpGet("LessTime")]
         public async Task<AnyType> lessTimeTasks()
         {
