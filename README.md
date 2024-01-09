@@ -1,4 +1,3 @@
-[![Deploy to VPS](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml/badge.svg)](https://github.com/JoseTeixeira1200941/G046/actions/workflows/deploy.yml)
 # SEM_5_PI_G045 README
 
 ## Project Overview
