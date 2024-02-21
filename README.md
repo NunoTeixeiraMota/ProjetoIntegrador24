@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Welcome to the Project Name GitHub repository! This repository is the central hub for our project, where we manage our code, collaborate on development, and track our progress.
+This repository is the central hub for our project, where we manage our code, collaborate on development, and track our progress.
 
 This section provides information about the members of the project team.
 - José Teixeira
